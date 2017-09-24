@@ -34,9 +34,9 @@
 %\usepackage{amsthm}
 
 \hypersetup{
-    %bookmarks=true,         % show bookmarks bar?
-    colorlinks=true,       % false: boxed links; true: colored links
-    linkcolor=red,          % color of internal links (change box color with 
+    %bookmarks=true,			% show bookmarks bar?
+    colorlinks=true,			% false: boxed links; true: colored links
+    linkcolor=red,				% color of internal links (change box color with 
 %linkbordercolor)
     citecolor=green,        % color of links to bibliography
     filecolor=magenta,      % color of file links
@@ -63,10 +63,27 @@
 \usepackage{fullpage}
 
 %Set the custom referencing system
+	% Goal Statement
 \newtheorem{GS}{GS}
 \crefname{GS}{GS}{GSs}
+	% Assumption
 \newtheorem{A}{A}
 \crefname{A}{A}{As}
+	% Theoretical Model
+\newtheorem{T}{T}
+\crefname{T}{T}{Ts}
+	% Data Definition
+\newtheorem{DD}{DD}
+\crefname{DD}{DD}{DDs}
+	% Data Constraints
+\newtheorem{DC}{DC}
+\crefname{DC}{DC}{DCs}
+	% Instance Model
+\newtheorem{IM}{IM}
+\crefname{IM}{IM}{IMs}
+	% General Definition
+\newtheorem{GD}{GD}
+\crefname{GD}{GD}{GDs}
 
 \begin{document}
 
@@ -124,22 +141,25 @@ the symbol is given followed by a description of the unit and the SI name.\par
 \subsection{Table of Symbols}
 
 The table that follows summarizes the symbols used in this document along with
-their units.  The symbols are listed in alphabetical order.
+their units if applicable.
 
 \renewcommand{\arraystretch}{1.2}
 %\noindent \begin{tabularx}{1.0\textwidth}{l l X}
 \noindent \begin{longtable*}{l l p{12cm}} \toprule
 \textbf{Symbol} & \textbf{Unit} & \textbf{Description}\\
 \midrule 
-$A_C$ & \si[per-mode=symbol] {\square\metre} & coil surface area
-\\
-$A_\text{in}$ & \si[per-mode=symbol] {\square\metre} & surface area over 
-which heat is transferred in
-\\ 
+$\delta$ & & Dirac delta function \\
+$\varepsilon$ & & Strain tensor \\
+$\mathcal{FT}$ & & Fourier transform \\
+$\overrightarrow{g_{hkl}}$ & \si{\per\nano\meter} & [hkl] crystalline wave vector \\
+$i$ & & Imaginary unit \\
+$\mathbb{N}$ & & Set of natural numbers\\
+$\omega$ & & Rotation tensor\\
+$p$ & \si{\nano\meter} & pixel size\\
+$\mathbb{R}$ & & Set of real numbers\\
+$\mathbb{Z}$ & & Set of integer numbers\\
 \bottomrule
 \end{longtable*}
-\wss{Use your problems actual symbols.  The si package is a good idea to use for
-  units.}
 
 \subsection{Abbreviations and Acronyms}
 
@@ -149,11 +169,13 @@ which heat is transferred in
   \textbf{symbol} & \textbf{description}\\
   \midrule 
   A & Assumption\\
+  DC & Data Constraint \\
   DD & Data Definition\\
   EM & Electron Micrograph \\
   GD & General Definition\\
   GPA & Geometrical Phase Analysis \\
   GS & Goal Statement\\
+  I & Intensity (or number of counts \\
   IM & Instance Model\\
   LC & Likely Change\\
   PS & Physical System Description\\
@@ -161,7 +183,6 @@ which heat is transferred in
   SMH & STEM Moir{\'e} Hologram \\
   SRS & Software Requirements Specification\\
   STEM & Scanning Transmission Electron Microscopy \\
-  \progname{} & \wss{put your program name here}\\
   T & Theoretical Model\\
   \bottomrule
 \end{tabular}\\
@@ -179,8 +200,6 @@ which heat is transferred in
   deviation from the template.  Although the bits shown below do not include
   type information, you may need to add this information for your problem.}
 
-\wss{Feel free to change the appearance of the report by modifying the LaTeX
-  commands.}
 
 \wss{If you are documenting a family of models, you can start from this same
   template, but you will have to add a section for variabilities.  For program
@@ -245,7 +264,7 @@ the software level.
 
 \begin{itemize}
 
-\item \textbf{2D Cartesian coordinate system}: orthonormal coordinate system model by the orthonormal base $\mathcal{B}=(O,\vec{u_x},\vec{u_y}$ such that any vector $\vec{r}$ can be expressed as the following with $\mathbb{R}$ representing the set of real space:
+\item \textbf{2D Cartesian coordinate system}: orthonormal coordinate system model by the orthonormal base $\mathcal{B}=(O,\vec{u_x},\vec{u_y}$ such that any vector $\vec{r}$ can be expressed as the following:
 \begin{equation}
 \forall (x,y) \in \mathbb{R}^{2}, \vec{r}=x\vec{u_x}+y\vec{u_y}
 \end{equation}
@@ -260,101 +279,14 @@ STEM EM formation can be visualized in \cref{fig:STEM_imaging_Fig}. The position
 \caption{On the left hand side, a schematic of the STEM EM formation with the STEM probe scanning the sample at each intersection of the grid lines. The electrons crossing the sample are collected on the detector and counted during the acquisition time. On the right hand side is presented a STEM EM on a pure silicon sample revealing its atomic structure. In the inset is highlighted the type of data the STEM EM corresponds to which is a 2D array.}
 \label{fig:STEM_imaging_Fig}
 \end{figure}
-In the 2D Cartesian coordinate system, the scanning grid can be seen as sampler $S$ of continuous function $f$. For the purpose of the STEM Moir{\'e} GPA, the sampler is set to be periodic with the same periodicity $p$ (called pixel size) in both $x$ and $y$ directions (2D Dirac comb). The resulting sampled version $f_S$ of $f$ can be represented as the following with $\delta$ representing the Dirac functio
-\begin{equation}
-\begin{gathered}
-\forall (x,y) \in \mathbb{R}^{2}, f_S(x,y)=S(x,y)\times f(x,y) \\
-\forall (x,y) \in \mathbb{R}^{2}, f_S(x,y)=\sum_{n=-\infty}^{n=+\infty}\sum_{m=-\infty}^{m=+\infty}\delta(x-np,y-mp)\times f(x,y)
-\end{gathered}
-\label{eq:sampling}
-\end{equation}
-For shorter notations, it is position to define a set Q as follows $Q=\{\forall (n,m) \in \mathbb{Z}^{2}, \vec{q}=n\vec{u_x}+m\vec{u_y}\}$ with $\mathbb{Z}$ representing the set of integer numbers and thus simplify \cref{eq:sampling}
-\begin{equation}
-\forall (x,y) \in \mathbb{R}^{2}, f_S(\vec{r})=\sum_{q\in Q}\delta(\vec{r}-p\vec{q}) f(\vec{r})
-\label{eq:sampling_simplified}
-\end{equation}
-\item \textbf{Hologram}: Result from an interference between two or multiples waves. \newline
-Let consider two monochromatic plane waves $\psi_1$ and $\psi_2$ with their respective amplitude $A_j$, phase $\phi_j$ and wave vector $\vec{k_j}$ in the 2D Cartesian system. The hologram $\psi_H$ and the resulting intensity from the hologram $I_H$ can be modelled as follows with $i$ representing the imaginary unit:
-\begin{equation}
-\begin{gathered}
-\forall (x,y) \in \mathbb{R}^{2},\psi_H(\vec{r})=\psi_1+\psi_2= A_1e^{i(\vec{k_1}\cdot\vec{r})+i\phi_1}+A_2e^{i(\vec{k_2}\cdot\vec{r})+i\phi_2} \\
-\forall (x,y) \in \mathbb{R}^{2},I_H(\vec{r})=\psi_H\psi_H^{*}= A_{1}^{2}+A_{2}^{2}+A_{1}A_{1}(e^{i(\vec{k_1}-\vec{k_2})\cdot\vec{r}+i(\phi_1-\phi_2)}+e^{i(\vec{k_2}-\vec{k_1})\cdot\vec{r}+i(\phi_2-\phi_1)})
-\end{gathered}
-\label{eq:hologram}
-\end{equation}
-The more waves are contributing to the hologram, the more complex \cref{eq:hologram} will be. However, similar factors will appear with constants and cross product terms. 
-\item \textbf{Moir{\'e} hologram}: Result from interference between two or multiple waves with similar but not equal wave numbers (or wave vectors in 2D). \an{Don't like the terminology similar}
+\item \textbf{Hologram}: Result from an interference between two or multiples waves. 
+\item \textbf{Moir{\'e} hologram}: Result from interference between two or multiple waves with similar but not equal wave numbers (or wave vectors in 2D).
 \item \textbf{Crystal lattice}: Arrangement of atoms forming matter.\newline
-For the purpose of the STEM Moir{\'e} GPA, only mono-crystalline samples are analysed.\an{Think about that ... limit it to mono-crystalline samples is obvious for me but is it possible to see more general case ?} In the case of a perfect periodic atomic arrangement, the crystalline lattice $I_c$ can be described in Fourier series with $C_j$ the complex Fourier coefficient related to the crystalline wave vector $\vec{g_j}$ in the 2D Cartesian system.
-\begin{equation}
-\forall (x,y) \in \mathbb{R}^{2},I_C(\vec{r})=\sum_{j=-\infty}^{j=+\infty}C_je^{i(\vec{g_j}\cdot\vec{r})}
-\label{eq:crystal_Fourier_series}
-\end{equation}
-If the crystal is elastically deformed, the relative position of the atoms will be slightly modified from their original unstrained configuration. The local deformation is breaking locally the perfect periodicity of the crystalline lattice. In the case of small deformation,$C_j$ can be allowed to vary in space in \cref{eq:crystal_Fourier_series}. Representing $C_j$ with a phase $A_j$ and an amplitude $P_j$, a pure displacement is only contributing in the phase component. The strain information is therefore embedded in $P_{g_{j}}(\vec{r})$ such that $P_{g_{j}}(\vec{r})=2\pi\Delta \vec{g_{j}}(\vec{r})\cdot\vec{r}$ where $\Delta \vec{g_j}$ represent the variation of the crystalline vector compared to its unstrained state (ref hytch 1998).
-\begin{equation}
-\begin{gathered}
-\forall (x,y) \in \mathbb{R}^{2},I_C(\vec{r})=\sum_{j=-\infty}^{j=+\infty}C_j(\vec{r})e^{i(\vec{g_j}\cdot\vec{r})} \\
-\forall (x,y) \in \mathbb{R}^{2},I_C(\vec{r})=\sum_{j=-\infty}^{j=+\infty}A_je^{i(\vec{g_j}\cdot\vec{r})+iP_{g_{j}}(\vec{r})}
-\end{gathered}
-\label{eq:crystal_strain_Fourier_series}
-\end{equation}
-
 \item \textbf{STEM Moir{\'e} hologram (SMH)}: EM collected in STEM and resulting from the 
-Moir{\'e} interference between the scanning grid and the crystal lattice.
-
-Combining \cref{eq:crystal_strain_Fourier_series} and \cref{eq:sampling}, a STEM Moir{\'e} hologram $I_{SMH}$ can be described as follows
-\begin{equation}
-I_{SMH}(\vec{r})=\sum_{q\in Q}\delta(\vec{r}-p\vec{q})\times\sum_{j=-\infty}^{j=+\infty}A_je^{i(\vec{g_j}\cdot\vec{r})+iP_{g_{j}}(\vec{r})}
-\label{eq:SMH_1}
-\end{equation}
-Since the Dirac comb function is also periodic, the sampler can also be represented into Fourier series
-\begin{equation}
-\forall (x,y) \in \mathbb{R}^{2}, S(\vec{r})=\sum_{q\in Q}\delta(\vec{r}-p\vec{q}) = \frac{1}{(2\pi)^2}\sum_{q\in Q}\sum_{l=-\infty}^{l=+\infty}e^{il(\vec{r}-p\vec{q})}
-\label{eq:SMH_2}
-\end{equation}
-Using \cref{eq:SMH_2} in \cref{eq:SMH_1}, it is possible to recognize an interference equation between multiple plane waves (a more complex version of \cref{eq:hologram}.
-\begin{equation}
-I_{SMH}(\vec{r})=\frac{1}{(2\pi)^2}\sum_{q\in Q}\sum_{l=-\infty}^{l=+\infty}\sum_{j=-\infty}^{j=+\infty}A_je^{i(\vec{g_j}\cdot\vec{r}+l(\vec{r}-p\vec{q}))+iP_{g_{j}}(\vec{r})}
-\label{eq:SMH_3}
-\end{equation}
-By modifying $p$ the scanning periodicity (or the pixel size), it is possible to adjust the spatial frequency of the SMH solving \cref{eq:SMH_3} 
+Moir{\'e} interference between the scanning grid and the crystal lattice. 
 \item \textbf{Strain map}: 2D array mapping the evolution of one element of the 2D strain or rotation 
-tensor.\newline
-If $\vec{g_j}=g_{j_{x}}\vec{u_{x}}+g_{j_{y}}\vec{u_{y}}$ and $\Delta \vec{g_{j}}=\Delta g_{j_{x}}\vec{u_{x}}+\Delta g_{j_{y}}\vec{u_{y}}$ are known for two non-collinear crystalline wave vectors, then the strain tensor can be deduced. First both the unstrained matrix $G$ and the variation of the crystalline wave vectors matrix $\Delta G$ are generated to calculate the distortion matrix $D$ with $I_{d}$ representing the identity matrix. 
-\begin{equation}
-\begin{gathered}
-	G_{ref} =
-	\begin{bmatrix}
-	g_{1_{x}} & g_{1_{y}} \\
-	g_{2_{x}} & g_{2_{y}} 
-	\end{bmatrix} \\
-	\Delta G =
-	\begin{bmatrix}
-	\Delta g_{1_{x}} & \Delta g_{1_{y}} \\
-	\Delta g_{2_{x}} & \Delta g_{2_{y}} 
-	\end{bmatrix} \\
-D = ({\Delta G}^{T})^{-1}{G_{ref}}^{T}-I_{d}
-\end{gathered}
-\label{eq:strain_1}
-\end{equation}
-From the distortion matrix, the strain and rotation tensor can be finally evaluated with $\varepsilon$ the strain tensor and $\omega$ the rotation tensor (see annexe D in ref{Hytch1998} and equation (30) in ref{Rouviere2005}). 
-\begin{equation}
-\begin{gathered}
-\varepsilon = \begin{bmatrix}
-	\varepsilon_{xx} & \varepsilon_{xy} \\
-	\varepsilon_{xy} & \varepsilon_{yy} 
-	\end{bmatrix} = \frac{1}{2}(D+D^{T}) \\
-\omega = \begin{bmatrix}
-	0 & \omega_{xy} \\
-	-\omega_{xy} & 0 
-	\end{bmatrix} = \frac{1}{2}(D-D^{T})
-\end{gathered}
-\label{eq:strain_2}
-\end{equation}
-
-
+tensor. 
 \end{itemize}
-
 
 \subsubsection{Physical System Description}
 
@@ -397,14 +329,11 @@ includes the following elements:
 \subsubsection{Assumptions}
 
 \begin{A}
-\normalfont The microscope has a limit of resolution corresponding to the probe size and thus cannot resolve any spatial frequency higher than $g_{lim}$. As a consequence, the expression of $I_C$ in \cref{eq:crystal_strain_Fourier_series} is simplified since the series becomes a finite sum considering $F$ a floor function.
-\begin{equation}
-\forall (x,y) \in \mathbb{R}^{2},I_C(\vec{r})=\sum_{j=-F(g_{lim})}^{j=+F(g_{lim})+1}A_je^{i(\vec{g_j}\cdot\vec{r})+iP_{g_{j}}(\vec{r})}
-\end{equation}
+\normalfont The microscope has a limit of resolution corresponding to the probe size and thus cannot resolve any spatial frequency higher than $g_{j_{lim}}$. 
 \label{A_1}
 \end{A}
 \begin{A}
-\normalfont Since the STEM EM is discretized in pixels, the smallest features possible is composed of two pixels. Therefore, in reciprocal space, the maximum range of spatial frequency detectable is $[-\frac{1}{2p},\frac{1}{2p}]^{2}$.
+\normalfont Since the STEM EM is discretized in pixels, the smallest features possible is composed of two pixels. Therefore, in reciprocal space, the maximum range of spatial frequency detectable is $\Gamma=[-\frac{1}{2p},\frac{1}{2p}]^{2}$.
 \label{A_2}
 \end{A}
 \begin{A}
@@ -412,29 +341,345 @@ includes the following elements:
 \label{A_3}
 \end{A}
 \begin{A}
-\normalfont The variation of the strain field (or deformation field) is small. As a consequence $\nabla(\Delta \overrightarrow{g(\vec{r})}\cdot\vec{r})\approx\Delta \overrightarrow{g(\vec{r})}$
+\normalfont The variation of the strain field (or deformation field) is small.
 \label{A_4}
 \end{A}
 \begin{A}
 \normalfont The strain magnitude is small (elastic regime). As a consequence, $\frac{||\vec{\Delta g}||}{||\vec{g}||}<0.1$
 \label{A_5}
 \end{A}
+\begin{A}
+\normalfont The user knows the crystal structure of the sample analysed at its unstrained state or can provide a reference in which is embedded the crystal structure information at its unstrained state.
+\label{A_6}
+\end{A}
+
 \subsubsection{Theoretical Models}\label{sec_theoretical}
 
-dwdqwd
+\begin{T}
+\normalfont \textbf{Sampling}
+\begin{itemize}
+\item \underline{Equation}: \Cref{eq:sampling_simplified}
+\item \underline{Description}: In the 2D Cartesian coordinate system, the scanning grid can be seen as sampler $S$ of continuous function $f$. For the purpose of the STEM Moir{\'e} GPA, the sampler is set to be periodic with the same periodicity $p$ (called pixel size) in both $x$ and $y$ directions (2D Dirac comb). The resulting sampled version $f_S$ of $f$ can be represented as the following with $\delta$ representing the Dirac function:
+\begin{equation}
+\begin{gathered}
+\forall (x,y) \in \mathbb{R}^{2}, f_S(x,y)=S(x,y)\times f(x,y) \\
+\forall (x,y) \in \mathbb{R}^{2}, f_S(x,y)=\sum_{n=-\infty}^{n=+\infty}\sum_{m=-\infty}^{m=+\infty}\delta(x-np,y-mp)\times f(x,y)
+\end{gathered}
+\label{eq:sampling}
+\end{equation}
+For shorter notations, it is position to define a set Q as follows $Q=\{\forall (n,m) \in \mathbb{Z}^{2}, \vec{q}=n\vec{u_x}+m\vec{u_y}\}$ and thus simplify \cref{eq:sampling}
+\begin{equation}
+\forall (x,y) \in \mathbb{R}^{2}, f_S(\vec{r})=\sum_{q\in Q}\delta(\vec{r}-p\vec{q}) f(\vec{r})
+\label{eq:sampling_simplified}
+\end{equation}
+\item \underline{Source}: Trouver un truc pr sampling (bouquin sur la table d'isobel
+\item \underline{Ref by}:
+\end{itemize}
+\label{T_1}
+\end{T}
+
+\begin{T}
+\normalfont \textbf{Geometrical Phase Analysis}
+\begin{itemize}
+\item \underline{Equation}: \Cref{eq:GPA_method}
+\item \underline{Description}: Let consider a function $f$ decomposed in Fourier series as the following with 
+\begin{equation}
+\begin{gathered}
+\forall \vec{r}=(x_1,...,x_n) \in \mathbb{R}^n, f(\vec{r})=\sum_{j=-\infty}^{j=+\infty}C_je^{i(\vec{k_j}\cdot\vec{r})} \\
+\forall \vec{r}=(x_1,...,x_n) \in \mathbb{R}^n, f(\vec{r})=\sum_{j=-\infty}^{j=+\infty}A_je^{i((\vec{k_j}\cdot\vec{r})+B_j)}
+\end{gathered}
+\end{equation}
+The objective of GPA is to extract one chosen $B_j$ from $f$ in Fourier space. Let's consider the Fourier transform of $f$ such that
+\begin{equation*}
+\forall \vec{\nu}=(\nu_1,...,\nu_n) \in \mathbb{R}^n, \forall \vec{r}=(x_1,...,x_n) \in \mathbb{R}^n, \widetilde{f}(\vec{\nu})=\mathcal{FT}(f(\vec{r}))
+\end{equation*}
+\begin{equation}
+\forall \vec{\nu}\in \mathbb{R}^n, \widetilde{f}(\vec{\nu})=\sum_{j=-\infty}^{j=+\infty}A_je^{iB_j}\delta(\vec{k_j}-\vec{\nu})
+\end{equation}
+If all the $\vec{k_j}$ are separated enough to be isolated with a mask, then $B_j$ can be extracted by considering the inverse Fourier transform of the masked area and expressing the result in term of amplitude and phase. In mathematical formalism, $B_j$ is extracted as follows.
+\begin{equation*}
+\begin{gathered}
+\text{if} \ \exists \ M :
+\begin{array}{|rcl}
+\mathbb{R} & \longrightarrow & \mathbb{C} \\
+\vec{\nu} & \longmapsto & M(\vec{\nu}) 
+    \end{array} / \begin{cases}
+    					M(\vec{\nu})\widetilde{f}(\vec{\nu})=A_je^{iB_j} & \text{for} \ \vec{\nu} \in [(\nu_1^D,...,\nu_n^D),(\nu_1^U,...,\nu_n^U)] \\
+    					M(\vec{\nu})\widetilde{f}(\vec{\nu})=0 & 
+    				 \end{cases} \\
+\end{gathered}
+\end{equation*}
+\begin{equation}
+\Rightarrow \begin{array}{l}
+|\mathcal{FT}^{-1}(M(\vec{\nu})\widetilde{f(\vec{\nu})})(\vec{r})|=A_j \\
+arg(\mathcal{FT}^{-1}(M(\vec{\nu})\widetilde{f(\vec{\nu})})(\vec{r}))=B_j
+\end{array}
+\label{eq:GPA_method}
+\end{equation}
+
+\item \underline{Source}:
+\item \underline{Ref by}:
+\end{itemize}
+\label{T_2}
+\end{T}
+
+\subsubsection*{Description of the GPA method in a 1D cartesian coordinate system}
+Let's consider a function $f$ such that 
+\begin{equation*}
+\begin{gathered}
+\forall x \in \mathbb{R}, f(x)=C_0e^{i(k_0x)}+C_1e^{i(k_1x)} \\
+\end{gathered}
+\end{equation*}
+Applying the GPA method on $f$,
+\begin{equation*}
+\begin{gathered}
+\forall \nu \in \mathbb{R}, \forall x \in \mathbb{R}, \widetilde{f(\nu)}=C_0\delta(k_0-\nu)+C_1\delta(k_1-\nu)
+\end{gathered}
+\end{equation*}
+\begin{T}
+\normalfont \textbf{Strain Model}
+\begin{itemize}
+\item \underline{Equation}: \Cref{eq:strain_2}
+\item \underline{Description}: In infinitesimal strain theory with small displacement and small gradient of displacement, the displacement gradient tensor $\nabla u$ can be decomposed in two independent tensors: the symmetric strain tensor $\varepsilon$ and the anti-symmetric rotation tensor $\omega$. Their relationship can be described as follows:
+\begin{equation}
+\begin{gathered}
+\nabla u = \varepsilon + \omega = \begin{bmatrix}
+	\varepsilon_{xx} & \varepsilon_{xy} \\
+	\varepsilon_{xy} & \varepsilon_{yy} 
+	\end{bmatrix} + \begin{bmatrix}
+	0 & \omega_{xy} \\
+	-\omega_{xy} & 0 
+	\end{bmatrix} \\ 
+\varepsilon = \frac{1}{2}(\nabla u+(\nabla u)^{T}) \\
+\omega = \frac{1}{2}(\nabla u-(\nabla u)^{T})
+\end{gathered}
+\label{eq:strain_2}
+\end{equation}
+\item \underline{Source}:
+\item \underline{Ref by}:
+\end{itemize}
+\label{T_3}
+\end{T}
+
+\begin{T}
+\normalfont \textbf{Interferometry}
+\begin{itemize}
+\item \underline{Equation}: \Cref{eq:hologram}
+\item \underline{Description}: Let consider two monochromatic plane waves $\psi_1$ and $\psi_2$ with their respective amplitude $A_j$, phase $\phi_j$ and wave vector $\vec{k_j}$ in the 2D Cartesian system interfering with each other. The resulting hologram $\psi_H$ represented by the intensity $I_H$ can be modelled as follows with :
+\begin{equation}
+\forall (x,y) \in \mathbb{R}^{2}, \psi_H(\vec{r})=\psi_1+\psi_2= A_1e^{i(\vec{k_1}\cdot\vec{r})+i\phi_1}+A_2e^{i(\vec{k_2}\cdot\vec{r})+i\phi_2}
+\end{equation}
+\begin{equation}
+\begin{split}
+\forall (x,y) \in \mathbb{R}^{2}, I_H(\vec{r})=\psi_H\psi_H^{*}= & A_{1}^{2}+A_{2}^{2}+ \\ & A_{1}A_{2}(e^{i(\vec{k_1}-\vec{k_2})\cdot\vec{r}+i(\phi_1-\phi_2)}+e^{i(\vec{k_2}-\vec{k_1})\cdot\vec{r}+i(\phi_2-\phi_1)})
+\end{split}
+\label{eq:hologram}
+\end{equation}
+The more waves are contributing to the hologram, the more complex \cref{eq:hologram} will be. However, similar factors will appear with constants and cross product terms.
+\item \underline{Source}:
+\item \underline{Ref by}:
+\end{itemize}
+\label{T_4}
+\end{T}
 
 \subsubsection{General Definitions}\label{sec_gendef}
 
+\begin{GD}
+\normalfont \textbf{Strain in crystal lattice}
+\begin{itemize}
+\item \underline{Equation}: \Cref{eq:Strain_GPA}
+\item \underline{Description}: For the purpose of the STEM Moir{\'e} GPA, only mono-crystalline samples are analysed. In the case of a perfect periodic atomic arrangement, the crystalline lattice $I_c$ can be described in Fourier series with $C_j$ the complex Fourier coefficient related to the crystalline wave vector $\vec{g_j}$ in the 2D Cartesian system.
+\begin{equation}
+\forall (x,y) \in \mathbb{R}^{2},I_C(\vec{r})=\sum_{j=-\infty}^{j=+\infty}C_je^{i(\vec{g_j}\cdot\vec{r})}
+\label{eq:crystal_Fourier_series}
+\end{equation}
+If the crystal is elastically deformed, the relative position of the atoms will be slightly modified from their original unstrained configuration. The local deformation is breaking locally the perfect periodicity of the crystalline lattice. In the case of small deformation, $C_j$ can be allowed to vary in space in \cref{eq:crystal_Fourier_series}. Representing $C_j$ with a phase $A_j$ and an amplitude $P_j$, a pure displacement is only contributing in the phase component. The strain information is therefore embedded in $P_{g_{j}}(\vec{r})$ such that $P_{g_{j}}(\vec{r})=2\pi\Delta \overrightarrow{g_{j}}(\vec{r})\cdot\vec{r}$ where $\Delta \overrightarrow{g_j}$ represent the variation of the crystalline vector compared to its unstrained state.
+\begin{equation}
+\begin{gathered}
+\forall (x,y) \in \mathbb{R}^{2},I_C(\vec{r})=\sum_{j=-\infty}^{j=+\infty}C_j(\vec{r})e^{i(\vec{g_j}\cdot\vec{r})} \\
+\forall (x,y) \in \mathbb{R}^{2},I_C(\vec{r})=\sum_{j=-\infty}^{j=+\infty}A_je^{i(\vec{g_j}\cdot\vec{r})+iP_{g_{j}}(\vec{r})}
+\end{gathered}
+\label{eq:crystal_strain_Fourier_series}
+\end{equation}
+Applying GPA (\cref{T_2}) on \cref{eq:crystal_strain_Fourier_series}, $P_{g_{j}}(\vec{r})$ can be extracted. Applying \cref{A_4}, the gradient $\nabla$ of $P_{g_{j}}(\vec{r})$ can be approximate as follows
+\begin{equation}
+\nabla P_{g_{j}}(\vec{r}) = 2\pi [\nabla( \Delta \overrightarrow{g_j}(\vec{r}))]^T\vec{r}  + 2\pi\Delta \overrightarrow{g_j(\vec{r})} \approx 2\pi\Delta \overrightarrow{g_j(\vec{r})}
+\label{eq:Strain_GPA}
+\end{equation}
+\item \underline{Source}: Ref Hytch1998
+\item \underline{Ref by}:
+\end{itemize}
+\label{GD_1}
+\end{GD}
 
-\subsubsection*{Detailed derivation of simplified rate of change of temperature}
+\begin{GD}
+\normalfont \textbf{STEM Moir{\'e} hologram}
+\begin{itemize}
+\item \underline{Equation}: \Cref{eq:SMH_simplified_1}
+\item \underline{Description}: Combining \cref{eq:crystal_strain_Fourier_series} and \cref{eq:sampling}, a STEM Moir{\'e} hologram $I_{SMH}$ can be described as follows
+\begin{equation}
+\forall (x,y) \in \mathbb{R}^{2}, I_{SMH}(\vec{r})=\sum_{q\in Q}\delta(\vec{r}-p\vec{q})\times\sum_{j=-\infty}^{j=+\infty}A_je^{i(\vec{g_j}\cdot\vec{r})+iP_{g_{j}}(\vec{r})}
+\label{eq:SMH_1}
+\end{equation}
+By modifying $p$ the scanning periodicity (or the pixel size), it is possible to adjust the spatial frequency of the SMH solving \cref{eq:SMH_1}.Applying \cref{A_1}, the expression of $I_C$ in \cref{eq:crystal_strain_Fourier_series} is simplified since the series becomes a finite sum.
+\begin{equation}
+\forall (x,y) \in \mathbb{R}^{2},I_C(\vec{r})=\sum_{j=-j_{lim}}^{j=+j_{lim}}A_je^{i(\vec{g_j}\cdot\vec{r})+iP_{g_{j}}(\vec{r})}
+\label{eq:crystal_lattice_simplified}
+\end{equation}
+Therefore, the STEM Moir{\'e} hologram $I_{SMH}$ is also simplified as follows:
+\begin{equation}
+\forall (x,y) \in \mathbb{R}^{2}, I_{SMH}(\vec{r})=\sum_{q\in Q}\delta(\vec{r}-p\vec{q})\times\sum_{j=-j_{lim}}^{j=+j_{lim}}A_je^{i(\vec{g_j}\cdot\vec{r})+iP_{g_{j}}(\vec{r})}
+\label{eq:SMH_simplified_1}
+\end{equation}
+\item \underline{Source}:
+\item \underline{Ref by}:
+\end{itemize}
+\label{GD_2}
+\end{GD}
 
-\wss{This may be necessary when the necessary information does not fit in the
-  description field.} 
+\subsubsection*{From sampling to a hologram}
+
+Since the Dirac comb function is also periodic, the sampler can also be represented into Fourier series
+\begin{equation}
+\forall (x,y) \in \mathbb{R}^{2}, S(\vec{r})=\sum_{q\in Q}\delta(\vec{r}-p\vec{q}) = \frac{1}{(2\pi)^2}\sum_{q\in Q}\sum_{l=-\infty}^{l=+\infty}e^{il(\vec{r}-p\vec{q})}
+\label{eq:SMH_2}
+\end{equation}
+Using \cref{eq:SMH_2} in \cref{eq:SMH_simplified_1}, it is possible to recognize an interference equation between multiple plane waves (a more complex version of \cref{eq:hologram}.
+\begin{equation}
+I_{SMH}(\vec{r})=\frac{1}{(2\pi)^2}\sum_{q\in Q}\sum_{l=-\infty}^{l=+\infty}\sum_{j=-j_{lim}}^{j=+j_{lim}}A_je^{i(\vec{g_j}\cdot\vec{r}+l(\vec{r}-p\vec{q}))+iP_{g_{j}}(\vec{r})}
+\label{eq:SMH_3}
+\end{equation}
+
+\begin{GD}
+\normalfont \textbf{Deformation gradient tensor}
+\item \underline{Equation}: \Cref{eq:strain_1}
+\item \underline{Description}: If $\vec{g_j}=g_{j_{x}}\vec{u_{x}}+g_{j_{y}}\vec{u_{y}}$ and $\Delta \vec{g_{j}}=\Delta g_{j_{x}}\vec{u_{x}}+\Delta g_{j_{y}}\vec{u_{y}}$ are known in the base $\mathcal{B}$ for two non-collinear crystalline wave vectors, then the strain deformation tensor can be deduced by calculating first both the unstrained matrix $G$ and the variation of the crystalline wave vectors matrix $\Delta G$. Then the deformation gradient tensor $\nabla u$ is estimated as the following with $I_{d}$ representing the identity matrix (see annexe D in ref{Hytch1998} and equation (30) in ref{Rouviere2005}). 
+\begin{equation}
+\begin{gathered}
+	G_{ref} =
+	\begin{bmatrix}
+	g_{1_{x}} & g_{1_{y}} \\
+	g_{2_{x}} & g_{2_{y}} 
+	\end{bmatrix} \\
+	\Delta G =
+	\begin{bmatrix}
+	\Delta g_{1_{x}} & \Delta g_{1_{y}} \\
+	\Delta g_{2_{x}} & \Delta g_{2_{y}} 
+	\end{bmatrix} \\
+\nabla u = ({\Delta G}^{T})^{-1}{G_{ref}}^{T}-I_{d}
+\end{gathered}
+\label{eq:strain_1}
+\end{equation}
+\item \underline{Source}:
+\item \underline{Ref by}:
+\label{GD_3}
+\end{GD}
 
 \subsubsection{Data Definitions}\label{sec_datadef}
 
+\begin{DD}
+\normalfont \textbf{STEM Moir{\'e} hologram}
+\begin{itemize}
+\item Equation: \cref{eq:strain_2}
+\item Description:
+\item Source:
+\item Ref by:
+\end{itemize}
+\label{DD_1}
+\end{DD}
+
+\begin{DD}
+\normalfont \textbf{Crystal structure reference}
+\begin{itemize}
+\item Equation:
+\item Description:
+\item Source:
+\item Ref by:
+\end{itemize}
+\label{DD_2}
+\end{DD}
+
+\begin{DD}
+\normalfont \textbf{Moir{\'e} wave vector}
+\begin{itemize}
+\item Equation:
+\item Description:
+\item Source:
+\item Ref by:
+\end{itemize}
+\label{DD_3}
+\end{DD}
+
+\begin{DD}
+\normalfont \textbf{Crystalline wave vector}
+\begin{itemize}
+\item Equation:
+\item Description:
+\item Source:
+\item Ref by:
+\end{itemize}
+\label{DD_4}
+\end{DD}
+
+\begin{DD}
+\normalfont \textbf{Sampling vector operating in $\Gamma$ frequency range}
+\begin{itemize}
+\item Equation: $\overrightarrow{g_{j}^{C}}=\overrightarrow{g_{j}^{M}}+\frac{1}{p}\overrightarrow{q_{j}}$
+\item Description:
+\item Source:
+\item Ref by:
+\end{itemize}
+\label{DD_5}
+\end{DD}
+
+\begin{DD}
+\normalfont \textbf{Mask $M$ isolating a spatial frequency}
+\begin{itemize}
+\item Equation:
+\item Description:
+\item Source:
+\item Ref by:
+\end{itemize}
+\label{DD_6}
+\end{DD}
 
 \subsubsection{Instance Models} \label{sec_instance}    
+
+\begin{IM}
+\normalfont \textbf{Simulate the SMH on a reference to determine $\overrightarrow{q_{j}}$ for each $\vec{g_j}^{M}$}
+\begin{itemize}
+\item Input: $I_{ref}, p$
+\item Output: $I_{sim}, (n_{j};m_{j}), \vec{g_j}^{M}$
+\item Source:
+\item Ref by:
+\end{itemize}
+\label{IM_1}
+\end{IM}
+
+\subsubsection*{Derivation of \cref{IM_1}}
+
+\begin{IM}
+\normalfont \textbf{Convert the Moir{\'e} geometric phase into Crystalline geometric phase}
+\begin{itemize}
+\item Input: $I_{SMH}, M, \overrightarrow{q_{j}}, \Delta \overrightarrow{g_{j}^{M}}$
+\item Output: $\Delta \overrightarrow{g_{j}^{C}}$
+\item Source:
+\item Ref by:
+\end{itemize}
+\label{IM_2}
+\end{IM}
+
+\begin{IM}
+\normalfont \textbf{Strain calculation using 2 non-crystalline wave vectors}
+\begin{itemize}
+\item Input: $g_{1_{x}}^{C}, g_{1_{y}}^{C},g_{2_{x}}^{C}, g_{2_{y}}^{C}, \Delta g_{1_{x}}^{C}, \Delta g_{1_{y}}^{C},\Delta g_{2_{x}}^{C},\Delta g_{2_{y}}^{C}$
+\item Output: $\varepsilon_{xx},\varepsilon_{xy},\varepsilon_{yy},\omega_{xy}$
+\item Source:
+\item Ref by:
+\end{itemize}
+\label{IM_3}
+\end{IM}
+
 
 \subsubsection*{Derivation of ...}
 
