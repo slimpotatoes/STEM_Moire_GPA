@@ -32,6 +32,11 @@
 \usepackage{cleveref}
 \usepackage{float}
 %\usepackage{amsthm}
+\usepackage{xcolor}
+\definecolor{shadecolorIM}{RGB}{200,200,200}
+\definecolor{shadecolorT}{RGB}{200,200,200}
+\definecolor{shadecolorGD}{RGB}{200,200,200}
+\definecolor{shadecolorDD}{RGB}{200,200,200}
 
 \hypersetup{
     %bookmarks=true,			% show bookmarks bar?
@@ -84,6 +89,9 @@
 	% General Definition
 \newtheorem{GD}{GD}
 \crefname{GD}{GD}{GDs}
+	% Requirement
+\newtheorem{R}{R}
+\crefname{R}{R}{Rs}
 
 \begin{document}
 
@@ -169,6 +177,7 @@ $\mathbb{Z}$ & & Set of integer numbers\\
   \textbf{symbol} & \textbf{description}\\
   \midrule 
   A & Assumption\\
+  AU & Arbitrary Unit\\
   DC & Data Constraint \\
   DD & Data Definition\\
   EM & Electron Micrograph \\
@@ -264,7 +273,7 @@ the software level.
 
 \begin{itemize}
 
-\item \textbf{2D Cartesian coordinate system}: orthonormal coordinate system model by the orthonormal base $\mathcal{B}=(O,\vec{u_x},\vec{u_y}$ such that any vector $\vec{r}$ can be expressed as the following:
+\item \textbf{2D Cartesian coordinate system}: orthonormal coordinate system model by the orthonormal base $\mathcal{B}=(O,\vec{u_x},\vec{u_y})$ such that any vector $\vec{r}$ can be expressed as the following:
 \begin{equation}
 \forall (x,y) \in \mathbb{R}^{2}, \vec{r}=x\vec{u_x}+y\vec{u_y}
 \end{equation}
@@ -281,7 +290,7 @@ STEM EM formation can be visualized in \cref{fig:STEM_imaging_Fig}. The position
 \end{figure}
 \item \textbf{Hologram}: Result from an interference between two or multiples waves. 
 \item \textbf{Moir{\'e} hologram}: Result from interference between two or multiple waves with similar but not equal wave numbers (or wave vectors in 2D).
-\item \textbf{Crystal lattice}: Arrangement of atoms forming matter.\newline
+\item \textbf{Crystal lattice}: Arrangement of atoms forming matter.
 \item \textbf{STEM Moir{\'e} hologram (SMH)}: EM collected in STEM and resulting from the 
 Moir{\'e} interference between the scanning grid and the crystal lattice. 
 \item \textbf{Strain map}: 2D array mapping the evolution of one element of the 2D strain or rotation 
@@ -345,8 +354,7 @@ includes the following elements:
 \label{A_4}
 \end{A}
 \begin{A}
-\normalfont The strain magnitude is small (elastic regime). As a consequence, $\frac{||\vec{\Delta g}||}{||\vec{g}||}<0.1$
-\label{A_5}
+\normalfont The strain magnitude is small (elastic regime).
 \end{A}
 \begin{A}
 \normalfont The user knows the crystal structure of the sample analysed at its unstrained state or can provide a reference in which is embedded the crystal structure information at its unstrained state.
@@ -389,51 +397,95 @@ For shorter notations, it is position to define a set Q as follows $Q=\{\forall 
 \forall \vec{r}=(x_1,...,x_n) \in \mathbb{R}^n, f(\vec{r})=\sum_{j=-\infty}^{j=+\infty}A_je^{i((\vec{k_j}\cdot\vec{r})+B_j)}
 \end{gathered}
 \end{equation}
-The objective of GPA is to extract one chosen $B_j$ from $f$ in Fourier space. Let's consider the Fourier transform of $f$ such that
+If there is a small perturbation locally of the n-dimensions wave vector $\vec{k_j}$, it is possible to model it allowing $B_j$ to be a function of $\vec{r}.$ 
+\begin{equation}
+\forall \vec{r}=(x_1,...,x_n) \in \mathbb{R}^n, f(\vec{r})=\sum_{j=-\infty}^{j=+\infty}A_je^{i((\vec{k_j}\cdot\vec{r})+B_j(\vec{r}))}
+\end{equation}
+The objective of GPA is to extract the perturbation, one chosen $B_j(\vec{r})$, from $f$ in Fourier space. Let's consider the Fourier transform of $f$ such that
 \begin{equation*}
-\forall \vec{\nu}=(\nu_1,...,\nu_n) \in \mathbb{R}^n, \forall \vec{r}=(x_1,...,x_n) \in \mathbb{R}^n, \widetilde{f}(\vec{\nu})=\mathcal{FT}(f(\vec{r}))
+\begin{gathered}
+\forall \vec{\nu}=(\nu_1,...,\nu_n) \in \mathbb{R}^n, \forall \vec{r}=(x_1,...,x_n) \in \mathbb{R}^n, \widetilde{f}(\vec{\nu})=\mathcal{FT}(f(\vec{r})) \\
+\forall \vec{\nu}=(\nu_1,...,\nu_n) \in \mathbb{R}^n, \forall \vec{r}=(x_1,...,x_n) \in \mathbb{R}^n, \widetilde{f}(\vec{\nu})=\sum_{j=-\infty}^{j=+\infty}\mathcal{FT}(C_j(\vec{r})\times e^{i(\vec{k_j}\cdot\vec{r})})
+\end{gathered}
 \end{equation*}
 \begin{equation}
-\forall \vec{\nu}\in \mathbb{R}^n, \widetilde{f}(\vec{\nu})=\sum_{j=-\infty}^{j=+\infty}A_je^{iB_j}\delta(\vec{k_j}-\vec{\nu})
+\begin{gathered}
+\forall \vec{\nu}\in \mathbb{R}^n, \widetilde{f}(\vec{\nu})=\sum_{j=-\infty}^{j=+\infty}\widetilde{C_j}(\vec{\nu})\ast\delta(\vec{\nu}-\vec{k_j})\\
+\forall \vec{\nu}\in \mathbb{R}^n, \widetilde{f}(\vec{\nu})=\sum_{j=-\infty}^{j=+\infty}\widetilde{C_j}(\vec{\nu}-\vec{k_j})
+\end{gathered}
 \end{equation}
-If all the $\vec{k_j}$ are separated enough to be isolated with a mask, then $B_j$ can be extracted by considering the inverse Fourier transform of the masked area and expressing the result in term of amplitude and phase. In mathematical formalism, $B_j$ is extracted as follows.
+If all the $\vec{k_j}$ are separated enough to be isolated with a mask, then $B_j(\vec{r})$ can be extracted by considering the inverse Fourier transform of the masked area and expressing the result in term of amplitude and phase. In mathematical formalism, $B_j(\vec{r})$ is extracted as follows.
 \begin{equation*}
 \begin{gathered}
 \text{if} \ \exists \ M :
-\begin{array}{|rcl}
-\mathbb{R} & \longrightarrow & \mathbb{C} \\
+\begin{array}{|ccl}
+\mathbb{R}^{n} & \longrightarrow & \mathbb{C} \\
 \vec{\nu} & \longmapsto & M(\vec{\nu}) 
     \end{array} / \begin{cases}
-    					M(\vec{\nu})\widetilde{f}(\vec{\nu})=A_je^{iB_j} & \text{for} \ \vec{\nu} \in [(\nu_1^D,...,\nu_n^D),(\nu_1^U,...,\nu_n^U)] \\
-    					M(\vec{\nu})\widetilde{f}(\vec{\nu})=0 & 
+    					M(\vec{\nu}-\vec{k_j})\widetilde{f}(\vec{\nu})=\widetilde{C_j}(\vec{\nu}-\vec{k_j}) & \text{for} \ \vec{\nu} \in [(\nu_1^D,...,\nu_n^D),(\nu_1^U,...,\nu_n^U)] \\
+    					M(\vec{\nu}-\vec{k_j})\widetilde{f}(\vec{\nu})=0 & 
     				 \end{cases} \\
 \end{gathered}
 \end{equation*}
 \begin{equation}
 \Rightarrow \begin{array}{l}
-|\mathcal{FT}^{-1}(M(\vec{\nu})\widetilde{f(\vec{\nu})})(\vec{r})|=A_j \\
-arg(\mathcal{FT}^{-1}(M(\vec{\nu})\widetilde{f(\vec{\nu})})(\vec{r}))=B_j
+|\mathcal{FT}^{-1}[M(\vec{\nu})\widetilde{f}(\vec{\nu}+\vec{k_j})]|=|\mathcal{FT}^{-1}[\widetilde{C}(\vec{\nu})]|=A_j \\
+arg(\mathcal{FT}^{-1}[M(\vec{\nu})\widetilde{f}(\vec{\nu}+\vec{k_j})])=arg(\mathcal{FT}^{-1}[\widetilde{C}(\vec{\nu})])=B_j(\vec{r})
 \end{array}
 \label{eq:GPA_method}
 \end{equation}
 
-\item \underline{Source}:
+\item \underline{Source}: \cite{Hytch1998,Rouviere2005}
 \item \underline{Ref by}:
 \end{itemize}
 \label{T_2}
 \end{T}
 
-\subsubsection*{Description of the GPA method in a 1D cartesian coordinate system}
-Let's consider a function $f$ such that 
+\subsubsection*{Description of the GPA method in a 1D coordinate system}
+\noindent Let's consider a function $f$ such that 
 \begin{equation*}
 \begin{gathered}
 \forall x \in \mathbb{R}, f(x)=C_0e^{i(k_0x)}+C_1e^{i(k_1x)} \\
 \end{gathered}
 \end{equation*}
+Let's consider a small perturbation of $k_1$ modelled as the following
+\begin{equation*}
+\begin{gathered}
+\forall x \in \mathbb{R}, f(x)=C_0e^{i(k_0x)}+A_1e^{i(k_1x)+iB_1(x)} \\
+\end{gathered}
+\end{equation*}
 Applying the GPA method on $f$,
 \begin{equation*}
 \begin{gathered}
-\forall \nu \in \mathbb{R}, \forall x \in \mathbb{R}, \widetilde{f(\nu)}=C_0\delta(k_0-\nu)+C_1\delta(k_1-\nu)
+\forall \nu \in \mathbb{R}, \widetilde{f}(\nu)=C_0\delta(\nu-k_0)+\widetilde{C_1}(\nu)\ast\delta(\nu-k_1) \\
+\forall \nu \in \mathbb{R}, \widetilde{f}(\nu)=C_0\delta(\nu-k_0)+\widetilde{C_1}(\nu-k_1)
+\end{gathered}
+\end{equation*}
+Considering the perturbation around $k_1$ to be small and that $k_0$ and $k_1$ are enough separated such that the perturbation is located around $k_1$ in frequency space, it is possible to define a mask $M$ such that:
+\begin{equation*}
+\begin{gathered}
+\forall \nu \in \mathbb{R}, M(\nu) = 
+\begin{cases}
+1 & \text{for} \ \nu-k_1 \in  [-\epsilon,+\epsilon] \ / \ k_0 \notin [k_1-\epsilon,k_1+\epsilon] \\
+0
+\end{cases}
+\end{gathered}
+\end{equation*}
+In such case, multiply the mask $M$ with the Fourier transform of $f$ isolates $\widetilde{C_1}$ from the sum and can be independently transformed as follows:
+\begin{equation*}
+\begin{gathered}
+\forall \nu \in \mathbb{R}, M(\nu-k_1)\widetilde{f}(\nu)=\widetilde{C_1}(\nu-k_1)
+\end{gathered}
+\end{equation*}
+Setting, $\lambda=\nu-k_1$ and performing the inverse Fourier transform of the masked Fourier transform of $f$, the perturbation can be extracted.
+\begin{equation*}
+\begin{gathered}
+\forall \nu \in \mathbb{R}, M(\lambda)\widetilde{f}(\lambda+k_1)=\widetilde{C_1}(\lambda) \\
+\forall x \in \mathbb{R}, \mathcal{FT}^{-1}[M(\lambda)\widetilde{f}(\lambda+k_1)]=C_1(x) \\
+\Rightarrow \begin{cases}
+|C_1(x)|=A_1 \\
+arg(C_1(x))=B_1(x)
+\end{cases}
 \end{gathered}
 \end{equation*}
 \begin{T}
@@ -455,7 +507,7 @@ Applying the GPA method on $f$,
 \end{gathered}
 \label{eq:strain_2}
 \end{equation}
-\item \underline{Source}:
+\item \underline{Source}:\cite{Hytch1998,Rouviere2005}
 \item \underline{Ref by}:
 \end{itemize}
 \label{T_3}
@@ -501,12 +553,12 @@ If the crystal is elastically deformed, the relative position of the atoms will 
 \end{gathered}
 \label{eq:crystal_strain_Fourier_series}
 \end{equation}
-Applying GPA (\cref{T_2}) on \cref{eq:crystal_strain_Fourier_series}, $P_{g_{j}}(\vec{r})$ can be extracted. Applying \cref{A_4}, the gradient $\nabla$ of $P_{g_{j}}(\vec{r})$ can be approximate as follows
+By applying GPA (\cref{T_2}) on \cref{eq:crystal_strain_Fourier_series}, $P_{g_{j}}(\vec{r})$ can be extracted. Then by applying \cref{A_4}, the gradient $\nabla$ of $P_{g_{j}}(\vec{r})$ can be approximate as follows
 \begin{equation}
 \nabla P_{g_{j}}(\vec{r}) = 2\pi [\nabla( \Delta \overrightarrow{g_j}(\vec{r}))]^T\vec{r}  + 2\pi\Delta \overrightarrow{g_j(\vec{r})} \approx 2\pi\Delta \overrightarrow{g_j(\vec{r})}
 \label{eq:Strain_GPA}
 \end{equation}
-\item \underline{Source}: Ref Hytch1998
+\item \underline{Source}: \cite{Hytch1998}
 \item \underline{Ref by}:
 \end{itemize}
 \label{GD_1}
@@ -531,7 +583,7 @@ Therefore, the STEM Moir{\'e} hologram $I_{SMH}$ is also simplified as follows:
 \forall (x,y) \in \mathbb{R}^{2}, I_{SMH}(\vec{r})=\sum_{q\in Q}\delta(\vec{r}-p\vec{q})\times\sum_{j=-j_{lim}}^{j=+j_{lim}}A_je^{i(\vec{g_j}\cdot\vec{r})+iP_{g_{j}}(\vec{r})}
 \label{eq:SMH_simplified_1}
 \end{equation}
-\item \underline{Source}:
+\item \underline{Source}:\cite{Pofelski2017}
 \item \underline{Ref by}:
 \end{itemize}
 \label{GD_2}
@@ -544,7 +596,7 @@ Since the Dirac comb function is also periodic, the sampler can also be represen
 \forall (x,y) \in \mathbb{R}^{2}, S(\vec{r})=\sum_{q\in Q}\delta(\vec{r}-p\vec{q}) = \frac{1}{(2\pi)^2}\sum_{q\in Q}\sum_{l=-\infty}^{l=+\infty}e^{il(\vec{r}-p\vec{q})}
 \label{eq:SMH_2}
 \end{equation}
-Using \cref{eq:SMH_2} in \cref{eq:SMH_simplified_1}, it is possible to recognize an interference equation between multiple plane waves (a more complex version of \cref{eq:hologram}.
+Using \cref{eq:SMH_2} in \cref{eq:SMH_simplified_1}, it is possible to recognize an interference equation between multiple plane waves (a more complex version of \cref{eq:hologram}).
 \begin{equation}
 I_{SMH}(\vec{r})=\frac{1}{(2\pi)^2}\sum_{q\in Q}\sum_{l=-\infty}^{l=+\infty}\sum_{j=-j_{lim}}^{j=+j_{lim}}A_je^{i(\vec{g_j}\cdot\vec{r}+l(\vec{r}-p\vec{q}))+iP_{g_{j}}(\vec{r})}
 \label{eq:SMH_3}
@@ -570,99 +622,180 @@ I_{SMH}(\vec{r})=\frac{1}{(2\pi)^2}\sum_{q\in Q}\sum_{l=-\infty}^{l=+\infty}\sum
 \end{gathered}
 \label{eq:strain_1}
 \end{equation}
-\item \underline{Source}:
+\item \underline{Source}:\cite{Hytch1998,Rouviere2005}
 \item \underline{Ref by}:
 \label{GD_3}
 \end{GD}
 
 \subsubsection{Data Definitions}\label{sec_datadef}
 
+\renewcommand{\labelitemi}{$\star$}
+
 \begin{DD}
-\normalfont \textbf{STEM Moir{\'e} hologram}
+\normalfont \textbf{Experimental STEM Moir{\'e} hologram}
 \begin{itemize}
-\item Equation: \cref{eq:strain_2}
-\item Description:
-\item Source:
-\item Ref by:
+\item {Symbol}: $I_{SMH_{exp}}$
+\item {Unit}: Intensity (AU)
+\item {Description}: 2D array
+\item {Ref by}:
 \end{itemize}
 \label{DD_1}
 \end{DD}
 
 \begin{DD}
-\normalfont \textbf{Crystal structure reference}
+\normalfont \textbf{Fourier transform of the experimental STEM Moir{\'e} hologram}
 \begin{itemize}
-\item Equation:
-\item Description:
-\item Source:
-\item Ref by:
+\item {Symbol}: $\widetilde{I}_{SMH_{exp}}$ 
+\item {Unit}: Intensity (AU)
+\item {Description}: 2D array
+\item {Ref by}:
 \end{itemize}
 \label{DD_2}
 \end{DD}
 
 \begin{DD}
-\normalfont \textbf{Moir{\'e} wave vector}
+\normalfont \textbf{Reference crystal wave vector}
 \begin{itemize}
-\item Equation:
-\item Description:
-\item Source:
-\item Ref by:
+\item {Symbol}: $\overrightarrow{g_{j}}^{C_{ref}}$ 
+\item {Unit}: \si{\per\nano\metre}
+\item {Description}: 2D vector
+\item {Ref by}:
 \end{itemize}
 \label{DD_3}
 \end{DD}
 
 \begin{DD}
-\normalfont \textbf{Crystalline wave vector}
+\normalfont \textbf{Reference crystal structure}
 \begin{itemize}
-\item Equation:
-\item Description:
-\item Source:
-\item Ref by:
+\item {Symbol}: $I_{C_{ref}}$
+\item {Unit}: Intensity (AU)
+\item {Description}: 2D array
+\item {Ref by}:
 \end{itemize}
 \label{DD_4}
 \end{DD}
 
 \begin{DD}
-\normalfont \textbf{Sampling vector operating in $\Gamma$ frequency range}
+\normalfont \textbf{Simulated SMH from reference crystal structure and scanning grid}
 \begin{itemize}
-\item Equation: $\overrightarrow{g_{j}^{C}}=\overrightarrow{g_{j}^{M}}+\frac{1}{p}\overrightarrow{q_{j}}$
-\item Description:
-\item Source:
-\item Ref by:
+\item {Symbol}: $I_{SMH_{sim}}$
+\item {Unit}: Intensity (AU)
+\item {Description}: 2D array
+\item {Ref by}:
 \end{itemize}
 \label{DD_5}
 \end{DD}
 
 \begin{DD}
-\normalfont \textbf{Mask $M$ isolating a spatial frequency}
+\normalfont \textbf{Fourier transform of the $I_{SMH_{sim}}$}
 \begin{itemize}
-\item Equation:
-\item Description:
-\item Source:
-\item Ref by:
+\item {Symbol}: $\widetilde{I}_{SMH_{sim}}$
+\item {Unit}: Intensity (AU)
+\item {Description}: 2D array
+\item {Ref by}:
 \end{itemize}
 \label{DD_6}
 \end{DD}
 
+\begin{DD}
+\normalfont \textbf{Experimental Moir{\'e} wave vector}
+\begin{itemize}
+\item {Symbol}: $\overrightarrow{g_{j}}^{M_{exp}}$
+\item {Unit}: \si{\per\nano\metre}
+\item {Description}: 2D vector
+\item {Ref by}:
+\end{itemize}
+\label{DD_7}
+\end{DD}
+
+\begin{DD}
+\normalfont \textbf{Sampling vector operating in $\Gamma$ frequency range}
+\begin{itemize}
+\item {Symbol}: $\overrightarrow{q_{j}}$
+\item {Unit}: \si{\per\nano\metre}
+\item {Description}: 2D vector
+\item {Ref by}:
+\end{itemize}
+\label{DD_8}
+\end{DD}
+
+\begin{DD}
+\normalfont \textbf{Mask isolating a spatial frequency}
+\begin{itemize}
+\item {Symbol}: $M$
+\item {Unit}: Intensity (AU)
+\item {Description}: 2D array
+\item {Ref by}:
+\end{itemize}
+\label{DD_9}
+\end{DD}
+
+\begin{DD}
+\normalfont \textbf{Masked Fourier transform of experimental STEM Moir{\'e} hologram}
+\begin{itemize}
+\item {Symbol}: $M\widetilde{I}_{SMH_{exp}}$
+\item {Unit}: Intensity (AU)
+\item {Description}: 2D array
+\item {Ref by}:
+\end{itemize}
+\label{DD_10}
+\end{DD}
+
+\begin{DD}
+\normalfont \textbf{Experimental Crystalline wave vector}
+\begin{itemize}
+\item {Symbol}: $\overrightarrow{g_{j}}^{C_{exp}}$
+\item {Unit}: \si{\per\nano\metre}
+\item {Description}: 2D vector
+\item {Ref by}:
+\end{itemize}
+\label{DD_11}
+\end{DD}
+
+\begin{DD}
+\normalfont \textbf{Geometric phase image}
+\begin{itemize}
+\item {Symbol}: $P_{\Delta\overrightarrow{g_{j}}^{M_{exp}}}$
+\item {Unit}: rad
+\item {Description}: 2D array
+\item {Ref by}:
+\end{itemize}
+\label{DD_12}
+\end{DD}
+
+\begin{DD}
+\normalfont \textbf{Unstrained area in the geometric phase image}
+\begin{itemize}
+\item {Symbol}: $U$
+\item {Unit}: Dimensionless
+\item {Description}: 2D array
+\item {Ref by}:
+\end{itemize}
+\label{DD_13}
+\end{DD}
+
 \subsubsection{Instance Models} \label{sec_instance}    
 
+\renewcommand{\labelitemi}{$-$}
+
 \begin{IM}
-\normalfont \textbf{Simulate the SMH on a reference to determine $\overrightarrow{q_{j}}$ for each $\vec{g_j}^{M}$}
+\noindent\colorbox{shadecolorIM}{\normalfont \textbf{Simulate the SMH on a reference to determine $\overrightarrow{q_{j}}$ for each $\vec{g_j}^{M}$}}
+\normalfont
 \begin{itemize}
-\item Input: $I_{ref}, p$
-\item Output: $I_{sim}, (n_{j};m_{j}), \vec{g_j}^{M}$
+\item Input: $I_{C_{ref}}, p$
+\item Output: $I_{SMH_{sim}}, \overrightarrow{q_{j}}, \overrightarrow{g_j}^{M_{ref}}$
 \item Source:
 \item Ref by:
 \end{itemize}
 \label{IM_1}
 \end{IM}
 
-\subsubsection*{Derivation of \cref{IM_1}}
-
 \begin{IM}
-\normalfont \textbf{Convert the Moir{\'e} geometric phase into Crystalline geometric phase}
+\noindent\colorbox{shadecolorIM}{\normalfont \textbf{GPA on a selected Moir{\'e} wave vector from $I_{SMH_{exp}}$}}
+\normalfont
 \begin{itemize}
-\item Input: $I_{SMH}, M, \overrightarrow{q_{j}}, \Delta \overrightarrow{g_{j}^{M}}$
-\item Output: $\Delta \overrightarrow{g_{j}^{C}}$
+\item Input: $I_{SMH_{exp}}, M$
+\item Output: $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$
 \item Source:
 \item Ref by:
 \end{itemize}
@@ -670,20 +803,40 @@ I_{SMH}(\vec{r})=\frac{1}{(2\pi)^2}\sum_{q\in Q}\sum_{l=-\infty}^{l=+\infty}\sum
 \end{IM}
 
 \begin{IM}
-\normalfont \textbf{Strain calculation using 2 non-crystalline wave vectors}
+\noindent\colorbox{shadecolorIM}{\normalfont \textbf{Determine an unstrained area in the geometric phase image}}
+\normalfont
 \begin{itemize}
-\item Input: $g_{1_{x}}^{C}, g_{1_{y}}^{C},g_{2_{x}}^{C}, g_{2_{y}}^{C}, \Delta g_{1_{x}}^{C}, \Delta g_{1_{y}}^{C},\Delta g_{2_{x}}^{C},\Delta g_{2_{y}}^{C}$
-\item Output: $\varepsilon_{xx},\varepsilon_{xy},\varepsilon_{yy},\omega_{xy}$
+\item Input: $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}},U$
+\item Output: $\overrightarrow{g_{j}}^{M_{exp}}$
 \item Source:
 \item Ref by:
 \end{itemize}
 \label{IM_3}
 \end{IM}
 
+\begin{IM}
+\noindent\colorbox{shadecolorIM}{\normalfont \textbf{Convert the Moir{\'e} wave vector into the Crystalline wave vector}}
+\normalfont
+\begin{itemize}
+\item Input: $\overrightarrow{g_{j}}^{M_{exp}},\Delta \overrightarrow{g_{j}}^{M_{exp}},\overrightarrow{q_{j}},p$
+\item Output: $\Delta \overrightarrow{g_{j}}^{C_{exp}},\overrightarrow{g_{j}}^{C_{exp}}$
+\item Source:
+\item Ref by:
+\end{itemize}
+\label{IM_4}
+\end{IM}
 
-\subsubsection*{Derivation of ...}
-
-\wss{May be necessary to include this subsection in some cases.}
+\begin{IM}
+\noindent\colorbox{shadecolorIM}{\normalfont \textbf{Strain calculation using 2 non-crystalline wave vectors}}
+\normalfont
+\begin{itemize}
+\item Input: $g_{1_{x}}^{C_{exp}}, g_{1_{y}}^{C_{exp}},g_{2_{x}}^{C_{exp}}, g_{2_{y}}^{C_{exp}}, \Delta g_{1_{x}}^{C_{exp}}, \Delta g_{1_{y}}^{C_{exp}},\Delta g_{2_{x}}^{C_{exp}},\Delta g_{2_{y}}^{C_{exp}}$
+\item Output: $\varepsilon_{xx},\varepsilon_{xy},\varepsilon_{yy},\omega_{xy}$
+\item Source:
+\item Ref by:
+\end{itemize}
+\label{IM_5}
+\end{IM}
 
 \subsubsection{Data Constraints} \label{sec_DataConstraints}    
 
@@ -701,6 +854,7 @@ qualities that the software is expected to exhibit.
 \subsection{Functional Requirements}
 
 
+
 \subsection{Nonfunctional Requirements}
 
 \wss{List your nonfunctional requirements.  You may consider using a fit
@@ -716,8 +870,9 @@ qualities that the software is expected to exhibit.
 
 \newpage
 
-\bibliographystyle {ieeetr}
-%\bibliography {../../ReferenceMaterial/References}
+\bibliography{SRS_biblio}
+\bibliographystyle{ieeetr}
+
 
 \newpage
 
@@ -727,6 +882,7 @@ qualities that the software is expected to exhibit.
 show the values of the symbolic parameters introduced in the report.}
 
 \subsection{Symbolic Parameters}
+
 
 
 \end{document}
