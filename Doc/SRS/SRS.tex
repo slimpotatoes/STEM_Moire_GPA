@@ -31,7 +31,6 @@
 \usepackage{indentfirst}
 \usepackage{cleveref}
 \usepackage{float}
-%\usepackage{amsthm}
 \usepackage{xcolor}
 \definecolor{shadecolorIM}{RGB}{0,200,0}
 \definecolor{shadecolorT}{RGB}{0,191,255}
@@ -67,7 +66,7 @@
 
 \usepackage{fullpage}
 
-%Set the custom referencing system
+%Set the custom referencing system (author's initiative)
 	% Goal Statement
 \newtheorem{GS}{GS}
 \crefname{GS}{GS}{GSs}
@@ -95,6 +94,9 @@
 	% Non Functional Requirement
 \newtheorem{NR}{NR}
 \crefname{NR}{NR}{NRs}
+	% Likely change
+\newtheorem{LC}{LC}
+\crefname{LC}{LC}{LCs}
 
 \begin{document}
 
@@ -122,7 +124,7 @@ STEM Moir{\'e} GPA}
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-19/09/2017 & 1.0 & First Draft\\
+1/10/2017 & 1.0 & First Draft\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -500,9 +502,9 @@ If all the $\vec{k_j}$ are separated enough to be isolated with a mask, then $B_
 \begin{equation}
 \Rightarrow \begin{array}{l}
 |\mathcal{FT}^{-1}[M(\vec{\nu})\widetilde{f}(\vec{\nu}+\vec{k_j})]|=|\mathcal{FT}^{-1}[\widetilde{C}(\vec{\nu})]|=A_j \\
+\label{eq:GPA_method}
 arg(\mathcal{FT}^{-1}[M(\vec{\nu})\widetilde{f}(\vec{\nu}+\vec{k_j})])=arg(\mathcal{FT}^{-1}[\widetilde{C}(\vec{\nu})])=B_j(\vec{r})
 \end{array}
-\label{eq:GPA_method}
 \end{equation}
 
 \item \underline{Source}: \cite{Hytch1998,Rouviere2005}
@@ -594,7 +596,7 @@ Non applicable for \progname{} software.
 
 \begin{DD}
 \label{DD_1}
-\noindent\colorbox{shadecolorDD}{\normalfont \textbf{Strain in crystal lattice}}
+\noindent\colorbox{shadecolorDD}{\normalfont \textbf{Variation of the crystalline wave vector $\Delta \overrightarrow{g_j}$ (strain in crystal lattice)}}
 \normalfont
 \begin{itemize}
 \item \underline{Equation}: \Cref{eq:Strain_GPA}
@@ -623,7 +625,7 @@ By applying GPA (\cref{T_2}) on \cref{eq:crystal_strain_Fourier_series}, $P_{g_{
 
 \begin{DD}
 \label{DD_2}
-\noindent\colorbox{shadecolorDD}{\normalfont \textbf{STEM Moir{\'e} hologram}}
+\noindent\colorbox{shadecolorDD}{\normalfont \textbf{STEM Moir{\'e} hologram $I_{SMH}$}}
 \normalfont
 \begin{itemize}
 \item \underline{Equation}: \Cref{eq:SMH_FT_complete}
@@ -668,18 +670,21 @@ Therefore it is possible to restrain the calculation of $\widetilde{I}_{SMH}$ fo
 
 Since the Dirac comb function is also periodic, the sampler can also be represented into Fourier series
 \begin{equation}
-\forall (x,y) \in \mathbb{R}^{2}, S(\vec{r})=\sum_{q\in Q}\delta(\vec{r}-p\vec{q}) = \frac{1}{(2\pi)^2}\sum_{q\in Q}\sum_{l=-\infty}^{l=+\infty}e^{il(\vec{r}-p\vec{q})}
+\forall (x,y) \in \mathbb{R}^{2}, S(\vec{r})=\sum_{q\in Q}\delta(\vec{r}-p\vec{q}) = \frac{1}{p^2}\sum_{q\in Q}e^{\frac{i}{p}\vec{q}\cdot\vec{r}}
 \label{eq:SMH_2}
 \end{equation}
 Using \cref{eq:SMH_2} in \cref{eq:SMH_simplified_1}, it is possible to recognize an interference equation between multiple plane waves (a more complex version of \cref{eq:hologram}).
 \begin{equation}
-I_{SMH}(\vec{r})=\frac{1}{(2\pi)^2}\sum_{q\in Q}\sum_{l=-\infty}^{l=+\infty}\sum_{j=-j_{lim}}^{j=+j_{lim}}A_je^{i(\vec{g_j}\cdot\vec{r}+l(\vec{r}-p\vec{q}))+iP_{g_{j}}(\vec{r})}
+\begin{gathered}
+\forall (x,y) \in \mathbb{R}^{2}, I_{SMH}(\vec{r})=\frac{1}{p^2}\sum_{q\in Q}\sum_{j=-j_{lim}}^{j=+j_{lim}}A_je^{i(\vec{g_j}\cdot\vec{r}+\frac{i}{p}\vec{q}\cdot\vec{r}+iP_{g_{j}}(\vec{r})} \\
+\forall (x,y) \in \mathbb{R}^{2}, I_{SMH}(\vec{r})=\frac{1}{p^2}\sum_{q\in Q}\sum_{j=-j_{lim}}^{j=+j_{lim}}A_je^{i((\vec{g_j}-\frac{i}{p}\vec{q})\cdot\vec{r}+iP_{g_{j}}(\vec{r})}
+\end{gathered}
 \label{eq:SMH_3}
 \end{equation}
 
 \begin{DD}
 \label{DD_3}
-\noindent\colorbox{shadecolorDD}{\normalfont \textbf{Deformation gradient tensor from crystalline wave vectors}}
+\noindent\colorbox{shadecolorDD}{\normalfont \textbf{Deformation gradient tensor $\nabla u$ from crystalline wave vectors}}
 \normalfont
 \item \underline{Equation}: \Cref{eq:strain_1}
 \item \underline{Description}: Let's consider $\overrightarrow{g_j} = {\overrightarrow{g}_{j}}_{uns} + \Delta \overrightarrow{g}_j$ with ${\overrightarrow{g}_{j}}_{uns}$ representing the crystalline wave vector at its unstrained state. If ${\overrightarrow{g}_{j}}_{uns}={g_{j_{x}}}_{uns}\overrightarrow{u_{x}}+{g_{j_{y}}}_{uns}\overrightarrow{u_{y}}$ and $\Delta \overrightarrow{g_{j}}=\Delta g_{j_{x}}\overrightarrow{u_{x}}+\Delta g_{j_{y}}\overrightarrow{u_{y}}$ are known in the base $\mathcal{B}$ for two non-collinear crystalline wave vectors (only valid for mono-crystalline samples \cref{A_7}), then the strain deformation tensor can be deduced by calculating first both the unstrained matrix $G$ and the variation of the crystalline wave vectors matrix $\Delta G$. Then, under assumptions \cref{A_4} and \cref{A_5}, the deformation gradient tensor $\nabla u$ is estimated as the following with $I_{d}$ representing the identity matrix (see annexe D in \cite{Hytch1998} and equation (30) in \cite{Rouviere2005}). 
@@ -726,6 +731,16 @@ $N_{lim}$ in $Q_{lim}$ is set with respect to the highest spatial frequency reso
 
 \subsubsection*{Details on the extraction of $\overrightarrow{q_{n_j,m_j}}$ and $ \overrightarrow{g_j}^{M_{ref}}$}
 
+For the moment, the extraction the $\overrightarrow{q_{n_j,m_j}}$ for a specific $ \overrightarrow{g_j}^{M_{ref}}$ is manual and should be done by the user. \cref{IM_1} is transforming the $\overrightarrow{g_j}^{C_{ref}}$ into $\overrightarrow{g_j}^{M_{ref}}$ as the following:
+\begin{equation}
+\label{eq:sim_Moire}
+{\overrightarrow{g_j}^{C_{ref}}}-\overrightarrow{q_{n_j,m_j}}\times p =  \overrightarrow{g_j}^{M_{ref}}
+\end{equation}
+This simple equation comes from \cref{eq:SMH_3} by restraining $SMH_{sim}$ in $\Gamma$. Identifying the frequency component, the following condition has to be respected:
+\begin{equation*}
+(\overrightarrow{g_j}^{C_{ref}}-\overrightarrow{q}\times p) \in \Gamma
+\end{equation*}
+Since $\Gamma = [-\frac{1}{2p},\frac{1}{2p}]^{2}$, there is only one possible $\overrightarrow{q}\times p$ vector that transform $\overrightarrow{g_j}^{C_{ref}}$ in $\Gamma$. Naming the only option $\overrightarrow{q_{n_j,m_j}}$ and the result of the transformation $\overrightarrow{g_j}^{M_{ref}}$ as the Moir{\'e} wave vector, equation \cref{eq:sim_Moire} can be deduced.
 \begin{IM}
 \label{IM_2}
 \noindent\colorbox{shadecolorIM}{\normalfont \textbf{GPA on a selected Moir{\'e} wave vector from $I_{SMH_{exp}}$}}
@@ -823,7 +838,7 @@ Finally the gradient of the $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r}
 \end{DC}
 \begin{DC}
 \label{DC_3}
-\normalfont Both $I_{C_{ref}}$ and $I_{SMH_{exp}}$ can be and dm3 file.
+\normalfont Both $I_{C_{ref}}$ and $I_{SMH_{exp}}$ can be dm3 files.
 \end{DC}
 
 \subsubsection{Properties of a Correct Solution} \label{sec_CorrectSolution}
@@ -841,15 +856,15 @@ qualities that the software is expected to exhibit.
 
 \begin{R}
 \label{R_1}
-\normalfont Provide an environment for the user to input ${I_{SMF}}$ and $I_{C_{ref}}$.
+\normalfont Provide an environment for the user to input $I_{SMH_{exp}}$ and $I_{C_{ref}}$.
 \end{R}
 \begin{R}
 \label{R_2}
-\normalfont Verify the format of the inputs ${I_{SMF}}$ and $I_{C_{ref}}$.
+\normalfont Verify the format of the inputs $I_{SMH_{exp}}$ and $I_{C_{ref}}$.
 \end{R}
 \begin{R}
 \label{R_3}
-\normalfont Output $\widetilde{I}_{SMH_{exp}}$.
+\normalfont Output $\widetilde{I}_{SMH_{exp}}$, $\widetilde{I}_{SMH_{sim}}$.
 \end{R}
 \begin{R}
 \label{R_4}
@@ -947,17 +962,34 @@ qualities that the software is expected to exhibit.
 \end{NR}
 
 
-\section{Likely Changes}    
+\section{Likely Changes (or Possible Changes)}    
 
-For the moment, no element has been identify to be subjected to a change however, it is possible that a solution improving in the accuracy and the precision of the \progname{} software is found in the next phases of the development. If the solution is not affecting drastically the skeleton of the software, the solution will be implemented.
+\begin{LC}
+\label{LC_1}
+\normalfont The determination of $\overrightarrow{q_{n_j,m_j}}$ for a specific $\overrightarrow{g_j}^{M_{ref}}$ in \cref{IM_1} could be done automatically by the software. Nevertheless, the notion of "spatial frequency overlap" needs to be introduce and will complexify \progname{} software. A decision has to be made between keeping a more simple version of \progname{} software while accepting more inputs from the user and, a more simple user experience of \progname{} software with a more demanding implementation phase.
+\end{LC}
+
+\begin{LC}
+\label{LC_2}
+\normalfont In \cref{T_2}, the argument component in \cref{eq:GPA_method} has a constraint to output values between $[0;2\pi[$ only. If the phase varies more than in this interval phase unwrapping method needs to be implemented to process the data correctly. While initially considered as a lower level of implementation, different phase unwrapping algorithm exists with different performance. Since accuracy and precision have been identified as a non-functional requirement, the unwrapping model should be considered in the SRS document. Nevertheless, a deeper understanding of the different algorithms is first required before documenting them.
+\end{LC}
 
 \section{Traceability Matrices and Graphs}
 
-
+The traceability matrices section relates the interactions between different elements of the \progname{} software. If a cell of the table is crossed, it means that if the element from the column is modified, the section in the horizontal line has to be changed. The traceability matrices are described below:
+\begin{itemize}
+\item\Cref{tb:Matrix_1} is showing the dependencies between the theoretical models, the data definitions and the instance models. Since \progname{} software is mostly sequential, most dependencies are related to the input/output sequences. However, \cref{DD_1} reveals to be a very dependant element and will require an important work if modified. Since the definition of strain in the crystalline lattice is defined in this specific parameter, a strong relation with any section of \progname{} software can be indeed expected.
+\item \Cref{tb:Matrix_2} is highlighting the dependencies of the theoretical models, the data definitions and the instance models with respect to the assumptions. Two families affecting their respective sections can be observed:
+\begin{itemize}
+\item Assumptions related to the sample \cref{A_4}, \cref{A_5}, \cref{A_6}, \cref{A_7}. 
+\item Assumptions related to the microscope \cref{A_1}, \cref{A_2}, \cref{A_3}.
+\end{itemize}
+The assumptions were used to cover a certain variety of sample and to not be sensitive to different microscopes. However for dedicated applications, some of this assumptions can be removed.
+\item \Cref{tb:Matrix_3} is showing the dependencies between the instance models and the requirements. The sequential structure of \progname{} is again visible here. \cref{IM_1} and \cref{IM_2} are the key elements of the software in which heavy calculations and multiple interactions with the users are performed. The high number of related requirements can be explained by the complexity factor.
+\end{itemize}
 \afterpage{
 %\begin{landscape}
 \begin{table}[H]
-\label{table:Matrix_1}
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
@@ -975,15 +1007,14 @@ For the moment, no element has been identify to be subjected to a change however
 \cref{IM_4}			& X & & & X & X & & X & & X & \cellcolor{gray!25} & \\ \hline
 \cref{IM_5}			& & & X & X & & X & & & & X & \cellcolor{gray!25} \\ \hline
 \end{tabular}
-\caption{Traceability Matrix for the theoertical models TM, the data definitions DD and the instance models IM}
+\caption{Traceability Matrix for the theoertical models TM, the data definitions DD and the instance models IM}\label{tb:Matrix_1}
 \end{table}
 %\end{landscape}
 }
 
 \afterpage{
 %\begin{landscape}
-\begin{table}[H]
-\label{table:Matrix_2}
+\begin{table}[h]
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
@@ -1001,7 +1032,7 @@ For the moment, no element has been identify to be subjected to a change however
 \cref{IM_4}			& & & & & & & \\ \hline
 \cref{IM_5}			& & & & X & X & & \\ \hline
 \end{tabular}
-\caption{Traceability Matrix linking the assumptions to the theoertical models TM, the data definitions DD and the instance models IM}
+\caption{Traceability Matrix linking the assumptions to the theoertical models TM, the data definitions DD and the instance models IM}\label{tb:Matrix_2}
 \end{table}
 %\end{landscape}
 }
@@ -1009,34 +1040,33 @@ For the moment, no element has been identify to be subjected to a change however
 \afterpage{
 \begin{landscape}
 \begin{table}[H]
-\label{table:Matrix_3}
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
 	& \cref{IM_1} & \cref{IM_2} & \cref{IM_3} & \cref{IM_4} & \cref{IM_5} & \cref{R_1} & \cref{R_2} & \cref{R_3} & \cref{R_4} & \cref{R_5} & \cref{R_6} & \cref{R_7} & \cref{R_8} & \cref{R_9} & \cref{R_10} & \cref{R_11} & \cref{R_12} & \cref{R_13} & \cref{R_14} \\
 \hline
 \cref{IM_1}			& \cellcolor{gray!25}& & & & & X & & & & & & & & & & & & & \\ \hline
-\cref{IM_2}			& X &\cellcolor{gray!25} & & & & X & & X & & X & & & & & & & & & \\ \hline
-\cref{IM_3}			& & X &\cellcolor{gray!25} & & & & & & & & & & X & & & & & & \\ \hline
-\cref{IM_4}			& X & & X &\cellcolor{gray!25} & & X & & & X & & & & & & & X & & & \\ \hline
-\cref{IM_5}			& & & & X &\cellcolor{gray!25} & & & & & & & & & & & & & & \\ \hline
+\cref{IM_2}			& X &\cellcolor{gray!25} & & & & & & X & X & X & & X & X & & & & & & \\ \hline
+\cref{IM_3}			& & X &\cellcolor{gray!25} & & & & & & & & & X & X & & X & & & & \\ \hline
+\cref{IM_4}			& X & & X &\cellcolor{gray!25} & & X & & & X & & & & X & & X & X & X & & \\ \hline
+\cref{IM_5}			& & & & X &\cellcolor{gray!25} & & & & & & & & & & & & X & X & X \\ \hline
 \cref{R_1}			& X & X & & & &\cellcolor{gray!25} & & & & & & & & & & & & & \\ \hline
-\cref{R_2}			& X & & & & & &\cellcolor{gray!25} & & & & & & & & & & & & \\ \hline
-\cref{R_3}			& X & & & & & & &\cellcolor{gray!25} & & & & & & & & & & & \\ \hline
-\cref{R_4}			& X & & & & & & & &\cellcolor{gray!25} & & & & & & & & & & \\ \hline
-\cref{R_5}			& & & & & & & & & &\cellcolor{gray!25} & & & & & & & & & \\ \hline
-\cref{R_6}			& & & & & & & & & & &\cellcolor{gray!25} & & & & & & & & \\ \hline
-\cref{R_7}			& & & & & & & & & & & &\cellcolor{gray!25} & & & & & & & \\ \hline
-\cref{R_8}			& & & & & & & & & & & & &\cellcolor{gray!25} & & & & & & \\ \hline
-\cref{R_9}			& & & & & & & & & & & & & &\cellcolor{gray!25} & & & & & \\ \hline
-\cref{R_10}			& & & & & & & & & & & & & & &\cellcolor{gray!25} & & & & \\ \hline
-\cref{R_11}			& X & & & & & & & & & & & & & & &\cellcolor{gray!25} & & & \\ \hline
-\cref{R_12}			& & & & & & & & & & & & & & & & &\cellcolor{gray!25} & & \\ \hline
-\cref{R_13}			& & & & & & & & & & & & & & & & & &\cellcolor{gray!25} & \\ \hline
-\cref{R_14}			& & & & & & & & & & & & & & & & & & &\cellcolor{gray!25} \\ \hline
+\cref{R_2}			& X & X & & & & X &\cellcolor{gray!25} & & & & & & & & & & & & \\ \hline
+\cref{R_3}			& X & X & & & & X & &\cellcolor{gray!25} & & & & & & & & & & & \\ \hline
+\cref{R_4}			& X & X & & & & X & & X &\cellcolor{gray!25} & & & & & & & & & & \\ \hline
+\cref{R_5}			& & X & & & & & & X & X &\cellcolor{gray!25} & & & & & & & & & \\ \hline
+\cref{R_6}			& & X & & & & & & & & X &\cellcolor{gray!25} & & & & & & & & \\ \hline
+\cref{R_7}			& & X & & & & & & & & X & &\cellcolor{gray!25} & & & & & & & \\ \hline
+\cref{R_8}			& & X & X & & & & & & X & & & X &\cellcolor{gray!25} & & & & & & \\ \hline
+\cref{R_9}			& & & & X & & & & & & & & & X &\cellcolor{gray!25} & & & & & \\ \hline
+\cref{R_10}			& & & & X & & & & & & & & & X & &\cellcolor{gray!25} & & & & \\ \hline
+\cref{R_11}			& X & & & X & & & & & & & & & & & &\cellcolor{gray!25} & & & \\ \hline
+\cref{R_12}			& & & & X & & & & & & & & & & & & X &\cellcolor{gray!25} & & \\ \hline
+\cref{R_13}			& & & & & X & & & & & & & & & & & & X &\cellcolor{gray!25} & \\ \hline
+\cref{R_14}			& & & & & X & & & & & & & & & & & & & X &\cellcolor{gray!25} \\ \hline
 
 \end{tabular}
-\caption{Traceability Matrix for the instance models IM and the requirements R}
+\caption{Traceability Matrix for the instance models IM and the requirements R}\label{tb:Matrix_3}
 \end{table}
 \end{landscape}
 }
