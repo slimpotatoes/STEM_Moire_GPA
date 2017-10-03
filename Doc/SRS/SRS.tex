@@ -124,7 +124,7 @@ STEM Moir{\'e} GPA}
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-1/10/2017 & 1.0 & First Draft\\
+2/10/2017 & 1.0 & First Draft\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -246,25 +246,10 @@ $\mathbb{Z}$ & & Set of integer numbers\\
   \bottomrule
 \end{tabular}\\
 
-\wss{Add any other abbreviations or acronyms that you add}
-
 \newpage
 \pagenumbering{arabic}
 
 \section{Introduction}
-
-\wss{This SRS template is based on \citet{SmithAndLai2005, SmithEtAl2007}.  It
-  will get you started, but you will have to make changes.  Any changes to
-  section headings should be approved by the instructor, since that implies a
-  deviation from the template.  Although the bits shown below do not include
-  type information, you may need to add this information for your problem.}
-
-
-\wss{If you are documenting a family of models, you can start from this same
-  template, but you will have to add a section for variabilities.  For program
-  families you should look at \cite{Smith2006, SmithMcCutchanAndCarette2017}.
-  You should be able to do one document that captures the commonality analysis
-  and the requirements.}
 
 \subsection{Purpose of Document}
 
@@ -321,7 +306,7 @@ The end user of \progname{} should have a relative strong background in Physics,
 \subsection{Problem Description} \label{Sec_pd}
 
 STEM Moir{\'e} GPA project is a software capable of converting a STEM Moir{\'e} 
-hologram into 2D relative strain maps. Terminologies, the context and a detailed description of the physical system is proposed below.
+hologram into 2D relative strain maps. Terminologies and the physical system are described below.
 
 \subsubsection{Terminology and Definitions}
 
@@ -332,7 +317,7 @@ context and the type of data the STEM Moir{\'e} GPA software is subjected to. Ne
 
 \begin{itemize}
 
-\item \textbf{2D Cartesian coordinate system}: orthonormal coordinate system model by the orthonormal base $\mathcal{B}=(O,\vec{u_x},\vec{u_y})$ such that any vector $\vec{r}$ can be expressed as the following:
+\item \textbf{2D Cartesian coordinate system}: orthonormal coordinate system model by the base $\mathcal{B}=(O,\vec{u_x},\vec{u_y})$ such that any vector $\vec{r}$ can be expressed as the following:
 \begin{equation}
 \forall (x,y) \in \mathbb{R}^{2}, \vec{r}=x\vec{u_x}+y\vec{u_y}
 \end{equation}
@@ -341,9 +326,11 @@ context and the type of data the STEM Moir{\'e} GPA software is subjected to. Ne
 \item \textbf{Scanning grid}: set representing the succession of the STEM probe positions when collecting the STEM EM. Equivalently the scanning grid represents the relative position of the pixel with respect to the sample when acquiring the EM. A simplified version of the 
 STEM EM formation can be visualized in \cref{fig:STEM_imaging_Fig}. The positions of the STEM probe are located at the intersection of the black grid lines.
 \begin{figure}[H]
-\includegraphics[width=\linewidth]{Figures/STEM_imaging_Fig.png}
-\caption{On the left hand side, a schematic of the STEM EM formation with the STEM probe scanning the sample at each intersection of the grid lines. The electrons crossing the sample are collected on the detector and counted during the acquisition time. On the right hand side is presented a STEM EM on a pure silicon sample revealing its atomic structure. In the inset is highlighted the type of data the STEM EM corresponds to which is a 2D array with the intensity collected on each element of the array.}
+\begin{center}
+\includegraphics[scale=0.7]{Figures/STEM_imaging_Fig.png}
+\caption{(Left) Schematic of the STEM EM formation with the STEM probe scanning the sample at each intersection of the grid lines. The electrons crossing the sample are collected on the detector and counted during the acquisition time. (Right) STEM EM on a pure silicon sample revealing its atomic structure. In the inset is highlighted the type of data the STEM EM corresponds to which is a 2D array with the intensity collected on each pixel.}
 \label{fig:STEM_imaging_Fig}
+\end{center}
 \end{figure}
 \item \textbf{Hologram}: Result from an interference between two or multiples waves. \newline
 Let consider two monochromatic plane waves $\psi_1$ and $\psi_2$ with their respective amplitude $A_j$, phase $\phi_j$ and wave vector $\vec{k_j}$ in the 2D Cartesian system interfering with each other. The resulting hologram $\psi_H$ represented by the intensity $I_H$ can be modelled as follows with :
@@ -367,21 +354,19 @@ tensor.
 
 \subsubsection{Physical System Description}
 
-The physical system of \progname{}, as shown in Figure~?,
-includes the following elements:
+The physical system of \progname{}, as shown in \cref{fig:system_description}, includes the following elements:
+\begin{itemize}
+\item The STEM Moir{\'e} hologram as the results of the interaction between the scanning grid and the crystal periodicity of the sample
+\item Physical inputs to convert a STEM Moir{\'e} hologram into strain and rotation maps that need to be provided by the user: 
+\end{itemize}
 
-
-\wss{A figure here may make sense for most SRS documents}
-
-% \begin{figure}[h!]
-% \begin{center}
-% %\rotatebox{-90}
-% {
-%  \includegraphics[width=0.5\textwidth]{<FigureName>}
-% }
-% \caption{\label{<Label>} <Caption>}
-% \end{center}
-% \end{figure}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.65]{Figures/System_description.png}
+\caption{Physical system of \progname{} highlighted in the yellow area.}
+\label{fig:system_description}
+\end{center}
+\end{figure}
 
 
 \subsubsection{Goal Statements}
@@ -974,6 +959,11 @@ qualities that the software is expected to exhibit.
 \normalfont In \cref{T_2}, the argument component in \cref{eq:GPA_method} has a constraint to output values between $[0;2\pi[$ only. If the phase varies more than in this interval phase unwrapping method needs to be implemented to process the data correctly. While initially considered as a lower level of implementation, different phase unwrapping algorithm exists with different performance. Since accuracy and precision have been identified as a non-functional requirement, the unwrapping model should be considered in the SRS document. Nevertheless, a deeper understanding of the different algorithms is first required before documenting them.
 \end{LC}
 
+\begin{LC}
+\label{LC_3}
+\normalfont The effect of the detector system such as gain non-uniformity, frequency cut-off, and distortions could be corrected to improve the accuracy of \progname{} software. Extra inputs and processing would be needed to be implemented before applying GPA (\cref{IM_2}).
+\end{LC}
+
 \section{Traceability Matrices and Graphs}
 
 The traceability matrices section relates the interactions between different elements of the \progname{} software. If a cell of the table is crossed, it means that if the element from the column is modified, the section in the horizontal line has to be changed. The traceability matrices are described below:
@@ -987,8 +977,8 @@ The traceability matrices section relates the interactions between different ele
 The assumptions were used to cover a certain variety of sample and to not be sensitive to different microscopes. However for dedicated applications, some of this assumptions can be removed.
 \item \Cref{tb:Matrix_3} is showing the dependencies between the instance models and the requirements. The sequential structure of \progname{} is again visible here. \cref{IM_1} and \cref{IM_2} are the key elements of the software in which heavy calculations and multiple interactions with the users are performed. The high number of related requirements can be explained by the complexity factor.
 \end{itemize}
-\afterpage{
-%\begin{landscape}
+
+
 \begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
@@ -1009,12 +999,8 @@ The assumptions were used to cover a certain variety of sample and to not be sen
 \end{tabular}
 \caption{Traceability Matrix for the theoertical models TM, the data definitions DD and the instance models IM}\label{tb:Matrix_1}
 \end{table}
-%\end{landscape}
-}
 
-\afterpage{
-%\begin{landscape}
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
@@ -1034,8 +1020,6 @@ The assumptions were used to cover a certain variety of sample and to not be sen
 \end{tabular}
 \caption{Traceability Matrix linking the assumptions to the theoertical models TM, the data definitions DD and the instance models IM}\label{tb:Matrix_2}
 \end{table}
-%\end{landscape}
-}
 
 \afterpage{
 \begin{landscape}
@@ -1075,17 +1059,5 @@ The assumptions were used to cover a certain variety of sample and to not be sen
 
 \bibliography{SRS_biblio}
 \bibliographystyle{ieeetr}
-
-
-\newpage
-
-\section{Appendix}
-
-\wss{Your report may require an appendix.  For instance, this is a good point to
-show the values of the symbolic parameters introduced in the report.}
-
-\subsection{Symbolic Parameters}
-
-
 
 \end{document}
