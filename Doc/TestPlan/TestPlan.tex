@@ -12,29 +12,20 @@
 }
 \usepackage[round]{natbib}
 
-\title{SE 3XA3: Test Plan\\Title of Project}
-
-\author{Team \#, Team Name
-		\\ Student 1 name and macid
-		\\ Student 2 name and macid
-		\\ Student 3 name and macid
-}
-
-\date{\today}
-
 \input{../Comments}
 
 \begin{document}
 
+\title{Project Title} 
+\author{Author Name}
+\date{\today}
+	
 \maketitle
 
 \pagenumbering{roman}
-\tableofcontents
-\listoftables
-\listoffigures
 
-\begin{table}[bp]
-\caption{\bf Revision History}
+\section{Revision History}
+
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
@@ -42,7 +33,29 @@ Date 1 & 1.0 & Notes\\
 Date 2 & 1.1 & Notes\\
 \bottomrule
 \end{tabularx}
-\end{table}
+
+~\newpage
+
+\section{Symbols, Abbreviations and Acronyms}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l l} 
+  \toprule		
+  \textbf{symbol} & \textbf{description}\\
+  \midrule 
+  T & Test\\
+  \bottomrule
+\end{tabular}\\
+
+\wss{symbols, abbreviations or acronyms -- you can reference the SRS tables if needed}
+
+\newpage
+
+\tableofcontents
+
+\listoftables
+
+\listoffigures
 
 \newpage
 
@@ -56,36 +69,6 @@ This document ...
 
 \subsection{Scope}
 
-\subsection{Acronyms, Abbreviations, and Symbols}
-	
-\begin{table}[hbp]
-\caption{\textbf{Table of Abbreviations}} \label{Table}
-
-\begin{tabularx}{\textwidth}{p{3cm}X}
-\toprule
-\textbf{Abbreviation} & \textbf{Definition} \\
-\midrule
-Abbreviation1 & Definition1\\
-Abbreviation2 & Definition2\\
-\bottomrule
-\end{tabularx}
-
-\end{table}
-
-\begin{table}[!htbp]
-\caption{\textbf{Table of Definitions}} \label{Table}
-
-\begin{tabularx}{\textwidth}{p{3cm}X}
-\toprule
-\textbf{Term} & \textbf{Definition}\\
-\midrule
-Term1 & Definition1\\
-Term2 & Definition2\\
-\bottomrule
-\end{tabularx}
-
-\end{table}	
-
 \subsection{Overview of Document}
 
 \section{Plan}
@@ -94,13 +77,24 @@ Term2 & Definition2\\
 
 \subsection{Test Team}
 
+\wss{Probably just you.  :-)}
+
 \subsection{Automated Testing Approach}
 
-\subsection{Testing Tools}
+\subsection{Verification Tools}
 
-\subsection{Testing Schedule}
+\wss{Thoughts on what tools to use, such as the following: unit testing
+  framework, valgrind, static analyzer, make, continuous integration, test
+  coverage tool, etc.}
+
+% \subsection{Testing Schedule}
 		
-See Gantt Chart at the following url ...
+% See Gantt Chart at the following url ...
+
+\subsection{Non-Testing Based Verification}
+
+\wss{List any approaches like code inspection, code walkthrough, symbolic
+  execution etc.  Enter not applicable if that is the case.}
 
 \section{System Test Description}
 	
@@ -182,52 +176,48 @@ How test will be performed:
 
 \subsection{Traceability Between Test Cases and Requirements}
 
-\section{Tests for Proof of Concept}
+% \section{Tests for Proof of Concept}
 
-\subsection{Area of Testing1}
+% \subsection{Area of Testing1}
 		
-\paragraph{Title for Test}
+% \paragraph{Title for Test}
 
-\begin{enumerate}
+% \begin{enumerate}
 
-\item{test-id1\\}
+% \item{test-id1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+% Type: Functional, Dynamic, Manual, Static etc.
 					
-Initial State: 
+% Initial State: 
 					
-Input: 
+% Input: 
 					
-Output: 
+% Output: 
 					
-How test will be performed: 
+% How test will be performed: 
 					
-\item{test-id2\\}
+% \item{test-id2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+% Type: Functional, Dynamic, Manual, Static etc.
 					
-Initial State: 
+% Initial State: 
 					
-Input: 
+% Input: 
 					
-Output: 
+% Output: 
 					
-How test will be performed: 
+% How test will be performed: 
 
-\end{enumerate}
+% \end{enumerate}
 
-\subsection{Area of Testing2}
+% \subsection{Area of Testing2}
 
-...
-
-	
-\section{Comparison to Existing Implementation}	
+% ...
 				
 \section{Unit Testing Plan}
 		
-\subsection{Unit testing of internal functions}
-		
-\subsection{Unit testing of output files}		
+\wss{Unit testing plans for internal functions and, if appropriate, output
+  files}
 
 \bibliographystyle{plainnat}
 
