@@ -125,6 +125,7 @@ STEM Moir{\'e} GPA}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 4/10/2017 & 1.0 & First Draft\\
+17/10.2017 & 1.1 & Significant corrections addressing comments and mistakes\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -168,53 +169,51 @@ their units if applicable.
 $\mathcal{B}$ & & 2D orthonormal base \\
 $\mathcal{C}$ & & Ceiling function \\
 $\delta$ & & Dirac delta function \\
-$\Delta \overrightarrow{g_{j}}^{M_{exp}}$ & \si{\per\nano\meter} & Variation of
-the $j^{th}$ Moir{\'e} wave vector of $SMH_{exp}$ \wss{LaTeX interprets $SMH$ as
-  $S$ times $M$ time $H$ in terms of spacing.  The same applies for $exp$.  The
-  spacing would look more natural with $\text{SMH}_{\text{exp}}$.  If SMH is a
-  variable, then you want it in italic font, which would be $\mathit{SMH}_{\text{exp}}$.}\\
-$\Delta \overrightarrow{g_{j}}^{C_{exp}}$ & \si{\per\nano\meter} & Variation of the $j^{th}$ crystalline wave vector of $SMH_{exp}$\\
+$\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}$ & \si{\per\nano\meter} & Variation of
+the $j^{\text{th}}$ Moir{\'e} wave vector of $\mathit{SMH}_{\text{exp}}$ \\
+$\Delta \overrightarrow{g_{j}}^{C_{\text{exp}}}$ & \si{\per\nano\meter} & Variation of the $j^{\text{th}}$ crystalline wave vector of $\mathit{SMH}_{\text{exp}}$\\
 $\varepsilon$ & & Strain tensor \\
-$\varepsilon_{xx}$ & & Uniaxial strain component along $\vec{u_x}$ \\
-$\varepsilon_{yy}$ & & Uniaxial strain component along $\vec{u_y}$ \\
-$\varepsilon_{xy}$ & & Shear strain component in base $\mathcal{B}$ \\
+$\varepsilon_{\mathit{xx}}$ & & Uniaxial strain component along $\vec{u_x}$ \\
+$\varepsilon_{\mathit{yy}}$ & & Uniaxial strain component along $\vec{u_y}$ \\
+$\varepsilon_{\mathit{xy}}$ & & Shear strain component in base $\mathcal{B}$ \\
 $\mathcal{FT}$ & & Fourier transform \\
 $\Gamma$ & & Spatial frequency range \\
-$\overrightarrow{g_{j}}$ & \si{\per\nano\meter} & $j^{th}$ wave vector \\
-$g_{j_x}$ & \si{\per\nano\meter} & Component of the $j^{th}$ wave vector along $\vec{u_x}$ \\
-$g_{j_y}$ & \si{\per\nano\meter} & Component of the $j^{th}$ wave vector along $\vec{u_y}$ \\
+$\overrightarrow{g_{j}}$ & \si{\per\nano\meter} & $j^{\text{th}}$ wave vector \\
+$g_{j_x}$ & \si{\per\nano\meter} & Component of the $j^{\text{th}}$ wave vector along $\vec{u_x}$ \\
+$g_{j_y}$ & \si{\per\nano\meter} & Component of the $j^{\text{th}}$ wave vector along $\vec{u_y}$ \\
 $\overrightarrow{g_{j}}^{C}$ & \si{\per\nano\meter} & $j^{th}$ crystalline wave vector \\
-$\overrightarrow{g_{j}}^{C_{ref}}$ & \si{\per\nano\meter} & $j^{th}$ crystalline wave vector of $I_{C_{ref}}$ \\
-$\overrightarrow{g_{j}}^{C_{exp}}$ & \si{\per\nano\meter} & $j^{th}$ crystalline wave vector of $SMH_{exp}$\\
-$\overrightarrow{g_{j}}^{C_{exp}}_{uns}$ & \si{\per\nano\meter} & $j^{th}$ crystalline wave vector of $SMH_{exp}$ at its unstrained state\\
-$\overrightarrow{g_{j}}^{M_{exp}}$ & \si{\per\nano\meter} & $j^{th}$ Moir{\'e} wave vector of $SMH_{exp}$\\
-$\overrightarrow{g_{j}}^{M_{exp}}_{uns}$ & \si{\per\nano\meter} & $j^{th}$ Moir{\'e} wave vector of $SMH_{exp}$ at its unstrained state\\
+$\overrightarrow{g_{j}}^{C_{\text{ref}}}$ & \si{\per\nano\meter} & $j^{\text{th}}$ crystalline wave vector of $I_{C_{\text{ref}}}$ \\
+$\overrightarrow{g_{j}}^{C_{\text{exp}}}$ & \si{\per\nano\meter} & $j^{\text{th}}$ crystalline wave vector of $\mathit{SMH}_{\text{exp}}$\\
+$\overrightarrow{g_{j}}^{C_{\text{exp}}}_{\text{uns}}$ & \si{\per\nano\meter} & $j^{\text{th}}$ crystalline wave vector of $\mathit{SMH}_{\text{exp}}$ at its unstrained state\\
+$\overrightarrow{g_{j}}^{M_{\text{exp}}}$ & \si{\per\nano\meter} & $j^{\text{th}}$ Moir{\'e} wave vector of $\mathit{SMH}_{\text{exp}}$\\
+$\overrightarrow{g_{j}}^{M_{\text{exp}}}_{\text{uns}}$ & \si{\per\nano\meter} & $j^{\text{th}}$ Moir{\'e} wave vector of $\mathit{SMH}_{\text{exp}}$ at its unstrained state\\
 $i$ & & Imaginary unit \\
 $I$ & & Intensity (or number of counts) \\
 $\mathbb{I}$ & & Sub-set of $\mathbb{R}$ representing the position of the pixels in an image\\
-$I_{C_{ref}}$ & & 2D array representing the reference crystal structure \\
-$I_{SMF_{exp}}$ & & 2D array representing the experimental SMH\\
-$I_{SMF_{sim}}$ & & 2D array representing the simulated SMH\\
-$I_{\varepsilon_{xx}}$ & & 2D array representing the uniaxial strain component along $\vec{u_x}$ \\
-$I_{\varepsilon_{yy}}$ & & 2D array representing the uniaxial strain component along $\vec{u_y}$ \\
-$I_{\varepsilon_{xy}}$ & & 2D array representing the shear strain component in base $\mathcal{B}$ \\
-$I_{\omega_{xy}}$ & & 2D array representing the rotation component in base $\mathcal{B}$ \\
-$M_j$ & & Mask function in Fourier space including the $j^{th}$ wave vector\\
+$I_{C_{\text{ref}}}$ & & 2D array representing the reference crystal structure \\
+$I_{\mathit{SMH}_{\text{exp}}}$ & & 2D array representing the experimental SMH\\
+$I_{\mathit{SMH}_{\text{sim}}}$ & & 2D array representing the simulated SMH\\
+$I_{\varepsilon_{\mathit{xx}}}$ & & 2D array representing the uniaxial strain component along $\vec{u_x}$ \\
+$I_{\varepsilon_{\mathit{yy}}}$ & & 2D array representing the uniaxial strain component along $\vec{u_y}$ \\
+$I_{\varepsilon_{\mathit{xy}}}$ & & 2D array representing the shear strain component in base $\mathcal{B}$ \\
+$I_{\omega_{\mathit{xy}}}$ & & 2D array representing the rotation component in base $\mathcal{B}$ \\
+$M_j$ & & Mask function in Fourier space including the $j^{\text{th}}$ wave vector\\
 $\mathbb{N}$ & & Set of natural numbers\\
 $\nabla$ & & Gradient operator\\
 $\nabla u$ & & Displacement gradient tensor\\
 $\vec{\nu}$ & \si{\per\nano\meter} & Vector position in Fourier space\\
 $\omega$ & & Rotation tensor\\
-$\omega_{xy}$ & rad & Rotation element of the rotation tensor\\
+$O$ & & Origin of the coordinate system \\
+$\omega_{\text{xy}}$ & rad & Rotation element of the rotation tensor\\
 $p$ & \si{\nano\meter} & Pixel size\\
 $P_{\overrightarrow{X}}$ & rad & 2D array representing $2\pi\overrightarrow{X}\cdot\vec{r}$\\
 $\overrightarrow{q_{n_j,m_j}}$ & & Sampling vector $\vec{q} \in Q$ of couple $(n_j,m_j)$\\
 $Q$ & & Set such that $Q=\{\forall (n,m) \in \mathbb{Z}^{2}, \vec{q}=n\vec{u_x}+m\vec{u_y}\}$ \\
 $\vec{r}$ & \si{\nano\meter} & Vector position \\
 $\mathbb{R}$ & & Set of real numbers \\
-$rot$ & & Curl operator\\
-$SMH_{exp}$ & & 2D array representing the experimental STEM Moir{\'e} Hologram \\
-$SMH_{sim}$ & & 2D array representing the simulated STEM Moir{\'e} Hologram \\
+$\overrightarrow{\mathit{rot}}$ & & Curl operator\\
+$\mathit{SMH}_{\text{exp}}$ & & 2D array representing the experimental STEM Moir{\'e} Hologram \\
+$\mathit{SMH}_{\text{sim}}$ & & 2D array representing the simulated STEM Moir{\'e} Hologram \\
 $\vec{u_x}$ & & Unitary vector from base $\mathcal{B}$ \\
 $\vec{u_y}$ & & Unitary vector from base $\mathcal{B}$ \\
 $\wedge$ & & Cross product operator\\
@@ -260,10 +259,11 @@ The purpose of the document is to provide a detailed description of the function
 
 \wss{The text is better for version control, and for reading in other editors,
   if you use a hard-wrap at 80 characters}
+\an{I understand the point. My tex editor is not so friendly with the 80 characters hard wrap (especially with equations) so I avoided it. I will try to find a solution}
 
 \subsection{Scope of Requirements} 
 
-The scope of requirements are limited to the realization of \cref{GS_1} which corresponds to transform a certain type of data to another one based on multiple user inputs.
+The scope of requirements are limited to the realization of \cref{GS_1} which corresponds to transform a certain type of data to another one based on multiple user inputs. \progname{} is for the moment limited to the study of mono-crystalline material undergoing a relative small deformation with respect to its unstrained state.
 
 \subsection{Characteristics of Intended Reader} 
 
@@ -291,9 +291,7 @@ describes the user characteristics and lists the system constraints.
 \item User Responsibilities:
 \begin{itemize}
 \item Provide the minimum information required by the \progname{} software.
-\item Use the software in the limits it is intended to. \wss{This is ambiguous.
-    If the limits cannot be stated abstractly here, is there a section of the
-    SRS you can reference?  Maybe the assumptions section?}
+\item Use the software in the limits it is intended to by respecting \cref{A_4}, \cref{A_5}, \cref{A_6} and \cref{A_7}.
 \item Be aware of the potential effects of user inputs on the quality of the final data.
 \item Judge the correctness of the data.
 \item Be particularly cautious on the use of the final data quantitatively. The quantitative aspect cannot be fully uncorrelated from the user inputs. 
@@ -301,6 +299,7 @@ describes the user characteristics and lists the system constraints.
 \end{itemize}
 \item \progname{} Responsibilities:
 \begin{itemize}
+\item Inform the user of their responsibilities in using \progname{}.
 \item Preserve the integrity of original data and not add any hidden processing steps on the final data such as, but not limited to, smoothing, blurring, averaging, de-noising and binning.
 \item Inform user of wrong format or missing information regarding the inputs.
 \item Inform the user of a potential insufficient quality of the final results which could lead to non reliable physical interpretations.
@@ -311,32 +310,20 @@ describes the user characteristics and lists the system constraints.
   add a responsibility to the system to explicitly warn the user of their
   responsibilities.  This is analogous to an electrical device that has a
   warning to read the manual before operating.}
+\an{I like the idea. I will add it in the responsibilities but will let the comment for further discussion}
 
 \subsection{User Characteristics} \label{SecUserCharacteristics}
 
-The end user of \progname{} should have a relative strong background in Physics,
-Mathematics and Electron Microscopy to get a reliable sense of the data
-processed. The multiple interactions between the user and \progname{} have a
-significant impact on the final results which can lead to some physical
-misinterpretations. \wss{Can you be more specific about education level?}
+The end user of \progname{} should have a relative strong background in Physics (interaction electron/matter) and Mathematics (or signal processing) at graduate level to get a reliable sense of the data processed. The multiple interactions between the user and \progname{} have  significant impact on the final results which can lead to some physical misinterpretations. Basic practical and theoretical knowledge in Electron Microscopy is recommended because of the terminology used in the document. 
 
 \subsection{System Constraints}
 
-\progname{} is for the moment limited to the study of mono-crystalline material
-undergoing a relative small deformation with respect to its unstrained state.
-\wss{This first point sounds like the scope of the program, not a constraint.
-  Constraints are design decisions that are imposed on you externally.  The next
-  constraints you list are good examples.} Another constraint is to be
-considered because of the electron microscopy community. Most of the files
-acquired on the microscope are in dm3 format, an non-standard format used by the
-detector manufacturer. Therefore, \progname{} software needs to be able to read
-any dm3 files to be considered by the research community.
+To be considered by the electron microscopy community, \progname{} has to be able to read dm3 files format, an non-standard format used by the electron detector manufacturer. 
 
 \section{Specific System Description}
 \subsection{Problem Description} \label{Sec_pd}
 
-STEM Moir{\'e} GPA project is a software capable of converting a STEM Moir{\'e} 
-hologram into 2D relative strain maps. Terminologies and the physical system are described below.
+STEM Moir{\'e} GPA project is a software capable of converting a STEM Moir{\'e} hologram into 2D relative strain maps. Terminologies and the physical system are described below.
 
 \subsubsection{Terminology and Definitions}
 
@@ -344,11 +331,12 @@ Regarding the complexity of the electron/matter interaction, some crude  simplif
 
 \begin{itemize}
 
-\item \textbf{2D Cartesian coordinate system}: orthonormal coordinate system model by the base $\mathcal{B}=(O,\vec{u_x},\vec{u_y})$ such that any vector $\vec{r}$ can be expressed as the following:
+\item \textbf{2D Cartesian coordinate system}: orthonormal coordinate system model by the base $\mathcal{B}=(O,\vec{u_x},\vec{u_y})$ with $O$ representing the origin and $M$ a point with coordinate the $(x,y)$, such that any vector $\vec{r}=\overrightarrow{\mathit{OM}}$ can be expressed as the following :
 \begin{equation}
 \forall (x,y) \in \mathbb{R}^{2}, \vec{r}=x\vec{u_x}+y\vec{u_y}
 \end{equation}
 \item \textbf{Pixel}: smallest addressable element sampling a 2D continuum.
+\item \textbf{Detector}: Element in \cref{fig:STEM_imaging_Fig} collecting and counting the electron that crossed the sample.
 \item \textbf{Electron Micrograph (EM)}: 2D array collected in an electron microscope representing the number of electron crossing the sample (intensity) at each pixel location.
 \item \textbf{Scanning grid}: set representing the succession of the STEM probe positions when collecting the STEM EM. Equivalently the scanning grid represents the relative position of the pixel with respect to the sample when acquiring the EM. A simplified version of the 
 STEM EM formation can be visualized in \cref{fig:STEM_imaging_Fig}. The positions of the STEM probe are located at the intersection of the black grid lines.
@@ -360,10 +348,11 @@ STEM EM formation can be visualized in \cref{fig:STEM_imaging_Fig}. The position
 \end{center}
 \end{figure}
 \item \textbf{Hologram}: Result from an interference between two or multiples waves. \newline
-Let consider two monochromatic plane waves $\psi_1$ and $\psi_2$ with their respective amplitude $A_j$, phase $\phi_j$ and wave vector $\vec{k_j}$ in the 2D Cartesian system interfering with each other. The resulting hologram $\psi_H$ represented by the intensity $I_H$ can be modelled as follows with :
+Let consider two monochromatic plane waves $\psi_1$ and $\psi_2$ with their respective amplitude $A_j$, phase $\phi_j$ and wave vector $\vec{k_j}$ in the 2D Cartesian system interfering with each other. The resulting hologram $\psi_H$  can be modelled as follows with :
 \begin{equation}
 \forall (x,y) \in \mathbb{R}^{2}, \psi_H(\vec{r})=\psi_1+\psi_2= A_1e^{i(\vec{k_1}\cdot\vec{r})+i\phi_1}+A_2e^{i(\vec{k_2}\cdot\vec{r})+i\phi_2}
 \end{equation}
+The intensity $I_H$ can be calculated as follows, with $\psi_H^{*}$ representing the complex conjugate of $\psi_H$
 \begin{equation}
 \begin{split}
 \forall (x,y) \in \mathbb{R}^{2}, I_H(\vec{r})=\psi_H\psi_H^{*}= & A_{1}^{2}+A_{2}^{2}+ \\ & A_{1}A_{2}(e^{i(\vec{k_1}-\vec{k_2})\cdot\vec{r}+i(\phi_1-\phi_2)}+e^{i(\vec{k_2}-\vec{k_1})\cdot\vec{r}+i(\phi_2-\phi_1)})
@@ -407,7 +396,7 @@ The physical system of \progname{}, as shown in \cref{fig:system_description}, i
 \subsubsection{Assumptions}
 
 \begin{A}
-\normalfont The microscope has a limit in resolution corresponding to the probe size and thus cannot resolve any spatial frequency higher than $g_{j_{lim}}$. 
+\normalfont The microscope has a limit in resolution corresponding to the probe size and thus cannot resolve any spatial frequency higher than $g_{j_{\text{lim}}}$. 
 \label{A_1}
 \end{A}
 \begin{A}
@@ -420,10 +409,10 @@ The physical system of \progname{}, as shown in \cref{fig:system_description}, i
 \end{A}
 \begin{A}
 \label{A_4}
-\normalfont The variation \wss{Do you mean gradient?} of the deformation field is small. Therefore,
+\normalfont The gradient of the deformation field is small. Therefore,
 \begin{equation*}
 \begin{gathered}
-\forall \vec{r} \in \mathbb{R}^2, \ \nabla (\Delta\overrightarrow{g_j}\cdot\vec{r})= (\Delta\overrightarrow{g_j}\cdot\nabla)\vec{r}+(\vec{r}\cdot\nabla)\Delta\overrightarrow{g_j}+\Delta\overrightarrow{g_j}\wedge rot(\vec{r})+\vec{r}\wedge rot(\Delta\overrightarrow{g_j}))\\
+\forall \vec{r} \in \mathbb{R}^2, \ \nabla (\Delta\overrightarrow{g_j}\cdot\vec{r})= (\Delta\overrightarrow{g_j}\cdot\nabla)\vec{r}+(\vec{r}\cdot\nabla)\Delta\overrightarrow{g_j}+\Delta\overrightarrow{g_j}\wedge \overrightarrow{\mathit{rot}}(\vec{r})+\vec{r}\wedge \overrightarrow{\mathit{rot}}(\Delta\overrightarrow{g_j}))\\
 \forall \vec{r} \in \mathbb{R}^2, \ \nabla (\Delta\overrightarrow{g_j}\cdot\vec{r})\approx \Delta\overrightarrow{g_j}
 \end{gathered}
 \end{equation*}
@@ -480,7 +469,7 @@ For shorter notations, it is possible to define a set Q as follows $Q=\{\forall 
 \forall \vec{r}=(x_1,...,x_n) \in \mathbb{R}^n, f(\vec{r})=\sum_{j=-\infty}^{j=+\infty}A_je^{i((\vec{k_j}\cdot\vec{r})+B_j)}
 \end{gathered}
 \end{equation}
-If there is a small perturbation locally of the n-dimensions wave vector $\vec{k_j}$, it is possible to model it allowing $B_j$ to be a function of $\vec{r}.$ 
+If there is a small perturbation locally of the n-dimensions wave vector $\vec{k_j}$, it is possible to model it by allowing $B_j$ to be a function of $\vec{r}$. 
 \begin{equation}
 \forall \vec{r}=(x_1,...,x_n) \in \mathbb{R}^n, f(\vec{r})=\sum_{j=-\infty}^{j=+\infty}A_je^{i((\vec{k_j}\cdot\vec{r})+B_j(\vec{r}))}
 \end{equation}
@@ -580,11 +569,11 @@ arg(C_1(x))=B_1(x)
 \begin{equation}
 \begin{gathered}
 \nabla u = \varepsilon + \omega = \begin{bmatrix}
-	\varepsilon_{xx} & \varepsilon_{xy} \\
-	\varepsilon_{xy} & \varepsilon_{yy} 
+	\varepsilon_{\mathit{xx}} & \varepsilon_{\mathit{xy}} \\
+	\varepsilon_{\mathit{xy}} & \varepsilon_{\mathit{yy}} 
 	\end{bmatrix} + \begin{bmatrix}
-	0 & \omega_{xy} \\
-	-\omega_{xy} & 0 
+	0 & \omega_{\mathit{xy}} \\
+	-\omega_{\mathit{xy}} & 0 
 	\end{bmatrix} \\ 
 \varepsilon = \frac{1}{2}(\nabla u+(\nabla u)^{T}) \\
 \omega = \frac{1}{2}(\nabla u-(\nabla u)^{T})
@@ -598,11 +587,7 @@ arg(C_1(x))=B_1(x)
 
 \subsubsection{General Definitions}\label{sec_gendef}
 
-Non applicable for \progname{} software.
-\an{Don't know what to put here. Don't see a clear difference between T and GD}
-\wss{Not all SRSs require a general definition.  In your case, you might just
-  want to write in this section something like: ``No general definitions are
-  needed for the current documentation.''}
+No general definitions are needed for the current documentation.
 
 \subsubsection{Data Definitions}\label{sec_datadef}
 
@@ -639,13 +624,13 @@ By applying GPA (\cref{T_2}) on \cref{eq:crystal_strain_Fourier_series}, $P_{g_{
 
 \begin{DD}
 \label{DD_2}
-\noindent\colorbox{shadecolorDD}{\normalfont \textbf{STEM Moir{\'e} hologram $I_{SMH}$}}
+\noindent\colorbox{shadecolorDD}{\normalfont \textbf{STEM Moir{\'e} hologram $I_{\mathit{SMH}}$}}
 \normalfont
 \begin{itemize}
 \item \underline{Equation}: \Cref{eq:SMH_FT_complete}
-\item \underline{Description}: Combining \cref{eq:crystal_strain_Fourier_series} and \cref{eq:sampling}, a STEM Moir{\'e} hologram $I_{SMH}$ can be described as follows
+\item \underline{Description}: Combining \cref{eq:crystal_strain_Fourier_series} and \cref{eq:sampling}, a STEM Moir{\'e} hologram $I_{\mathit{SMH}}$ can be described as follows
 \begin{equation}
-\forall (x,y) \in \mathbb{R}^{2}, I_{SMH}(\vec{r})=\sum_{q\in Q}\delta(\vec{r}-p\vec{q})\times\sum_{j=-\infty}^{j=+\infty}A_je^{i(\vec{g_j}\cdot\vec{r})+iP_{g_{j}}(\vec{r})}
+\forall (x,y) \in \mathbb{R}^{2}, I_{\mathit{SMH}}(\vec{r})=\sum_{q\in Q}\delta(\vec{r}-p\vec{q})\times\sum_{j=-\infty}^{j=+\infty}A_je^{i(\vec{g_j}\cdot\vec{r})+iP_{g_{j}}(\vec{r})}
 \label{eq:SMH_1}
 \end{equation}
 \Cref{eq:SMH_1} corresponds physically to the 2D sampling of a 2D periodic crystalline structure. By modifying $p$ the scanning periodicity (or the pixel size), it is possible to adjust the spatial frequency of the SMH. Applying \cref{A_1} and \cref{A_3}, the expression of $I_C$ in \cref{eq:crystal_strain_Fourier_series} is simplified since the series becomes a finite sum.
@@ -655,23 +640,32 @@ By applying GPA (\cref{T_2}) on \cref{eq:crystal_strain_Fourier_series}, $P_{g_{
 \end{equation}
 Therefore, the STEM Moir{\'e} hologram $I_{SMH}$ is also simplified as follows:
 \begin{equation}
-\forall (x,y) \in \mathbb{R}^{2}, I_{SMH}(\vec{r})=\sum_{q\in Q}\delta(\vec{r}-p\vec{q})\times\sum_{j=-j_{lim}}^{j=+j_{lim}}A_je^{i(\vec{g_j}\cdot\vec{r})+iP_{g_{j}}(\vec{r})}
+\forall (x,y) \in \mathbb{R}^{2}, I_{\mathit{SMH}}(\vec{r})=\sum_{q\in Q}\delta(\vec{r}-p\vec{q})\times\sum_{j=-j_{lim}}^{j=+j_{lim}}A_je^{i(\vec{g_j}\cdot\vec{r})+iP_{g_{j}}(\vec{r})}
 \label{eq:SMH_simplified_1}
 \end{equation}
-Calculating $\widetilde{I}_{SMH}$ the Fourier transform of $I_{SMH}$, it is possible to notice that $\widetilde{I}_{SMH}$ is $(1/p,1/p)$ periodic.  
+Calculating $\widetilde{I}_{\mathit{SMH}}$ the Fourier transform of $I_{\mathit{SMH}}$, it is possible to notice that $\widetilde{I}_{\mathit{SMH}}$ is $(1/p,1/p)$ periodic.  
 \begin{equation}
 \begin{gathered}
-\forall (\nu_x,\nu_y) \in \mathbb{R}^{2}, \widetilde{I}_{SMH}(\nu_x,\nu_y)=\frac{1}{p^2}\sum_{n=-\infty}^{n=+\infty}\sum_{m=-\infty}^{m=+\infty}\delta(\nu_x-\frac{n}{p},\nu_y-\frac{m}{p})\ast\widetilde{I}_{C}(\nu_x,\nu_y) \\
-\forall (\nu_x,\nu_y) \in \mathbb{R}^{2}, \widetilde{I}_{SMH}(\nu_x,\nu_y)=\frac{1}{p^2}\sum_{n=-\infty}^{n=+\infty}\sum_{m=-\infty}^{m=+\infty}\widetilde{I}_{C}(\nu_x-\frac{n}{p},\nu_y-\frac{m}{p}) \\
-\forall (\nu_x,\nu_y) \in \mathbb{R}^{2}, \widetilde{I}_{SMH}(\nu_x+\frac{1}{p},\nu_y+\frac{1}{p})=\widetilde{I}_{SMH}(\nu_x,\nu_y)
+\forall (\nu_x,\nu_y) \in \mathbb{R}^{2}, \widetilde{I}_{\mathit{SMH}}(\nu_x,\nu_y)=\frac{1}{p^2}\sum_{n=-\infty}^{n=+\infty}\sum_{m=-\infty}^{m=+\infty}\delta(\nu_x-\frac{n}{p},\nu_y-\frac{m}{p})\ast\widetilde{I}_{C}(\nu_x,\nu_y) \\
+\forall (\nu_x,\nu_y) \in \mathbb{R}^{2}, \widetilde{I}_{\mathit{SMH}}(\nu_x,\nu_y)=\frac{1}{p^2}\sum_{n=-\infty}^{n=+\infty}\sum_{m=-\infty}^{m=+\infty}\widetilde{I}_{C}(\nu_x-\frac{n}{p},\nu_y-\frac{m}{p}) \\
+\forall (\nu_x,\nu_y) \in \mathbb{R}^{2}, \widetilde{I}_{\mathit{SMH}}(\nu_x+\frac{1}{p},\nu_y+\frac{1}{p})=\widetilde{I}_{\mathit{SMH}}(\nu_x,\nu_y)
 \end{gathered}
 \label{eq:SMH_FT}
 \end{equation}
-Therefore it is possible to restrain the calculation of $\widetilde{I}_{SMH}$ for $\vec{\nu} \in [-\frac{1}{2p},\frac{1}{2p}]^{2}=\Gamma$ and respect assumption \cref{A_2}. Nevertheless, \cref{eq:SMH_simplified_1} (or equivalently \cref{eq:SMH_FT}) has still an infinite set of terms in the sum since the set Q is not finite. Therefore, \cref{eq:SMH_simplified_1}, at this stage, is unusable. Applying \cref{A_1}, $\forall (\nu_x,\nu_y) \notin [-g_{lim},g_{lim}]^2, \widetilde{I}_{C}(\nu_x,\nu_y)=0$. As a consequence, $\exists (N_{lim},N_{lim})\in \mathbb{N}^2 / \ \forall (\nu_x,\nu_y) \in \Gamma, \ \widetilde{I}_{C}(\nu_x-\frac{N_{lim}}{p},\nu_y-\frac{N_{lim}}{p})=0$. It is possible thus to define $Q_{lim}=\{\forall (n,m) \in \mathbb{Z}^{2}\cap[-N_{lim},N_{lim}]^2, \ \vec{q}=n\vec{u_x}+m\vec{u_y}\}$ and rewrite \cref{eq:SMH_FT} in a usable format as the following:
+Therefore it is possible to restrain the calculation of $\widetilde{I}_{\mathit{SMH}}$ for $\vec{\nu} \in [-\frac{1}{2p},\frac{1}{2p}]^{2}=\Gamma$ and respect assumption \cref{A_2}. Nevertheless, \cref{eq:SMH_simplified_1} (or equivalently \cref{eq:SMH_FT}) has still an infinite set of terms in the sum since the set Q is not finite. Therefore, \cref{eq:SMH_simplified_1}, at this stage, is unusable. 
+Applying \cref{A_1}, it is possible to fix a condition for $\widetilde{I}_{C}$ as follows:
+\begin{equation}
+\forall (\nu_x,\nu_y) \notin [-g_{lim},g_{lim}]^2, \widetilde{I}_{C}(\nu_x,\nu_y)=0
+\end{equation}
+As a consequence, 
+\begin{equation}
+\exists (N_{\text{lim}},N_{\text{lim}})\in \mathbb{N}^2 / \ \forall (\nu_x,\nu_y) \in \Gamma, \ \widetilde{I}_{C}(\nu_x-\frac{N_{\text{lim}}}{p},\nu_y-\frac{N_{\text{lim}}}{p})=0
+\end{equation}
+It is possible thus to define $Q_{\text{lim}}=\{\forall (n,m) \in \mathbb{Z}^{2}\cap[-N_{\text{lim}},N_{\text{lim}}]^2, \ \vec{q}=n\vec{u_x}+m\vec{u_y}\}$ and rewrite \cref{eq:SMH_FT} in a usable format with a finite number of terms in the sum, as the following:
 \begin{equation}
 \begin{gathered}
-\forall (\nu_x,\nu_y) \in \Gamma, \widetilde{I}_{SMH}(\nu_x,\nu_y)=\frac{1}{p^2}\sum_{n=-N_{lim}}^{n=+N_{lim}}\sum_{m=-N_{lim}}^{m=+N_{lim}}\widetilde{I}_{C}(\nu_x-\frac{n}{p},\nu_y-\frac{m}{p}) \\
-\forall \vec{\nu} \in \Gamma, \widetilde{I}_{SMH}(\vec{\nu})=\frac{1}{p^2}\sum_{\vec{q}\in Q_{lim}}\widetilde{I}_{C}(\vec{\nu}-\frac{\vec{q}}{p})
+\forall (\nu_x,\nu_y) \in \Gamma, \widetilde{I}_{\mathit{SMH}}(\nu_x,\nu_y)=\frac{1}{p^2}\sum_{n=-N_{\text{lim}}}^{n=+N_{\text{lim}}}\sum_{m=-N_{\text{lim}}}^{m=+N_{\text{lim}}}\widetilde{I}_{C}(\nu_x-\frac{n}{p},\nu_y-\frac{m}{p}) \\
+\forall \vec{\nu} \in \Gamma, \widetilde{I}_{\mathit{SMH}}(\vec{\nu})=\frac{1}{p^2}\sum_{\vec{q}\in Q_{\text{lim}}}\widetilde{I}_{C}(\vec{\nu}-\frac{\vec{q}}{p})
 \end{gathered}
 \label{eq:SMH_FT_complete}
 \end{equation}
@@ -690,8 +684,8 @@ Since the Dirac comb function is also periodic, the sampler can also be represen
 Using \cref{eq:SMH_2} in \cref{eq:SMH_simplified_1}, it is possible to recognize an interference equation between multiple plane waves (a more complex version of \cref{eq:hologram}), justifying the terminology hologram in the sampling context.
 \begin{equation}
 \begin{gathered}
-\forall (x,y) \in \mathbb{R}^{2}, I_{SMH}(\vec{r})=\frac{1}{p^2}\sum_{q\in Q}\sum_{j=-j_{lim}}^{j=+j_{lim}}A_je^{i\vec{g_j}\cdot\vec{r}+\frac{i}{p}\vec{q}\cdot\vec{r}+iP_{g_{j}}(\vec{r})} \\
-\forall (x,y) \in \mathbb{R}^{2}, I_{SMH}(\vec{r})=\frac{1}{p^2}\sum_{q\in Q}\sum_{j=-j_{lim}}^{j=+j_{lim}}A_je^{i(\vec{g_j}-\frac{1}{p}\vec{q})\cdot\vec{r}+iP_{g_{j}}(\vec{r})}
+\forall (x,y) \in \mathbb{R}^{2}, I_{\mathit{SMH}}(\vec{r})=\frac{1}{p^2}\sum_{q\in Q}\sum_{j=-j_{\text{lim}}}^{j=+j_{\text{lim}}}A_je^{i\vec{g_j}\cdot\vec{r}+\frac{i}{p}\vec{q}\cdot\vec{r}+iP_{g_{j}}(\vec{r})} \\
+\forall (x,y) \in \mathbb{R}^{2}, I_{\mathit{SMH}}(\vec{r})=\frac{1}{p^2}\sum_{q\in Q}\sum_{j=-j_{\text{lim}}}^{j=+j_{\text{lim}}}A_je^{i(\vec{g_j}-\frac{1}{p}\vec{q})\cdot\vec{r}+iP_{g_{j}}(\vec{r})}
 \end{gathered}
 \label{eq:SMH_3}
 \end{equation}
@@ -701,20 +695,20 @@ Using \cref{eq:SMH_2} in \cref{eq:SMH_simplified_1}, it is possible to recognize
 \noindent\colorbox{shadecolorDD}{\normalfont \textbf{Deformation gradient tensor $\nabla u$ from crystalline wave vectors}}
 \normalfont
 \item \underline{Equation}: \Cref{eq:strain_1}
-\item \underline{Description}: Let's consider $\overrightarrow{g_j} = {\overrightarrow{g}_{j}}_{uns} + \Delta \overrightarrow{g}_j$ with ${\overrightarrow{g}_{j}}_{uns}$ representing the crystalline wave vector at its unstrained state. If ${\overrightarrow{g}_{j}}_{uns}={g_{j_{x}}}_{uns}\overrightarrow{u_{x}}+{g_{j_{y}}}_{uns}\overrightarrow{u_{y}}$ and $\Delta \overrightarrow{g_{j}}=\Delta g_{j_{x}}\overrightarrow{u_{x}}+\Delta g_{j_{y}}\overrightarrow{u_{y}}$ are known in the base $\mathcal{B}$ for two non-collinear crystalline wave vectors (only valid for mono-crystalline samples \cref{A_7}), then the strain deformation tensor can be deduced by calculating first the unstrained matrix $G$ and the variation of the crystalline wave vectors matrix $\Delta G$. Then, under assumptions \cref{A_4} and \cref{A_5}, the deformation gradient tensor $\nabla u$ is estimated as the following with $I_{d}$ representing the identity matrix (see annexe D in \cite{Hytch1998} and equation (30) in \cite{Rouviere2005}). 
+\item \underline{Description}: Let's consider $\overrightarrow{g_j} = {\overrightarrow{g}_{j}}_{\text{uns}} + \Delta \overrightarrow{g}_j$ with ${\overrightarrow{g}_{j}}_{\text{uns}}$ representing the crystalline wave vector at its unstrained state. If ${\overrightarrow{g}_{j}}_{\text{uns}}={g_{j_{x}}}_{\text{uns}}\overrightarrow{u_{x}}+{g_{j_{y}}}_{\text{uns}}\overrightarrow{u_{y}}$ and $\Delta \overrightarrow{g_{j}}=\Delta g_{j_{x}}\overrightarrow{u_{x}}+\Delta g_{j_{y}}\overrightarrow{u_{y}}$ are known in the base $\mathcal{B}$ for two non-collinear crystalline wave vectors (only valid for mono-crystalline samples \cref{A_7}), then the strain deformation tensor can be deduced by calculating first the unstrained matrix $G$ and the variation of the crystalline wave vectors matrix $\Delta G$. Then, under assumptions \cref{A_4} and \cref{A_5}, the deformation gradient tensor $\nabla u$ is estimated as the following with $I_{d}$ representing the identity matrix (see annexe D in \cite{Hytch1998} and equation (30) in \cite{Rouviere2005}). 
 \begin{equation}
 \begin{gathered}
-	G_{uns} =
+	G_{\text{uns}} =
 	\begin{bmatrix}
-	{g_{1_{x}}}_{uns} & {g_{1_{y}}}_{uns} \\
-	{g_{2_{x}}}_{uns} & {g_{2_{y}}}_{uns} 
+	{g_{1_{x}}}_{\text{uns}} & {g_{1_{y}}}_{\text{uns}} \\
+	{g_{2_{x}}}_{\text{uns}} & {g_{2_{y}}}_{\text{uns}} 
 	\end{bmatrix} \\
 	\Delta G =
 	\begin{bmatrix}
 	\Delta g_{1_{x}} & \Delta g_{1_{y}} \\
 	\Delta g_{2_{x}} & \Delta g_{2_{y}} 
 	\end{bmatrix} \\
-\nabla u = ({\Delta G}^{T})^{-1}{G_{uns}}^{T}-I_{d}
+	\nabla u = ({\Delta G}^{T})^{-1}{G_{\text{uns}}}^{T}-I_{d}
 \end{gathered}
 \label{eq:strain_1}
 \end{equation}
@@ -731,13 +725,13 @@ Using \cref{eq:SMH_2} in \cref{eq:SMH_simplified_1}, it is possible to recognize
 \noindent\colorbox{shadecolorIM}{\normalfont \textbf{Simulate the SMH on a reference to determine $\overrightarrow{q_{j}}$ for each $\overrightarrow{g_j}^{M}$}}
 \normalfont
 \begin{itemize}
-\item \textbf{Input}: $I_{C_{ref}}, p$
-\item \textbf{Output}: $\widetilde{I}_{SMH_{sim}}, \overrightarrow{q_{n_j,m_j}}, \overrightarrow{g_j}^{M_{ref}}$
-\item \textbf{Description}: Considering that $I_{C_{ref}}$ represents a 2D array of the sample mono-crystalline lattice (\cref{A_6}, \cref{A_7}), the STEM Moir{\'e} hologram with a scanning grid periodicity $p$ and respecting the assumptions,\cref{A_1}, \cref{A_2}, \cref{A_3}, is simulated to compare it to the experimental STEM Moir{\'e} hologram $I_{SMH_{exp}}$ in Fourier space. Using \cref{DD_2}, the Fourier transform of the simulated STEM Moir{\'e} $\widetilde{I}_{SMH_{sim}}$ hologram is calculated using \cref{eq:SMH_FT_complete}:
+\item \textbf{Input}: $I_{\mathit{SMH}_{\text{exp}}},I_{C_{\text{ref}}}, p$
+\item \textbf{Output}: $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}, \widetilde{I}_{\mathit{SMH}_{\text{sim}}}, \overrightarrow{q_{n_j,m_j}}, \overrightarrow{g_j}^{M_{\text{ref}}}$
+\item \textbf{Description}: Considering that $I_{C_{\text{ref}}}$ represents a 2D array of the sample mono-crystalline lattice (\cref{A_6}, \cref{A_7}), the STEM Moir{\'e} hologram $I_{\mathit{SMH}_{\text{sim}}}$ with a scanning grid periodicity $p$ and respecting the assumptions,\cref{A_1}, \cref{A_2}, \cref{A_3}, is simulated to compare its Fourier transform $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}$ manually to $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ (the Fourier transform of the experimental STEM Moir{\'e} hologram $I_{\mathit{SMH}_{\text{exp}}}$). Using \cref{DD_2}, the Fourier transform of the simulated STEM Moir{\'e} $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}$ hologram is calculated using \cref{eq:SMH_FT_complete}:
 \begin{equation}
-\forall \vec{\nu} \in \Gamma, \widetilde{I}_{SMH_{sim}}(\vec{\nu})=\frac{1}{p^2}\sum_{\vec{q}\in Q_{lim}}\widetilde{I}_{C_{ref}}(\vec{\nu}-\frac{\vec{q}}{p})
+\forall \vec{\nu} \in \Gamma, \widetilde{I}_{\mathit{SMH}_{\text{sim}}}(\vec{\nu})=\frac{1}{p^2}\sum_{\vec{q}\in Q_{lim}}\widetilde{I}_{C_{\text{ref}}}(\vec{\nu}-\frac{\vec{q}}{p})
 \end{equation}
-$N_{lim}$ in $Q_{lim}$ is set with respect to the highest spatial frequency resolved in  $I_{C_{ref}}$ such that $\forall j \in [-j_{lim},j_{lim}], \ \mathcal{C}(\max(||\overrightarrow{g_j}^{C_{ref}}||)\times p) = N_{lim}$ where $\mathcal{C}$ is the ceiling function.
+$N_{\text{lim}}$ in $Q_{\text{lim}}$ is set with respect to the highest spatial frequency resolved in  $I_{C_{\text{ref}}}$ such that $\forall j \in [-j_{\text{lim}},j_{\text{lim}}], \ \mathcal{C}(\max(||\overrightarrow{g_j}^{C_{\text{ref}}}||)\times p) = N_{\text{lim}}$ where $\mathcal{C}$ is the ceiling function.
 \item \textbf{Source}: \cite{Pofelski2017}
 \item \textbf{Ref by}: \cref{IM_4}, \cref{IM_5}, \cref{DD_2}
 \end{itemize}
@@ -745,10 +739,10 @@ $N_{lim}$ in $Q_{lim}$ is set with respect to the highest spatial frequency reso
 
 \subsubsection*{Details on the extraction of $\overrightarrow{q_{n_j,m_j}}$ and $ \overrightarrow{g_j}^{M_{ref}}$}
 
-For the moment, the extraction of $\overrightarrow{q_{n_j,m_j}}$ for a specific $ \overrightarrow{g_j}^{M_{ref}}$ is manually done by the user by looking to the results of\cref{IM_1} transforming the $\overrightarrow{g_j}^{C_{ref}}$ into $\overrightarrow{g_j}^{M_{ref}}$ as the following:
+For the moment, the extraction of $\overrightarrow{q_{n_j,m_j}}$ for a specific $ \overrightarrow{g_j}^{M_{\text{ref}}}$ is manually done by the user by looking to the results of\cref{IM_1} transforming the $\overrightarrow{g_j}^{C_{\text{ref}}}$ into $\overrightarrow{g_j}^{M_{\text{ref}}}$ as the following:
 \begin{equation}
 \label{eq:sim_Moire}
-{\overrightarrow{g_j}^{C_{ref}}}-\overrightarrow{q_{n_j,m_j}}\times p =  \overrightarrow{g_j}^{M_{ref}}
+{\overrightarrow{g_j}^{C_{\text{ref}}}}-\overrightarrow{q_{n_j,m_j}}\times p =  \overrightarrow{g_j}^{M_{\text{ref}}}
 \end{equation}
 \Cref{eq:sim_Moire} comes from \cref{eq:SMH_3} by restraining $SMH_{sim}$ in $\Gamma$. Identifying the frequency component, the following condition has to be respected:
 \begin{equation*}
@@ -760,29 +754,29 @@ Since $\Gamma = [-\frac{1}{2p},\frac{1}{2p}]^{2}$, there is only one possible $\
 \noindent\colorbox{shadecolorIM}{\normalfont \textbf{GPA on a selected Moir{\'e} wave vector from $I_{SMH_{exp}}$}}
 \normalfont
 \begin{itemize}
-\item \textbf{Input}: $I_{SMH_{exp}}, M_j$
-\item \textbf{Output}: $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}, \overrightarrow{g_{j}}^{M_{exp}}, \Delta \overrightarrow{g_{j}}^{M_{exp}}$
+\item \textbf{Input}: $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}, M_j$
+\item \textbf{Output}: $P_{\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}}(\vec{r}), \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r}), \Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r})$
 \item \textbf{Description}: Applying \cref{DD_1} and using assumption \cref{A_1}, $I_{SMH_{exp}}$ can be interpreted as follows
 \begin{equation}
-\forall \vec{r} \in \mathbb{I},\ I_{SMH_{exp}}=\sum_{j=-j_{lim}}^{j=+j_{lim}}A_je^{i(\overrightarrow{g_{j}}^{M_{exp}}\cdot\vec{r}+P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}})}
+\forall \vec{r} \in \mathbb{I},\ I_{\mathit{SMH}_{\text{exp}}}=\sum_{j=-j_{\text{lim}}}^{j=+j_{\text{lim}}}A_je^{i(\overrightarrow{g_{j}}^{M_{\text{exp}}}\cdot\vec{r}+P_{\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}})}
 \end{equation}
-Applying GPA (\cref{T_2}) under the assumptions \cref{A_4} and \cref{A_5}, $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$ is extracted using a mask $M_j$ centred around $({g_{j_x}}^{M_{exp}},{g_{j_y}}^{M_{exp}})$ with $\epsilon \in \mathbb{R}$ such that
+Applying GPA (\cref{T_2}) under the assumptions \cref{A_4} and \cref{A_5}, $P_{\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}}$ is extracted using a mask $M_j$ centred around $({g_{j_x}}^{M_{\text{exp}}},{g_{j_y}}^{M_{exp}})=\overrightarrow{g_{j}}^{M_{\text{exp}}}$ with $\epsilon \in \mathbb{R}$ such that
 \begin{equation}
 \begin{gathered}
 \forall \nu \in \Gamma, M_j(\nu) = 
 \begin{cases}
-1 & \text{for} \ ||\vec{\nu}-\overrightarrow{g_{j}}^{M_{exp}}||\leq\epsilon \ / \ \forall \ l\neq j, \ ||\vec{\nu}-\overrightarrow{g_{l}}^{M_{exp}}||\geq \epsilon \\
+1 & \text{for} \ ||\vec{\nu}-\overrightarrow{g_{j}}^{M_{\text{exp}}}||\leq\epsilon \ / \ \forall \ l\neq j, \ ||\vec{\nu}-\overrightarrow{g_{l}}^{M_{\text{exp}}}||\geq \epsilon \\
 0
 \end{cases}
 \end{gathered}
 \end{equation}
-Finally considering $M_j\widetilde{I}_{SMH_{exp}}$ the masked Fourier transform of $I_{SMH_{exp}}$,
+Finally considering $M_j\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ the masked Fourier transform of $I_{\mathit{SMH}_{\text{exp}}}$,
 \begin{equation}
-\forall \vec{r} \in \mathbb{I},\ P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r})=arg(\mathcal{FT}^{-1}[M_j\widetilde{I}_{SMH_{exp}}])(\vec{r})
+\forall \vec{r} \in \mathbb{I},\ P_{\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}}(\vec{r})=arg(\mathcal{FT}^{-1}[M_j\widetilde{I}_{\mathit{SMH}_{\text{exp}}}])(\vec{r})
 \end{equation}
-Finally the gradient of the $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r})$ is calculated to extract ${\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r})$.
+Finally the gradient of the $P_{\Delta \overrightarrow{g_{j}}^{\text{exp}}}(\vec{r})$ is calculated to extract ${\Delta \overrightarrow{g_{j}}^{\text{exp}}}(\vec{r})$.
 \begin{equation}
-\forall \vec{r} \in \mathbb{I},\ \nabla P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r})=2\pi\Delta \overrightarrow{g_{j}}^{M_{exp}}(\vec{r})
+\forall \vec{r} \in \mathbb{I},\ \nabla P_{\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}}(\vec{r})=2\pi\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r})
 \end{equation}
 \item \textbf{Source}: \cite{Hytch1998}
 \item \textbf{Ref by}: \cref{IM_3}, \cref{IM_5}, \cref{DD_1}, \cref{T_2}, \cref{DD_2}
@@ -794,11 +788,11 @@ Finally the gradient of the $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r}
 \noindent\colorbox{shadecolorIM}{\normalfont \textbf{Determine an unstrained area in the geometric phase image}}
 \normalfont
 \begin{itemize}
-\item \textbf{Input}: $\Delta \overrightarrow{g_{j}}^{M_{exp}},U,p$
-\item \textbf{Output}: $\overrightarrow{g_{j}}_{uns}^{M_{exp}}$
-\item \textbf{Description}: From \cref{DD_1} and \cref{IM_2}, $\forall \vec{r} \in \mathbb{I},\  \nabla P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}} (\vec{r}) = 2\pi \Delta \overrightarrow{g_{j}}^{M_{exp}}(\vec{r})$. An area $U \in \mathbb{I}$ of $\Delta \overrightarrow{g_{j}}^{M_{exp}}$ is set by the user as an unstrained reference, so $\Delta \overrightarrow{g_{j}}^{M_{exp}}$ is set to $\overrightarrow{0}$ in $U$. The operation can be formalized as follows with $card(U)$ representing the cardinality of the set $U$.
+\item \textbf{Input}: $\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r}),U,p$
+\item \textbf{Output}: $\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}(\vec{r})$
+\item \textbf{Description}: From \cref{DD_1} and \cref{IM_2}, $\forall \vec{r} \in \mathbb{I},\  \nabla P_{\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}} (\vec{r}) = 2\pi \Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r})$. An area $U \in \mathbb{I}$ of $\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}$ is set by the user as an unstrained reference, so $\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}$ is set to $\overrightarrow{0}$ in $U$. The operation can be formalized as follows with $card(U)$ representing the cardinality of the set $U$.
 \begin{equation}
-\forall \vec{r} \in U, \ \overrightarrow{g_{j}}_{uns}^{M_{exp}}=\frac{1}{card(U)\times p^2}\sum_{\vec{r}\in U}\overrightarrow{g_{j}}^{M_{exp}}(\vec{r})
+\forall \vec{r} \in U, \ \overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}=\frac{1}{card(U)}\sum_{\vec{r}\in U}\overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r})
 \end{equation}
 \item \textbf{Source}: \cite{Hytch1998}
 \item \textbf{Ref by}: \cref{IM_2}, \cref{DD_1}, \cref{DD_3}
@@ -810,15 +804,15 @@ Finally the gradient of the $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r}
 \noindent\colorbox{shadecolorIM}{\normalfont \textbf{Convert the Moir{\'e} wave vector into the Crystalline wave vector}}
 \normalfont
 \begin{itemize}
-\item \textbf{Input}: $\overrightarrow{g_{j}}_{uns}^{M_{exp}},\Delta \overrightarrow{g_{j}}^{M_{exp}},\overrightarrow{q_{n_j,m_j}},p$
+\item \textbf{Input}: $\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}(\vec{r}),\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r}),\overrightarrow{q_{n_j,m_j}},p$
 \item \textbf{Output}: $\Delta \overrightarrow{g_{j}}^{C_{exp}},\overrightarrow{g_{j}}_{uns}^{C_{exp}}$
 \item \textbf{Description}: The conversion is a basic affine vectorial transformation and is highlighted in \cref{eq:conversion_Moire}.
 \begin{equation}
 \label{eq:conversion_Moire}
 \begin{gathered}
-\begin{cases}
-\overrightarrow{g_{j}}_{uns}^{C_{exp}}= \overrightarrow{g_{j}}_{uns}^{M_{exp}} + p \times \overrightarrow{q_{n_j,m_j}} \\
-\Delta \overrightarrow{g_{j}}^{C_{exp}}= \Delta \overrightarrow{g_{j}}^{M_{exp}} + p \times \overrightarrow{q_{n_j,m_j}}
+\forall \vec{r} \in \mathbb{I}, \ \begin{cases}
+\overrightarrow{g_{j}}_{\text{uns}}^{C_{\text{exp}}}(\vec{r})= \overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}(\vec{r}) + p \times \overrightarrow{q_{n_j,m_j}} \\
+\Delta \overrightarrow{g_{j}}^{C_{\text{exp}}}(\vec{r})= \Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r}) + p \times \overrightarrow{q_{n_j,m_j}}
 \end{cases}
 \end{gathered}
 \end{equation}
@@ -832,9 +826,41 @@ Finally the gradient of the $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r}
 \noindent\colorbox{shadecolorIM}{\normalfont \textbf{Strain calculation using 2 non-crystalline wave vectors}}
 \normalfont
 \begin{itemize}
-\item \textbf{Input}: $g_{1_{{uns}_x}}^{C_{exp}}, g_{1_{{uns}_y}}^{C_{exp}},g_{2_{{uns}_x}}^{C_{exp}}, g_{2_{{uns}_y}}^{C_{exp}}, \Delta g_{1_{x}}^{C_{exp}}, \Delta g_{1_{y}}^{C_{exp}},\Delta g_{2_{x}}^{C_{exp}},\Delta g_{2_{y}}^{C_{exp}}$
-\item \textbf{Output}: $\varepsilon_{xx},\varepsilon_{xy},\varepsilon_{yy},\omega_{xy}$, $I_{\varepsilon_{xx}},I_{\varepsilon_{xy}},I_{\varepsilon_{yy}},I_{\omega_{xy}}$
-\item \textbf{Description}: Applying \cref{DD_3} and \cref{T_3}, the matrices $G_{uns}$ and $\Delta G$ are formed to calculate the deformation gradient tensor $\nabla u$ and then the rotation $\omega$ and strain $\varepsilon$ tensors on each pixel. The data is then displayed in form of 2D arrays.
+\item \textbf{Input}: $g_{1_{{\text{uns}}_x}}^{C_{\text{exp}}}(\vec{r}), g_{1_{{\text{uns}}_y}}^{C_{\text{exp}}}(\vec{r}),g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}}(\vec{r}), g_{2_{{\text{uns}}_y}}^{C_{\text{exp}}}(\vec{r}), \Delta g_{1_{x}}^{C_{\text{exp}}}(\vec{r}), \Delta g_{1_{y}}^{C_{\text{exp}}}(\vec{r}),\Delta g_{2_{x}}^{C_{\text{exp}}}(\vec{r}),\Delta g_{2_{y}}^{C_{\text{exp}}}(\vec{r})$
+\item \textbf{Output}: $\varepsilon_{\mathit{xx}}^{\text{exp}}(\vec{r}),\varepsilon_{\mathit{xy}}^{\text{exp}}(\vec{r}),\varepsilon_{\mathit{yy}}^{\text{exp}}(\vec{r}),\omega_{\mathit{xy}}^{\text{exp}}(\vec{r})$, $I_{\varepsilon_{\mathit{xx}}^{\text{exp}}},I_{\varepsilon_{\mathit{xy}}^{\text{exp}}},I_{\varepsilon_{\mathit{yy}}^{\text{exp}}},I_{\omega_{\mathit{xy}}^{\text{exp}}}$
+\item \textbf{Description}: Applying \cref{DD_3} and \cref{T_3}, the matrices $G_{\text{uns}}^{\text{exp}}$ and $\Delta G^{\text{exp}}$ are formed to calculate the deformation gradient tensor $\nabla u^{\text{exp}}$ on each pixel as the following:
+\begin{equation}
+\begin{gathered}
+\forall \vec{r} \in \mathbb{I}, \ G_{\text{uns}}^{\text{exp}}(\vec{r}) =
+	\begin{bmatrix}
+	g_{1_{{\text{uns}}_x}}^{C_{\text{exp}}}(\vec{r}) & g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}}(\vec{r}) \\
+	g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}}(\vec{r}) & g_{2_{{\text{uns}}_y}}^{C_{\text{exp}}}(\vec{r}) 
+	\end{bmatrix} \\
+\forall \vec{r} \in \mathbb{I}, \	\Delta G^{\text{exp}}(\vec{r})=
+	\begin{bmatrix}
+	\Delta g_{1_{x}}^{C_{\text{exp}}}(\vec{r}) & \Delta g_{1_{y}}^{C_{\text{exp}}}(\vec{r}) \\
+	\Delta g_{2_{x}}^{C_{\text{exp}}}(\vec{r}) & \Delta g_{2_{y}}^{C_{\text{exp}}}(\vec{r})
+	\end{bmatrix} \\
+\forall \vec{r} \in \mathbb{I}, \	\nabla u^{\text{exp}}(\vec{r}) = ({{\Delta G^{\text{exp}}}(\vec{r})}^{T})^{-1}{{G_{\text{uns}}^{\text{exp}}}(\vec{r})}^{T}-I_{d}
+\end{gathered}
+\end{equation}
+Then, the rotation $\omega^{\text{exp}}$ and strain $\varepsilon^{\text{exp}}$ tensors are determined on each pixel as follows:
+\begin{equation}
+\begin{gathered}
+\forall \vec{r} \in \mathbb{I}, \ \nabla u^{\text{exp}}(\vec{r}) = \varepsilon^{\text{exp}}(\vec{r}) + \omega^{\text{exp}}(\vec{r}) \\
+\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	\varepsilon_{\mathit{xx}^{\text{exp}}}(\vec{r}) & \varepsilon_{\mathit{xy}^{\text{exp}}}(\vec{r}) \\
+	\varepsilon_{\mathit{xy}^{\text{exp}}}(\vec{r}) & \varepsilon_{\mathit{yy^{\text{exp}}}}(\vec{r})
+	\end{bmatrix} \\
+\forall \vec{r} \in \mathbb{I}, \ \omega^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	0 & \omega_{\mathit{xy}^{\text{exp}}}(\vec{r}) \\
+	-\omega_{\mathit{xy}^{\text{exp}}}(\vec{r}) & 0 
+	\end{bmatrix} \\ 
+\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \frac{1}{2}(\nabla u^{\text{exp}}(\vec{r})+(\nabla u^{\text{exp}}(\vec{r}))^{T}) \\
+\forall \vec{r} \in \mathbb{I}, \ \omega^{\text{exp}}(\vec{r}) = \frac{1}{2}(\nabla u^{\text{exp}}(\vec{r})-(\nabla u^{\text{exp}}(\vec{r}))^{T})
+\end{gathered}
+\end{equation}
+The data are finally displayed in form of 2D arrays, $I_{\varepsilon_{\mathit{xx}}^{\text{exp}}},I_{\varepsilon_{\mathit{xy}}^{\text{exp}}},I_{\varepsilon_{\mathit{yy}}^{\text{exp}}},I_{\omega_{\mathit{xy}}^{\text{exp}}}$.
 \item \textbf{Source}: \cite{Hytch1998,Rouviere2005}
 \item \textbf{Ref by}: \cref{IM_4}, \cref{DD_3}, \cref{T_3}
 \end{itemize}
@@ -844,7 +870,7 @@ Finally the gradient of the $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r}
 
 \begin{DC}
 \label{DC_1}
-\normalfont U should be the same in both $\Delta \overrightarrow{g_{j}}^{M_{exp}}$ with $j=\{1,2\}$ in \cref{IM_3}.
+\normalfont U should be the same in both $\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}$ with $j=\{1,2\}$ in \cref{IM_3}.
 \end{DC}    
 \begin{DC}
 \label{DC_2}
@@ -852,11 +878,11 @@ Finally the gradient of the $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r}
 \end{DC}
 \begin{DC}
 \label{DC_3}
-\normalfont Both $I_{C_{ref}}$ and $I_{SMH_{exp}}$ can be dm3 files.
+\normalfont Both $I_{\mathit{C}_{\text{ref}}}$ and $I_{\mathit{SMH_{\text{exp}}}}$ can be dm3 files.
 \end{DC}
 \begin{DC}
 \label{DC_4}
-\normalfont A typical image (2D array $I_{C_{ref}}$ or $I_{SMH_{exp}}$) is composed of $2048 \times 2048$ pixels (size of the 2D array $I_{C_{ref}}$ or $I_{SMH_{exp}}$). There is no limit in the size of the data from the theoretical point of view, however the computing power to perform the calculations is not infinite. Therefore, it is recommended to use images up to a size of $2048 \times 2048$ pixels.
+\normalfont A typical image (2D array $I_{C_{\text{ref}}}$ or $I_{\mathit{SMH_{\text{exp}}}}$) is composed of $2048 \times 2048$ pixels (size of the 2D array $I_{C_{\text{ref}}}$ or $I_{\mathit{SMH_{\text{exp}}}}$). There is no limit in the size of the data from the theoretical point of view, however the computing power to perform the calculations is not infinite. Therefore, it is recommended to use images up to a size of $2048 \times 2048$ pixels.
 \end{DC}
 
 \subsubsection{Properties of a Correct Solution} \label{sec_CorrectSolution}
@@ -866,67 +892,65 @@ The correctness of the solution must be judged by the user him/herself based on 
 
 \section{Requirements}
 
-This section provides the functional requirements, the tasks that the
-software is expected to complete, and the nonfunctional requirements, the
-qualities that the software is expected to exhibit.
+This section provides the functional requirements, the tasks that the software is expected to complete, and the nonfunctional requirements, the qualities that the software is expected to exhibit.
 
 \subsection{Functional Requirements}
 
 \begin{R}
 \label{R_1}
-\normalfont Provide an environment for the user to input $I_{SMH_{exp}}$, $p$ and $I_{C_{ref}}$.
+\normalfont Provide an environment for the user to input $I_{\mathit{SMH}_{\text{exp}}}$, $p$ and $I_{C_{\text{ref}}}$ (\cref{IM_1}).
 \end{R}
 \begin{R}
 \label{R_2}
-\normalfont Verify the format of the inputs $I_{SMH_{exp}}$ and $I_{C_{ref}}$ to be 2D arrays composed of real numbers and verify $p$ to be a real number strictly positive.
+\normalfont Verify the format of the inputs $I_{\mathit{SMH}_{\text{exp}}}$ and $I_{C_{\text{ref}}}$ to be 2D arrays composed of real numbers and verify $p$ to be a real number strictly positive (\cref{IM_1}).
 \end{R}
 \begin{R}
 \label{R_3}
-\normalfont Output $\widetilde{I}_{SMH_{exp}}$, $\widetilde{I}_{SMH_{sim}}$.
+\normalfont Output $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$, $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}$ (\cref{IM_1}).
 \end{R}
 \begin{R}
 \label{R_4}
-\normalfont Display to the user $\widetilde{I}_{SMH_{exp}}$ and $\widetilde{I}_{SMH_{sim}}$ to allow the user to determine natural integers values $n_j$ and $m_j$ from $\overrightarrow{q_{n_j,m_j}}$ for each $\overrightarrow{g_j}^{M_{ref}}$.
+\normalfont Display to the user $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ and $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}$ to allow the user to determine natural integers values $n_j$ and $m_j$ from $\overrightarrow{q_{n_j,m_j}}$ for each $\overrightarrow{g_j}^{M_{\text{ref}}}$ (\cref{IM_1}).
 \end{R}
 \begin{R}
 \label{R_5}
-\normalfont Provide an environment for the user to input $M_j$ for each $\overrightarrow{g_{j}}^{M_{exp}}$ with $j=\{1,2\}$ on $\widetilde{I}_{SMH_{exp}}$.
+\normalfont Provide an environment for the user to input $M_j$ for each $\overrightarrow{g_{j}}^{M_{\text{exp}}}$ with $j=\{1,2\}$ on $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ (\cref{IM_2}).
 \end{R}
 \begin{R}
 \label{R_6}
-\normalfont Verify both $M_j$ inputs with $j=\{1,2\}$ to be different and to be 2D arrays of real numbers with the same dimensions than $I_{SMH_{exp}}$.
+\normalfont Verify both $M_j$ inputs with $j=\{1,2\}$ to be different and to be 2D arrays of real numbers with the same dimensions than $I_{\mathit{SMH}_{\text{exp}}}$ (\cref{IM_2}).
 \end{R}
 \begin{R}
 \label{R_7}
-\normalfont Output both $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$ and $\overrightarrow{g_{j}}^{M_{exp}}$ with $j=\{1,2\}$.
+\normalfont Output both $P_{\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}}$ and $\overrightarrow{g_{j}}^{M_{\text{exp}}}$ with $j=\{1,2\}$ (\cref{IM_2}).
 \end{R}
 \begin{R}
 \label{R_8}
-\normalfont Display both $\Delta \overrightarrow{g_{j}}^{M_{exp}}$  with $j=\{1,2\}$ and provide an environment for the user to input $U$.
+\normalfont Display both $\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}$  with $j=\{1,2\}$ and provide an environment for the user to input $U$ (\cref{IM_3}).
 \end{R}
 \begin{R}
 \label{R_9}
-\normalfont Verify the input $U$ to be a 2D array of real numbers with a smaller dimensions than $I_{SMH_{exp}}$.
+\normalfont Verify the input $U$ to be a 2D array of real numbers with a smaller dimensions than $I_{\mathit{SMH}_{\text{exp}}}$ (\cref{IM_3}).
 \end{R}
 \begin{R}
 \label{R_10}
-\normalfont Output both $\overrightarrow{g_{j}}_{uns}^{M_{exp}}$ with $j=\{1,2\}$.
+\normalfont Output both $\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}$ with $j=\{1,2\}$ (\cref{IM_3}).
 \end{R}
 \begin{R}
 \label{R_11}
-\normalfont Provide an environment to the user to input the natural integers values $n_j$ and $m_j$ from $\overrightarrow{q_{n_j,m_j}}$ with $j=\{1,2\}$. 
+\normalfont Provide an environment to the user to input the natural integers values $n_j$ and $m_j$ from $\overrightarrow{q_{n_j,m_j}}$ with $j=\{1,2\}$ (\cref{IM_4}).
 \end{R}
 \begin{R}
 \label{R_12}
-\normalfont Output both  $\Delta \overrightarrow{g_{j}}^{C_{exp}}$ and both $\overrightarrow{g_{j}}_{uns}^{C_{exp}}$ with $j=\{1,2\}$.
+\normalfont Output both  $\Delta \overrightarrow{g_{j}}^{C_{\text{exp}}}$ and both $\overrightarrow{g_{j}}_{\text{uns}}^{C_{\text{exp}}}$ with $j=\{1,2\}$ (\cref{IM_4}).
 \end{R}
 \begin{R}
 \label{R_13}
-\normalfont Output $\varepsilon_{xx},\varepsilon_{xy},\varepsilon_{yy},\omega_{xy}$ on each element of the array to form $I_{\varepsilon_{xx}},I_{\varepsilon_{xy}},I_{\varepsilon_{yy}},I_{\omega_{xy}}$.
+\normalfont Output $\varepsilon_{\mathit{xx}}^{\text{exp}},\varepsilon_{\mathit{xy}}^{\text{exp}},\varepsilon_{\mathit{yy}}^{\text{exp}},\omega_{\mathit{xy}}^{\text{exp}}$ on each element of the array to form $I_{\varepsilon_{\mathit{xx}}^{\text{exp}}},I_{\varepsilon_{\mathit{xy}}^{\text{exp}}},I_{\varepsilon_{\mathit{yy}}^{\text{exp}}},I_{\omega_{\mathit{xy}}^{\text{exp}}}$ (\cref{IM_5}).
 \end{R}
 \begin{R}
 \label{R_14}
-\normalfont Display to the user $I_{\varepsilon_{xx}},I_{\varepsilon_{xy}},I_{\varepsilon_{yy}},I_{\omega_{xy}}$.
+\normalfont Display to the user $I_{\varepsilon_{\mathit{xx}}^{\text{exp}}},I_{\varepsilon_{\mathit{xy}}^{\text{exp}}},I_{\varepsilon_{\mathit{yy}}^{\text{exp}}},I_{\omega_{\mathit{xy}}^{\text{exp}}}$ (\cref{IM_5}).
 \end{R}
 
 \wss{Explicitly reference your instance models.}
@@ -1069,8 +1093,8 @@ are working on tools.  I'm sorry they aren't ready yet.  :-(}
 \hline
 	& \cref{IM_1} & \cref{IM_2} & \cref{IM_3} & \cref{IM_4} & \cref{IM_5} & \cref{R_1} & \cref{R_2} & \cref{R_3} & \cref{R_4} & \cref{R_5} & \cref{R_6} & \cref{R_7} & \cref{R_8} & \cref{R_9} & \cref{R_10} & \cref{R_11} & \cref{R_12} & \cref{R_13} & \cref{R_14} \\
 \hline
-\cref{IM_1}			& \cellcolor{gray!25}& & & & & X & & & & & & & & & & & & & \\ \hline
-\cref{IM_2}			& X &\cellcolor{gray!25} & & & & & & X & X & X & & X & X & & & & & & \\ \hline
+\cref{IM_1}			& \cellcolor{gray!25}& & & & & X & X & X & & & & & & & & & & & \\ \hline
+\cref{IM_2}			& X &\cellcolor{gray!25} & & & & X & X & X & X & X & & X & X & & & & & & \\ \hline
 \cref{IM_3}			& & X &\cellcolor{gray!25} & & & & & & & & & X & X & & X & & & & \\ \hline
 \cref{IM_4}			& X & & X &\cellcolor{gray!25} & & X & & & X & & & & X & & X & X & X & & \\ \hline
 \cref{IM_5}			& & & & X &\cellcolor{gray!25} & & & & & & & & & & & & X & X & X \\ \hline

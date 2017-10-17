@@ -1,5 +1,10 @@
 \documentclass[12pt, titlepage]{article}
 
+% Author's up-front packages
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+%Packages on template
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
@@ -10,14 +15,35 @@
     linkcolor=red,
     urlcolor=blue
 }
-\usepackage[round]{natbib}
+
+% ---- Author's choice to remove them ----
+%\usepackage[round]{natbib}
+
+% Author's packages
+\usepackage{amsmath, mathtools}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{indentfirst}
+\usepackage{cleveref}
+\usepackage{float}
+\usepackage{csquotes}
 
 \input{../Comments}
+\newcommand{\progname}{STEM Moir{\'e} GPA}
+
+	% Test
+\newtheorem{Test}{Test}
+\crefname{Test}{Test}{Tests}
 
 \begin{document}
 
-\title{Project Title} 
-\author{Author Name}
+\title{Test Plan:\\
+		STEM Moir{\'e} GPA} 
+\author{Alexandre Pofelski \\
+		macid: pofelska \\
+		github: slimpotatoes}
 \date{\today}
 	
 \maketitle
@@ -30,13 +56,13 @@
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
 \bottomrule
 \end{tabularx}
 
 ~\newpage
 
 \section{Symbols, Abbreviations and Acronyms}
+\label{symbols}
 
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l} 
@@ -61,11 +87,12 @@ Date 2 & 1.1 & Notes\\
 
 \pagenumbering{arabic}
 
-This document ...
 
 \section{General Information}
 
 \subsection{Purpose}
+
+The purpose of the document is to provide the plan for testing \progname{} software. 
 
 \subsection{Scope}
 
@@ -75,11 +102,15 @@ This document ...
 	
 \subsection{Software Description}
 
+\progname{} software is converting STEM Moir{\'e} hologram into deformation maps. Details on the goal and the requirements of \progname{} are provided in the Problem Statement and the SRS documents. Acronyms, symbols and terminologies used in the following document are the same as the ones in the SRS document.
+
 \subsection{Test Team}
 
-\wss{Probably just you.  :-)}
+The author is the only member of the test team.
 
 \subsection{Automated Testing Approach}
+
+While interesting to implement, the automatic testing is not approached in \progname{} program.
 
 \subsection{Verification Tools}
 
@@ -99,80 +130,209 @@ This document ...
 \section{System Test Description}
 	
 \subsection{Tests for Functional Requirements}
+\renewcommand{\labelitemi}{$\star$}
 
-\subsubsection{Area of Testing1}
+\subsubsection{Input Verification test}
+
+\paragraph{Test R2 in IM1}
+
+\begin{Test}\normalfont\underline{Test-Existence-SMH}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $I_{SMH_{exp}}$ user input
+\item Input: $I_{SMH_{exp}}$ = $\emptyset$
+\item Output: Error message $Err_{I_{SMH_{exp}}}$ should match: \enquote{No STEM Moir{\'e} hologram, please load a proper image}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Format-SMH}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $I_{SMH_{exp}}$ user input
+\item Input: Various $I_{SMH_{exp}}$ improper format
+\item Output: Error message $Err_{I_{SMH_{exp}}}$ should match: \enquote{Invalid STEM Moir{\'e} hologram format}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Existence-pixel}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: After importing $I_{SMH_{exp}}$ and format validated
+\item Input: $p$=$\emptyset$
+\item Output: Error message $Err_{p}$ should match: \enquote{No pixel size found}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Format-pixel}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: After importing $I_{SMH_{exp}}$ and format validated
+\item Input: Improper format of $p$
+\item Output: Error message $Err_{p}$ should match: \enquote{Invalid pixel size}
+\end{itemize}
+\end{Test}
+
+\an{Unit should be displayed .... so it should be also checked that a metric unit exist for p}
+
+\begin{Test}\normalfont\underline{Test-Format-Reference}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $I_{C_{ref}}$ user input
+\item Input: Various $I_{C_{ref}}$ improper format
+\item Output: Error message $Err_{I_{C_{ref}}}$ should match: \enquote{Invalid Reference image format}
+\end{itemize}
+\end{Test}
+
+\paragraph{Test R6 in IM2}
+
+\begin{Test}\normalfont\underline{Test-Existence-Mask}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $M$ user input on $\widetilde{I}_{SMH_{exp}}$
+\item Input: $M$=$\emptyset$
+\item Output:  Error message $Err_{M}$ should match: \enquote{No Mask found}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Format-Mask}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $M$ user input on $\widetilde{I}_{SMH_{exp}}$
+\item Input: $M$ improper format
+\item Output:  Error message $Err_{M}$ should match: \enquote{Improper mask format}
+\end{itemize}
+\end{Test}
+
+\paragraph{Test R9 in IM3}
+
+\begin{Test}\normalfont\underline{Test-Existence-U}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $U$ user input on $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$
+\item Input: $U$=$\emptyset$
+\item Output:  Error message $Err_{U}$ should match: \enquote{No reference in phase image found}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Format-U}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $U$ user input on $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$
+\item Input: $U$ improper format
+\item Output:  Error message $Err_{U}$ should match: \enquote{Improper reference in phase image format}
+\end{itemize}
+\end{Test}
+
+\subsubsection{Output Result test}
+	
+\paragraph{Test R3}
+
+\begin{Test}\normalfont\underline{bla}
+\begin{itemize}
+\item Type: Functional
+\item Initial State:
+\item Input: 
+\item Expected output
+\item Output:  
+\end{itemize}
+\end{Test}
 		
-\paragraph{Title for Test}
+\paragraph{Test R7 in IM2}
 
-\begin{enumerate}
+\begin{Test}\normalfont\underline{Test-Phase-Extraction-No-Strain}
+\begin{itemize}
+\item Type: Functional
+\item Initial State: 
+\item Input: $I_{SMH_{exp}}=e^{2i\pi gx}$, Mask $M$ of one pixel at $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$
+\item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=0$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=\overrightarrow{0}$, 
+\item Test output:${P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}$, $\Delta {\overrightarrow{g_{j}}^{M_{exp}}}^{t}$
+	\begin{itemize}
+	\item $\forall \vec{r} \in \mathbb{I}, \ E_{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})=|{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}(\vec{r})|$
+	\item $\forall \vec{r} \in \mathbb{I}, \ E_{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})=|{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}^t(\vec{r})|$
+	\end{itemize}  
+\end{itemize}
+\end{Test}
 
-\item{test-id1\\}
+\begin{Test}\normalfont\underline{Test-Phase-Extraction-Known-Strain}
+\begin{itemize}
+\item Type: Functional
+\item Initial State:
+\item Input: $I_{SMH_{exp}}=e^{2i\pi (g+K(x))x}$, Mask $M$ centred on $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$ and with the minimum radius to include $K(x)$. 
+\item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=K(x)x$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=K(x)\overrightarrow{u_x}$, 
+\item Test output:${P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}$, $\Delta {\overrightarrow{g_{j}}^{M_{exp}}}^{t}$
+	\begin{itemize}
+	\item $\forall \vec{r} \in \mathbb{I}, \ E_{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})=|{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}(\vec{r})-P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r})|$
+	\item $\forall \vec{r} \in \mathbb{I}, \ E_{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})=|{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}^t(\vec{r})-{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})|$
+	\end{itemize}  
+\end{itemize}
+\end{Test}				
+ 
+\begin{Test}\normalfont\underline{Test-Phase-Extraction-Mask}
+\begin{itemize}
+\item Type: Functional
+\item Initial State:
+\item Input: $I_{SMH_{exp}}=e^{2i\pi (g+K(x))x}$, Mask $M$ centred on $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$ with different radius $\epsilon$. 
+\item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=K(x)x$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=K(x)\overrightarrow{u_x}$, 
+\item Test output:${P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}$, $\Delta {\overrightarrow{g_{j}}^{M_{exp}}}^{t}$
+	\begin{itemize}
+	\item $\forall \vec{r} \in \mathbb{I}, \ E_{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r},\epsilon)=|{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}(\vec{r},\epsilon)-P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r})|$
+	\item $\forall \vec{r} \in \mathbb{I}, \ E_{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r},\epsilon)=|{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}^t(\vec{r},\epsilon)-{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})|$
+	\end{itemize}
+\end{itemize}
+\end{Test}						
 
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
+\paragraph{Test R10}	
 
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
+\begin{Test}\normalfont\underline{bla}
+\begin{itemize}
+\item Type: Functional
+\item Initial State:
+\item Input: 
+\item Expected output
+\item Output:  
+\end{itemize}
+\end{Test}
 
-\end{enumerate}
+\paragraph{Test R11}
 
-\subsubsection{Area of Testing2}
+\begin{Test}\normalfont\underline{bla}
+\begin{itemize}
+\item Type: Functional
+\item Initial State:
+\item Input: 
+\item Expected output
+\item Output:  
+\end{itemize}
+\end{Test}
 
-...
+\paragraph{Test R12}						
+
+\begin{Test}\normalfont\underline{bla}
+\begin{itemize}
+\item Type: Functional
+\item Initial State:
+\item Input: 
+\item Expected output
+\item Output:  
+\end{itemize}
+\end{Test}					
+
 
 \subsection{Tests for Nonfunctional Requirements}
 
 \subsubsection{Area of Testing1}
 		
-\paragraph{Title for Test}
+\paragraph{Test NR1}						
 
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: 
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Area of Testing2}
-
-...
+\begin{Test}\normalfont\underline{bla}
+\begin{itemize}
+\item Type: Functional
+\item Initial State:
+\item Input: 
+\item Expected output
+\item Output:  
+\end{itemize}
+\end{Test}	
 
 \subsection{Traceability Between Test Cases and Requirements}
 
@@ -219,9 +379,8 @@ How test will be performed:
 \wss{Unit testing plans for internal functions and, if appropriate, output
   files}
 
-\bibliographystyle{plainnat}
-
-\bibliography{SRS}
+\bibliography{TestPlan_biblio}
+\bibliographystyle{ieeetr}
 
 \newpage
 
