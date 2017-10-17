@@ -168,7 +168,11 @@ their units if applicable.
 $\mathcal{B}$ & & 2D orthonormal base \\
 $\mathcal{C}$ & & Ceiling function \\
 $\delta$ & & Dirac delta function \\
-$\Delta \overrightarrow{g_{j}}^{M_{exp}}$ & \si{\per\nano\meter} & Variation of the $j^{th}$ Moir{\'e} wave vector of $SMH_{exp}$\\
+$\Delta \overrightarrow{g_{j}}^{M_{exp}}$ & \si{\per\nano\meter} & Variation of
+the $j^{th}$ Moir{\'e} wave vector of $SMH_{exp}$ \wss{LaTeX interprets $SMH$ as
+  $S$ times $M$ time $H$ in terms of spacing.  The same applies for $exp$.  The
+  spacing would look more natural with $\text{SMH}_{\text{exp}}$.  If SMH is a
+  variable, then you want it in italic font, which would be $\mathit{SMH}_{\text{exp}}$.}\\
 $\Delta \overrightarrow{g_{j}}^{C_{exp}}$ & \si{\per\nano\meter} & Variation of the $j^{th}$ crystalline wave vector of $SMH_{exp}$\\
 $\varepsilon$ & & Strain tensor \\
 $\varepsilon_{xx}$ & & Uniaxial strain component along $\vec{u_x}$ \\
@@ -254,13 +258,21 @@ $\mathbb{Z}$ & & Set of integer numbers\\
 
 The purpose of the document is to provide a detailed description of the functional and the non-functional requirements of the \progname{} software.  The theoretical models on which the requirements are based on are also described to provide the context of each instance model.
 
+\wss{The text is better for version control, and for reading in other editors,
+  if you use a hard-wrap at 80 characters}
+
 \subsection{Scope of Requirements} 
 
 The scope of requirements are limited to the realization of \cref{GS_1} which corresponds to transform a certain type of data to another one based on multiple user inputs.
 
 \subsection{Characteristics of Intended Reader} 
 
-The intended reader is expected to have a minimum knowledge in mathematics at undergraduate level. Simplification of some physical concepts are proposed to make the document technically accessible. Nevertheless, a basic knowledge in Transmission Electron Microscopy, electron/matter interaction and elastic strain theory is recommended to get a deeper understanding of the document. 
+The intended reader is expected to have a minimum knowledge in mathematics at
+undergraduate level. Simplification of some physical concepts are proposed to
+make the document technically accessible. Nevertheless, a basic knowledge in
+Transmission Electron Microscopy, electron/matter interaction and elastic strain
+theory is recommended to get a deeper understanding of the document. \wss{Is
+  there are standard textbook, or other resource, you can point to?}
 
 \subsection{Organization of Document}
 
@@ -279,7 +291,9 @@ describes the user characteristics and lists the system constraints.
 \item User Responsibilities:
 \begin{itemize}
 \item Provide the minimum information required by the \progname{} software.
-\item Use the software in the limits it is intended to.
+\item Use the software in the limits it is intended to. \wss{This is ambiguous.
+    If the limits cannot be stated abstractly here, is there a section of the
+    SRS you can reference?  Maybe the assumptions section?}
 \item Be aware of the potential effects of user inputs on the quality of the final data.
 \item Judge the correctness of the data.
 \item Be particularly cautious on the use of the final data quantitatively. The quantitative aspect cannot be fully uncorrelated from the user inputs. 
@@ -293,13 +307,30 @@ describes the user characteristics and lists the system constraints.
 \end{itemize}
 \end{itemize}
 
+\wss{We will touch on it later when we discuss Assurance Cases, but you might
+  add a responsibility to the system to explicitly warn the user of their
+  responsibilities.  This is analogous to an electrical device that has a
+  warning to read the manual before operating.}
+
 \subsection{User Characteristics} \label{SecUserCharacteristics}
 
-The end user of \progname{} should have a relative strong background in Physics, Mathematics and Electron Microscopy to get a reliable sense of the data processed. The multiple interactions between the user and \progname{} have a significant impact on the final results which can lead to some physical misinterpretations. 
+The end user of \progname{} should have a relative strong background in Physics,
+Mathematics and Electron Microscopy to get a reliable sense of the data
+processed. The multiple interactions between the user and \progname{} have a
+significant impact on the final results which can lead to some physical
+misinterpretations. \wss{Can you be more specific about education level?}
 
 \subsection{System Constraints}
 
-\progname{} is for the moment limited to the study of mono-crystalline material undergoing a relative small deformation with respect to its unstrained state. Another constraint is to be considered because of the electron microscopy community. Most of the files acquired on the microscope are in dm3 format, an non-standard format used by the detector manufacturer. Therefore, \progname{} software needs to be able to read any dm3 files to be considered by the research community.
+\progname{} is for the moment limited to the study of mono-crystalline material
+undergoing a relative small deformation with respect to its unstrained state.
+\wss{This first point sounds like the scope of the program, not a constraint.
+  Constraints are design decisions that are imposed on you externally.  The next
+  constraints you list are good examples.} Another constraint is to be
+considered because of the electron microscopy community. Most of the files
+acquired on the microscope are in dm3 format, an non-standard format used by the
+detector manufacturer. Therefore, \progname{} software needs to be able to read
+any dm3 files to be considered by the research community.
 
 \section{Specific System Description}
 \subsection{Problem Description} \label{Sec_pd}
@@ -389,7 +420,7 @@ The physical system of \progname{}, as shown in \cref{fig:system_description}, i
 \end{A}
 \begin{A}
 \label{A_4}
-\normalfont The variation of the deformation field is small. Therefore,
+\normalfont The variation \wss{Do you mean gradient?} of the deformation field is small. Therefore,
 \begin{equation*}
 \begin{gathered}
 \forall \vec{r} \in \mathbb{R}^2, \ \nabla (\Delta\overrightarrow{g_j}\cdot\vec{r})= (\Delta\overrightarrow{g_j}\cdot\nabla)\vec{r}+(\vec{r}\cdot\nabla)\Delta\overrightarrow{g_j}+\Delta\overrightarrow{g_j}\wedge rot(\vec{r})+\vec{r}\wedge rot(\Delta\overrightarrow{g_j}))\\
@@ -569,6 +600,9 @@ arg(C_1(x))=B_1(x)
 
 Non applicable for \progname{} software.
 \an{Don't know what to put here. Don't see a clear difference between T and GD}
+\wss{Not all SRSs require a general definition.  In your case, you might just
+  want to write in this section something like: ``No general definitions are
+  needed for the current documentation.''}
 
 \subsubsection{Data Definitions}\label{sec_datadef}
 
@@ -895,6 +929,8 @@ qualities that the software is expected to exhibit.
 \normalfont Display to the user $I_{\varepsilon_{xx}},I_{\varepsilon_{xy}},I_{\varepsilon_{yy}},I_{\omega_{xy}}$.
 \end{R}
 
+\wss{Explicitly reference your instance models.}
+
 \subsection{Nonfunctional Requirements}
 
 \begin{NR}
@@ -1000,6 +1036,10 @@ The assumptions were used to cover a certain variety of sample and to not be sen
 \caption{Traceability Matrix for the theoertical models TM, the data definitions DD and the instance models IM}\label{tb:Matrix_1}
 \end{table}
 
+\wss{Why don't any of the instance models depend on T3?  The description of IM5
+  suggests a dependency.  To make generating these figures and tables easier, we
+are working on tools.  I'm sorry they aren't ready yet.  :-(}
+
 \begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
@@ -1058,6 +1098,9 @@ The assumptions were used to cover a certain variety of sample and to not be sen
 \newpage
 
 \bibliography{SRS_biblio}
+%\bibliography{../../ReferenceMaterial/References} %changed so could get bibtex
+                                %to compile
+
 \bibliographystyle{ieeetr}
 
 \end{document}
