@@ -161,11 +161,13 @@ the symbol is given followed by a description of the unit and the SI name.\par
 The table that follows summarizes the symbols used in this document along with
 their units if applicable.
 
-\renewcommand{\arraystretch}{1.2}
-%\noindent \begin{tabularx}{1.0\textwidth}{l l X}
-\noindent \begin{longtable*}{l l p{12cm}} \toprule
+%\renewcommand{\arraystretch}{1.2}
+\noindent 
+\begin{longtable*}{l l p{12cm}} 
+\toprule
 \textbf{Symbol} & \textbf{Unit} & \textbf{Description}\\
-\midrule 
+\midrule
+\endhead
 $\mathcal{B}$ & & 2D orthonormal base \\
 $\mathcal{C}$ & & Ceiling function \\
 $\delta$ & & Dirac delta function \\
@@ -246,7 +248,7 @@ $\mathbb{Z}$ & & Set of integer numbers\\
   STEM & Scanning Transmission Electron Microscopy \\
   T & Theoretical Model\\
   \bottomrule
-\end{tabular}\\
+\end{tabular}
 
 \newpage
 \pagenumbering{arabic}
@@ -727,7 +729,7 @@ Using \cref{eq:SMH_2} in \cref{eq:SMH_simplified_1}, it is possible to recognize
 \begin{itemize}
 \item \textbf{Input}: $I_{\mathit{SMH}_{\text{exp}}},I_{C_{\text{ref}}}, p$
 \item \textbf{Output}: $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}, \widetilde{I}_{\mathit{SMH}_{\text{sim}}}, \overrightarrow{q_{n_j,m_j}}, \overrightarrow{g_j}^{M_{\text{ref}}}$
-\item \textbf{Description}: Considering that $I_{C_{\text{ref}}}$ represents a 2D array of the sample mono-crystalline lattice (\cref{A_6}, \cref{A_7}), the STEM Moir{\'e} hologram $I_{\mathit{SMH}_{\text{sim}}}$ with a scanning grid periodicity $p$ and respecting the assumptions,\cref{A_1}, \cref{A_2}, \cref{A_3}, is simulated to compare its Fourier transform $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}$ manually to $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ (the Fourier transform of the experimental STEM Moir{\'e} hologram $I_{\mathit{SMH}_{\text{exp}}}$). Using \cref{DD_2}, the Fourier transform of the simulated STEM Moir{\'e} $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}$ hologram is calculated using \cref{eq:SMH_FT_complete}:
+\item \textbf{Description}: Considering that $I_{C_{\text{ref}}}$ represents a 2D array of the sample mono crystalline lattice (\cref{A_6}, \cref{A_7}), the STEM Moir{\'e} hologram $I_{\mathit{SMH}_{\text{sim}}}$ with a scanning grid periodicity $p$ and respecting the assumptions,\cref{A_1}, \cref{A_2}, \cref{A_3}, is simulated to compare its Fourier transform $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}$ manually to $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ (the Fourier transform of the experimental STEM Moir{\'e} hologram $I_{\mathit{SMH}_{\text{exp}}}$). Using \cref{DD_2}, the Fourier transform of the simulated STEM Moir{\'e} $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}$ hologram is calculated using \cref{eq:SMH_FT_complete}:
 \begin{equation}
 \forall \vec{\nu} \in \Gamma, \widetilde{I}_{\mathit{SMH}_{\text{sim}}}(\vec{\nu})=\frac{1}{p^2}\sum_{\vec{q}\in Q_{lim}}\widetilde{I}_{C_{\text{ref}}}(\vec{\nu}-\frac{\vec{q}}{p})
 \end{equation}
@@ -953,18 +955,16 @@ This section provides the functional requirements, the tasks that the software i
 \normalfont Display to the user $I_{\varepsilon_{\mathit{xx}}^{\text{exp}}},I_{\varepsilon_{\mathit{xy}}^{\text{exp}}},I_{\varepsilon_{\mathit{yy}}^{\text{exp}}},I_{\omega_{\mathit{xy}}^{\text{exp}}}$ (\cref{IM_5}).
 \end{R}
 
-\wss{Explicitly reference your instance models.}
-
 \subsection{Nonfunctional Requirements}
 
 \begin{NR}
 \label{NR_1} 
-\normalfont The software shall be reproducible on most used operating systems (Linux, Mac, Windows). Reproducibility condition is satisfied if both \cref{NR_9} and \cref{NR_8} are satisfied on the different operating systems. 
+\normalfont The software shall be reproducible on most used operating systems (Linux, Mac, Windows). The same raw data should show the same (or reasonably close to) results on the different operating systems. 
 \end{NR}
 
 \begin{NR}
 \label{NR_2} 
-\normalfont The software shall run on a classic PC desktop.
+\normalfont The software shall run on a modern desktop computer with at minimum a decent x86-CPU and a few GB of RAM.
 \end{NR}
 
 \begin{NR}
@@ -979,22 +979,22 @@ This section provides the functional requirements, the tasks that the software i
 
 \begin{NR}
 \label{NR_5} 
-\normalfont The user shall be able to extract the final data in text or csv format.
+\normalfont The user shall be able to extract the final data in text, csv or png format.
 \end{NR}
 
 \begin{NR}
 \label{NR_6} 
-\normalfont The \progname{} software shall be able to save the information processed in a temporary file to prevent a loss of information when the software or the PC crashes.
+\normalfont The \progname{} software shall be able to recover from a crash by allowing the user to resume the processing from a certain step.
 \end{NR}
 
 \begin{NR}
 \label{NR_7} 
-\normalfont When starting the \progname{} software, the existence of a temporary file should be checked and the user should be asked if he or she wants to start the software from the previously saved temporary file.
+\normalfont When starting the \progname{} software, the user should be prompted to start a new processing or to resume an already existing one.
 \end{NR}
 
 \begin{NR}
 \label{NR_8} 
-\normalfont The precision on the final results from \progname{} software should be limited only by the quality of the initial $SMH_{exp}$ and by the user inputs (\cref{LC_4}).
+\normalfont The precision on the final results from \progname{} software should be limited only by the quality of the initial $SMH_{\text{exp}}$ and by the user inputs (\cref{LC_4}).
 \end{NR}
 
 \begin{NR}
@@ -1006,7 +1006,7 @@ This section provides the functional requirements, the tasks that the software i
 
 \begin{LC}
 \label{LC_1}
-\normalfont The determination of $\overrightarrow{q_{n_j,m_j}}$ for a specific $\overrightarrow{g_j}^{M_{ref}}$ in \cref{IM_1} could be done automatically by the software. Nevertheless, the notion of "spatial frequency overlap" needs to be introduced and will complexify \progname{} software. A decision has to be made between the potential simplification of the user experience and the time needed to implement the simplification.
+\normalfont The determination of $\overrightarrow{q_{n_j,m_j}}$ for a specific $\overrightarrow{g_j}^{M_{\text{ref}}}$ in \cref{IM_1} could be done automatically by the software. Nevertheless, the notion of "spatial frequency overlap" needs to be introduced and will complexify \progname{} software. A decision has to be made between the potential simplification of the user experience and the time needed to implement the simplification.
 \end{LC}
 
 \begin{LC}
@@ -1053,16 +1053,12 @@ The assumptions were used to cover a certain variety of sample and to not be sen
 \cref{DD_3}			& & & & X & & \cellcolor{gray!25} & & & & & \\ \hline
 \cref{IM_1}			& X & & & X & X & & \cellcolor{gray!25} & & & & \\ \hline
 \cref{IM_2}			& & X & & X & X & & X & \cellcolor{gray!25} & & & \\ \hline
-\cref{IM_3}			& & & X & X & & X & & X & \cellcolor{gray!25} & & \\ \hline
+\cref{IM_3}			& & & & X & & X & & X & \cellcolor{gray!25} & & \\ \hline
 \cref{IM_4}			& X & & & X & X & & X & & X & \cellcolor{gray!25} & \\ \hline
 \cref{IM_5}			& & & X & X & & X & & & & X & \cellcolor{gray!25} \\ \hline
 \end{tabular}
 \caption{Traceability Matrix for the theoertical models TM, the data definitions DD and the instance models IM}\label{tb:Matrix_1}
 \end{table}
-
-\wss{Why don't any of the instance models depend on T3?  The description of IM5
-  suggests a dependency.  To make generating these figures and tables easier, we
-are working on tools.  I'm sorry they aren't ready yet.  :-(}
 
 \begin{table}[H]
 \centering
@@ -1088,6 +1084,7 @@ are working on tools.  I'm sorry they aren't ready yet.  :-(}
 \afterpage{
 \begin{landscape}
 \begin{table}[H]
+\setlength\tabcolsep{4pt}
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
