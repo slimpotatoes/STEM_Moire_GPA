@@ -132,6 +132,295 @@ While interesting to implement, the automatic testing is not approached in \prog
 \subsection{Tests for Functional Requirements}
 \renewcommand{\labelitemi}{$\star$}
 
+\subsubsection{Output error characterization}
+	
+\paragraph{Test R3 in IM 1: Correctness of the sampling theory application when undersampling g}
+
+\begin{Test}\normalfont\underline{Test-aliasing-frequency}
+\begin{itemize}
+\item Type: Functional, Dynamical
+\item Initial State: 
+\item Input: $I_{C_{\text{ref}}}=e^{2i\pi gx}$, $p$ such that $\overrightarrow{q}=\frac{1}{p}\vec{u_x}$
+\item Expected output : $\widetilde{I}_{\mathit{SHM}_{\text{sim}}}=\delta(\vec{\nu}-\vec{q})$
+\item Output: ${\widetilde{I}_{\mathit{SHM}_{\text{sim}}}}^{t}$ to be tested as a Dirac delta function at $\overrightarrow{q}$
+\end{itemize}
+\end{Test}
+		
+\paragraph{Test R7 in IM 2: Correctness of the GPA method application} 
+
+\begin{Test}\normalfont\underline{Test-Phase-Extraction-No-Strain}
+\label{T_Phase-Extraction-No-Strain}
+\begin{itemize}
+\item Type: Functional, Dynamical
+\item Initial State: ?
+\item Input: $I_{SMH_{exp}}=e^{2i\pi gx}$, Mask $M$ of one pixel at $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$
+\item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=0$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=\overrightarrow{0}$, 
+\item Test output:${P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}$, $\Delta {\overrightarrow{g_{j}}^{M_{exp}}}^{t}$
+	\begin{itemize}
+	\item $\forall \vec{r} \in \mathbb{I}, \ E_{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})=|{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}(\vec{r})|$
+	\item $\forall \vec{r} \in \mathbb{I}, \ E_{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})=|{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}^t(\vec{r})|$
+	\end{itemize}  
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Phase-Extraction-Known-Strain}
+\label{T_Phase-Extraction-Known-Strain}
+\begin{itemize}
+\item Type: Functional, Dynamical
+\item Initial State:
+\item Input: $I_{SMH_{exp}}=e^{2i\pi (g+K(x))x}$, Mask $M$ centred on $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$ and with the minimum radius to include $K(x)$. 
+\item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=K(x)x$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=K(x)\overrightarrow{u_x}$, 
+\item Test output:${P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}$, $\Delta {\overrightarrow{g_{j}}^{M_{exp}}}^{t}$
+	\begin{itemize}
+	\item $\forall \vec{r} \in \mathbb{I}, \ E_{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})=|{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}(\vec{r})-P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r})|$
+	\item $\forall \vec{r} \in \mathbb{I}, \ E_{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})=|{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}^t(\vec{r})-{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})|$
+	\end{itemize}  
+\end{itemize}
+\end{Test}				
+ 
+\begin{Test}\normalfont\underline{Test-Phase-Extraction-Mask}
+\label{T_Phase-Extraction-Mask}
+\begin{itemize}
+\item Type: Functional, Dynamical
+\item Initial State:
+\item Input: $I_{SMH_{exp}}=e^{2i\pi (g+K(x))x}$, Mask $M$ centred on $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$ with different radius $\epsilon$. 
+\item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=K(x)x$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=K(x)\overrightarrow{u_x}$, 
+\item Test output:${P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}$, $\Delta {\overrightarrow{g_{j}}^{M_{exp}}}^{t}$
+	\begin{itemize}
+	\item $\forall \vec{r} \in \mathbb{I}, \ E_{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r},\epsilon)=|{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}(\vec{r},\epsilon)-P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r})|$
+	\item $\forall \vec{r} \in \mathbb{I}, \ E_{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r},\epsilon)=|{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}^t(\vec{r},\epsilon)-{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})|$
+	\end{itemize}
+\end{itemize}
+\end{Test}						
+
+Because the GPA method is itself based on a approximation (see IM 2 in SRS document), errors from the algorithm are added to the errors from the code. Both are probed at the same time and cannot be fully separated. Therefore, to interpret the various 2D array errors generated from the test functions \cref{T_Phase-Extraction-Known-Strain}, \cref{T_Phase-Extraction-Mask}, the error will be characterized as a function of the mask properties (such as radius) and the deformation magnitude. This characterization will allow \progname{} to be compared with other software using the same GPA algorithm.
+
+\paragraph{Test R10 in IM 3: Correctness of the unstrained reference calculation}	
+
+\begin{Test}\normalfont\underline{Test-constant-delta-g}
+\label{T_constant-delta-g}
+\begin{itemize}
+\item Type: Functional, Dynamical
+\item Initial State: 
+\item Input: 
+	\begin{itemize}
+	\item $\forall \vec{r} \in \mathbb{I}, \  \Delta \overrightarrow{g}^{M_{\text{exp}}}(\vec{r})=\overrightarrow{C}$
+	\item $U$ array of 1 pixel wherever on $\Delta \overrightarrow{g}^{M_{\text{exp}}}(\vec{r})$
+	\item $\overrightarrow{g}^{M_{\text{exp}}}={g_x}^{M_{\text{exp}}}\overrightarrow{u_x}+{g_y}^{M_{\text{exp}}}\overrightarrow{u_y}$
+	\end{itemize} 
+\item Expected output: $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}=\overrightarrow{g}^{M_{\text{exp}}}-\overrightarrow{C}$, $\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}=\overrightarrow{0}$
+\item Output:${\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}}^{t}$ , ${\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}}^{t}$
+	\begin{itemize}
+	\item $E_{\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}}=||{\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}}^{t}-\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}||$
+	\item $\forall \vec{r} \in \mathbb{I}, \ E_{\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}}=||{\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}}^{t}||$
+\end{itemize}
+
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-constant-delta-g-with-noise}
+\label{T_constant-delta-g-with-noise}
+\begin{itemize}
+\item Type: Functional, Dynamical
+\item Initial State: 
+\item Input: 
+	\begin{itemize}
+	\item $\overrightarrow{N}$, 2D random noise
+	\item $\forall \vec{r} \in \mathbb{I}, \ \Delta \overrightarrow{g}^{M_{\text{exp}}}(\vec{r})=\overrightarrow{C} + \overrightarrow{N}$
+	\item $U$ array of $n \times m$ pixels wherever on $\Delta \overrightarrow{g}^{M_{\text{exp}}}(\vec{r})$ 
+	\item $\overrightarrow{g}^{M_{\text{exp}}}={g_x}^{M_{\text{exp}}}\overrightarrow{u_x}+{g_y}^{M_{\text{exp}}}\overrightarrow{u_y}$
+	\end{itemize}
+\item Expected output: $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}=\overrightarrow{g}^{M_{\text{exp}}}-\overrightarrow{C}$,  $\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}=\overrightarrow{0}$
+\item Output:${\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}}^{t}, {\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}}^{t}$
+	\begin{itemize}
+	\item $E_{\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}}=||{\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}}^{t}-\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}||$
+	\item $\forall \vec{r} \in \mathbb{I}, \ E_{\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}}=||{\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}}^{t}||$
+	\end{itemize}
+\end{itemize}
+\end{Test}
+
+\Cref{T_constant-delta-g-with-noise} is more representative of a real case than \cref{T_constant-delta-g} and will be use to characterize the evolution of the error with respect to the level of noise and the size of U. The evaluation of $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}$ is critical on the quantitative estimation of strain and rotation.
+
+\begin{Test}\normalfont\underline{Test-varying-delta-g}
+\label{T_varying-delta-g}
+\begin{itemize}
+\item Type: Functional, Dynamical
+\item Initial State: 
+\item Input: 
+	\begin{itemize}
+	\item $\forall \vec{r} \in \mathbb{I}, \ \overrightarrow{g}^{M_{\text{exp}}}(\vec{r})=\overrightarrow{C}(\vec{r})$
+	\item $U$ array of $n \times m$ pixels wherever on $\Delta \overrightarrow{g}^{M_{\text{exp}}}(\vec{r})$
+	\item $\overrightarrow{g}^{M_{\text{exp}}}={g_x}^{M_{\text{exp}}}\overrightarrow{u_x}+{g_y}^{M_{\text{exp}}}\overrightarrow{u_y}$
+\end{itemize}
+\item Expected output: $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}=\overrightarrow{g}^{M_{\text{exp}}}-F(\overrightarrow{C}(\vec{r}))$,   $\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}=\overrightarrow{C}(\vec{r})-F(\overrightarrow{C}(\vec{r}))$ where $F(\overrightarrow{C}(\vec{r}))$ is the best possible linear fit of $\overrightarrow{C}(\vec{r})$ in $U$.
+\item Output:${\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}}^{t}, {\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}}^{t}$
+	\begin{itemize}
+	\item $E_{\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}}=||{\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}}^{t}-\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}||$
+	\item $\forall \vec{r} \in \mathbb{I}, \ E_{\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}}=||{\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}}^{t}-\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}||$
+	\end{itemize}
+\end{itemize}
+\end{Test}
+
+\an{I don't know if \cref{T_varying-delta-g} is possible but the idea is to see the effect of a user not choosing a proper unstrained reference. If a non uniform deformation field is present in the reference, \progname{} is trying to find the best linear fit to cancel it out. However, if the quality of the fit is poor, it could be an information \progname{} could show to the user and warn of a potential problem in the reference chosen.}
+
+
+\paragraph{Test R12 in IM 5: Strain and rotation calculation correctness}						
+
+\begin{Test}\normalfont\underline{Test-No-2D-strain}
+\label{T_No-2D-strain}
+\begin{itemize}
+\item Type: Functional, Dynamical
+\item Initial State:
+\item Input:
+\begin{itemize}
+	\item $G_{\text{uns}}^{\text{exp}} =
+	\begin{bmatrix}
+	g_{1_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} \\
+	g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_y}}^{C_{\text{exp}}} 
+	\end{bmatrix} =\begin{bmatrix}
+	1 & 2 \\
+	3 & 4 
+	\end{bmatrix} $
+	\item $\Delta G^{\text{exp}}(\vec{r})=
+	\begin{bmatrix}
+	\Delta g_{1_{x}}^{C_{\text{exp}}}(\vec{r}) & \Delta g_{1_{y}}^{C_{\text{exp}}}(\vec{r}) \\
+	\Delta g_{2_{x}}^{C_{\text{exp}}}(\vec{r}) & \Delta g_{2_{y}}^{C_{\text{exp}}}(\vec{r})
+	\end{bmatrix} = \begin{bmatrix}
+	0 & 0 \\
+	0 & 0 
+	\end{bmatrix} $
+	\end{itemize} 
+\item Expected output:
+	\begin{itemize}
+	\item  $\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	\varepsilon_{\mathit{xx}^{\text{exp}}}(\vec{r}) & \varepsilon_{\mathit{xy}^{\text{exp}}}(\vec{r}) \\
+	\varepsilon_{\mathit{xy}^{\text{exp}}}(\vec{r}) & \varepsilon_{\mathit{yy^{\text{exp}}}}(\vec{r})
+	\end{bmatrix} = \begin{bmatrix}
+	0 & 0 \\
+	0 & 0 
+	\end{bmatrix} $
+	\item $\forall \vec{r} \in \mathbb{I}, \  \omega^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	0 & \omega_{\mathit{xy}^{\text{exp}}}(\vec{r}) \\
+	-\omega_{\mathit{xy}^{\text{exp}}}(\vec{r}) & 0 
+	\end{bmatrix} = \begin{bmatrix}
+	0 & 0 \\
+	0 & 0 
+	\end{bmatrix} $
+	\end{itemize}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-known-constant-2D-strain}
+\label{T_known-constant-2D-strain}
+\begin{itemize}
+\item Type: Functional, Dynamical
+\item Initial State:
+\item Input:
+\begin{itemize}
+	\item $G_{\text{uns}}^{\text{exp}} =
+	\begin{bmatrix}
+	g_{1_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} \\
+	g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_y}}^{C_{\text{exp}}} 
+	\end{bmatrix} =\begin{bmatrix}
+	1 & 2 \\
+	3 & 4 
+	\end{bmatrix} $
+	\item $\Delta G^{\text{exp}}(\vec{r})=
+	\begin{bmatrix}
+	\Delta g_{1_{x}}^{C_{\text{exp}}}(\vec{r}) & \Delta g_{1_{y}}^{C_{\text{exp}}}(\vec{r}) \\
+	\Delta g_{2_{x}}^{C_{\text{exp}}}(\vec{r}) & \Delta g_{2_{y}}^{C_{\text{exp}}}(\vec{r})
+	\end{bmatrix} = \begin{bmatrix}
+	a & b \\
+	c & d 
+	\end{bmatrix} $
+\end{itemize} 
+\item Expected output:
+
+\an { A REFAIIIIIIIIIIIIIIIIREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE }
+	\begin{itemize}
+	\item  $\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	\varepsilon_{\mathit{xx}^{\text{exp}}}(\vec{r}) & \varepsilon_{\mathit{xy}^{\text{exp}}}(\vec{r}) \\
+	\varepsilon_{\mathit{xy}^{\text{exp}}}(\vec{r}) & \varepsilon_{\mathit{yy^{\text{exp}}}}(\vec{r})
+	\end{bmatrix} = \begin{bmatrix}
+	\frac{d-2b}{ad-bc}-1 & \frac{3d-4b-c+2a}{ad-bc} \\
+	\frac{3d-4b-c+2a}{ad-bc} & \frac{4a-3c}{ad-bc}-1
+	\end{bmatrix} $
+	\item $\forall \vec{r} \in \mathbb{I}, \  \omega^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	0 & \omega_{\mathit{xy}^{\text{exp}}}(\vec{r}) \\
+	-\omega_{\mathit{xy}^{\text{exp}}}(\vec{r}) & 0 
+	\end{bmatrix} = \begin{bmatrix}
+	0 & \frac{3d-4b+c-2a}{ad-bc} \\
+	-\frac{3d-4b+c-2a}{ad-bc} & 0 
+	\end{bmatrix} $
+	\end{itemize}
+
+\item Output:  ${\varepsilon^{\text{exp}}(\vec{r})}^{t}-\varepsilon^{\text{exp}}(\vec{r}), {\omega^{\text{exp}}(\vec{r})}^{t}- \omega^{\text{exp}}(\vec{r})$  and test them to be 0
+
+The special case with $det(G_{\text{uns}}^{\text{exp}}+\Delta G^{\text{exp}})=0$ should be also tested.
+
+\end{itemize}
+\end{Test}					
+
+
+\subsection{Tests for Nonfunctional Requirements}
+
+\subsubsection{Area of Testing1}
+		
+\paragraph{Test NR1}						
+
+\begin{Test}\normalfont\underline{bla}
+\begin{itemize}
+\item Type: Functional
+\item Initial State:
+\item Input: 
+\item Expected output
+\item Output:  
+\end{itemize}
+\end{Test}	
+
+\subsection{Traceability Between Test Cases and Requirements}
+
+% \section{Tests for Proof of Concept}
+
+% \subsection{Area of Testing1}
+		
+% \paragraph{Title for Test}
+
+% \begin{enumerate}
+
+% \item{test-id1\\}
+
+% Type: Functional, Dynamic, Manual, Static etc.
+					
+% Initial State: 
+					
+% Input: 
+					
+% Output: 
+					
+% How test will be performed: 
+					
+% \item{test-id2\\}
+
+% Type: Functional, Dynamic, Manual, Static etc.
+					
+% Initial State: 
+					
+% Input: 
+					
+% Output: 
+					
+% How test will be performed: 
+
+% \end{enumerate}
+
+% \subsection{Area of Testing2}
+
+% ...
+				
+\section{Unit Testing Plan}
+		
+
 \subsubsection{Input Verification test}
 
 \paragraph{Test R2 in IM1}
@@ -223,9 +512,9 @@ While interesting to implement, the automatic testing is not approached in \prog
 \end{itemize}
 \end{Test}
 
-\subsubsection{Output Result test}
-	
-\paragraph{Test R3}
+\subsubsection{Output results test}
+
+\paragraph{Test R11 in IM 4}
 
 \begin{Test}\normalfont\underline{bla}
 \begin{itemize}
@@ -236,148 +525,6 @@ While interesting to implement, the automatic testing is not approached in \prog
 \item Output:  
 \end{itemize}
 \end{Test}
-		
-\paragraph{Test R7 in IM2}
-
-\begin{Test}\normalfont\underline{Test-Phase-Extraction-No-Strain}
-\begin{itemize}
-\item Type: Functional
-\item Initial State: 
-\item Input: $I_{SMH_{exp}}=e^{2i\pi gx}$, Mask $M$ of one pixel at $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$
-\item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=0$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=\overrightarrow{0}$, 
-\item Test output:${P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}$, $\Delta {\overrightarrow{g_{j}}^{M_{exp}}}^{t}$
-	\begin{itemize}
-	\item $\forall \vec{r} \in \mathbb{I}, \ E_{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})=|{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}(\vec{r})|$
-	\item $\forall \vec{r} \in \mathbb{I}, \ E_{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})=|{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}^t(\vec{r})|$
-	\end{itemize}  
-\end{itemize}
-\end{Test}
-
-\begin{Test}\normalfont\underline{Test-Phase-Extraction-Known-Strain}
-\begin{itemize}
-\item Type: Functional
-\item Initial State:
-\item Input: $I_{SMH_{exp}}=e^{2i\pi (g+K(x))x}$, Mask $M$ centred on $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$ and with the minimum radius to include $K(x)$. 
-\item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=K(x)x$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=K(x)\overrightarrow{u_x}$, 
-\item Test output:${P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}$, $\Delta {\overrightarrow{g_{j}}^{M_{exp}}}^{t}$
-	\begin{itemize}
-	\item $\forall \vec{r} \in \mathbb{I}, \ E_{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})=|{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}(\vec{r})-P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r})|$
-	\item $\forall \vec{r} \in \mathbb{I}, \ E_{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})=|{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}^t(\vec{r})-{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})|$
-	\end{itemize}  
-\end{itemize}
-\end{Test}				
- 
-\begin{Test}\normalfont\underline{Test-Phase-Extraction-Mask}
-\begin{itemize}
-\item Type: Functional
-\item Initial State:
-\item Input: $I_{SMH_{exp}}=e^{2i\pi (g+K(x))x}$, Mask $M$ centred on $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$ with different radius $\epsilon$. 
-\item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=K(x)x$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=K(x)\overrightarrow{u_x}$, 
-\item Test output:${P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}$, $\Delta {\overrightarrow{g_{j}}^{M_{exp}}}^{t}$
-	\begin{itemize}
-	\item $\forall \vec{r} \in \mathbb{I}, \ E_{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r},\epsilon)=|{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}(\vec{r},\epsilon)-P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r})|$
-	\item $\forall \vec{r} \in \mathbb{I}, \ E_{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r},\epsilon)=|{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}^t(\vec{r},\epsilon)-{\Delta {\overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r})|$
-	\end{itemize}
-\end{itemize}
-\end{Test}						
-
-\paragraph{Test R10}	
-
-\begin{Test}\normalfont\underline{bla}
-\begin{itemize}
-\item Type: Functional
-\item Initial State:
-\item Input: 
-\item Expected output
-\item Output:  
-\end{itemize}
-\end{Test}
-
-\paragraph{Test R11}
-
-\begin{Test}\normalfont\underline{bla}
-\begin{itemize}
-\item Type: Functional
-\item Initial State:
-\item Input: 
-\item Expected output
-\item Output:  
-\end{itemize}
-\end{Test}
-
-\paragraph{Test R12}						
-
-\begin{Test}\normalfont\underline{bla}
-\begin{itemize}
-\item Type: Functional
-\item Initial State:
-\item Input: 
-\item Expected output
-\item Output:  
-\end{itemize}
-\end{Test}					
-
-
-\subsection{Tests for Nonfunctional Requirements}
-
-\subsubsection{Area of Testing1}
-		
-\paragraph{Test NR1}						
-
-\begin{Test}\normalfont\underline{bla}
-\begin{itemize}
-\item Type: Functional
-\item Initial State:
-\item Input: 
-\item Expected output
-\item Output:  
-\end{itemize}
-\end{Test}	
-
-\subsection{Traceability Between Test Cases and Requirements}
-
-% \section{Tests for Proof of Concept}
-
-% \subsection{Area of Testing1}
-		
-% \paragraph{Title for Test}
-
-% \begin{enumerate}
-
-% \item{test-id1\\}
-
-% Type: Functional, Dynamic, Manual, Static etc.
-					
-% Initial State: 
-					
-% Input: 
-					
-% Output: 
-					
-% How test will be performed: 
-					
-% \item{test-id2\\}
-
-% Type: Functional, Dynamic, Manual, Static etc.
-					
-% Initial State: 
-					
-% Input: 
-					
-% Output: 
-					
-% How test will be performed: 
-
-% \end{enumerate}
-
-% \subsection{Area of Testing2}
-
-% ...
-				
-\section{Unit Testing Plan}
-		
-\wss{Unit testing plans for internal functions and, if appropriate, output
-  files}
 
 \bibliography{TestPlan_biblio}
 \bibliographystyle{ieeetr}

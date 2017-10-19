@@ -125,7 +125,8 @@ STEM Moir{\'e} GPA}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 4/10/2017 & 1.0 & First Draft\\
-17/10.2017 & 1.1 & Significant corrections addressing comments and mistakes\\
+17/10/2017 & 1.1 & Significant corrections addressing comments and mistakes\\
+18/10/2017 & 1.2 & Modification of \cref{IM_3} algorithm considered not enough precise\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -218,7 +219,8 @@ $\mathit{SMH}_{\text{exp}}$ & & 2D array representing the experimental STEM Moir
 $\mathit{SMH}_{\text{sim}}$ & & 2D array representing the simulated STEM Moir{\'e} Hologram \\
 $\vec{u_x}$ & & Unitary vector from base $\mathcal{B}$ \\
 $\vec{u_y}$ & & Unitary vector from base $\mathcal{B}$ \\
-$\wedge$ & & Cross product operator\\
+$\wedge$ & & Mathematical symbol for "and"\\
+$\bigwedge$ & & Cross product operator\\
 $\mathbb{Z}$ & & Set of integer numbers\\
 \bottomrule
 \end{longtable*}
@@ -414,7 +416,7 @@ The physical system of \progname{}, as shown in \cref{fig:system_description}, i
 \normalfont The gradient of the deformation field is small. Therefore,
 \begin{equation*}
 \begin{gathered}
-\forall \vec{r} \in \mathbb{R}^2, \ \nabla (\Delta\overrightarrow{g_j}\cdot\vec{r})= (\Delta\overrightarrow{g_j}\cdot\nabla)\vec{r}+(\vec{r}\cdot\nabla)\Delta\overrightarrow{g_j}+\Delta\overrightarrow{g_j}\wedge \overrightarrow{\mathit{rot}}(\vec{r})+\vec{r}\wedge \overrightarrow{\mathit{rot}}(\Delta\overrightarrow{g_j}))\\
+\forall \vec{r} \in \mathbb{R}^2, \ \nabla (\Delta\overrightarrow{g_j}\cdot\vec{r})= (\Delta\overrightarrow{g_j}\cdot\nabla)\vec{r}+(\vec{r}\cdot\nabla)\Delta\overrightarrow{g_j}+\Delta\overrightarrow{g_j}\bigwedge \overrightarrow{\mathit{rot}}(\vec{r})+\vec{r}\bigwedge \overrightarrow{\mathit{rot}}(\Delta\overrightarrow{g_j}))\\
 \forall \vec{r} \in \mathbb{R}^2, \ \nabla (\Delta\overrightarrow{g_j}\cdot\vec{r})\approx \Delta\overrightarrow{g_j}
 \end{gathered}
 \end{equation*}
@@ -710,7 +712,12 @@ Using \cref{eq:SMH_2} in \cref{eq:SMH_simplified_1}, it is possible to recognize
 	\Delta g_{1_{x}} & \Delta g_{1_{y}} \\
 	\Delta g_{2_{x}} & \Delta g_{2_{y}} 
 	\end{bmatrix} \\
-	\nabla u = ({\Delta G}^{T})^{-1}{G_{\text{uns}}}^{T}-I_{d}
+	G = G_{\text{uns}} + \Delta G = 
+	\begin{bmatrix}
+	{g_{1_{x}}}_{\text{uns}}+\Delta g_{1_{x}} & {g_{1_{y}}}_{\text{uns}} + \Delta g_{1_{y}} \\
+	{g_{2_{x}}}_{\text{uns}}+\Delta g_{2_{x}} & {g_{2_{y}}}_{\text{uns}} + \Delta g_{2_{y}} 
+	\end{bmatrix}\\
+	\nabla u = ({G}^{T})^{-1}{G_{\text{uns}}}^{T}-I_{d}
 \end{gathered}
 \label{eq:strain_1}
 \end{equation}
@@ -757,7 +764,7 @@ Since $\Gamma = [-\frac{1}{2p},\frac{1}{2p}]^{2}$, there is only one possible $\
 \normalfont
 \begin{itemize}
 \item \textbf{Input}: $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}, M_j$
-\item \textbf{Output}: $P_{\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}}(\vec{r}), \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r}), \Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r})$
+\item \textbf{Output}: $P_{\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}}(\vec{r}), \overrightarrow{g_{j}}^{M_{\text{exp}}}, \Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r})$
 \item \textbf{Description}: Applying \cref{DD_1} and using assumption \cref{A_1}, $I_{SMH_{exp}}$ can be interpreted as follows
 \begin{equation}
 \forall \vec{r} \in \mathbb{I},\ I_{\mathit{SMH}_{\text{exp}}}=\sum_{j=-j_{\text{lim}}}^{j=+j_{\text{lim}}}A_je^{i(\overrightarrow{g_{j}}^{M_{\text{exp}}}\cdot\vec{r}+P_{\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}})}
@@ -790,11 +797,18 @@ Finally the gradient of the $P_{\Delta \overrightarrow{g_{j}}^{\text{exp}}}(\vec
 \noindent\colorbox{shadecolorIM}{\normalfont \textbf{Determine an unstrained area in the geometric phase image}}
 \normalfont
 \begin{itemize}
-\item \textbf{Input}: $\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r}),U,p$
-\item \textbf{Output}: $\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}(\vec{r})$
-\item \textbf{Description}: From \cref{DD_1} and \cref{IM_2}, $\forall \vec{r} \in \mathbb{I},\  \nabla P_{\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}} (\vec{r}) = 2\pi \Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r})$. An area $U \in \mathbb{I}$ of $\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}$ is set by the user as an unstrained reference, so $\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}$ is set to $\overrightarrow{0}$ in $U$. The operation can be formalized as follows with $card(U)$ representing the cardinality of the set $U$.
+\item \textbf{Input}: $\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r}),U,\overrightarrow{g_{j}}^{M_{\text{exp}}}$
+\item \textbf{Output}: $\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}, \Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}(\vec{r})$
+\item \textbf{Description}: From \cref{DD_1} and \cref{IM_2}, $\forall \vec{r} \in \mathbb{I},\  \nabla P_{\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}} (\vec{r}) = 2\pi \Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r})$. An area $U \in \mathbb{I}$ of $\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}$ is set by the user as an unstrained reference. Therefore, $\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}$ is set to $\overrightarrow{0}$ in $U$ by correcting it with the vector $\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}$. The operation can be formalized as follows with $card(U)$ representing the cardinality of the set $U$:
 \begin{equation}
-\forall \vec{r} \in U, \ \overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}=\frac{1}{card(U)}\sum_{\vec{r}\in U}\overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r})
+\forall \vec{r} \in U, \ \exists! \ \overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}} \ | \ R=\sum_{\vec{r}\in U}{||\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r})-\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}||}^{2} \wedge \frac{dR}{d\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}}=\overrightarrow{0}
+\end{equation}
+The correction must be applied on the entire image $\mathbb{I}$ to get $\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}$ and on $\overrightarrow{g_{j}}^{M_{\text{exp}}}$ to get its corrected unstrained state $\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}$.
+\begin{equation}
+\begin{gathered}
+\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}} = \overrightarrow{g_{j}}^{M_{\text{exp}}} -\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}} \\
+\forall \vec{r} \in \mathbb{I}, \ \Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}(\vec{r})=\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r})-\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}
+\end{gathered}
 \end{equation}
 \item \textbf{Source}: \cite{Hytch1998}
 \item \textbf{Ref by}: \cref{IM_2}, \cref{DD_1}, \cref{DD_3}
@@ -806,15 +820,15 @@ Finally the gradient of the $P_{\Delta \overrightarrow{g_{j}}^{\text{exp}}}(\vec
 \noindent\colorbox{shadecolorIM}{\normalfont \textbf{Convert the Moir{\'e} wave vector into the Crystalline wave vector}}
 \normalfont
 \begin{itemize}
-\item \textbf{Input}: $\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}(\vec{r}),\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r}),\overrightarrow{q_{n_j,m_j}},p$
-\item \textbf{Output}: $\Delta \overrightarrow{g_{j}}^{C_{exp}},\overrightarrow{g_{j}}_{uns}^{C_{exp}}$
+\item \textbf{Input}: $\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}},\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}(\vec{r}),\overrightarrow{q_{n_j,m_j}},p$
+\item \textbf{Output}: $\Delta \overrightarrow{g_{j}}^{C_{exp}}(\vec{r}),\overrightarrow{g_{j}}_{uns}^{C_{exp}}$
 \item \textbf{Description}: The conversion is a basic affine vectorial transformation and is highlighted in \cref{eq:conversion_Moire}.
 \begin{equation}
 \label{eq:conversion_Moire}
 \begin{gathered}
 \forall \vec{r} \in \mathbb{I}, \ \begin{cases}
-\overrightarrow{g_{j}}_{\text{uns}}^{C_{\text{exp}}}(\vec{r})= \overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}(\vec{r}) + p \times \overrightarrow{q_{n_j,m_j}} \\
-\Delta \overrightarrow{g_{j}}^{C_{\text{exp}}}(\vec{r})= \Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r}) + p \times \overrightarrow{q_{n_j,m_j}}
+\overrightarrow{g_{j}}_{\text{uns}}^{C_{\text{exp}}}= \overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}} + p \times \overrightarrow{q_{n_j,m_j}} \\
+\Delta \overrightarrow{g_{j}}^{C_{\text{exp}}}(\vec{r})= \Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}(\vec{r}) + p \times \overrightarrow{q_{n_j,m_j}}
 \end{cases}
 \end{gathered}
 \end{equation}
@@ -828,22 +842,23 @@ Finally the gradient of the $P_{\Delta \overrightarrow{g_{j}}^{\text{exp}}}(\vec
 \noindent\colorbox{shadecolorIM}{\normalfont \textbf{Strain calculation using 2 non-crystalline wave vectors}}
 \normalfont
 \begin{itemize}
-\item \textbf{Input}: $g_{1_{{\text{uns}}_x}}^{C_{\text{exp}}}(\vec{r}), g_{1_{{\text{uns}}_y}}^{C_{\text{exp}}}(\vec{r}),g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}}(\vec{r}), g_{2_{{\text{uns}}_y}}^{C_{\text{exp}}}(\vec{r}), \Delta g_{1_{x}}^{C_{\text{exp}}}(\vec{r}), \Delta g_{1_{y}}^{C_{\text{exp}}}(\vec{r}),\Delta g_{2_{x}}^{C_{\text{exp}}}(\vec{r}),\Delta g_{2_{y}}^{C_{\text{exp}}}(\vec{r})$
+\item \textbf{Input}: $g_{1_{{\text{uns}}_x}}^{C_{\text{exp}}}, g_{1_{{\text{uns}}_y}}^{C_{\text{exp}}},g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}}, g_{2_{{\text{uns}}_y}}^{C_{\text{exp}}}, \Delta g_{1_{x}}^{C_{\text{exp}}}(\vec{r}), \Delta g_{1_{y}}^{C_{\text{exp}}}(\vec{r}),\Delta g_{2_{x}}^{C_{\text{exp}}}(\vec{r}),\Delta g_{2_{y}}^{C_{\text{exp}}}(\vec{r})$
 \item \textbf{Output}: $\varepsilon_{\mathit{xx}}^{\text{exp}}(\vec{r}),\varepsilon_{\mathit{xy}}^{\text{exp}}(\vec{r}),\varepsilon_{\mathit{yy}}^{\text{exp}}(\vec{r}),\omega_{\mathit{xy}}^{\text{exp}}(\vec{r})$, $I_{\varepsilon_{\mathit{xx}}^{\text{exp}}},I_{\varepsilon_{\mathit{xy}}^{\text{exp}}},I_{\varepsilon_{\mathit{yy}}^{\text{exp}}},I_{\omega_{\mathit{xy}}^{\text{exp}}}$
 \item \textbf{Description}: Applying \cref{DD_3} and \cref{T_3}, the matrices $G_{\text{uns}}^{\text{exp}}$ and $\Delta G^{\text{exp}}$ are formed to calculate the deformation gradient tensor $\nabla u^{\text{exp}}$ on each pixel as the following:
 \begin{equation}
 \begin{gathered}
-\forall \vec{r} \in \mathbb{I}, \ G_{\text{uns}}^{\text{exp}}(\vec{r}) =
+\forall \vec{r} \in \mathbb{I}, \ G_{\text{uns}}^{\text{exp}} =
 	\begin{bmatrix}
-	g_{1_{{\text{uns}}_x}}^{C_{\text{exp}}}(\vec{r}) & g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}}(\vec{r}) \\
-	g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}}(\vec{r}) & g_{2_{{\text{uns}}_y}}^{C_{\text{exp}}}(\vec{r}) 
+	g_{1_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} \\
+	g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_y}}^{C_{\text{exp}}} 
 	\end{bmatrix} \\
 \forall \vec{r} \in \mathbb{I}, \	\Delta G^{\text{exp}}(\vec{r})=
 	\begin{bmatrix}
 	\Delta g_{1_{x}}^{C_{\text{exp}}}(\vec{r}) & \Delta g_{1_{y}}^{C_{\text{exp}}}(\vec{r}) \\
 	\Delta g_{2_{x}}^{C_{\text{exp}}}(\vec{r}) & \Delta g_{2_{y}}^{C_{\text{exp}}}(\vec{r})
 	\end{bmatrix} \\
-\forall \vec{r} \in \mathbb{I}, \	\nabla u^{\text{exp}}(\vec{r}) = ({{\Delta G^{\text{exp}}}(\vec{r})}^{T})^{-1}{{G_{\text{uns}}^{\text{exp}}}(\vec{r})}^{T}-I_{d}
+	\forall \vec{r} \in \mathbb{I}, \	G^{\text{exp}}(\vec{r})= G_{\text{uns}}^{\text{exp}} + \Delta G^{\text{exp}}(\vec{r})\\
+\forall \vec{r} \in \mathbb{I}, \	\nabla u^{\text{exp}}(\vec{r}) = ({{G^{\text{exp}}}(\vec{r})}^{T})^{-1}{{G_{\text{uns}}^{\text{exp}}}}^{T}-I_{d}
 \end{gathered}
 \end{equation}
 Then, the rotation $\omega^{\text{exp}}$ and strain $\varepsilon^{\text{exp}}$ tensors are determined on each pixel as follows:
@@ -936,7 +951,7 @@ This section provides the functional requirements, the tasks that the software i
 \end{R}
 \begin{R}
 \label{R_10}
-\normalfont Output both $\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}$ with $j=\{1,2\}$ (\cref{IM_3}).
+\normalfont Output both $\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}$ and $\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}$ with $j=\{1,2\}$ (\cref{IM_3}).
 \end{R}
 \begin{R}
 \label{R_11}
