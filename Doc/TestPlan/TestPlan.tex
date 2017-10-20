@@ -7,7 +7,24 @@
 %Packages on template
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{xr-hyper}
 \usepackage{hyperref}
+
+
+% ---- Author's choice to remove them ----
+%\usepackage[round]{natbib}
+
+% Author's packages
+
+\usepackage{amsmath, mathtools}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{indentfirst}
+\usepackage{float}
+\usepackage{csquotes}
+\usepackage{cleveref}
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -15,23 +32,45 @@
     linkcolor=red,
     urlcolor=blue
 }
+\newcommand{\progname}{STEM Moir{\'e} GPA}
+\externaldocument[ext:]{../SRS/SRS}
 
-% ---- Author's choice to remove them ----
-%\usepackage[round]{natbib}
+%Set the custom referencing system (author's initiative)
+	% Goal Statement
+\newtheorem{GS}{GS}
+\crefname{GS}{GS}{GSs}
+	% Assumption
+\newtheorem{A}{A}
+\crefname{A}{A}{As}
+	% Theoretical Model
+\newtheorem{T}{T}
+\crefname{T}{T}{Ts}
+	% Data Definition
+\newtheorem{DD}{DD}
+\crefname{DD}{DD}{DDs}
+	% Data Constraints
+\newtheorem{DC}{DC}
+\crefname{DC}{DC}{DCs}
+	% Instance Model
+\newtheorem{IM}{IM}
+\crefname{IM}{IM}{IMs}
+	% General Definition
+\newtheorem{GD}{GD}
+\crefname{GD}{GD}{GDs}
+	% Requirement
+\newtheorem{R}{R}
+\crefname{R}{R}{Rs}
+	% Non Functional Requirement
+\newtheorem{NR}{NR}
+\crefname{NR}{NR}{NRs}
+	% Likely change
+\newtheorem{LC}{LC}
+\crefname{LC}{LC}{LCs}
 
-% Author's packages
-\usepackage{amsmath, mathtools}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{cite}
-\usepackage{indentfirst}
-\usepackage{cleveref}
-\usepackage{float}
-\usepackage{csquotes}
+
 
 \input{../Comments}
-\newcommand{\progname}{STEM Moir{\'e} GPA}
+
 
 	% Test
 \newtheorem{Test}{Test}
@@ -110,7 +149,7 @@ The author is the only member of the test team.
 
 \subsection{Automated Testing Approach}
 
-While interesting to implement, the automatic testing is not approached in \progname{} program.
+blbabla
 
 \subsection{Verification Tools}
 
@@ -134,7 +173,7 @@ While interesting to implement, the automatic testing is not approached in \prog
 
 \subsubsection{Output error characterization}
 	
-\paragraph{Test R3 in IM 1: Correctness of the sampling theory application when undersampling g}
+\paragraph{Test \cref{ext:R_3} in \cref{ext:IM_1}: Correctness of the sampling theory application when undersampling g}
 
 \begin{Test}\normalfont\underline{Test-aliasing-frequency}
 \begin{itemize}
@@ -146,7 +185,7 @@ While interesting to implement, the automatic testing is not approached in \prog
 \end{itemize}
 \end{Test}
 		
-\paragraph{Test R7 in IM 2: Correctness of the GPA method application} 
+\paragraph{Test \cref{ext:R_7} in \cref{ext:IM_2}: Correctness of the GPA method application} 
 
 \begin{Test}\normalfont\underline{Test-Phase-Extraction-No-Strain}
 \label{T_Phase-Extraction-No-Strain}
@@ -193,9 +232,9 @@ While interesting to implement, the automatic testing is not approached in \prog
 \end{itemize}
 \end{Test}						
 
-Because the GPA method is itself based on a approximation (see IM 2 in SRS document), errors from the algorithm are added to the errors from the code. Both are probed at the same time and cannot be fully separated. Therefore, to interpret the various 2D array errors generated from the test functions \cref{T_Phase-Extraction-Known-Strain}, \cref{T_Phase-Extraction-Mask}, the error will be characterized as a function of the mask properties (such as radius) and the deformation magnitude. This characterization will allow \progname{} to be compared with other software using the same GPA algorithm.
+Because the GPA method is itself based on a approximation (see IM 2 in SRS document), errors from the algorithm are added to the errors from the code. Both are probed at the same time in the tests and cannot be fully separated. Therefore, to interpret the various 2D array errors generated from the test functions \cref{T_Phase-Extraction-Known-Strain}, \cref{T_Phase-Extraction-Mask}, the error will be characterized as a function of the mask properties (such as radius) and the deformation magnitude. This characterization will allow the GPA algorithm of \progname{} to be compared with other software using the same GPA algorithm.
 
-\paragraph{Test R10 in IM 3: Correctness of the unstrained reference calculation}	
+\paragraph{Test \cref{ext:R_10} in \cref{ext:IM_3}: Correctness of the unstrained reference calculation}	
 
 \begin{Test}\normalfont\underline{Test-constant-delta-g}
 \label{T_constant-delta-g}
@@ -264,7 +303,179 @@ Because the GPA method is itself based on a approximation (see IM 2 in SRS docum
 \an{I don't know if \cref{T_varying-delta-g} is possible but the idea is to see the effect of a user not choosing a proper unstrained reference. If a non uniform deformation field is present in the reference, \progname{} is trying to find the best linear fit to cancel it out. However, if the quality of the fit is poor, it could be an information \progname{} could show to the user and warn of a potential problem in the reference chosen.}
 
 
-\paragraph{Test R12 in IM 5: Strain and rotation calculation correctness}						
+
+
+
+\subsection{Tests for Nonfunctional Requirements}
+
+\subsubsection{Evolution of accuracy with noise of \progname{}}
+		
+\paragraph{Test \cref{ext:NR_8} and \cref{ext:NR_9}}						
+
+\begin{Test}\normalfont\underline{bla}
+\begin{itemize}
+\item Type: Functional, Dynimical, Black box
+\item Initial State: All parameters are predefined except the STEM Moir{\'e} holograms
+\item Input: STEM Moir{\'e} holograms with different level of noise: 
+	\begin{itemize}
+	\item	$I_{\mathit{SMH}_\text{exp}}^{1} = I(\vec{r})^{1} + N(\vec{r})$ with $I^1$ a perfect SMH and $N$ a random noise
+	\item  $I_{\mathit{SMH}_\text{exp}}^{2} = I(\vec{r})^{2} + N(\vec{r})$ with $I^2$ another perfect SMH and $N$ the same random noise
+	\end{itemize}
+
+\item Expected output
+\item Output:  
+\end{itemize}
+\end{Test}	
+
+\subsection{Traceability Between Test Cases and Requirements}
+
+% \section{Tests for Proof of Concept}
+
+% \subsection{Area of Testing1}
+		
+% \paragraph{Title for Test}
+
+% \begin{enumerate}
+
+% \item{test-id1\\}
+
+% Type: Functional, Dynamic, Manual, Static etc.
+					
+% Initial State: 
+					
+% Input: 
+					
+% Output: 
+					
+% How test will be performed: 
+					
+% \item{test-id2\\}
+
+% Type: Functional, Dynamic, Manual, Static etc.
+					
+% Initial State: 
+					
+% Input: 
+					
+% Output: 
+					
+% How test will be performed: 
+
+% \end{enumerate}
+
+% \subsection{Area of Testing2}
+
+% ...
+				
+\section{Unit Testing Plan}
+		
+
+\subsubsection{Input Verification test}
+
+\paragraph{Test \cref{ext:R_2} in \cref{ext:IM_1}}
+
+\begin{Test}\normalfont\underline{Test-Existence-SMH}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $I_{SMH_{exp}}$ user input
+\item Input: $I_{SMH_{exp}}$ = $\emptyset$
+\item Output: Error message $Err_{I_{SMH_{exp}}}$ should match: \enquote{No STEM Moir{\'e} hologram, please load a proper image}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Format-SMH}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $I_{SMH_{exp}}$ user input
+\item Input: Various $I_{SMH_{exp}}$ improper format
+\item Output: Error message $Err_{I_{SMH_{exp}}}$ should match: \enquote{Invalid STEM Moir{\'e} hologram format}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Existence-pixel}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: After importing $I_{SMH_{exp}}$ and format validated
+\item Input: $p$=$\emptyset$
+\item Output: Error message $Err_{p}$ should match: \enquote{No pixel size found}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Format-pixel}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: After importing $I_{SMH_{exp}}$ and format validated
+\item Input: Improper format of $p$
+\item Output: Error message $Err_{p}$ should match: \enquote{Invalid pixel size}
+\end{itemize}
+\end{Test}
+
+\an{Unit should be displayed .... so it should be also checked that a metric unit exist for p}
+
+\begin{Test}\normalfont\underline{Test-Format-Reference}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $I_{C_{ref}}$ user input
+\item Input: Various $I_{C_{ref}}$ improper format
+\item Output: Error message $Err_{I_{C_{ref}}}$ should match: \enquote{Invalid Reference image format}
+\end{itemize}
+\end{Test}
+
+\paragraph{Test \cref{ext:R_6} in \cref{ext:IM_2}}
+
+\begin{Test}\normalfont\underline{Test-Existence-Mask}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $M$ user input on $\widetilde{I}_{SMH_{exp}}$
+\item Input: $M$=$\emptyset$
+\item Output:  Error message $Err_{M}$ should match: \enquote{No Mask found}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Format-Mask}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $M$ user input on $\widetilde{I}_{SMH_{exp}}$
+\item Input: $M$ improper format
+\item Output:  Error message $Err_{M}$ should match: \enquote{Improper mask format}
+\end{itemize}
+\end{Test}
+
+\paragraph{Test \cref{ext:R_9} in \cref{ext:IM_3}}
+
+\begin{Test}\normalfont\underline{Test-Existence-U}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $U$ user input on $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$
+\item Input: $U$=$\emptyset$
+\item Output:  Error message $Err_{U}$ should match: \enquote{No reference in phase image found}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Format-U}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $U$ user input on $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$
+\item Input: $U$ improper format
+\item Output:  Error message $Err_{U}$ should match: \enquote{Improper reference in phase image format}
+\end{itemize}
+\end{Test}
+
+\subsubsection{Output results test}
+
+\paragraph{Test \cref{ext:R_11} in \cref{ext:IM_4}}
+
+\begin{Test}\normalfont\underline{bla}
+\begin{itemize}
+\item Type: Functional
+\item Initial State:
+\item Input: 
+\item Expected output
+\item Output:  
+\end{itemize}
+\end{Test}
+
+\paragraph{Test\cref{ext:R_12} in \cref{ext:IM_5}: Strain and rotation calculation correctness}						
 
 \begin{Test}\normalfont\underline{Test-No-2D-strain}
 \label{T_No-2D-strain}
@@ -322,36 +533,84 @@ Because the GPA method is itself based on a approximation (see IM 2 in SRS docum
 	g_{1_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} \\
 	g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_y}}^{C_{\text{exp}}} 
 	\end{bmatrix} =\begin{bmatrix}
-	1 & 2 \\
-	3 & 4 
-	\end{bmatrix} $
-	\item $\Delta G^{\text{exp}}(\vec{r})=
+	1 & 0 \\
+	0 & 1 
+	\end{bmatrix}$
+	\item Various $\Delta G^{\text{exp}}(\vec{r}) =
 	\begin{bmatrix}
 	\Delta g_{1_{x}}^{C_{\text{exp}}}(\vec{r}) & \Delta g_{1_{y}}^{C_{\text{exp}}}(\vec{r}) \\
 	\Delta g_{2_{x}}^{C_{\text{exp}}}(\vec{r}) & \Delta g_{2_{y}}^{C_{\text{exp}}}(\vec{r})
-	\end{bmatrix} = \begin{bmatrix}
-	a & b \\
-	c & d 
+	\end{bmatrix}$
+		\begin{itemize}
+		\item Uniaxial strain along $\vec{u_x}$, $\Delta G^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	0.1 & 0 \\
+	0 & 0 
 	\end{bmatrix} $
+		\item Uniaxial strain along $\vec{u_y}$, $\Delta G^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	0 & 0 \\
+	0 & 0.1 
+	\end{bmatrix} $
+		\item Pure shear strain, $\Delta G^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	0 & 0.1 \\
+	0.1 & 0 
+	\end{bmatrix} $
+		\item Pure rotation, $\Delta G^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	0 & 0.1 \\
+	-0.1 & 0 
+	\end{bmatrix} $
+		\end{itemize}	
+	
 \end{itemize} 
 \item Expected output:
-
-\an { A REFAIIIIIIIIIIIIIIIIREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE }
 	\begin{itemize}
-	\item  $\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \begin{bmatrix}
-	\varepsilon_{\mathit{xx}^{\text{exp}}}(\vec{r}) & \varepsilon_{\mathit{xy}^{\text{exp}}}(\vec{r}) \\
-	\varepsilon_{\mathit{xy}^{\text{exp}}}(\vec{r}) & \varepsilon_{\mathit{yy^{\text{exp}}}}(\vec{r})
-	\end{bmatrix} = \begin{bmatrix}
-	\frac{d-2b}{ad-bc}-1 & \frac{3d-4b-c+2a}{ad-bc} \\
-	\frac{3d-4b-c+2a}{ad-bc} & \frac{4a-3c}{ad-bc}-1
-	\end{bmatrix} $
-	\item $\forall \vec{r} \in \mathbb{I}, \  \omega^{\text{exp}}(\vec{r}) = \begin{bmatrix}
-	0 & \omega_{\mathit{xy}^{\text{exp}}}(\vec{r}) \\
-	-\omega_{\mathit{xy}^{\text{exp}}}(\vec{r}) & 0 
-	\end{bmatrix} = \begin{bmatrix}
-	0 & \frac{3d-4b+c-2a}{ad-bc} \\
-	-\frac{3d-4b+c-2a}{ad-bc} & 0 
-	\end{bmatrix} $
+	\item Uniaxial strain along $\vec{u_x}$,\\
+	\newline
+	$\begin{cases} 
+	\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	-\frac{1}{11} & 0 \\
+	0 & 0
+	\end{bmatrix}  \\
+	\forall \vec{r} \in \mathbb{I}, \  \omega^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	0 & 0 \\
+	0 & 0 
+	\end{bmatrix} 
+	\end{cases}$
+	\item Uniaxial strain along $\vec{u_y}$,\\
+	\newline
+	$\begin{cases} 
+	\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	0 & 0 \\
+	0 & -\frac{1}{11}
+	\end{bmatrix}  \\
+	\forall \vec{r} \in \mathbb{I}, \  \omega^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	0 & 0 \\
+	0 & 0 
+	\end{bmatrix} 
+	\end{cases}$
+	\item Pure shear strain,\\
+	\newline
+	$\begin{cases} 
+	\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	0 & -\frac{1}{11} \\
+	-\frac{1}{11} & 0
+	\end{bmatrix}  \\
+	\forall \vec{r} \in \mathbb{I}, \  \omega^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	0 & 0 \\
+	0 & 0 
+	\end{bmatrix} 
+	\end{cases}$
+	\item Pure rotation,\\
+	\newline
+	$\begin{cases} 
+	\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	0 & 0 \\
+	0 & 0
+	\end{bmatrix}  \\
+	\forall \vec{r} \in \mathbb{I}, \  \omega^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	0 & \frac{1}{11} \\
+	-\frac{1}{11} & 0 
+	\end{bmatrix} 
+	\end{cases}$
 	\end{itemize}
 
 \item Output:  ${\varepsilon^{\text{exp}}(\vec{r})}^{t}-\varepsilon^{\text{exp}}(\vec{r}), {\omega^{\text{exp}}(\vec{r})}^{t}- \omega^{\text{exp}}(\vec{r})$  and test them to be 0
@@ -360,171 +619,6 @@ The special case with $det(G_{\text{uns}}^{\text{exp}}+\Delta G^{\text{exp}})=0$
 
 \end{itemize}
 \end{Test}					
-
-
-\subsection{Tests for Nonfunctional Requirements}
-
-\subsubsection{Area of Testing1}
-		
-\paragraph{Test NR1}						
-
-\begin{Test}\normalfont\underline{bla}
-\begin{itemize}
-\item Type: Functional
-\item Initial State:
-\item Input: 
-\item Expected output
-\item Output:  
-\end{itemize}
-\end{Test}	
-
-\subsection{Traceability Between Test Cases and Requirements}
-
-% \section{Tests for Proof of Concept}
-
-% \subsection{Area of Testing1}
-		
-% \paragraph{Title for Test}
-
-% \begin{enumerate}
-
-% \item{test-id1\\}
-
-% Type: Functional, Dynamic, Manual, Static etc.
-					
-% Initial State: 
-					
-% Input: 
-					
-% Output: 
-					
-% How test will be performed: 
-					
-% \item{test-id2\\}
-
-% Type: Functional, Dynamic, Manual, Static etc.
-					
-% Initial State: 
-					
-% Input: 
-					
-% Output: 
-					
-% How test will be performed: 
-
-% \end{enumerate}
-
-% \subsection{Area of Testing2}
-
-% ...
-				
-\section{Unit Testing Plan}
-		
-
-\subsubsection{Input Verification test}
-
-\paragraph{Test R2 in IM1}
-
-\begin{Test}\normalfont\underline{Test-Existence-SMH}
-\begin{itemize}
-\item Type: Dynamical
-\item Initial State: Waiting for $I_{SMH_{exp}}$ user input
-\item Input: $I_{SMH_{exp}}$ = $\emptyset$
-\item Output: Error message $Err_{I_{SMH_{exp}}}$ should match: \enquote{No STEM Moir{\'e} hologram, please load a proper image}
-\end{itemize}
-\end{Test}
-
-\begin{Test}\normalfont\underline{Test-Format-SMH}
-\begin{itemize}
-\item Type: Dynamical
-\item Initial State: Waiting for $I_{SMH_{exp}}$ user input
-\item Input: Various $I_{SMH_{exp}}$ improper format
-\item Output: Error message $Err_{I_{SMH_{exp}}}$ should match: \enquote{Invalid STEM Moir{\'e} hologram format}
-\end{itemize}
-\end{Test}
-
-\begin{Test}\normalfont\underline{Test-Existence-pixel}
-\begin{itemize}
-\item Type: Dynamical
-\item Initial State: After importing $I_{SMH_{exp}}$ and format validated
-\item Input: $p$=$\emptyset$
-\item Output: Error message $Err_{p}$ should match: \enquote{No pixel size found}
-\end{itemize}
-\end{Test}
-
-\begin{Test}\normalfont\underline{Test-Format-pixel}
-\begin{itemize}
-\item Type: Dynamical
-\item Initial State: After importing $I_{SMH_{exp}}$ and format validated
-\item Input: Improper format of $p$
-\item Output: Error message $Err_{p}$ should match: \enquote{Invalid pixel size}
-\end{itemize}
-\end{Test}
-
-\an{Unit should be displayed .... so it should be also checked that a metric unit exist for p}
-
-\begin{Test}\normalfont\underline{Test-Format-Reference}
-\begin{itemize}
-\item Type: Dynamical
-\item Initial State: Waiting for $I_{C_{ref}}$ user input
-\item Input: Various $I_{C_{ref}}$ improper format
-\item Output: Error message $Err_{I_{C_{ref}}}$ should match: \enquote{Invalid Reference image format}
-\end{itemize}
-\end{Test}
-
-\paragraph{Test R6 in IM2}
-
-\begin{Test}\normalfont\underline{Test-Existence-Mask}
-\begin{itemize}
-\item Type: Dynamical
-\item Initial State: Waiting for $M$ user input on $\widetilde{I}_{SMH_{exp}}$
-\item Input: $M$=$\emptyset$
-\item Output:  Error message $Err_{M}$ should match: \enquote{No Mask found}
-\end{itemize}
-\end{Test}
-
-\begin{Test}\normalfont\underline{Test-Format-Mask}
-\begin{itemize}
-\item Type: Dynamical
-\item Initial State: Waiting for $M$ user input on $\widetilde{I}_{SMH_{exp}}$
-\item Input: $M$ improper format
-\item Output:  Error message $Err_{M}$ should match: \enquote{Improper mask format}
-\end{itemize}
-\end{Test}
-
-\paragraph{Test R9 in IM3}
-
-\begin{Test}\normalfont\underline{Test-Existence-U}
-\begin{itemize}
-\item Type: Dynamical
-\item Initial State: Waiting for $U$ user input on $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$
-\item Input: $U$=$\emptyset$
-\item Output:  Error message $Err_{U}$ should match: \enquote{No reference in phase image found}
-\end{itemize}
-\end{Test}
-
-\begin{Test}\normalfont\underline{Test-Format-U}
-\begin{itemize}
-\item Type: Dynamical
-\item Initial State: Waiting for $U$ user input on $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$
-\item Input: $U$ improper format
-\item Output:  Error message $Err_{U}$ should match: \enquote{Improper reference in phase image format}
-\end{itemize}
-\end{Test}
-
-\subsubsection{Output results test}
-
-\paragraph{Test R11 in IM 4}
-
-\begin{Test}\normalfont\underline{bla}
-\begin{itemize}
-\item Type: Functional
-\item Initial State:
-\item Input: 
-\item Expected output
-\item Output:  
-\end{itemize}
-\end{Test}
 
 \bibliography{TestPlan_biblio}
 \bibliographystyle{ieeetr}

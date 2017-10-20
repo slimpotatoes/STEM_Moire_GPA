@@ -10,7 +10,7 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{colortbl}
-\usepackage{xr}
+\usepackage{xr-hyper}
 \usepackage{hyperref}
 \usepackage{longtable}
 \usepackage{xfrac}
@@ -746,7 +746,7 @@ $N_{\text{lim}}$ in $Q_{\text{lim}}$ is set with respect to the highest spatial 
 \end{itemize}
 \end{IM}
 
-\subsubsection*{Details on the extraction of $\overrightarrow{q_{n_j,m_j}}$ and $ \overrightarrow{g_j}^{M_{ref}}$}
+\subsubsection*[Extraction q and g]{Details on the extraction of $\overrightarrow{q_{n_j,m_j}}$ and $\overrightarrow{g_j}^{M_{ref}}$}
 
 For the moment, the extraction of $\overrightarrow{q_{n_j,m_j}}$ for a specific $ \overrightarrow{g_j}^{M_{\text{ref}}}$ is manually done by the user by looking to the results of\cref{IM_1} transforming the $\overrightarrow{g_j}^{C_{\text{ref}}}$ into $\overrightarrow{g_j}^{M_{\text{ref}}}$ as the following:
 \begin{equation}
@@ -758,6 +758,7 @@ For the moment, the extraction of $\overrightarrow{q_{n_j,m_j}}$ for a specific 
 (\overrightarrow{g_j}^{C_{ref}}-\overrightarrow{q}\times p) \in \Gamma
 \end{equation*}
 Since $\Gamma = [-\frac{1}{2p},\frac{1}{2p}]^{2}$, there is only one possible $\overrightarrow{q}\times p$ vector that transform $\overrightarrow{g_j}^{C_{ref}}$ in $\Gamma$. Naming the only option $\overrightarrow{q_{n_j,m_j}}$ and the result of the transformation $\overrightarrow{g_j}^{M_{ref}}$ (as the Moir{\'e} wave vector), equation \cref{eq:sim_Moire} can be deduced. By choosing a Moir{\'e} wave vector in \cref{IM_2} $\overrightarrow{g_j}^{M_{ref}}$, the user selects the only possible $\overrightarrow{q_{n_j,m_j}}$ that is going to used in \cref{IM_4}.
+
 \begin{IM}
 \label{IM_2}
 \noindent\colorbox{shadecolorIM}{\normalfont \textbf{GPA on a selected Moir{\'e} wave vector from $I_{SMH_{exp}}$}}
