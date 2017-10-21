@@ -175,7 +175,8 @@ blbabla
 	
 \paragraph{Test \cref{ext:R_3} in \cref{ext:IM_1}: Correctness of the sampling theory application when undersampling g}
 
-\begin{Test}\normalfont\underline{Test-aliasing-frequency}
+\begin{Test}\normalfont\underline{Test-aliasing-frequency-simple}
+\label{aliasing-frequency-simple}
 \begin{itemize}
 \item Type: Functional, Dynamical
 \item Initial State: 
@@ -184,6 +185,8 @@ blbabla
 \item Output: ${\widetilde{I}_{\mathit{SHM}_{\text{sim}}}}^{t}$ to be tested as a Dirac delta function at $\overrightarrow{q}$
 \end{itemize}
 \end{Test}
+		
+The position in frequency space of the aliased frequency (transformation of one g from Ic to one g of IM) is key to identify the vector $\overrightarrow{q_{n,m}}$. \Cref{aliasing-frequency-simple} is designed to check if the most basic transformation when under sampling is correctly performed. More complex versions of \Cref{aliasing-frequency-simple} can be designed with reference functions having, for example, a continuous description in Fourier space. Nevertheless, the more complex tests will cover way more cases than what $I_{C_{\text{ref}}}$ typically is (a sparse function). Depending on the time availability, a more complete version of \cref{aliasing-frequency-simple} will be designed.
 		
 \paragraph{Test \cref{ext:R_7} in \cref{ext:IM_2}: Correctness of the GPA method application} 
 
@@ -232,7 +235,7 @@ blbabla
 \end{itemize}
 \end{Test}						
 
-Because the GPA method is itself based on a approximation (see IM 2 in SRS document), errors from the algorithm are added to the errors from the code. Both are probed at the same time in the tests and cannot be fully separated. Therefore, to interpret the various 2D array errors generated from the test functions \cref{T_Phase-Extraction-Known-Strain}, \cref{T_Phase-Extraction-Mask}, the error will be characterized as a function of the mask properties (such as radius) and the deformation magnitude. This characterization will allow the GPA algorithm of \progname{} to be compared with other software using the same GPA algorithm.
+Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} in SRS document), errors from the algorithm are added to the errors from the code. Both are probed at the same time in the tests and cannot be fully separated. \Cref{T_Phase-Extraction-No-Strain} is probing the accuracy and the precision in the most basic case possible (no strain) and is a first indicator of the \cref{ext:IM_2} performance. \cref{T_Phase-Extraction-Known-Strain} and \cref{T_Phase-Extraction-Mask} are closer to a real case scenario and highlight a more realistic version of \cref{ext:IM_2} performance. To get quantitative trends, the error will be characterized as a function of the mask properties (such as the radius) and the deformation magnitude. This characterization will allow the GPA algorithm of \progname{} to be compared with other software using the same GPA algorithm. Another interest of the performance characterization is to see a quantitative effect of the user inputs on \cref{ext:IM_2} and provide a ``good practice guidance'' in the user manual.
 
 \paragraph{Test \cref{ext:R_10} in \cref{ext:IM_3}: Correctness of the unstrained reference calculation}	
 
@@ -252,10 +255,11 @@ Because the GPA method is itself based on a approximation (see IM 2 in SRS docum
 	\begin{itemize}
 	\item $E_{\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}}=||{\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}}^{t}-\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}||$
 	\item $\forall \vec{r} \in \mathbb{I}, \ E_{\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}}=||{\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}}^{t}||$
-\end{itemize}
-
+	\end{itemize}
 \end{itemize}
 \end{Test}
+
+\Cref{T_constant-delta-g} is not realistic but test the code directly. Increasing the size of U, should have absolutely no effect on the output. 
 
 \begin{Test}\normalfont\underline{Test-constant-delta-g-with-noise}
 \label{T_constant-delta-g-with-noise}
@@ -300,102 +304,75 @@ Because the GPA method is itself based on a approximation (see IM 2 in SRS docum
 \end{itemize}
 \end{Test}
 
-\an{I don't know if \cref{T_varying-delta-g} is possible but the idea is to see the effect of a user not choosing a proper unstrained reference. If a non uniform deformation field is present in the reference, \progname{} is trying to find the best linear fit to cancel it out. However, if the quality of the fit is poor, it could be an information \progname{} could show to the user and warn of a potential problem in the reference chosen.}
-
-
-
+\Cref{T_varying-delta-g} might be impossible to properly interpret but the idea is to see the effect an improper choice of an unstrained reference. If a non uniform deformation field is present in the reference, \progname{} is trying to find the best linear fit to cancel it out. A solution is proposed whatever the precision of the fit. However, if the quality of the fit is poor, it could be possible that \progname{} informs/warns the user of a potential problem in the reference chosen.
 
 
 \subsection{Tests for Nonfunctional Requirements}
 
-\subsubsection{Evolution of accuracy with noise of \progname{}}
+\subsubsection{Evolution of precision with noise in \progname{}}
 		
 \paragraph{Test \cref{ext:NR_8} and \cref{ext:NR_9}}						
 
-\begin{Test}\normalfont\underline{bla}
+\begin{Test}\normalfont\underline{Test-Black-Box-STEM-Moir{\'e}-GPA}
+\label{black_box_STEM_Moire_GPA}
 \begin{itemize}
 \item Type: Functional, Dynimical, Black box
-\item Initial State: All parameters are predefined except the STEM Moir{\'e} holograms
-\item Input: STEM Moir{\'e} holograms with different level of noise: 
+\item Initial State: All user inputs are predefined ($p,M_1,M_2,U,\overrightarrow{q_{n_1,m_1}},\overrightarrow{q_{n_2,m_2}}$) except the STEM Moir{\'e} hologram
+\item Input: STEM Moir{\'e} holograms with different level of noise (from no noise to high level of noise): 
 	\begin{itemize}
-	\item	$I_{\mathit{SMH}_\text{exp}}^{1} = I(\vec{r})^{1} + N(\vec{r})$ with $I^1$ a perfect SMH and $N$ a random noise
-	\item  $I_{\mathit{SMH}_\text{exp}}^{2} = I(\vec{r})^{2} + N(\vec{r})$ with $I^2$ another perfect SMH and $N$ the same random noise
+	\item	$I_{\mathit{SMH}_\text{exp}} = I(\vec{r}) + N(\vec{r})$ with $I$ a perfect SMH (with a defined strain field $\varepsilon(\vec{r})$ and rotation field $\omega(\vec{r})$) and $N$ a random noise
 	\end{itemize}
-
-\item Expected output
-\item Output:  
+\item Expected output $\forall \vec{r} \in \mathbb{I}, \ \varepsilon(\vec{r})^{t}=\varepsilon(\vec{r}) \wedge \omega\vec({r})^{t}=\omega(\vec{r})$
+\item Output:
+	\begin{itemize}
+	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\varepsilon}=|\varepsilon(\vec{r})^{t}-\varepsilon(\vec{r})|$
+	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\omega}=|\omega(\vec{r})^{t}-\omega(\vec{r})|$
+	\end{itemize}
 \end{itemize}
-\end{Test}	
+\end{Test}
+
+\Cref{black_box_STEM_Moire_GPA} looks more like a validation test than a verification test. Nevertheless, \cref{black_box_STEM_Moire_GPA} is highlighting the accuracy (with no noise), and the precision (with noise) of \progname{} seen by the end-user (code, user and algorithm errors included). The performance is then characterized as the error output function of the noise (or of the quality factor of $I_{\mathit{SMH}_{\text{exp}}}$ like the signal on noise ratio $SNR=\frac{I_{\mathit{SMH}_\text{exp}}}{N}$). The performance characterization can be used to see from which quality factor the accuracy and sensitivity of \progname{} is too poor to consider the strain and rotation results reliable and warn the user in this case. The performance graph can also be as a base of comparison with another software (if it exists) doing the same data treatment.
 
 \subsection{Traceability Between Test Cases and Requirements}
 
-% \section{Tests for Proof of Concept}
-
-% \subsection{Area of Testing1}
-		
-% \paragraph{Title for Test}
-
-% \begin{enumerate}
-
-% \item{test-id1\\}
-
-% Type: Functional, Dynamic, Manual, Static etc.
-					
-% Initial State: 
-					
-% Input: 
-					
-% Output: 
-					
-% How test will be performed: 
-					
-% \item{test-id2\\}
-
-% Type: Functional, Dynamic, Manual, Static etc.
-					
-% Initial State: 
-					
-% Input: 
-					
-% Output: 
-					
-% How test will be performed: 
-
-% \end{enumerate}
-
-% \subsection{Area of Testing2}
-
-% ...
 				
 \section{Unit Testing Plan}
 		
-
 \subsubsection{Input Verification test}
 
-\paragraph{Test \cref{ext:R_2} in \cref{ext:IM_1}}
+\paragraph{Test \cref{ext:R_2} in \cref{ext:IM_1}: Existence and Format of $I_{\mathit{SMH}_{\text{exp}}}$, $I_{C_{\text{ref}}}$ and $p$}
 
 \begin{Test}\normalfont\underline{Test-Existence-SMH}
 \begin{itemize}
 \item Type: Dynamical
-\item Initial State: Waiting for $I_{SMH_{exp}}$ user input
-\item Input: $I_{SMH_{exp}}$ = $\emptyset$
-\item Output: Error message $Err_{I_{SMH_{exp}}}$ should match: \enquote{No STEM Moir{\'e} hologram, please load a proper image}
+\item Initial State: Waiting for $I_{\mathit{SMH}_{\text{exp}}}$ user input
+\item Input: $I_{\mathit{SMH}_{\text{exp}}}$ = $\emptyset$
+\item Output: Error message $Err_{I_{\mathit{SMH}_{\text{exp}}}}$ should match: \enquote{No STEM Moir{\'e} hologram, please load a proper image}
 \end{itemize}
 \end{Test}
 
 \begin{Test}\normalfont\underline{Test-Format-SMH}
 \begin{itemize}
 \item Type: Dynamical
-\item Initial State: Waiting for $I_{SMH_{exp}}$ user input
-\item Input: Various $I_{SMH_{exp}}$ improper format
-\item Output: Error message $Err_{I_{SMH_{exp}}}$ should match: \enquote{Invalid STEM Moir{\'e} hologram format}
+\item Initial State: Waiting for $I_{\mathit{SMH}_{\text{exp}}}$ user input
+\item Input: Various $I_{\mathit{SMH}_{\text{exp}}}$ improper format
+\item Output: Error message $Err_{I_{\mathit{SMH}_{\text{exp}}}}$ should match: \enquote{Invalid STEM Moir{\'e} hologram format (expecting a 2D array)}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-read-dm3-format}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $I_{\mathit{SMH}_{\text{exp}}}$ or $I_{C_{\text{ref}}}$ user input
+\item Input: Pre defined random 2D array in dm3 format with specific tags (calibration, microscope, high tension, ...)
+\item Output: Read the tag from the dm3 file and and test each tag collected with the pre defined tags
 \end{itemize}
 \end{Test}
 
 \begin{Test}\normalfont\underline{Test-Existence-pixel}
 \begin{itemize}
 \item Type: Dynamical
-\item Initial State: After importing $I_{SMH_{exp}}$ and format validated
+\item Initial State: After importing $I_{\mathit{SMH}_{\text{exp}}}$ and format validated
 \item Input: $p$=$\emptyset$
 \item Output: Error message $Err_{p}$ should match: \enquote{No pixel size found}
 \end{itemize}
@@ -404,29 +381,37 @@ Because the GPA method is itself based on a approximation (see IM 2 in SRS docum
 \begin{Test}\normalfont\underline{Test-Format-pixel}
 \begin{itemize}
 \item Type: Dynamical
-\item Initial State: After importing $I_{SMH_{exp}}$ and format validated
+\item Initial State: After importing $I_{\mathit{SMH}_{\text{exp}}}$ and format validated
 \item Input: Improper format of $p$
 \item Output: Error message $Err_{p}$ should match: \enquote{Invalid pixel size}
 \end{itemize}
 \end{Test}
 
-\an{Unit should be displayed .... so it should be also checked that a metric unit exist for p}
-
 \begin{Test}\normalfont\underline{Test-Format-Reference}
 \begin{itemize}
 \item Type: Dynamical
-\item Initial State: Waiting for $I_{C_{ref}}$ user input
-\item Input: Various $I_{C_{ref}}$ improper format
-\item Output: Error message $Err_{I_{C_{ref}}}$ should match: \enquote{Invalid Reference image format}
+\item Initial State: Waiting for $I_{C_{\text{ref}}}$ user input
+\item Input: Various $I_{C_{\text{ref}}}$ improper format
+\item Output: Error message $Err_{I_{C_{\text{ref}}}}$ should match: \enquote{Invalid Reference image format (expecting a 2D array)}
 \end{itemize}
 \end{Test}
 
-\paragraph{Test \cref{ext:R_6} in \cref{ext:IM_2}}
+\begin{Test}\normalfont\underline{Test-Existence-Reference}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $I_{C_{\text{ref}}}$ user input
+\item Input: $I_{C_{\text{ref}}}$ = $\emptyset$
+\item Output: Error message $Err_{I_{C_{\text{ref}}}}$ should match: \enquote{No Reference image, please load a proper image}
+\end{itemize}
+\end{Test}
+
+
+\paragraph{Test \cref{ext:R_6} in \cref{ext:IM_2}: Test of the mask user input}
 
 \begin{Test}\normalfont\underline{Test-Existence-Mask}
 \begin{itemize}
 \item Type: Dynamical
-\item Initial State: Waiting for $M$ user input on $\widetilde{I}_{SMH_{exp}}$
+\item Initial State: Waiting for $M$ user input on $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$
 \item Input: $M$=$\emptyset$
 \item Output:  Error message $Err_{M}$ should match: \enquote{No Mask found}
 \end{itemize}
@@ -435,13 +420,24 @@ Because the GPA method is itself based on a approximation (see IM 2 in SRS docum
 \begin{Test}\normalfont\underline{Test-Format-Mask}
 \begin{itemize}
 \item Type: Dynamical
-\item Initial State: Waiting for $M$ user input on $\widetilde{I}_{SMH_{exp}}$
-\item Input: $M$ improper format
+\item Initial State: Waiting for $M$ user input on $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$
+\item Input: $M$ improper format (such as 1D array, 2D array out of bounds if  
 \item Output:  Error message $Err_{M}$ should match: \enquote{Improper mask format}
 \end{itemize}
 \end{Test}
 
-\paragraph{Test \cref{ext:R_9} in \cref{ext:IM_3}}
+\begin{Test}\normalfont\underline{Test-Position-Radius-Mask}
+\begin{itemize}
+\item Type: Dynamical
+\item Initial State: Waiting for $M$ user input on $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$
+\item Input: Mask center =$(0,0)$, Mask radius=3
+\item Output: Center of the circle mask positioned in the middle of the 2D array $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ and with a radius of 3 pixels
+\end{itemize}
+\end{Test}
+
+\an{Technically, the GUI should be also tested. Is the position of the pointer corresponding to the area pointed ? Is the area pointed corresponding to the center of the circle mask ? ... but it starts to get very long} 
+
+\paragraph{Test \cref{ext:R_9} in \cref{ext:IM_3}: Test of the unstrained region user input}
 
 \begin{Test}\normalfont\underline{Test-Existence-U}
 \begin{itemize}
@@ -461,21 +457,40 @@ Because the GPA method is itself based on a approximation (see IM 2 in SRS docum
 \end{itemize}
 \end{Test}
 
-\subsubsection{Output results test}
-
-\paragraph{Test \cref{ext:R_11} in \cref{ext:IM_4}}
-
-\begin{Test}\normalfont\underline{bla}
+\begin{Test}\normalfont\underline{Test-Position-U}
 \begin{itemize}
-\item Type: Functional
-\item Initial State:
-\item Input: 
-\item Expected output
-\item Output:  
+\item Type: Dynamical
+\item Initial State: Waiting for $U$ user input on $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$
+\item Input: Position left top corner=$(10,10)$, Position right bottom corner=$(30,40)$
+\item Output: Rectangle center position $(20,25)$, short length $l=20$ pixels and longh length $L=30$ pixels
 \end{itemize}
 \end{Test}
 
-\paragraph{Test\cref{ext:R_12} in \cref{ext:IM_5}: Strain and rotation calculation correctness}						
+\an{GUI should be tested again here}
+
+\subsubsection{Output results test}
+
+\paragraph{Test \cref{ext:R_11} in \cref{ext:IM_4}: Affine vectorial transformation}
+
+\begin{Test}\normalfont\underline{Test-Basic-affine-transformation}
+\begin{itemize}
+\item Type: Functional, Dynamical
+\item Initial State: 
+\item Input: $\overrightarrow{q_{n,m}}=\begin{bmatrix}
+1 \\
+-2
+\end{bmatrix}$, $\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}=\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}=\begin{bmatrix}
+1 \\
+1
+\end{bmatrix}$, $p=3$
+\item Output:  $\overrightarrow{g_{j}}_{\text{uns}}^{C_{\text{exp}}}=\Delta\overrightarrow{g_{j}}^{C_{\text{exp}}}=\begin{bmatrix}
+4\\
+-5
+\end{bmatrix}$
+\end{itemize}
+\end{Test}
+
+\paragraph{Test\cref{ext:R_12} in \cref{ext:IM_5}: Strain and rotation calculation}						
 
 \begin{Test}\normalfont\underline{Test-No-2D-strain}
 \label{T_No-2D-strain}
@@ -616,9 +631,48 @@ Because the GPA method is itself based on a approximation (see IM 2 in SRS docum
 \item Output:  ${\varepsilon^{\text{exp}}(\vec{r})}^{t}-\varepsilon^{\text{exp}}(\vec{r}), {\omega^{\text{exp}}(\vec{r})}^{t}- \omega^{\text{exp}}(\vec{r})$  and test them to be 0
 
 The special case with $det(G_{\text{uns}}^{\text{exp}}+\Delta G^{\text{exp}})=0$ should be also tested.
-
 \end{itemize}
-\end{Test}					
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Improper-$\Delta G^{\text{exp}}$}
+\label{T_Bad-G_ref}
+\begin{itemize}
+\item Type: Functional, Dynamical
+\item Initial State: Whatever $\Delta G^{\text{exp}}(\vec{r})$
+\item Input:
+\begin{itemize}
+	\item $G_{\text{uns}}^{\text{exp}} =
+	\begin{bmatrix}
+	g_{1_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} \\
+	g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_y}}^{C_{\text{exp}}} 
+	\end{bmatrix} =\begin{bmatrix}
+	1 & 1 \\
+	1 & 1 
+	\end{bmatrix} $
+	\end{itemize} 
+\item Output:
+Error message $Err_{G_{\text{uns}}^{\text{exp}}}$ should match: \enquote{Matrix $G_{\text{uns}}^{\text{exp}}$ non invertible, the crystalline wave vectors are liked (collinear). Please chose another combination of crystalline wave vectors.}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Improper-$G_{\text{uns}}^{\text{exp}}$}
+\label{T_Bad-Delta-G}
+\begin{itemize}
+\item Type: Functional, Dynamical
+\item Initial State: 
+\item Input:
+\begin{itemize}
+	\item $\Delta G^{\text{exp}}+G_{\text{uns}}^{\text{exp}} =
+	\begin{bmatrix}
+	1 & 1 \\
+	1 & 1 
+	\end{bmatrix} $
+	\end{itemize} 
+\item Output:
+Error message $Err_{\Delta G^{\text{exp}}}$ should match: \enquote{Matrix $G^{\text{exp}}$ non invertible. If  $G_{\text{uns}}^{\text{exp}}$ is invertible, something is probably wrong with $\Delta G^{\text{exp}}$.}
+\end{itemize}
+\end{Test}
+					
 
 \bibliography{TestPlan_biblio}
 \bibliographystyle{ieeetr}
