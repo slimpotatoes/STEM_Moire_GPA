@@ -3,6 +3,7 @@
 % Author's up-front packages
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{longtable}
 
 %Packages on template
 \usepackage{booktabs}
@@ -66,15 +67,12 @@
 	% Likely change
 \newtheorem{LC}{LC}
 \crefname{LC}{LC}{LCs}
-
-
-
-\input{../Comments}
-
-
 	% Test
 \newtheorem{Test}{Test}
 \crefname{Test}{Test}{Tests}
+
+\input{../Comments}
+
 
 \begin{document}
 
@@ -91,19 +89,22 @@
 
 \section{Revision History}
 
+\begin{table}[h]
+\caption{\bf Revision History}
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
+21/10/2017 & 1.0 & First Draft\\
 \bottomrule
 \end{tabularx}
+\end{table}
 
 ~\newpage
 
 \section{Symbols, Abbreviations and Acronyms}
 \label{symbols}
 
-Symbols, Abbreviations and Acronyms used in the Test Plan document are regrouped under the following table and in \cref{ext:table_symbols_SRS} and in \cref{ext:table_acro_SRS} of the SRS document. \newline
+Symbols, Abbreviations and Acronyms used in the Test Plan document are regrouped under the following table and in \cref{ext:table_symbols_SRS} and in \cref{ext:table_acro_SRS} of the SRS document. \par\medskip
 
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l} 
@@ -113,7 +114,8 @@ Symbols, Abbreviations and Acronyms used in the Test Plan document are regrouped
   GUI & Graphical Unit Interface \\
   N/A & Non-Applicable \\
   \bottomrule
-\end{tabular}\\
+  \label{table_acro_Test_Plan}
+\end{tabular}
 
 
 \newpage
@@ -140,7 +142,7 @@ The purpose of the document is to provide the plan for testing \progname{} softw
 The scope of the test plan is described below:
 \begin{itemize}
 \item \progname{} will be written in Python.
-\item The proposed test plan is focusing on system and unit testing to verify the functional and non functional requirements of \progname{}. Because of the nature of the instance models \cref{ext:IM_1}, \cref{ext:IM_2} and \cref{ext:IM_3}, a complete verification of their respective outputs is not possible. In this case, the system tests are designed as validation tests (including algorithm errors) and might not catch a code error. A physical understanding of the test output is recommended to interpret properly its quantitative aspect. A judgement by the test team on the quality of the test results (reasonable error?) is required to validate the test. 
+\item The proposed test plan is focusing on system and unit testing to verify the functional and non functional requirements of \progname{}. Because of the nature of the instance models \cref{ext:IM_1}, \cref{ext:IM_2} and \cref{ext:IM_3}, a complete verification of their respective outputs is not possible. In this case, the system tests are designed as validation tests (including algorithm errors) and might not catch a code error. A physical understanding of the test output is recommended to interpret properly its quantitative aspect. An assessment by the test team on the quality of the test results is required to validate the test (reasonable error?). 
 \item Regarding the numerous requirements of \progname{} and their relative complexity to be fully verified, only a portion of \progname{} is proposed to be tested. A specific focus is proposed on key aspects that are identified as the highest potential source of errors. The testing of the GUI won't be approached in this document but should be definitely considered in the future.
 \end{itemize}
 
@@ -154,17 +156,15 @@ Based on the scope of the test plan, only \cref{ext:R_2}, \cref{ext:R_3}, \cref{
 
 \subsection{Test Team}
 
-The author is the only member of the test team.
+The author of the document is the only member of the test team.
 
 \subsection{Automated Testing Approach}
 
-blbabla
+By predefining some user inputs, an automated testing approach can be considered. The unit tests and most of the system tests will be executed and validated automatically. Some system tests (\cref{T_Phase-Extraction-No-Strain}, \cref{T_Phase-Extraction-Known-Strain}, \cref{T_Phase-Extraction-Mask}, \cref{T_constant-delta-g-with-noise}, \cref{T_varying-delta-g}, \cref{black_box_STEM_Moire_GPA}) require at least a manual assessment of the test results and are thus removed from the automated scope. 
 
 \subsection{Verification Tools}
 
-\wss{Thoughts on what tools to use, such as the following: unit testing
-  framework, valgrind, static analyzer, make, continuous integration, test
-  coverage tool, etc.}
+With respect to the limited experience of the test team regarding verification and validation, only a unit test framework is going to be used as verification tools. \textbf{Pytest}, a Python unit test framework, will be used to test \progname{} software.
 
 \subsection{Non-Testing Based Verification}
 
@@ -334,18 +334,32 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{itemize}
 \end{Test}
 
-\Cref{black_box_STEM_Moire_GPA} looks more like a validation test than a verification test. Nevertheless, if the error is unreasonably high in \cref{black_box_STEM_Moire_GPA}, it is a good indication that there might be a mistake somewhere in the code. On the validation side, \cref{black_box_STEM_Moire_GPA} is highlighting the accuracy (without noise), and the precision (with noise) of \progname{} seen by the end-user (code, user and algorithm errors included). The performance is then characterized as the error output function of the noise (or of the quality factor of $I_{\mathit{SMH}_{\text{exp}}}$ like the signal on noise ratio $SNR=\frac{I_{\mathit{SMH}_\text{exp}}}{N}$). The performance characterization can be used to see from which quality factor the accuracy and sensitivity of \progname{} is too poor to consider the strain and rotation results reliable and warn the user in this case. The performance graph can also be as a base of comparison with another software (if it exists) doing the same data treatment.
+\Cref{black_box_STEM_Moire_GPA} looks more like a validation test than a verification test. Nevertheless, if the error in \cref{black_box_STEM_Moire_GPA} is unreasonably high, it is possible to consider the presence of a mistake in the code somewhere. On the validation side, \cref{black_box_STEM_Moire_GPA} is highlighting the accuracy (without noise), and the precision (with noise) of \progname{} seen by the end-user (code, user and algorithm errors included). The performance is then characterized as the error output function of the noise (or of the quality factor of $I_{\mathit{SMH}_{\text{exp}}}$ like the signal on noise ratio $\mathit{SNR}=\frac{I_{\mathit{SMH}_\text{exp}}}{N}$). The performance characterization can be used to see from which quality factor the accuracy and sensitivity of \progname{} is too poor to consider the strain and rotation results reliable and warn the user in this case. The performance graph can also be as a base of comparison with another software (if it exists) doing the same data treatment.
 
-\subsection{Traceability Between Test Cases and Requirements}
+\subsubsection{Evolution of the time calculations with data size}
+		
+\paragraph{Test \cref{ext:NR_2}}
+
+\begin{Test}\normalfont\underline{Test-stress-STEM-Moir{\'e}-GPA}
+\label{stress_test_STEM_Moire_GPA}
+\begin{itemize}
+\item Type: Functional, Dynimical, Black box
+\item Initial State: All user inputs are predefined ($p,M_1,M_2,U,\overrightarrow{q_{n_1,m_1}},\overrightarrow{q_{n_2,m_2}}$) except the STEM Moir{\'e} hologram
+\item Input: STEM Moir{\'e} holograms with different 2D array size.
+\item Expected output $\forall \vec{r} \in \mathbb{I}, \ \varepsilon(\vec{r})^{t}=\varepsilon(\vec{r}) \wedge \omega\vec({r})^{t}=\omega(\vec{r})$ in a reasonable time frame
+\item Output: Time to perform all the calculations
+\end{itemize}
+\end{Test}
 
 				
 \section{Unit Testing Plan}
 		
-\subsubsection{Input Verification test}
+\subsection{Input Verification test}
 
 \paragraph{Test \cref{ext:R_2} in \cref{ext:IM_1}: Existence and Format of $I_{\mathit{SMH}_{\text{exp}}}$, $I_{C_{\text{ref}}}$ and $p$}
 
 \begin{Test}\normalfont\underline{Test-Existence-SMH}
+\label{Test-Existence-SMH}
 \begin{itemize}
 \item Type: Dynamical
 \item Initial State: Waiting for $I_{\mathit{SMH}_{\text{exp}}}$ user input
@@ -355,6 +369,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{Test}
 
 \begin{Test}\normalfont\underline{Test-Format-SMH}
+\label{Test-Format-SMH}
 \begin{itemize}
 \item Type: Dynamical
 \item Initial State: Waiting for $I_{\mathit{SMH}_{\text{exp}}}$ user input
@@ -364,6 +379,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{Test}
 
 \begin{Test}\normalfont\underline{Test-read-dm3-format}
+\label{Test-read-dm3-format}
 \begin{itemize}
 \item Type: Dynamical
 \item Initial State: Waiting for $I_{\mathit{SMH}_{\text{exp}}}$ or $I_{C_{\text{ref}}}$ user input
@@ -373,6 +389,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{Test}
 
 \begin{Test}\normalfont\underline{Test-Existence-pixel}
+\label{Test-Existence-pixel}
 \begin{itemize}
 \item Type: Dynamical
 \item Initial State: After importing $I_{\mathit{SMH}_{\text{exp}}}$ and format validated
@@ -382,6 +399,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{Test}
 
 \begin{Test}\normalfont\underline{Test-Format-pixel}
+\label{Test-Format-pixel}
 \begin{itemize}
 \item Type: Dynamical
 \item Initial State: After importing $I_{\mathit{SMH}_{\text{exp}}}$ and format validated
@@ -391,6 +409,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{Test}
 
 \begin{Test}\normalfont\underline{Test-Format-Reference}
+\label{Test-Format-Reference}
 \begin{itemize}
 \item Type: Dynamical
 \item Initial State: Waiting for $I_{C_{\text{ref}}}$ user input
@@ -400,6 +419,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{Test}
 
 \begin{Test}\normalfont\underline{Test-Existence-Reference}
+\label{Test-Existence-Reference}
 \begin{itemize}
 \item Type: Dynamical
 \item Initial State: Waiting for $I_{C_{\text{ref}}}$ user input
@@ -412,6 +432,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \paragraph{Test \cref{ext:R_6} in \cref{ext:IM_2}: Test of the mask user input}
 
 \begin{Test}\normalfont\underline{Test-Existence-Mask}
+\label{Test-Existence-Mask}
 \begin{itemize}
 \item Type: Dynamical
 \item Initial State: Waiting for $M$ user input on $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$
@@ -421,6 +442,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{Test}
 
 \begin{Test}\normalfont\underline{Test-Format-Mask}
+\label{Test-Format-Mask}
 \begin{itemize}
 \item Type: Dynamical
 \item Initial State: Waiting for $M$ user input on $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$
@@ -430,6 +452,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{Test}
 
 \begin{Test}\normalfont\underline{Test-Position-Radius-Mask}
+\label{Test-Position-Radius-Mask}
 \begin{itemize}
 \item Type: Dynamical
 \item Initial State: Waiting for $M$ user input on $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$
@@ -438,11 +461,10 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{itemize}
 \end{Test}
 
-\an{Technically, the GUI should be also tested. Is the position of the pointer corresponding to the area pointed ? Is the area pointed corresponding to the center of the circle mask ? ... but it starts to get very long} 
-
 \paragraph{Test \cref{ext:R_9} in \cref{ext:IM_3}: Test of the unstrained region user input}
 
 \begin{Test}\normalfont\underline{Test-Existence-U}
+\label{Test-Existence-U}
 \begin{itemize}
 \item Type: Dynamical
 \item Initial State: Waiting for $U$ user input on $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$
@@ -452,6 +474,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{Test}
 
 \begin{Test}\normalfont\underline{Test-Format-U}
+\label{Test-Format-U}
 \begin{itemize}
 \item Type: Dynamical
 \item Initial State: Waiting for $U$ user input on $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$
@@ -461,24 +484,30 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{Test}
 
 \begin{Test}\normalfont\underline{Test-Position-U}
+\label{Test-Position-U}
 \begin{itemize}
 \item Type: Dynamical
 \item Initial State: Waiting for $U$ user input on $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$
-\item Input: Position left top corner=$(10,10)$, Position right bottom corner=$(30,40)$
-\item Output: Rectangle center position $(20,25)$, short length $l=20$ pixels and longh length $L=30$ pixels
+\item Input: 
+	\begin{itemize}
+	\item Position left top corner=$(10,10)$, 
+	\item Position right bottom corner=$(30,40)$.
+	\end{itemize}
+\item Output: Rectangle center position $(20,25)$, short length $l=20$ pixels and long length $L=30$ pixels
 \end{itemize}
 \end{Test}
 
 \an{GUI should be tested again here}
 
-\subsubsection{Output results test}
+\subsection{Output Verification test}
 
-\paragraph{Test \cref{ext:R_11} in \cref{ext:IM_4}: Affine vectorial transformation}
+\paragraph{Test \cref{ext:R_12} in \cref{ext:IM_4}: Affine vectorial transformation}
 
 \begin{Test}\normalfont\underline{Test-Basic-affine-transformation}
+\label{Test-Basic-affine-transformation}
 \begin{itemize}
 \item Type: Functional, Dynamical
-\item Initial State: 
+\item Initial State: N/A
 \item Input: $\overrightarrow{q_{n,m}}=\begin{bmatrix}
 1 \\
 -2
@@ -493,13 +522,13 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{itemize}
 \end{Test}
 
-\paragraph{Test\cref{ext:R_12} in \cref{ext:IM_5}: Strain and rotation calculation}						
+\paragraph{Test\cref{ext:R_13} in \cref{ext:IM_5}: Strain and rotation calculation}						
 
 \begin{Test}\normalfont\underline{Test-No-2D-strain}
 \label{T_No-2D-strain}
 \begin{itemize}
 \item Type: Functional, Dynamical
-\item Initial State:
+\item Initial State: N/A
 \item Input:
 \begin{itemize}
 	\item $G_{\text{uns}}^{\text{exp}} =
@@ -543,7 +572,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \label{T_known-constant-2D-strain}
 \begin{itemize}
 \item Type: Functional, Dynamical
-\item Initial State:
+\item Initial State: N/A
 \item Input:
 \begin{itemize}
 	\item $G_{\text{uns}}^{\text{exp}} =
@@ -582,7 +611,6 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \item Expected output:
 	\begin{itemize}
 	\item Uniaxial strain along $\vec{u_x}$,\\
-	\newline
 	$\begin{cases} 
 	\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \begin{bmatrix}
 	-\frac{1}{11} & 0 \\
@@ -594,7 +622,6 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 	\end{bmatrix} 
 	\end{cases}$
 	\item Uniaxial strain along $\vec{u_y}$,\\
-	\newline
 	$\begin{cases} 
 	\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \begin{bmatrix}
 	0 & 0 \\
@@ -606,7 +633,6 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 	\end{bmatrix} 
 	\end{cases}$
 	\item Pure shear strain,\\
-	\newline
 	$\begin{cases} 
 	\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \begin{bmatrix}
 	0 & -\frac{1}{11} \\
@@ -618,7 +644,6 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 	\end{bmatrix} 
 	\end{cases}$
 	\item Pure rotation,\\
-	\newline
 	$\begin{cases} 
 	\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \begin{bmatrix}
 	0 & 0 \\
@@ -662,7 +687,7 @@ Error message $Err_{G_{\text{uns}}^{\text{exp}}}$ should match: \enquote{Matrix 
 \label{T_Bad-Delta-G}
 \begin{itemize}
 \item Type: Functional, Dynamical
-\item Initial State: 
+\item Initial State: N/A
 \item Input:
 \begin{itemize}
 	\item $\Delta G^{\text{exp}}+G_{\text{uns}}^{\text{exp}} =
@@ -675,24 +700,45 @@ Error message $Err_{G_{\text{uns}}^{\text{exp}}}$ should match: \enquote{Matrix 
 Error message $Err_{\Delta G^{\text{exp}}}$ should match: \enquote{Matrix $G^{\text{exp}}$ non invertible. If  $G_{\text{uns}}^{\text{exp}}$ is invertible, something is probably wrong with $\Delta G^{\text{exp}}$.}
 \end{itemize}
 \end{Test}
-					
+
+\section{Traceability: Tests Cases vs Requirements}		
+
+\noindent 
+\begin{longtable}{l p{10cm}} 
+\toprule
+\textbf{Requirement} & \textbf{Test}\\
+\midrule
+\endhead
+\cref{ext:R_1} & Not covered in the Test Plan (GUI)\\
+\cref{ext:R_2} & \cref{Test-Existence-SMH}, \cref{Test-Format-SMH}, \cref{Test-read-dm3-format}, \cref{Test-Existence-pixel}, \cref{Test-Format-pixel}, \cref{Test-Format-Reference}, \cref{Test-Existence-Reference} \\
+\cref{ext:R_3} & \cref{aliasing-frequency-simple}\\
+\cref{ext:R_4} & Not covered in the Test Plan (GUI)\\
+\cref{ext:R_5} & Not covered in the Test Plan (GUI)\\
+\cref{ext:R_6} & \cref{Test-Existence-Mask}, \cref{Test-Format-Mask}, \cref{Test-Position-Radius-Mask}\\
+\cref{ext:R_7} & \cref{T_Phase-Extraction-No-Strain}, \cref{T_Phase-Extraction-Known-Strain}, \cref{T_Phase-Extraction-Mask} \\
+\cref{ext:R_8} & Not covered in the Test Plan (GUI)\\
+\cref{ext:R_9} & \cref{Test-Existence-U}, \cref{Test-Format-U}, \cref{Test-Position-U} \\
+\cref{ext:R_10} & \cref{T_constant-delta-g}, \cref{T_constant-delta-g-with-noise}, \cref{T_varying-delta-g}\\
+\cref{ext:R_11} & Not covered in the Test Plan (GUI)\\
+\cref{ext:R_12} & \cref{Test-Basic-affine-transformation} \\
+\cref{ext:R_13} & \cref{T_No-2D-strain}, \cref{T_known-constant-2D-strain}, \cref{T_Bad-G_ref}, \cref{T_Bad-Delta-G}\\
+\cref{ext:R_14} & Not covered in the Test Plan (GUI)\\
+\cref{ext:NR_1} & Not covered in the Test Plan\\
+\cref{ext:NR_2} & \cref{stress_test_STEM_Moire_GPA}\\
+\cref{ext:NR_3} & Not covered in the Test Plan (GUI)\\
+\cref{ext:NR_4} & Not covered in the Test Plan (GUI)\\
+\cref{ext:NR_5} & Not covered in the Test Plan (GUI)\\
+\cref{ext:NR_6} & Not covered in the Test Plan (Not a priority)\\
+\cref{ext:NR_7} & Not covered in the Test Plan (Not a priority)\\
+\cref{ext:NR_8} & \cref{black_box_STEM_Moire_GPA}\\
+\cref{ext:NR_9} & \cref{black_box_STEM_Moire_GPA}\\
+\bottomrule
+\label{table_traceability}
+\end{longtable}
 
 \bibliography{TestPlan_biblio}
 \bibliographystyle{ieeetr}
 
 \newpage
-
-\section{Appendix}
-
-This is where you can place additional information.
-
-\subsection{Symbolic Parameters}
-
-The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.
-
-\subsection{Usability Survey Questions?}
-
-This is a section that would be appropriate for some teams.
 
 \end{document}
