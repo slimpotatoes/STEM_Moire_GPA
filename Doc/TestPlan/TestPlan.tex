@@ -103,16 +103,18 @@ Date 1 & 1.0 & Notes\\
 \section{Symbols, Abbreviations and Acronyms}
 \label{symbols}
 
+Symbols, Abbreviations and Acronyms used in the Test Plan document are regrouped under the following table and in \cref{ext:table_symbols_SRS} and in \cref{ext:table_acro_SRS} of the SRS document. \newline
+
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l} 
   \toprule		
   \textbf{symbol} & \textbf{description}\\
   \midrule 
-  T & Test\\
+  GUI & Graphical Unit Interface \\
+  N/A & Non-Applicable \\
   \bottomrule
 \end{tabular}\\
 
-\wss{symbols, abbreviations or acronyms -- you can reference the SRS tables if needed}
 
 \newpage
 
@@ -131,17 +133,24 @@ Date 1 & 1.0 & Notes\\
 
 \subsection{Purpose}
 
-The purpose of the document is to provide the plan for testing \progname{} software. 
+The purpose of the document is to provide the plan for testing \progname{} software with respect to the requirements described in the SRS document. 
 
 \subsection{Scope}
 
-\subsection{Overview of Document}
+The scope of the test plan is described below:
+\begin{itemize}
+\item \progname{} will be written in Python.
+\item The proposed test plan is focusing on system and unit testing to verify the functional and non functional requirements of \progname{}. Because of the nature of the instance models \cref{ext:IM_1}, \cref{ext:IM_2} and \cref{ext:IM_3}, a complete verification of their respective outputs is not possible. In this case, the system tests are designed as validation tests (including algorithm errors) and might not catch a code error. A physical understanding of the test output is recommended to interpret properly its quantitative aspect. A judgement by the test team on the quality of the test results (reasonable error?) is required to validate the test. 
+\item Regarding the numerous requirements of \progname{} and their relative complexity to be fully verified, only a portion of \progname{} is proposed to be tested. A specific focus is proposed on key aspects that are identified as the highest potential source of errors. The testing of the GUI won't be approached in this document but should be definitely considered in the future.
+\end{itemize}
 
 \section{Plan}
+
+Based on the scope of the test plan, only \cref{ext:R_2}, \cref{ext:R_3}, \cref{ext:R_6}, \cref{ext:R_7}, \cref{ext:R_9}, \cref{ext:R_10}, \cref{ext:R_12} \cref{ext:R_13}, \cref{ext:NR_1}, \cref{ext:NR_2}, \cref{ext:NR_8} and \cref{ext:NR_9} are planned to be verified and/or validated. 
 	
 \subsection{Software Description}
 
-\progname{} software is converting STEM Moir{\'e} hologram into deformation maps. Details on the goal and the requirements of \progname{} are provided in the Problem Statement and the SRS documents. Acronyms, symbols and terminologies used in the following document are the same as the ones in the SRS document.
+\progname{} software is converting STEM Moir{\'e} hologram into deformation maps. Details on the goal and the requirements of \progname{} are provided in the Problem Statement and the SRS documents.
 
 \subsection{Test Team}
 
@@ -157,15 +166,9 @@ blbabla
   framework, valgrind, static analyzer, make, continuous integration, test
   coverage tool, etc.}
 
-% \subsection{Testing Schedule}
-		
-% See Gantt Chart at the following url ...
-
 \subsection{Non-Testing Based Verification}
 
-\wss{List any approaches like code inspection, code walkthrough, symbolic
-  execution etc.  Enter not applicable if that is the case.}
-
+N/A\an{Possible to put Isobel to go through the code but I don't want to add it in this document since the code inspection is a favor and not part of the plan :).}
 \section{System Test Description}
 	
 \subsection{Tests for Functional Requirements}
@@ -282,7 +285,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{itemize}
 \end{Test}
 
-\Cref{T_constant-delta-g-with-noise} is more representative of a real case than \cref{T_constant-delta-g} and will be use to characterize the evolution of the error with respect to the level of noise and the size of U. The evaluation of $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}$ is critical on the quantitative estimation of strain and rotation.
+\Cref{T_constant-delta-g-with-noise} is more representative of a real case than \cref{T_constant-delta-g} and will be use to characterize the evolution of the error with respect to the level of noise and the size of U. If the error is unreasonably high, an error in the code can be postulated. The evaluation of $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}$ is critical on the quantitative estimation of strain and rotation.
 
 \begin{Test}\normalfont\underline{Test-varying-delta-g}
 \label{T_varying-delta-g}
@@ -331,7 +334,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{itemize}
 \end{Test}
 
-\Cref{black_box_STEM_Moire_GPA} looks more like a validation test than a verification test. Nevertheless, \cref{black_box_STEM_Moire_GPA} is highlighting the accuracy (with no noise), and the precision (with noise) of \progname{} seen by the end-user (code, user and algorithm errors included). The performance is then characterized as the error output function of the noise (or of the quality factor of $I_{\mathit{SMH}_{\text{exp}}}$ like the signal on noise ratio $SNR=\frac{I_{\mathit{SMH}_\text{exp}}}{N}$). The performance characterization can be used to see from which quality factor the accuracy and sensitivity of \progname{} is too poor to consider the strain and rotation results reliable and warn the user in this case. The performance graph can also be as a base of comparison with another software (if it exists) doing the same data treatment.
+\Cref{black_box_STEM_Moire_GPA} looks more like a validation test than a verification test. Nevertheless, if the error is unreasonably high in \cref{black_box_STEM_Moire_GPA}, it is a good indication that there might be a mistake somewhere in the code. On the validation side, \cref{black_box_STEM_Moire_GPA} is highlighting the accuracy (without noise), and the precision (with noise) of \progname{} seen by the end-user (code, user and algorithm errors included). The performance is then characterized as the error output function of the noise (or of the quality factor of $I_{\mathit{SMH}_{\text{exp}}}$ like the signal on noise ratio $SNR=\frac{I_{\mathit{SMH}_\text{exp}}}{N}$). The performance characterization can be used to see from which quality factor the accuracy and sensitivity of \progname{} is too poor to consider the strain and rotation results reliable and warn the user in this case. The performance graph can also be as a base of comparison with another software (if it exists) doing the same data treatment.
 
 \subsection{Traceability Between Test Cases and Requirements}
 
