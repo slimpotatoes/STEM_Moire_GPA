@@ -104,7 +104,7 @@
 \section{Symbols, Abbreviations and Acronyms}
 \label{symbols}
 
-Symbols, Abbreviations and Acronyms used in the Test Plan document are regrouped under the following table and in \cref{ext:table_symbols_SRS} and in \cref{ext:table_acro_SRS} of the SRS document. \par\medskip
+Symbols, Abbreviations and Acronyms used in the Test Plan document are regrouped under the following table, in \cref{ext:table_symbols_SRS} and in \cref{ext:table_acro_SRS} of the SRS document. \par\medskip
 
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l} 
@@ -124,8 +124,6 @@ Symbols, Abbreviations and Acronyms used in the Test Plan document are regrouped
 
 \listoftables
 
-\listoffigures
-
 \newpage
 
 \pagenumbering{arabic}
@@ -135,7 +133,7 @@ Symbols, Abbreviations and Acronyms used in the Test Plan document are regrouped
 
 \subsection{Purpose}
 
-The purpose of the document is to provide the plan for testing \progname{} software with respect to the requirements described in the SRS document. 
+The purpose of the document is to provide the plan for testing \progname{} software with respect to the requirements specified in the SRS document. 
 
 \subsection{Scope}
 
@@ -148,11 +146,11 @@ The scope of the test plan is described below:
 
 \section{Plan}
 
-Based on the scope of the test plan, only \cref{ext:R_2}, \cref{ext:R_3}, \cref{ext:R_6}, \cref{ext:R_7}, \cref{ext:R_9}, \cref{ext:R_10}, \cref{ext:R_12} \cref{ext:R_13}, \cref{ext:NR_1}, \cref{ext:NR_2}, \cref{ext:NR_8} and \cref{ext:NR_9} are planned to be verified and/or validated. 
+Based on the scope of the test plan, only \cref{ext:R_2}, \cref{ext:R_3}, \cref{ext:R_6}, \cref{ext:R_7}, \cref{ext:R_9}, \cref{ext:R_10}, \cref{ext:R_12}, \cref{ext:R_13}, \cref{ext:NR_1}, \cref{ext:NR_2}, \cref{ext:NR_8} and \cref{ext:NR_9} are planned to be verified and/or validated. 
 	
 \subsection{Software Description}
 
-\progname{} software is converting STEM Moir{\'e} hologram into deformation maps. Details on the goal and the requirements of \progname{} are provided in the Problem Statement and the SRS documents.
+\progname{} software is converting a STEM Moir{\'e} hologram into deformation maps. Details on the goal and the requirements of \progname{} are provided in the Problem Statement and the SRS documents.
 
 \subsection{Test Team}
 
@@ -160,7 +158,7 @@ The author of the document is the only member of the test team.
 
 \subsection{Automated Testing Approach}
 
-By predefining some user inputs, an automated testing approach can be considered. The unit tests and most of the system tests will be executed and validated automatically. Some system tests (\cref{T_Phase-Extraction-No-Strain}, \cref{T_Phase-Extraction-Known-Strain}, \cref{T_Phase-Extraction-Mask}, \cref{T_constant-delta-g-with-noise}, \cref{T_varying-delta-g}, \cref{black_box_STEM_Moire_GPA}) require at least a manual assessment of the test results and are thus removed from the automated scope. 
+By predefining some user inputs, an automated testing approach can be considered. The unit tests and most of the system tests will be executed and validated automatically. Some system tests (\cref{T_Phase-Extraction-No-Strain}, \cref{T_Phase-Extraction-Known-Strain}, \cref{T_Phase-Extraction-Mask}, \cref{T_constant-delta-g-with-noise}, \cref{T_varying-delta-g}, \cref{black_box_STEM_Moire_GPA}) require at least a manual assessment of the test results and are thus removed from the automated scope.
 
 \subsection{Verification Tools}
 
@@ -182,14 +180,14 @@ N/A\an{Possible to put Isobel to go through the code but I don't want to add it 
 \label{aliasing-frequency-simple}
 \begin{itemize}
 \item Type: Functional, Dynamical, Automated
-\item Initial State: 
+\item Initial State: N/A
 \item Input: $I_{C_{\text{ref}}}=e^{2i\pi gx}$, $p$ such that $\overrightarrow{q}=\frac{1}{p}\vec{u_x}$
 \item Expected output : $\widetilde{I}_{\mathit{SHM}_{\text{sim}}}=\delta(\vec{\nu}-\vec{q})$
 \item Output: ${\widetilde{I}_{\mathit{SHM}_{\text{sim}}}}^{t}$ to be tested as a Dirac delta function at $\overrightarrow{q}$
 \end{itemize}
 \end{Test}
 		
-The position in frequency space of the aliased frequency (transformation of one g from Ic to one g of IM) is key to identify the vector $\overrightarrow{q_{n,m}}$. \Cref{aliasing-frequency-simple} is designed to check if the most basic transformation when under sampling is correctly performed. More complex versions of \Cref{aliasing-frequency-simple} can be designed with reference functions having, for example, a continuous description in Fourier space. Nevertheless, the more complex tests will cover way more cases than what $I_{C_{\text{ref}}}$ typically is (a sparse function). Depending on the time availability, a more complete version of \cref{aliasing-frequency-simple} will be designed.
+The position in frequency space of the aliased frequency (transformation of one $\overrightarrow{g_{j}}^{C_{\text{ref}}}$ from $I_{C_{\text{ref}}}$ to one $\overrightarrow{g_{j}}^{M_{\text{ref}}}$ of $I_{\mathit{SMH}_{\text{sim}}}$) is key to identify the vector $\overrightarrow{q_{n_j,m)j}}$. \Cref{aliasing-frequency-simple} is designed to check if the most basic transformation when under sampling is correctly performed. More complex versions of \Cref{aliasing-frequency-simple} can be designed with reference functions having, for example, a continuous description in Fourier space. Nevertheless, the more complex tests will cover way more cases than what $I_{C_{\text{ref}}}$ typically is (a sparse function). Depending on the time availability, a more complete version of \cref{aliasing-frequency-simple} will be designed.
 		
 \paragraph{Test \cref{ext:R_7} in \cref{ext:IM_2}: Correctness of the GPA method application} 
 
@@ -197,7 +195,7 @@ The position in frequency space of the aliased frequency (transformation of one 
 \label{T_Phase-Extraction-No-Strain}
 \begin{itemize}
 \item Type: Functional, Dynamical, Automated
-\item Initial State: ?
+\item Initial State: N/A
 \item Input: $I_{SMH_{exp}}=e^{2i\pi gx}$, Mask $M$ of one pixel at $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$
 \item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=0$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=\overrightarrow{0}$, 
 \item Test output:${P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}$, $\Delta {\overrightarrow{g_{j}}^{M_{exp}}}^{t}$
@@ -212,7 +210,7 @@ The position in frequency space of the aliased frequency (transformation of one 
 \label{T_Phase-Extraction-Known-Strain}
 \begin{itemize}
 \item Type: Functional, Dynamical, Manual
-\item Initial State:
+\item Initial State: N/A
 \item Input: $I_{SMH_{exp}}=e^{2i\pi (g+K(x))x}$, Mask $M$ centred on $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$ and with the minimum radius to include $K(x)$. 
 \item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=K(x)x$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=K(x)\overrightarrow{u_x}$, 
 \item Test output:${P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}$, $\Delta {\overrightarrow{g_{j}}^{M_{exp}}}^{t}$
@@ -227,9 +225,9 @@ The position in frequency space of the aliased frequency (transformation of one 
 \label{T_Phase-Extraction-Mask}
 \begin{itemize}
 \item Type: Functional, Dynamical, Manual
-\item Initial State:
-\item Input: $I_{SMH_{exp}}=e^{2i\pi (g+K(x))x}$, Mask $M$ centred on $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$ with different radius $\epsilon$. 
-\item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=K(x)x$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=K(x)\overrightarrow{u_x}$, 
+\item Initial State: N/A
+\item Input: $I_{SMH_{exp}}=e^{2i\pi (g+H(x))x}$, Mask $M$ centred on $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$ with different radius $\epsilon$. 
+\item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=H(x)x$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=H(x)\overrightarrow{u_x}$, 
 \item Test output:${P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}$, $\Delta {\overrightarrow{g_{j}}^{M_{exp}}}^{t}$
 	\begin{itemize}
 	\item $\forall \vec{r} \in \mathbb{I}, \ E_{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}(\vec{r},\epsilon)=|{P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}}^{t}(\vec{r},\epsilon)-P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}(\vec{r})|$
@@ -238,7 +236,7 @@ The position in frequency space of the aliased frequency (transformation of one 
 \end{itemize}
 \end{Test}						
 
-Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} in SRS document), errors from the algorithm are added to the errors from the code. Both are probed at the same time in the tests and cannot be fully separated. \Cref{T_Phase-Extraction-No-Strain} is probing the accuracy and the precision in the most basic case possible (no strain) and is a first indicator of the \cref{ext:IM_2} performance. \cref{T_Phase-Extraction-Known-Strain} and \cref{T_Phase-Extraction-Mask} are closer to a real case scenario and highlight a more realistic version of \cref{ext:IM_2} performance. To get quantitative trends, the error will be characterized as a function of the mask properties (such as the radius) and the deformation magnitude. This characterization will allow the GPA algorithm of \progname{} to be compared with other software using the same GPA algorithm. Another interest of the performance characterization is to see a quantitative effect of the user inputs on \cref{ext:IM_2} and provide a ``good practice guidance'' in the user manual.
+Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} in SRS document), errors from the algorithm are added to the errors from the code. Both are probed at the same time in the tests and cannot be fully separated. \Cref{T_Phase-Extraction-No-Strain} is probing the accuracy and the precision in the most basic case possible (no strain) and is a first indicator of the \cref{ext:IM_2} performance. \Cref{T_Phase-Extraction-Known-Strain} and \cref{T_Phase-Extraction-Mask} are closer to a real case scenario and highlight a more realistic version of \cref{ext:IM_2} performance. To get quantitative trends, the error will be characterized as a function of the mask properties (such as the radius) and the deformation magnitude. This characterization will allow the GPA algorithm of \progname{} to be compared with other software using the same GPA algorithm. Another interest of the performance characterization is to see a quantitative effect of the user inputs on \cref{ext:IM_2} and provide a ``good practice guidance'' in the user manual.
 
 \paragraph{Test \cref{ext:R_10} in \cref{ext:IM_3}: Correctness of the unstrained reference calculation}	
 
@@ -307,7 +305,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{itemize}
 \end{Test}
 
-\Cref{T_varying-delta-g} might be impossible to properly interpret but the idea is to see the effect an improper choice of an unstrained reference. If a non uniform deformation field is present in the reference, \progname{} is trying to find the best linear fit to cancel it out. A solution is proposed whatever the precision of the fit. However, if the quality of the fit is poor, it could be possible that \progname{} informs/warns the user of a potential problem in the reference chosen.
+\Cref{T_varying-delta-g} might be impossible to properly interpret but the idea is to see the effect an improper choice of an unstrained reference. If a non uniform deformation field is present in the reference, \progname{} is trying to find the best linear fit. A solution is calculated whatever the precision of the fit. However, if the quality of the fit is poor, it could be possible that \progname{} informs/warns the user of a potential problem in the reference chosen.
 
 
 \subsection{Tests for Nonfunctional Requirements}
@@ -897,19 +895,29 @@ Error message $Err_{\Delta G^{\text{exp}}}$ should match: \enquote{Matrix $G^{\t
 \cref{ext:NR_8} & \cref{black_box_STEM_Moire_GPA}\\
 \cref{ext:NR_9} & \cref{black_box_STEM_Moire_GPA}\\
 \bottomrule
+\caption{\textbf{Traceability table: Test vs Requirements}}
 \label{table_traceability}
 \end{longtable}
 
 \section{Prioritization}	
-The resources available for the test phase of \progname{} are limited  and will not cover all aspects of the test plan. Therefore, the tasks have been prioritized by focusing first on the system tests targeting the functional requirements, then the unit tests testing the functional requirements and finally the system tests assessing the non functional requirements. The details of the prioritization are described in the following table.
+The resources available for the test phase of \progname{} are relatively limited and all aspects of the test plan won't be covered. Therefore, the test tasks have been prioritized by focusing first on the system tests targeting the functional requirements, then the unit tests testing the functional requirements and finally the system tests assessing the non functional requirements. The details of the prioritization are described in the following table.
 
 \noindent 
-\begin{longtable}{l p{10cm}} 
+\begin{longtable}{l p{10cm}}
+
 \toprule
 \textbf{Priority} & \textbf{Requirement tested}\\
 \midrule
 \endhead
+P0 & \cref{ext:R_3} (\cref{aliasing-frequency-simple}), \cref{ext:R_7} (\cref{T_Phase-Extraction-No-Strain}, \cref{T_Phase-Extraction-Known-Strain}), \cref{ext:R_10} (\cref{T_constant-delta-g}, \cref{T_constant-delta-g-with-noise}) \\
+P1 & \cref{ext:R_13} (\cref{T_No-2D-strain}, \cref{T_known-constant-2D-strain}, \cref{T_Bad-G_ref}, \cref{T_Bad-Delta-G}), \cref{ext:R_12}  (\cref{Test-Basic-affine-transformation}, \cref{Test-Error-q-affine-transformation}, \cref{Test-Error-pixel-affine-transformation}) \\
+P2 & \cref{ext:R_7} (\cref{T_Phase-Extraction-Mask}), \cref{ext:R_10} (\cref{T_varying-delta-g}) \\
+P3 & \cref{ext:R_2} (\cref{Test-Existence-SMH}, \cref{Test-Format-SMH}, \cref{Test-read-dm3-format}, \cref{Test-Existence-pixel}, \cref{Test-Format-pixel}, \cref{Test-Format-Reference}, \cref{Test-Existence-Reference}), \cref{ext:R_6}  (\cref{Test-Existence-Mask}, \cref{Test-Format-Mask}, \cref{Test-Position-Radius-Mask}), \cref{ext:R_9} (\cref{Test-Existence-U}, \cref{Test-Format-U}, \cref{Test-Position-U}) \\
+P4 & \cref{ext:NR_8} (\cref{black_box_STEM_Moire_GPA}) , \cref{ext:NR_9} (\cref{black_box_STEM_Moire_GPA}) \\
+P5 & \cref{ext:NR_1} (\cref{black_box_STEM_Moire_GPA-predif-Linux}, \cref{black_box_STEM_Moire_GPA-predif-Mac}, \cref{black_box_STEM_Moire_GPA-predif-Windows}), \cref{ext:NR_2} (\cref{stress_test_STEM_Moire_GPA}) \\
+P6 & GUI and other lower priority tasks \\
 \bottomrule
+\caption{\textbf{Priority table}}
 \label{priority_table}
 \end{longtable}
 
