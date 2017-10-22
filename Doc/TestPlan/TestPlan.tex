@@ -94,7 +94,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-21/10/2017 & 1.0 & First Draft\\
+22/10/2017 & 1.0 & First Draft\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -142,7 +142,7 @@ The purpose of the document is to provide the plan for testing \progname{} softw
 The scope of the test plan is described below:
 \begin{itemize}
 \item \progname{} will be written in Python.
-\item The proposed test plan is focusing on system and unit testing to verify the functional and non functional requirements of \progname{}. Because of the nature of the instance models \cref{ext:IM_1}, \cref{ext:IM_2} and \cref{ext:IM_3}, a complete verification of their respective outputs is not possible. In this case, the system tests are designed as validation tests (including algorithm errors) and might not catch a code error. A physical understanding of the test output is recommended to interpret properly its quantitative aspect. An assessment by the test team on the quality of the test results is required to validate the test (reasonable error?). 
+\item The proposed test plan is focusing on system and unit testing to verify the functional and non functional requirements of \progname{}. Because of the nature of \cref{ext:IM_1}, \cref{ext:IM_2} and \cref{ext:IM_3} (see SRS document), a complete verification of their respective outputs is not possible. In these cases, the system tests are designed as validation tests (including algorithm errors) and will not catch a code error. A physical understanding of the test output is recommended to interpret properly its quantitative aspect since, an assessment by the test team on the quality of the test results is required to validate it (reasonable error?). If the error observed is unreasonably high, an error in the code tested might be postulated.
 \item Regarding the numerous requirements of \progname{} and their relative complexity to be fully verified, only a portion of \progname{} is proposed to be tested. A specific focus is proposed on key aspects that are identified as the highest potential source of errors. The testing of the GUI won't be approached in this document but should be definitely considered in the future.
 \end{itemize}
 
@@ -174,14 +174,14 @@ N/A\an{Possible to put Isobel to go through the code but I don't want to add it 
 \subsection{Tests for Functional Requirements}
 \renewcommand{\labelitemi}{$\star$}
 
-\subsubsection{Output error characterization}
+\subsubsection{Output Verfication (and/or Validation) tests}
 	
 \paragraph{Test \cref{ext:R_3} in \cref{ext:IM_1}: Correctness of the sampling theory application when undersampling g}
 
 \begin{Test}\normalfont\underline{Test-aliasing-frequency-simple}
 \label{aliasing-frequency-simple}
 \begin{itemize}
-\item Type: Functional, Dynamical
+\item Type: Functional, Dynamical, Automated
 \item Initial State: 
 \item Input: $I_{C_{\text{ref}}}=e^{2i\pi gx}$, $p$ such that $\overrightarrow{q}=\frac{1}{p}\vec{u_x}$
 \item Expected output : $\widetilde{I}_{\mathit{SHM}_{\text{sim}}}=\delta(\vec{\nu}-\vec{q})$
@@ -196,7 +196,7 @@ The position in frequency space of the aliased frequency (transformation of one 
 \begin{Test}\normalfont\underline{Test-Phase-Extraction-No-Strain}
 \label{T_Phase-Extraction-No-Strain}
 \begin{itemize}
-\item Type: Functional, Dynamical
+\item Type: Functional, Dynamical, Automated
 \item Initial State: ?
 \item Input: $I_{SMH_{exp}}=e^{2i\pi gx}$, Mask $M$ of one pixel at $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$
 \item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=0$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=\overrightarrow{0}$, 
@@ -211,7 +211,7 @@ The position in frequency space of the aliased frequency (transformation of one 
 \begin{Test}\normalfont\underline{Test-Phase-Extraction-Known-Strain}
 \label{T_Phase-Extraction-Known-Strain}
 \begin{itemize}
-\item Type: Functional, Dynamical
+\item Type: Functional, Dynamical, Manual
 \item Initial State:
 \item Input: $I_{SMH_{exp}}=e^{2i\pi (g+K(x))x}$, Mask $M$ centred on $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$ and with the minimum radius to include $K(x)$. 
 \item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=K(x)x$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=K(x)\overrightarrow{u_x}$, 
@@ -226,7 +226,7 @@ The position in frequency space of the aliased frequency (transformation of one 
 \begin{Test}\normalfont\underline{Test-Phase-Extraction-Mask}
 \label{T_Phase-Extraction-Mask}
 \begin{itemize}
-\item Type: Functional, Dynamical
+\item Type: Functional, Dynamical, Manual
 \item Initial State:
 \item Input: $I_{SMH_{exp}}=e^{2i\pi (g+K(x))x}$, Mask $M$ centred on $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$ with different radius $\epsilon$. 
 \item Expected output $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}=K(x)x$, $\Delta \overrightarrow{g_{j}}^{M_{exp}}=K(x)\overrightarrow{u_x}$, 
@@ -245,7 +245,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-constant-delta-g}
 \label{T_constant-delta-g}
 \begin{itemize}
-\item Type: Functional, Dynamical
+\item Type: Functional, Dynamical, Automated
 \item Initial State: 
 \item Input: 
 	\begin{itemize}
@@ -267,7 +267,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-constant-delta-g-with-noise}
 \label{T_constant-delta-g-with-noise}
 \begin{itemize}
-\item Type: Functional, Dynamical
+\item Type: Functional, Dynamical, Manual (can be automated)
 \item Initial State: 
 \item Input: 
 	\begin{itemize}
@@ -290,7 +290,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-varying-delta-g}
 \label{T_varying-delta-g}
 \begin{itemize}
-\item Type: Functional, Dynamical
+\item Type: Functional, Dynamical, Manual
 \item Initial State: 
 \item Input: 
 	\begin{itemize}
@@ -319,7 +319,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-Black-Box-STEM-Moir{\'e}-GPA}
 \label{black_box_STEM_Moire_GPA}
 \begin{itemize}
-\item Type: Functional, Dynimical, Black box
+\item Type: Functional, Dynamical, Black box, , Manual (can be automated)
 \item Initial State: All user inputs are predefined ($p,M_1,M_2,U,\overrightarrow{q_{n_1,m_1}},\overrightarrow{q_{n_2,m_2}}$) except the STEM Moir{\'e} hologram
 \item Input: STEM Moir{\'e} holograms with different level of noise (from no noise to high level of noise): 
 	\begin{itemize}
@@ -343,7 +343,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-stress-STEM-Moir{\'e}-GPA}
 \label{stress_test_STEM_Moire_GPA}
 \begin{itemize}
-\item Type: Functional, Dynimical, Black box
+\item Type: Functional, Dynimical, Black box, Manual
 \item Initial State: All user inputs are predefined ($p,M_1,M_2,U,\overrightarrow{q_{n_1,m_1}},\overrightarrow{q_{n_2,m_2}}$) except the STEM Moir{\'e} hologram
 \item Input: STEM Moir{\'e} holograms with different 2D array size.
 \item Expected output $\forall \vec{r} \in \mathbb{I}, \ \varepsilon(\vec{r})^{t}=\varepsilon(\vec{r}) \wedge \omega\vec({r})^{t}=\omega(\vec{r})$ in a reasonable time frame
@@ -351,7 +351,147 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{itemize}
 \end{Test}
 
-				
+\subsubsection{Evolution of the accuracy of \progname{} with environment (reproducibility)}
+
+\paragraph{Test \cref{ext:NR_1}}						
+
+\begin{Test}\normalfont\underline{Test-Black-Box-STEM-Moir{\'e}-GPA-Linux}
+\label{black_box_STEM_Moire_GPA-predif-Linux}
+\begin{itemize}
+\item Type: Functional, Dynamical, Black box, Manual
+\item Initial State: x64 Linux environment with all user inputs are predefined ($p,M_1,M_2,U,\overrightarrow{q_{n_1,m_1}},\overrightarrow{q_{n_2,m_2}}$) except $I_{\mathit{SMH}_\text{exp}}$ 
+\item Input: A perfect generated STEM Moir{\'e} hologram representing all the strain state in each quadrant $\mathbb{I}_{i}$ of the array $\mathbb{I}$ (unstrained in $\mathbb{I}_{1}$, 1{\%} uniaxial strain along $\vec{u_x}$ and $\vec{u_y}$ in $\mathbb{I}_{2}$, 1{\%} shear strain in $\mathbb{I}_{3}$, and  20 mrad rotation $\mathbb{I}_{4}$)
+\item Expected output: In each quadrant
+\begin{itemize}
+\item $\forall \vec{r} \in \mathbb{I}_{1}, \ \varepsilon(\vec{r})=\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix}$
+\item $\forall \vec{r} \in \mathbb{I}_{2}, \ \varepsilon(\vec{r})=\begin{bmatrix}
+0.01 & 0 \\
+0 & 0.01
+\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix}$
+\item $\forall \vec{r} \in \mathbb{I}_{3}, \ \varepsilon(\vec{r})=\begin{bmatrix}
+0 & 0.01 \\
+0.01 & 0
+\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix}$
+\item $\forall \vec{r} \in \mathbb{I}_{4}, \ \varepsilon(\vec{r})=\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
+0 & 0.2 \\
+-0.2 & 0
+\end{bmatrix}$
+\end{itemize}
+\item Output: $\varepsilon(\vec{r})^{t}, \omega(\vec{r})^{t}$
+	\begin{itemize}
+	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\varepsilon\text{ Linux}}=|\varepsilon(\vec{r})^{t}-\varepsilon(\vec{r})|$
+	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\omega\text{ Linux}}=|\omega(\vec{r})^{t}-\omega(\vec{r})|$
+	\end{itemize}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Black-Box-STEM-Moir{\'e}-GPA-Mac}
+\label{black_box_STEM_Moire_GPA-predif-Mac}
+\begin{itemize}
+\item Type: Functional, Dynamical, Black box, Manual
+\item Initial State: x64 Mac OS X environment with all user inputs are predefined ($p,M_1,M_2,U,\overrightarrow{q_{n_1,m_1}},\overrightarrow{q_{n_2,m_2}}$) except $I_{\mathit{SMH}_\text{exp}}$ 
+\item Input: A perfect generated STEM Moir{\'e} hologram representing all the strain state in each quadrant $\mathbb{I}_{i}$ of the array $\mathbb{I}$ (unstrained in $\mathbb{I}_{1}$, 1{\%} uniaxial strain along $\vec{u_x}$ and $\vec{u_y}$ in $\mathbb{I}_{2}$, 1{\%} shear strain in $\mathbb{I}_{3}$, and  20 mrad rotation $\mathbb{I}_{4}$)
+\item Expected output: In each quadrant
+\begin{itemize}
+\item $\forall \vec{r} \in \mathbb{I}_{1}, \ \varepsilon(\vec{r})=\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix}$
+\item $\forall \vec{r} \in \mathbb{I}_{2}, \ \varepsilon(\vec{r})=\begin{bmatrix}
+0.01 & 0 \\
+0 & 0.01
+\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix}$
+\item $\forall \vec{r} \in \mathbb{I}_{3}, \ \varepsilon(\vec{r})=\begin{bmatrix}
+0 & 0.01 \\
+0.01 & 0
+\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix}$
+\item $\forall \vec{r} \in \mathbb{I}_{4}, \ \varepsilon(\vec{r})=\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
+0 & 0.2 \\
+-0.2 & 0
+\end{bmatrix}$
+\end{itemize}
+\item Output: $\varepsilon(\vec{r})^{t}, \omega(\vec{r})^{t}$
+	\begin{itemize}
+	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\varepsilon\text{ Linux}}=|\varepsilon(\vec{r})^{t}-\varepsilon(\vec{r})|$
+	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\omega\text{ Linux}}=|\omega(\vec{r})^{t}-\omega(\vec{r})|$
+	\end{itemize}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Black-Box-STEM-Moir{\'e}-GPA-Windows}
+\label{black_box_STEM_Moire_GPA-predif-Windows}
+\begin{itemize}
+\item Type: Functional, Dynamical, Black box, Manual
+\item Initial State: x64 Windows environment with all user inputs are predefined ($p,M_1,M_2,U,\overrightarrow{q_{n_1,m_1}},\overrightarrow{q_{n_2,m_2}}$) except $I_{\mathit{SMH}_\text{exp}}$ 
+\item Input: A perfect generated STEM Moir{\'e} hologram representing all the strain state in each quadrant $\mathbb{I}_{i}$ of the array $\mathbb{I}$ (unstrained in $\mathbb{I}_{1}$, 1{\%} uniaxial strain along $\vec{u_x}$ and $\vec{u_y}$ in $\mathbb{I}_{2}$, 1{\%} shear strain in $\mathbb{I}_{3}$, and  20 mrad rotation $\mathbb{I}_{4}$)
+\item Expected output: In each quadrant
+\begin{itemize}
+\item $\forall \vec{r} \in \mathbb{I}_{1}, \ \varepsilon(\vec{r})=\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix}$
+\item $\forall \vec{r} \in \mathbb{I}_{2}, \ \varepsilon(\vec{r})=\begin{bmatrix}
+0.01 & 0 \\
+0 & 0.01
+\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix}$
+\item $\forall \vec{r} \in \mathbb{I}_{3}, \ \varepsilon(\vec{r})=\begin{bmatrix}
+0 & 0.01 \\
+0.01 & 0
+\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix}$
+\item $\forall \vec{r} \in \mathbb{I}_{4}, \ \varepsilon(\vec{r})=\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
+0 & 0.2 \\
+-0.2 & 0
+\end{bmatrix}$
+\end{itemize}
+\item Output: $\varepsilon(\vec{r})^{t}, \omega(\vec{r})^{t}$
+	\begin{itemize}
+	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\varepsilon\text{ Linux}}=|\varepsilon(\vec{r})^{t}-\varepsilon(\vec{r})|$
+	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\omega\text{ Linux}}=|\omega(\vec{r})^{t}-\omega(\vec{r})|$
+	\end{itemize}
+\end{itemize}
+\end{Test}
+
+\an{Technically x86 architecture should be also tested.}
+
 \section{Unit Testing Plan}
 		
 \subsection{Input Verification test}
@@ -361,7 +501,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-Existence-SMH}
 \label{Test-Existence-SMH}
 \begin{itemize}
-\item Type: Dynamical
+\item Type: Dynamical, Automated
 \item Initial State: Waiting for $I_{\mathit{SMH}_{\text{exp}}}$ user input
 \item Input: $I_{\mathit{SMH}_{\text{exp}}}$ = $\emptyset$
 \item Output: Error message $Err_{I_{\mathit{SMH}_{\text{exp}}}}$ should match: \enquote{No STEM Moir{\'e} hologram, please load a proper image}
@@ -371,7 +511,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-Format-SMH}
 \label{Test-Format-SMH}
 \begin{itemize}
-\item Type: Dynamical
+\item Type: Dynamical, Automated
 \item Initial State: Waiting for $I_{\mathit{SMH}_{\text{exp}}}$ user input
 \item Input: Various $I_{\mathit{SMH}_{\text{exp}}}$ improper format
 \item Output: Error message $Err_{I_{\mathit{SMH}_{\text{exp}}}}$ should match: \enquote{Invalid STEM Moir{\'e} hologram format (expecting a 2D array)}
@@ -381,7 +521,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-read-dm3-format}
 \label{Test-read-dm3-format}
 \begin{itemize}
-\item Type: Dynamical
+\item Type: Dynamical, Automated
 \item Initial State: Waiting for $I_{\mathit{SMH}_{\text{exp}}}$ or $I_{C_{\text{ref}}}$ user input
 \item Input: Pre defined random 2D array in dm3 format with specific tags (calibration, microscope, high tension, ...)
 \item Output: Read the tag from the dm3 file and and test each tag collected with the pre defined tags
@@ -391,7 +531,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-Existence-pixel}
 \label{Test-Existence-pixel}
 \begin{itemize}
-\item Type: Dynamical
+\item Type: Dynamical, Automated
 \item Initial State: After importing $I_{\mathit{SMH}_{\text{exp}}}$ and format validated
 \item Input: $p$=$\emptyset$
 \item Output: Error message $Err_{p}$ should match: \enquote{No pixel size found}
@@ -401,7 +541,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-Format-pixel}
 \label{Test-Format-pixel}
 \begin{itemize}
-\item Type: Dynamical
+\item Type: Dynamical, Automated
 \item Initial State: After importing $I_{\mathit{SMH}_{\text{exp}}}$ and format validated
 \item Input: Improper format of $p$
 \item Output: Error message $Err_{p}$ should match: \enquote{Invalid pixel size}
@@ -411,7 +551,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-Format-Reference}
 \label{Test-Format-Reference}
 \begin{itemize}
-\item Type: Dynamical
+\item Type: Dynamical, Automated
 \item Initial State: Waiting for $I_{C_{\text{ref}}}$ user input
 \item Input: Various $I_{C_{\text{ref}}}$ improper format
 \item Output: Error message $Err_{I_{C_{\text{ref}}}}$ should match: \enquote{Invalid Reference image format (expecting a 2D array)}
@@ -421,7 +561,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-Existence-Reference}
 \label{Test-Existence-Reference}
 \begin{itemize}
-\item Type: Dynamical
+\item Type: Dynamical, Automated
 \item Initial State: Waiting for $I_{C_{\text{ref}}}$ user input
 \item Input: $I_{C_{\text{ref}}}$ = $\emptyset$
 \item Output: Error message $Err_{I_{C_{\text{ref}}}}$ should match: \enquote{No Reference image, please load a proper image}
@@ -434,7 +574,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-Existence-Mask}
 \label{Test-Existence-Mask}
 \begin{itemize}
-\item Type: Dynamical
+\item Type: Dynamical, Automated
 \item Initial State: Waiting for $M$ user input on $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$
 \item Input: $M$=$\emptyset$
 \item Output:  Error message $Err_{M}$ should match: \enquote{No Mask found}
@@ -444,7 +584,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-Format-Mask}
 \label{Test-Format-Mask}
 \begin{itemize}
-\item Type: Dynamical
+\item Type: Dynamical, Automated
 \item Initial State: Waiting for $M$ user input on $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$
 \item Input: $M$ improper format (such as 1D array, 2D array out of bounds if  
 \item Output:  Error message $Err_{M}$ should match: \enquote{Improper mask format}
@@ -454,7 +594,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-Position-Radius-Mask}
 \label{Test-Position-Radius-Mask}
 \begin{itemize}
-\item Type: Dynamical
+\item Type: Dynamical, Automated
 \item Initial State: Waiting for $M$ user input on $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$
 \item Input: Mask center =$(0,0)$, Mask radius=3
 \item Output: Center of the circle mask positioned in the middle of the 2D array $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ and with a radius of 3 pixels
@@ -466,7 +606,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-Existence-U}
 \label{Test-Existence-U}
 \begin{itemize}
-\item Type: Dynamical
+\item Type: Dynamical, Automated
 \item Initial State: Waiting for $U$ user input on $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$
 \item Input: $U$=$\emptyset$
 \item Output:  Error message $Err_{U}$ should match: \enquote{No reference in phase image found}
@@ -476,7 +616,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-Format-U}
 \label{Test-Format-U}
 \begin{itemize}
-\item Type: Dynamical
+\item Type: Dynamical, Automated
 \item Initial State: Waiting for $U$ user input on $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$
 \item Input: $U$ improper format
 \item Output:  Error message $Err_{U}$ should match: \enquote{Improper reference in phase image format}
@@ -486,7 +626,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-Position-U}
 \label{Test-Position-U}
 \begin{itemize}
-\item Type: Dynamical
+\item Type: Dynamical, Automated
 \item Initial State: Waiting for $U$ user input on $P_{\Delta \overrightarrow{g_{j}}^{M_{exp}}}$
 \item Input: 
 	\begin{itemize}
@@ -506,7 +646,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-Basic-affine-transformation}
 \label{Test-Basic-affine-transformation}
 \begin{itemize}
-\item Type: Functional, Dynamical
+\item Type: Functional, Dynamical, Automated
 \item Initial State: N/A
 \item Input: $\overrightarrow{q_{n,m}}=\begin{bmatrix}
 1 \\
@@ -522,12 +662,38 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{itemize}
 \end{Test}
 
+\begin{Test}\normalfont\underline{Test-Error-pixel-affine-transformation}
+\label{Test-Error-pixel-affine-transformation}
+\begin{itemize}
+\item Type: Functional, Dynamical, Automated
+\item Initial State: Whatever $\overrightarrow{q_{n,m}}, \overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}, \Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}$
+\item Input:$p=0$ or $p=-10$
+\item Output: Error message $Err_{p_{\text{affine}}}$ should match: \enquote{Invalid pixel size}
+\end{itemize}
+\end{Test}
+
+\begin{Test}\normalfont\underline{Test-Error-q-affine-transformation}
+\label{Test-Error-q-affine-transformation}
+\begin{itemize}
+\item Type: Functional, Dynamical, Automated
+\item Initial State: Whatever $\overrightarrow{q_{n,m}}, \overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}, \Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}},$ and $p>0$
+\item Input:$\overrightarrow{q_{n,m}}=\begin{bmatrix}
+1.3 \\
+-1
+\end{bmatrix}$ or $\overrightarrow{q_{n,m}}=\begin{bmatrix}
+1 \\
+-\sqrt{2}
+\end{bmatrix}$
+\item Output: Error message $Err_{\vec{q}_{\text{affine}}}$ should match: \enquote{Invalid sampling vector $\overrightarrow{q_{n,m}}$}
+\end{itemize}
+\end{Test}
+
 \paragraph{Test\cref{ext:R_13} in \cref{ext:IM_5}: Strain and rotation calculation}						
 
 \begin{Test}\normalfont\underline{Test-No-2D-strain}
 \label{T_No-2D-strain}
 \begin{itemize}
-\item Type: Functional, Dynamical
+\item Type: Functional, Dynamical, Automated
 \item Initial State: N/A
 \item Input:
 \begin{itemize}
@@ -571,7 +737,7 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-known-constant-2D-strain}
 \label{T_known-constant-2D-strain}
 \begin{itemize}
-\item Type: Functional, Dynamical
+\item Type: Functional, Dynamical, Automated
 \item Initial State: N/A
 \item Input:
 \begin{itemize}
@@ -656,16 +822,14 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 	\end{cases}$
 	\end{itemize}
 
-\item Output:  ${\varepsilon^{\text{exp}}(\vec{r})}^{t}-\varepsilon^{\text{exp}}(\vec{r}), {\omega^{\text{exp}}(\vec{r})}^{t}- \omega^{\text{exp}}(\vec{r})$  and test them to be 0
-
-The special case with $det(G_{\text{uns}}^{\text{exp}}+\Delta G^{\text{exp}})=0$ should be also tested.
+\item Output:  ${\varepsilon^{\text{exp}}(\vec{r})}^{t}-\varepsilon^{\text{exp}}(\vec{r}), {\omega^{\text{exp}}(\vec{r})}^{t}- \omega^{\text{exp}}(\vec{r})$  and test them to be 0:
 \end{itemize}
 \end{Test}
 
 \begin{Test}\normalfont\underline{Test-Improper-$\Delta G^{\text{exp}}$}
 \label{T_Bad-G_ref}
 \begin{itemize}
-\item Type: Functional, Dynamical
+\item Type: Functional, Dynamical, Automated
 \item Initial State: Whatever $\Delta G^{\text{exp}}(\vec{r})$
 \item Input:
 \begin{itemize}
@@ -679,14 +843,14 @@ The special case with $det(G_{\text{uns}}^{\text{exp}}+\Delta G^{\text{exp}})=0$
 	\end{bmatrix} $
 	\end{itemize} 
 \item Output:
-Error message $Err_{G_{\text{uns}}^{\text{exp}}}$ should match: \enquote{Matrix $G_{\text{uns}}^{\text{exp}}$ non invertible, the crystalline wave vectors are liked (collinear). Please chose another combination of crystalline wave vectors.}
+Error message $Err_{G_{\text{uns}}^{\text{exp}}}$ should match: \enquote{Matrix $G_{\text{uns}}^{\text{exp}}$ non invertible, the crystalline wave vectors are linked (collinear). Please chose another combination of crystalline wave vectors.}
 \end{itemize}
 \end{Test}
 
 \begin{Test}\normalfont\underline{Test-Improper-$G_{\text{uns}}^{\text{exp}}$}
 \label{T_Bad-Delta-G}
 \begin{itemize}
-\item Type: Functional, Dynamical
+\item Type: Functional, Dynamical, Automated
 \item Initial State: N/A
 \item Input:
 \begin{itemize}
@@ -720,20 +884,33 @@ Error message $Err_{\Delta G^{\text{exp}}}$ should match: \enquote{Matrix $G^{\t
 \cref{ext:R_9} & \cref{Test-Existence-U}, \cref{Test-Format-U}, \cref{Test-Position-U} \\
 \cref{ext:R_10} & \cref{T_constant-delta-g}, \cref{T_constant-delta-g-with-noise}, \cref{T_varying-delta-g}\\
 \cref{ext:R_11} & Not covered in the Test Plan (GUI)\\
-\cref{ext:R_12} & \cref{Test-Basic-affine-transformation} \\
+\cref{ext:R_12} & \cref{Test-Basic-affine-transformation}, \cref{Test-Error-q-affine-transformation}, \cref{Test-Error-pixel-affine-transformation} \\
 \cref{ext:R_13} & \cref{T_No-2D-strain}, \cref{T_known-constant-2D-strain}, \cref{T_Bad-G_ref}, \cref{T_Bad-Delta-G}\\
 \cref{ext:R_14} & Not covered in the Test Plan (GUI)\\
-\cref{ext:NR_1} & Not covered in the Test Plan\\
+\cref{ext:NR_1} & \cref{black_box_STEM_Moire_GPA-predif-Linux}, \cref{black_box_STEM_Moire_GPA-predif-Mac}, \cref{black_box_STEM_Moire_GPA-predif-Windows}\\
 \cref{ext:NR_2} & \cref{stress_test_STEM_Moire_GPA}\\
 \cref{ext:NR_3} & Not covered in the Test Plan (GUI)\\
 \cref{ext:NR_4} & Not covered in the Test Plan (GUI)\\
-\cref{ext:NR_5} & Not covered in the Test Plan (GUI)\\
+\cref{ext:NR_5} & Not covered in the Test Plan (Not a priority)\\
 \cref{ext:NR_6} & Not covered in the Test Plan (Not a priority)\\
 \cref{ext:NR_7} & Not covered in the Test Plan (Not a priority)\\
 \cref{ext:NR_8} & \cref{black_box_STEM_Moire_GPA}\\
 \cref{ext:NR_9} & \cref{black_box_STEM_Moire_GPA}\\
 \bottomrule
 \label{table_traceability}
+\end{longtable}
+
+\section{Prioritization}	
+The resources available for the test phase of \progname{} are limited  and will not cover all aspects of the test plan. Therefore, the tasks have been prioritized by focusing first on the system tests targeting the functional requirements, then the unit tests testing the functional requirements and finally the system tests assessing the non functional requirements. The details of the prioritization are described in the following table.
+
+\noindent 
+\begin{longtable}{l p{10cm}} 
+\toprule
+\textbf{Priority} & \textbf{Requirement tested}\\
+\midrule
+\endhead
+\bottomrule
+\label{priority_table}
 \end{longtable}
 
 \bibliography{TestPlan_biblio}
