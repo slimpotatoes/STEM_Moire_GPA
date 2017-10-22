@@ -1,5 +1,3 @@
 # Test Plan
 
-The folders and files for this folder are as follows:
-
-Describe ...
+Test plan documentation (.pdf and .tex files)
