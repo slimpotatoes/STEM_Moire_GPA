@@ -1,13 +1,35 @@
 \documentclass[12pt, titlepage]{article}
 
+% Author's up-front packages
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+
+%Packages on template
 \usepackage{fullpage}
-\usepackage[round]{natbib}
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{graphicx}
 \usepackage{float}
+% Personal addtion
+\usepackage{xr-hyper}
+% End Personal addtion
 \usepackage{hyperref}
+
+% Author's packages
+
+\usepackage{amsmath, mathtools}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{indentfirst}
+\usepackage{float}
+\usepackage{csquotes}
+\usepackage{cleveref}
+
+%Hypersetup on template
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -15,6 +37,13 @@
     linkcolor=red,
     urlcolor=blue
 }
+
+\newcommand{\progname}{STEM Moir{\'e} GPA}
+\externaldocument[SRS:]{../../SRS/SRS}
+\externaldocument[TP:]{../../TestPlan/TestPlan}
+
+% Author choice to remove
+% \usepackage[round]{natbib}
 
 \input{../../Comments}
 
@@ -30,10 +59,26 @@
 \newcommand{\mthemnum}{M\themnum}
 \newcommand{\mref}[1]{M\ref{#1}}
 
+
+%Set the custom referencing system (author's initiative)
+	% Anticipated Changes
+\newtheorem{AC}{AC}
+\crefname{AC}{AC}{ACs}
+	% Unlikely Changes
+\newtheorem{UC}{UC}
+\crefname{UC}{UC}{UCs}
+	% Module
+\newtheorem{M}{M}
+\crefname{M}{M}{Ms}
+
+
 \begin{document}
 
-\title{Module Guide: Project Title} 
-\author{Author Name}
+\title{Module Guide (MG) \\
+STEM Moir{\'e} GPA} 
+\author{Alexandre Pofelski \\
+		macid: pofelska \\
+		github: slimpotatoes}
 \date{\today}
 
 \maketitle
@@ -42,13 +87,15 @@
 
 \section{Revision History}
 
+\begin{table}[h]
+\caption{\bf Revision History}
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+31/10/2017 & 1.0 & First Draft\\
 \bottomrule
 \end{tabularx}
+\end{table}
 
 \newpage
 
@@ -64,16 +111,18 @@ Date 2 & 1.1 & Notes\\
 
 \section{Introduction}
 
+%Keep as comment
+\iffalse
 Decomposing a system into modules is a commonly accepted approach to developing
 software.  A module is a work assignment for a programmer or programming
-team~\citep{ParnasEtAl1984}.  We advocate a decomposition
-based on the principle of information hiding~\citep{Parnas1972a}.  This
+team~\cite{ParnasEtAl1984}.  We advocate a decomposition
+based on the principle of information hiding~\cite{Parnas1972a}.  This
 principle supports design for change, because the ``secrets'' that each module
 hides represent likely future changes.  Design for change is valuable in SC,
 where modifications are frequent, especially during initial development as the
 solution space is explored.  
 
-Our design follows the rules layed out by \citet{ParnasEtAl1984}, as follows:
+Our design follows the rules layed out by \cite{ParnasEtAl1984}, as follows:
 \begin{itemize}
 \item System details that are likely to change independently should be the
   secrets of separate modules.
@@ -83,9 +132,7 @@ Our design follows the rules layed out by \citet{ParnasEtAl1984}, as follows:
 \end{itemize}
 
 After completing the first stage of the design, the Software Requirements
-Specification (SRS), the Module Guide (MG) is developed~\citep{ParnasEtAl1984}. The MG
-specifies the modular structure of the system and is intended to allow both
-designers and maintainers to easily identify the parts of the software.  The
+Specification (SRS), the Module Guide (MG) is developed~\cite{ParnasEtAl1984}. The MGspecifies the modular structure of the system and is intended to allow bothdesigners and maintainers to easily identify the parts of the software. The
 potential readers of this document are as follows:
 
 \begin{itemize}
@@ -101,33 +148,70 @@ potential readers of this document are as follows:
   system in various ways, such as consistency among modules, feasibility of the
   decomposition, and flexibility of the design.
 \end{itemize}
+\fi
+%End comment
 
-The rest of the document is organized as follows. Section
-\ref{SecChange} lists the anticipated and unlikely changes of the software
-requirements. Section \ref{SecMH} summarizes the module decomposition that
-was constructed according to the likely changes. Section \ref{SecConnection}
-specifies the connections between the software requirements and the
-modules. Section \ref{SecMD} gives a detailed description of the
-modules. Section \ref{SecTM} includes two traceability matrices. One checks
-the completeness of the design against the requirements provided in the SRS. The
-other shows the relation between anticipated changes and the modules. Section
-\ref{SecUse} describes the use relation between modules.
+The module guide document is providing to the reader the decomposition of \progname{} into smaller pieces to help the implementation phase. The decomposition is based on the principle of information hiding~\cite{Parnas1972a} which interest relies on its flexibility to design change. The module design follows the rules layed out by \cite{ParnasEtAl1984}, as follows:
+\begin{itemize}
+\item System details that are likely to change independently should be the
+  secrets of separate modules.
+\item Each data structure is used in only one module.
+\item Any other program that requires information stored in a module's data
+  structures must obtain it by calling access programs belonging to that module.
+\end{itemize}
+
+The module guide (MG) follows the Software Requirements Specification (SRS) available in the documentation tree. Terminologies, symbols and acronyms used in the document are described in the SRS document. The rest of the document is organized as follows. \Cref{SecChange} lists the anticipated and unlikely changes of the software requirements. \Cref{SecMH} summarizes the module decomposition that was constructed according to the likely changes. \Cref{SecConnection} specifies the connections between the software requirements and the modules. \Cref{SecMD} gives a detailed description of the modules. Section \cref{SecTM} includes two traceability matrices. One checks the completeness of the design against the requirements provided in the SRS. The other shows the relation between anticipated changes and the modules. \Cref{SecUse} describes the use relation between modules.
 
 \section{Anticipated and Unlikely Changes} \label{SecChange}
 
 This section lists possible changes to the system. According to the likeliness
 of the change, the possible changes are classified into two
-categories. Anticipated changes are listed in Section \ref{SecAchange}, and
-unlikely changes are listed in Section \ref{SecUchange}.
+categories. Anticipated changes are listed in \cref{SecAchange}, and
+unlikely changes are listed in \cref{SecUchange}.
 
 \subsection{Anticipated Changes} \label{SecAchange}
 
 Anticipated changes are the source of the information that is to be hidden
 inside the modules. Ideally, changing one of the anticipated changes will only
-require changing the one module that hides the associated decision. The approach
-adapted here is called design for
-change.
+require changing the one module that hides the associated decision. 
 
+\begin{AC}\normalfont Hardware running \progname{}
+\label{AC_Hardware}
+\end{AC}
+
+\begin{AC}\normalfont SMH, ICREF, inputs file format
+\label{AC_FormatFile}
+\end{AC}
+
+\begin{AC}\normalfont Small strain and small gradient of strain assumption
+\label{AC_Assum_SmallStrain}
+\end{AC}
+
+\begin{AC}\normalfont SMH simulation from a reference algorithm
+\label{AC_Assum_2DPeriodicGrid}
+\end{AC}
+
+\begin{AC}\normalfont GPA algorithm
+\label{AC_GPA_algo}
+\end{AC}
+
+\begin{AC}\normalfont Mask function for frequency isolation (in GPA)
+\label{AC_GPA_mask}
+\end{AC}
+
+\begin{AC}\normalfont Fitting algorithm to get unstrained reference (in GPA)
+\label{AC_GPA_RefFit}
+\end{AC}
+
+\begin{AC}\normalfont Output format
+\label{AC_Export}
+\end{AC}
+
+\begin{AC}\normalfont Data plotting
+\label{AC_Plot}
+\end{AC}
+
+\iffalse
 \begin{description}
 \item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
   hardware on which the software is running.
@@ -135,16 +219,38 @@ change.
   initial input data.
 \item ...
 \end{description}
+\fi
 
 \subsection{Unlikely Changes} \label{SecUchange}
 
+\iffalse
 The module design should be as general as possible. However, a general system is
 more complex. Sometimes this complexity is not necessary. Fixing some design
 decisions at the system architecture stage can simplify the software design. If
 these decision should later need to be changed, then many parts of the design
 will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
+\fi
 
+The unlikely changes are design decisions fixing some aspects of \progname{}. The lack of modularity is compensated by a simplification in the software design. If any of the elements are modified, important changes would be expected in the design. Therefore the following decisions are expected to stay unchanged.
+
+\begin{UC}\normalfont SMH data type (2D arrays)
+\label{UC_Input_data}
+\end{UC}
+
+\begin{UC}\normalfont Perfect 2D periodic scanning grid assumption
+\label{UC_Assum_2DPeriodicGrid}
+\end{UC}
+
+\begin{UC}\normalfont Pixel data type (real number)
+\label{UC_Assum_Pixel}
+\end{UC}
+
+\begin{UC}\normalfont Keyboard/mouse interface device with user
+\label{UC_Assum_Pixel}
+\end{UC}
+
+\iffalse
 \begin{description}
 \item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
   (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
@@ -152,31 +258,93 @@ decisions will be changed.
   a source of input data external to the software.
 \item ...
 \end{description}
+\fi
 
 \section{Module Hierarchy} \label{SecMH}
 
 This section provides an overview of the module design. Modules are summarized
-in a hierarchy decomposed by secrets in Table \ref{TblMH}. The modules listed
+in a hierarchy decomposed by secrets in \cref{TblMH}. The modules listed
 below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
+\iffalse
 \begin{description}
 \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
 \item ...
 \end{description}
+\fi
 
+\begin{M}\normalfont Hardware Module
+\label{M_Hardware}
+\end{M}
 
-\begin{table}[h!]
+\begin{M}\normalfont Input Format Module
+\label{M_InputFormat}
+\end{M}
+
+\begin{M}\normalfont Input GPA Module
+\label{M_InputGPA}
+\end{M}
+
+\begin{M}\normalfont Output Format Module
+\label{M_OutputFormat}
+\end{M}
+
+\begin{M}\normalfont Output GPA Module
+\label{M_InputGPA}
+\end{M}
+
+\begin{M}\normalfont GPA Module
+\label{M_GPA}
+\end{M}
+
+\begin{M}\normalfont Fourier Transform Module
+\label{M_TF}
+\end{M}
+
+\begin{M}\normalfont Mask Module
+\label{M_TF}
+\end{M}
+
+\begin{M}\normalfont Gradient Module
+\label{M_Gradient}
+\end{M}
+
+\begin{M}\normalfont Least Square Fitting Method Module
+\label{M_LSFM}
+\end{M}
+
+\begin{M}\normalfont Phase operation Module
+\label{M_Phase}
+\end{M}
+
+\begin{M}\normalfont Strain calculation Module
+\label{M_StrainCalc}
+\end{M}
+
+\begin{M}\normalfont Plotting Module
+\label{M_Plot}
+\end{M}
+
+\begin{M}\normalfont GUI Module
+\label{M_GUI}
+\end{M}
+
+\begin{M}\normalfont GUI{\_}GPA Module
+\label{M_GUI_GPA}
+\end{M}
+
+\begin{table}[H]
 \centering
-\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+\begin{tabular}{p{0.3\textwidth} p{0.3\textwidth} p{0.3\textwidth}}
 \toprule
-\textbf{Level 1} & \textbf{Level 2}\\
+\textbf{Level 1} & \textbf{Level 2} & Level 3\\
 \midrule
 
 {Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ? & ?\\
 & ?\\
 & ?\\
 & ?\\
@@ -186,7 +354,7 @@ actually be implemented.
 & ?\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
+\multirow{3}{0.3\textwidth}{Software Decision Module} & {?} & ?\\
 & ?\\
 & ?\\
 \bottomrule
@@ -205,7 +373,7 @@ between requirements and modules is listed in Table \ref{TblRT}.
 \section{Module Decomposition} \label{SecMD}
 
 Modules are decomposed according to the principle of ``information hiding''
-proposed by \citet{ParnasEtAl1984}. The \emph{Secrets} field in a module
+proposed by \cite{ParnasEtAl1984}. The \emph{Secrets} field in a module
 decomposition is a brief statement of the design decision hidden by the
 module. The \emph{Services} field specifies \emph{what} the module will do
 without documenting \emph{how} to do it. For each module, a suggestion for the
@@ -327,7 +495,7 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \section{Use Hierarchy Between Modules} \label{SecUse}
 
 In this section, the uses hierarchy between modules is
-provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B if
+provided. \cite{Parnas1978} said of two programs A and B that A {\em uses} B if
 correct execution of B may be necessary for A to complete the task described in
 its specification. That is, A {\em uses} B if there exist situations in which
 the correct functioning of A depends upon the availability of a correct
@@ -346,7 +514,7 @@ because they use modules from the lower levels.
 
 %\section*{References}
 
-\bibliographystyle {plainnat}
-\bibliography {MG}
+\bibliographystyle{ieeetr}
+\bibliography{MG}
 
 \end{document}
