@@ -160,7 +160,7 @@ The module guide document is providing to the reader the decomposition of \progn
   structures must obtain it by calling access programs belonging to that module.
 \end{itemize}
 
-The module guide (MG) follows the Software Requirements Specification (SRS) available in the documentation tree. Terminologies, symbols and acronyms used in the document are described in the SRS document. The rest of the document is organized as follows. \Cref{SecChange} lists the anticipated and unlikely changes of the software requirements. \Cref{SecMH} summarizes the module decomposition that was constructed according to the likely changes. \Cref{SecConnection} specifies the connections between the software requirements and the modules. \Cref{SecMD} gives a detailed description of the modules. Section \cref{SecTM} includes two traceability matrices. One checks the completeness of the design against the requirements provided in the SRS. The other shows the relation between anticipated changes and the modules. \Cref{SecUse} describes the use relation between modules.
+The module guide (MG) follows the Software Requirements Specification (SRS) available in the documentation tree. Terminologies, symbols and acronyms used in the document are described in the SRS and TestPlan documents. The rest of the document is organized as follows. \Cref{SecChange} lists the anticipated and unlikely changes of the software requirements. \Cref{SecMH} summarizes the module decomposition that was constructed according to the likely changes. \Cref{SecConnection} specifies the connections between the software requirements and the modules. \Cref{SecMD} gives a detailed description of the modules. Section \cref{SecTM} includes two traceability matrices. One checks the completeness of the design against the requirements provided in the SRS. The other shows the relation between anticipated changes and the modules. \Cref{SecUse} describes the use relation between modules.
 
 \section{Anticipated and Unlikely Changes} \label{SecChange}
 
@@ -278,24 +278,12 @@ actually be implemented.
 \label{M_Hardware}
 \end{M}
 
-\begin{M}\normalfont Input Format Module
+\begin{M}\normalfont Input Module
 \label{M_InputFormat}
 \end{M}
 
-\begin{M}\normalfont Input GPA Module
-\label{M_InputGPA}
-\end{M}
-
-\begin{M}\normalfont Output Format Module
+\begin{M}\normalfont Output Module
 \label{M_OutputFormat}
-\end{M}
-
-\begin{M}\normalfont Output GPA Module
-\label{M_InputGPA}
-\end{M}
-
-\begin{M}\normalfont GPA Module
-\label{M_GPA}
 \end{M}
 
 \begin{M}\normalfont Fourier Transform Module
@@ -330,33 +318,49 @@ actually be implemented.
 \label{M_GUI}
 \end{M}
 
-\begin{M}\normalfont GUI{\_}GPA Module
-\label{M_GUI_GPA}
+\begin{M}\normalfont GPA Module
+\label{M_GPA}
+\end{M}
+
+\begin{M}\normalfont SMH simulation Module
+\label{M_SMHSim}
+\end{M}
+
+\begin{M}\normalfont Unstrained reference calculation Module
+\label{M_URef}
+\end{M}
+
+\begin{M}\normalfont Moir{\'e} to Crystal conversion Module
+\label{M_MtoCConv}
+\end{M}
+
+\begin{M}\normalfont Control Module
+\label{M_DataSeq}
 \end{M}
 
 \begin{table}[H]
 \centering
 \begin{tabular}{p{0.3\textwidth} p{0.3\textwidth} p{0.3\textwidth}}
 \toprule
-\textbf{Level 1} & \textbf{Level 2} & Level 3\\
+\textbf{Level 1} & \textbf{Level 2} & \textbf{Level 3}\\
 \midrule
 
 {Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ? & ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\ 
-& ?\\
+\multirow{12}{0.3\textwidth}{Behaviour-Hiding Module} & Input & \\
+& Output &\\
+& Control Module &\\
+& SMH Simulation & Fourier Transform \\
+& Unstrained reference calculation & Least Square Fitting Method \\
+& Moir{\'e} to Crystal conversion &\\
+& Strain calculation &\\ 
+& \multirow{4}{0.3\textwidth}{GPA} & Fourier Transform \newline Mask \newline Phase operation \newline Gradient\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?} & ?\\
-& ?\\
-& ?\\
+\multirow{3}{0.3\textwidth}{Software Decision Module} & Data Sequence &\\
+& GUI & \\
+& Plotting & \\
 \bottomrule
 
 \end{tabular}
