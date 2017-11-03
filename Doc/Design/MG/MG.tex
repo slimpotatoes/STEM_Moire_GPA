@@ -283,15 +283,15 @@ actually be implemented.
 \end{M}
 
 \begin{M}\normalfont Output Module
-\label{M_OutputFormat}
+\label{M_Output}
 \end{M}
 
 \begin{M}\normalfont Fourier Transform Module
-\label{M_TF}
+\label{M_FT}
 \end{M}
 
 \begin{M}\normalfont Mask Module
-\label{M_TF}
+\label{M_Mask}
 \end{M}
 
 \begin{M}\normalfont Gradient Module
@@ -335,7 +335,11 @@ actually be implemented.
 \end{M}
 
 \begin{M}\normalfont Control Module
-\label{M_DataSeq}
+\label{M_Control}
+\end{M}
+
+\begin{M}\normalfont Data Structure Module
+\label{M_DataStruct}
 \end{M}
 
 \begin{table}[H]
@@ -358,7 +362,7 @@ actually be implemented.
 & \multirow{4}{0.3\textwidth}{GPA} & Fourier Transform \newline Mask \newline Phase operation \newline Gradient\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & Data Sequence &\\
+\multirow{3}{0.3\textwidth}{Software Decision Module} & Data Structure &\\
 & GUI & \\
 & Plotting & \\
 \bottomrule
@@ -392,7 +396,7 @@ that the module is not a leaf and will not have to be implemented. Whether or
 not this module is implemented depends on the programming language
 selected.
 
-\subsection{Hardware Hiding Modules (\mref{mHH})}
+\subsection{Hardware Hiding Modules (\cref{M_Hardware})}
 
 \begin{description}
 \item[Secrets:]The data structure and algorithm used to implement the virtual
@@ -415,32 +419,142 @@ selected.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Input Format Module (\mref{mInput})}
+\subsubsection{Input Module (\cref{M_InputFormat})}
 
 \begin{description}
 \item[Secrets:]The format and structure of the input data.
 \item[Services:]Converts the input data into the data structure used by the
   input parameters module.
-\item[Implemented By:] [Your Program Name Here]
+\item[Implemented By:] \progname{}
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Output Module (\cref{M_Output})}
+
+\begin{description}
+\item[Secrets:]Output format 
+\item[Services:]Transforms data to be usable by the plotter and the hardware device
+\item[Implemented By:] \progname{}
+\end{description}
+
+\subsubsection{Fourier Transform Module (\cref{M_FT})}
+
+\begin{description}
+\item[Secrets:] Fourier transform algorithm
+\item[Services:] Transforms data into its Fourier transform
+\item[Implemented By:] External Python library
+\end{description}
+
+\subsubsection{Least Square Fitting Method Module (\cref{M_LSFM})}
+
+\begin{description}
+\item[Secrets:] Least Square Fitting algorithm
+\item[Services:] Fit set of data into a 2D linear function using the Least squares method
+\item[Implemented By:] External Python library
+\end{description}
+
+\subsubsection{Gradient Module (\cref{M_Gradient})}
+
+\begin{description}
+\item[Secrets:] 2D Gradient algorithm
+\item[Services:] Perform the 2D derivative of a data set.
+\item[Implemented By:] External Python library
+\end{description}
+
+\subsubsection{Phase Module (\cref{M_Phase})}
+
+\begin{description}
+\item[Secrets:] Algorithm to wrap/unwrap the phase
+\item[Services:] Wrap/unwrap the phase by adding/removing discontinuity in the interval [0,2$\pi$]
+\item[Implemented By:] External Python library
+\end{description}
+
+\subsubsection{SMH simulation Module (\cref{M_SMHSim})}
+
+\begin{description}
+\item[Secrets:] Algorithm to simulate the SMH from the reference image
+\item[Services:] Simulate the SMH in Fourier space using the pixel size $p$ of $I_{\mathit{SMH}_{\texttt{exp}}}$ using the Fourier transform the image reference $I_{C_{\texttt{ref}}}$
+\item[Implemented By:] \progname{}
+\end{description}
+
+\subsubsection{Strain calculation Module (\cref{M_StrainCalc})}
+
+\begin{description}
+\item[Secrets:] Algorithm to calculate the strain from distortion matrix
+\item[Services:] Calculate the strain level on each pixel of the data
+\item[Implemented By:] \progname{}
+\end{description}
+
+\subsubsection{Control Module (\cref{M_Control})}
+
+\begin{description}
+\item[Secrets:] Execution flow of \progname{}
+\item[Services:] Calls the different modules in the appropriate order
+\item[Implemented By:] \progname{}
+\end{description}
+
+\subsubsection{Moir{\'e} to Crystal conversion Module (\cref{M_MtoCConv})}
+
+\begin{description}
+\item[Secrets:] Algorithm to convert a Moir{\'e} wave vector to a crystalline wave vector
+\item[Services:] Affine vectorial transformation using the Moir{\'e} data from GPA and the sampling vectors user inputs.
+\item[Implemented By:] \progname{}
+\end{description}
+
+\subsubsection{Unstrained reference calculation Module (\cref{M_URef})}
+
+\begin{description}
+\item[Secrets:] Algorithm to calculate the unstrained reference
+\item[Services:] Calculation of the unstrained reference based on the user input $U$ and the result of the fitting method.
+\item[Implemented By:] \progname{}
+\end{description}
+
+\subsubsection{Mask Module (\cref{M_Mask})}
+
+\begin{description}
+\item[Secrets:] Algorithm to isolate a portion of an image
+\item[Services:] Function isolating and weighting a sub area of an image
+\item[Implemented By:] \progname{}
+\end{description}
+
+\subsubsection{GPA Module (\cref{M_GPA})}
+
+\begin{description}
+\item[Secrets:] GPA method
+\item[Services:] Map the variation of a vector in Fourier space related the the variation of the periodicity in real space
+\item[Implemented By:] \progname{}
+\end{description}
 
 
 \subsection{Software Decision Module}
 
+\subsubsection{Plotting Module (\cref{M_Plot})}
+
 \begin{description}
-\item[Secrets:] The design decision based on mathematical theorems, physical
-  facts, or programming considerations. The secrets of this module are
-  \emph{not} described in the SRS.
-\item[Services:] Includes data structure and algorithms used in the system that
-  do not provide direct interaction with the user. 
-  % Changes in these modules are more likely to be motivated by a desire to
-  % improve performance than by externally imposed changes.
-\item[Implemented By:] --
+\item[Secrets:] Method to transforming the data format into plot format
+\item[Services:] Transform data into format usable by the hardware to display data into readable format for the user
+ 
+\item[Implemented By:] External Python library
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{GUI Module (\cref{M_GUI})}
+
+\begin{description}
+\item[Secrets:] Method to interact with the user
+\item[Services:] Provide an interactive interface for the user to feed the information needed for the proper execution of \progname{}. 
+ 
+\item[Implemented By:] External Python library
+\end{description}
+
+\subsubsection{Data Structure Module (\cref{M_DataStruct})}
+
+\begin{description}
+\item[Secrets:] Data format for an image
+\item[Services:] Provide convenient format to store, read and manipulate all elements (pixel) from an image
+ 
+\item[Implemented By:] External Python library
+\end{description}
+
+
 
 \section{Traceability Matrix} \label{SecTM}
 
