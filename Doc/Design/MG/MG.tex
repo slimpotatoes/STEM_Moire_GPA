@@ -70,7 +70,9 @@
 	% Module
 \newtheorem{M}{M}
 \crefname{M}{M}{Ms}
-
+	% Requirement
+\newtheorem{R}{R}
+\crefname{R}{R}{Rs}
 
 \begin{document}
 
@@ -175,11 +177,11 @@ Anticipated changes are the source of the information that is to be hidden
 inside the modules. Ideally, changing one of the anticipated changes will only
 require changing the one module that hides the associated decision. 
 
-\begin{AC}\normalfont Hardware running \progname{}
+\begin{AC}\normalfont Hardware on which is \progname{} running
 \label{AC_Hardware}
 \end{AC}
 
-\begin{AC}\normalfont SMH, ICREF, inputs file format
+\begin{AC}\normalfont $I_{\mathit{SMH}_{\texttt{exp}}},I_{\mathit{C}_{\texttt{ref}}}$ inputs file format
 \label{AC_FormatFile}
 \end{AC}
 
@@ -188,7 +190,7 @@ require changing the one module that hides the associated decision.
 \end{AC}
 
 \begin{AC}\normalfont SMH simulation from a reference algorithm
-\label{AC_Assum_2DPeriodicGrid}
+\label{AC_SMH_algo}
 \end{AC}
 
 \begin{AC}\normalfont GPA algorithm
@@ -196,19 +198,23 @@ require changing the one module that hides the associated decision.
 \end{AC}
 
 \begin{AC}\normalfont Mask function for frequency isolation (in GPA)
-\label{AC_GPA_mask}
+\label{AC_Mask}
 \end{AC}
 
-\begin{AC}\normalfont Fitting algorithm to get unstrained reference (in GPA)
-\label{AC_GPA_RefFit}
+\begin{AC}\normalfont Fitting algorithm to get unstrained reference 
+\label{AC_RefFit}
 \end{AC}
 
 \begin{AC}\normalfont Output format
-\label{AC_Export}
+\label{AC_Output}
 \end{AC}
 
-\begin{AC}\normalfont Data plotting
-\label{AC_Plot}
+\begin{AC}\normalfont Internal Data strucutre
+\label{AC_Data}
+\end{AC}
+
+\begin{AC}\normalfont Internal Object strucutre
+\label{AC_Object}
 \end{AC}
 
 \iffalse
@@ -247,7 +253,7 @@ The unlikely changes are design decisions fixing some aspects of \progname{}. Th
 \end{UC}
 
 \begin{UC}\normalfont Keyboard/mouse interface device with user
-\label{UC_Assum_Pixel}
+\label{UC_Assum_Hardware}
 \end{UC}
 
 \iffalse
@@ -274,24 +280,48 @@ actually be implemented.
 \end{description}
 \fi
 
-\begin{M}\normalfont Hardware Module
+\begin{M}\normalfont Hardware-Hiding Module
 \label{M_Hardware}
 \end{M}
 
-\begin{M}\normalfont Input Module
+\begin{M}\normalfont \progname{}  Control Module
+\label{M_Control}
+\end{M}
+
+\begin{M}\normalfont \progname{} GUI Module
+\label{M_GUISMG}
+\end{M}
+
+\begin{M}\normalfont User input Module
 \label{M_InputFormat}
 \end{M}
 
-\begin{M}\normalfont Output Module
-\label{M_Output}
+\begin{M}\normalfont SMH simulation Module
+\label{M_SMHSim}
 \end{M}
 
-\begin{M}\normalfont Fourier Transform Module
-\label{M_FT}
+\begin{M}\normalfont GPA Module
+\label{M_GPA}
 \end{M}
 
 \begin{M}\normalfont Mask Module
 \label{M_Mask}
+\end{M}
+
+\begin{M}\normalfont Unstrained region Module
+\label{M_URef}
+\end{M}
+
+\begin{M}\normalfont Conversion Module
+\label{M_MtoCConv}
+\end{M}
+
+\begin{M}\normalfont 2D strain tensor Module
+\label{M_StrainCalc}
+\end{M}
+
+\begin{M}\normalfont Fourier Transform Module
+\label{M_FT}
 \end{M}
 
 \begin{M}\normalfont Gradient Module
@@ -306,65 +336,47 @@ actually be implemented.
 \label{M_Phase}
 \end{M}
 
-\begin{M}\normalfont Strain calculation Module
-\label{M_StrainCalc}
-\end{M}
-
-\begin{M}\normalfont Plotting Module
-\label{M_Plot}
-\end{M}
-
-\begin{M}\normalfont GUI Module
-\label{M_GUI}
-\end{M}
-
-\begin{M}\normalfont GPA Module
-\label{M_GPA}
-\end{M}
-
-\begin{M}\normalfont SMH simulation Module
-\label{M_SMHSim}
-\end{M}
-
-\begin{M}\normalfont Unstrained reference calculation Module
-\label{M_URef}
-\end{M}
-
-\begin{M}\normalfont Moir{\'e} to Crystal conversion Module
-\label{M_MtoCConv}
-\end{M}
-
-\begin{M}\normalfont Control Module
-\label{M_Control}
-\end{M}
-
 \begin{M}\normalfont Data Structure Module
 \label{M_DataStruct}
 \end{M}
 
+\begin{M}\normalfont Object Structure Module
+\label{M_ObjectStruct}
+\end{M}
+
+\begin{M}\normalfont Generic GUI/Plot Module
+\label{M_GUIGene}
+\end{M}
+
 \begin{table}[H]
 \centering
-\begin{tabular}{p{0.3\textwidth} p{0.3\textwidth} p{0.3\textwidth}}
+\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
 \toprule
-\textbf{Level 1} & \textbf{Level 2} & \textbf{Level 3}\\
+\textbf{Level 1} & \textbf{Level 2}\\
 \midrule
 
 {Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{12}{0.3\textwidth}{Behaviour-Hiding Module} & Input & \\
-& Output &\\
-& Control Module &\\
-& SMH Simulation & Fourier Transform \\
-& Unstrained reference calculation & Least Square Fitting Method \\
-& Moir{\'e} to Crystal conversion &\\
-& Strain calculation &\\ 
-& \multirow{4}{0.3\textwidth}{GPA} & Fourier Transform \newline Mask \newline Phase operation \newline Gradient\\
+\multirow{10}{0.3\textwidth}{Behaviour-Hiding Module} & Input\\
+& \progname{} Control \\
+& \progname{} GUI \\
+& User Input \\
+& SMH simulation \\
+& GPA \\
+& Mask \\
+& Unstrained region \\
+& Conversion \\
+& 2D strain tensor \\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & Data StructureSS &\\
-& GUI & \\
-& Plotting & \\
+\multirow{7}{0.3\textwidth}{Software Decision Module} & Fourier Transform \\
+& Least square fitting method \\
+& Phase calculation \\
+& Gradient \\
+& Generic GUI/Plot \\
+& Data structure \\
+& Object structure \\
 \bottomrule
 
 \end{tabular}
@@ -396,19 +408,17 @@ that the module is not a leaf and will not have to be implemented. Whether or
 not this module is implemented depends on the programming language
 selected.
 
-\subsection{Hardware Hiding Modules (\cref{M_Hardware})}
+\subsection{Hardware Hiding Modules (\texorpdfstring{\cref{M_Hardware}}))}
 
 \begin{description}
-\item[Secrets:]The data structure and algorithm used to implement the virtual
-  hardware.
-\item[Services:]Serves as a virtual hardware used by the rest of the
-  system. This module provides the interface between the hardware and the
-  software. So, the system can use it to display outputs or to accept inputs.
+\item[Secrets:]The data structure and algorithm used to implement the virtual hardware.
+\item[Services:]Serves as a virtual hardware used by the rest of the system. This module provides the interface between the hardware and the software. So, the system can use it to display outputs or to accept inputs.
 \item[Implemented By:] OS
 \end{description}
 
 \subsection{Behaviour-Hiding Module}
 
+\iffalse
 \begin{description}
 \item[Secrets:]The contents of the required behaviours.
 \item[Services:]Includes programs that provide externally visible behaviour of
@@ -418,143 +428,136 @@ selected.
   module will need to change if there are changes in the SRS.
 \item[Implemented By:] --
 \end{description}
+\fi
 
-\subsubsection{Input Module (\cref{M_InputFormat})}
+\subsubsection{\progname{} Control Module (\texorpdfstring{\cref{M_Control}}))}
 
 \begin{description}
-\item[Secrets:]The format and structure of the input data.
-\item[Services:]Converts the input data into the data structure used by the
-  input parameters module.
+\item[Secrets:] Execution flow of \progname{}.
+\item[Services:] Calls the different modules in the appropriate order.
 \item[Implemented By:] \progname{}
 \end{description}
 
-\subsubsection{Output Module (\cref{M_Output})}
-
+\subsubsection{\progname{} GUI (\texorpdfstring{\cref{M_GUISMG}}))}
 \begin{description}
-\item[Secrets:]Output format 
-\item[Services:]Transforms data to be usable by the plotter and the hardware device
+\item[Secrets:] Methods to interact with user to make run \progname{}
+\item[Services:] Serves as interface between the user and the software through the hardware by outputting calculation results and collecting user information that are going to be used as inputs for the calculation modules.
 \item[Implemented By:] \progname{}
 \end{description}
 
-\subsubsection{Fourier Transform Module (\cref{M_FT})}
+\subsubsection{Input Module (\texorpdfstring{\cref{M_InputFormat}}))}
+
+\begin{description}
+\item[Secrets:] The format and structure of the input data.
+\item[Services:] Loads, verifies and converts the input data into the appropriate data and object structure.
+\item[Implemented By:] \progname{}
+\end{description}
+
+\subsubsection{SMH simulation Module (\texorpdfstring{\cref{M_SMHSim}}))}
+
+\begin{description}
+\item[Secrets:] Algorithm to simulate the SMH from the reference image
+\item[Services:] Simulates the SMH in Fourier space using the pixel size $p$ of $I_{\mathit{SMH}_{\texttt{exp}}}$ using the Fourier transform the image reference $I_{C_{\texttt{ref}}}$.
+\item[Implemented By:] \progname{}
+\end{description}
+
+\subsubsection{GPA Module (\texorpdfstring{\cref{M_GPA}}))}
+
+\begin{description}
+\item[Secrets:] GPA algorithm.
+\item[Services:] Calculates the variation of masked Moir{\'e} wave vector on each element of the array.
+\item[Implemented By:] \progname{}
+\end{description}
+
+\subsubsection{Mask Module (\texorpdfstring{\cref{M_Mask}}))}
+
+\begin{description}
+\item[Secrets:] Algorithm to isolate a portion of an image
+\item[Services:] Isolates and weights a sub area of an image by fixing the parameter $M_j$
+\item[Implemented By:] \progname{}
+\end{description}
+
+\subsubsection{Unstrained region Module (\texorpdfstring{\cref{M_URef}}))}
+
+\begin{description}
+\item[Secrets:] Algorithm to calculate the unstrained reference
+\item[Services:] Calculates the unstrained reference based on the user input $U$ and the result of the fitting method.
+\item[Implemented By:] \progname{}
+\end{description}
+
+\subsubsection{Conversion Module (\texorpdfstring{\cref{M_MtoCConv}}))}
+
+\begin{description}
+\item[Secrets:] Algorithm to convert a Moir{\'e} wave vector to a crystalline wave vector
+\item[Services:] Performs the affine vectorial transformation using the Moir{\'e} wave vectors and the sampling vectors as inputs.
+\item[Implemented By:] \progname{}
+\end{description}
+
+\subsubsection{2D strain tensor Module (\texorpdfstring{\cref{M_StrainCalc}}))}
+
+\begin{description}
+\item[Secrets:] Algorithm to calculate the strain from distortion matrix
+\item[Services:] Calculates the strain tensor on each pixel of the array.
+\item[Implemented By:] \progname{}
+\end{description}
+
+\subsection{Software Decision Module}
+
+\subsubsection{Fourier Transform Module (\texorpdfstring{\cref{M_FT}}))}
 
 \begin{description}
 \item[Secrets:] Fourier transform algorithm
 \item[Services:] Transforms data into its Fourier transform
-\item[Implemented By:] External Python library
+\item[Implemented By:]Python library
 \end{description}
 
-\subsubsection{Least Square Fitting Method Module (\cref{M_LSFM})}
-
-\begin{description}
-\item[Secrets:] Least Square Fitting algorithm
-\item[Services:] Fit set of data into a 2D linear function using the Least squares method
-\item[Implemented By:] External Python library
-\end{description}
-
-\subsubsection{Gradient Module (\cref{M_Gradient})}
+\subsubsection{Gradient Module (\texorpdfstring{\cref{M_Gradient}}))}
 
 \begin{description}
 \item[Secrets:] 2D Gradient algorithm
-\item[Services:] Perform the 2D derivative of a data set.
-\item[Implemented By:] External Python library
+\item[Services:] Performs the 2D derivative of function.
+\item[Implemented By:]Python library
 \end{description}
 
-\subsubsection{Phase Module (\cref{M_Phase})}
+\subsubsection{Least Square Fitting Method Module (\texorpdfstring{\cref{M_LSFM}}))}
+
+\begin{description}
+\item[Secrets:] Least Square Fitting algorithm
+\item[Services:] Fits a set of data into a 2D linear function using the Least squares method
+\item[Implemented By:] Python library
+\end{description}
+
+\subsubsection{Phase Module (\texorpdfstring{\cref{M_Phase}}))}
 
 \begin{description}
 \item[Secrets:] Algorithm to wrap/unwrap the phase
-\item[Services:] Wrap/unwrap the phase by adding/removing discontinuity in the interval [0,2$\pi$]
-\item[Implemented By:] External Python library
+\item[Services:] Wraps/unwraps the phase by adding/removing discontinuities in the interval [0,2$\pi$]
+\item[Implemented By:]Python library
 \end{description}
 
-\subsubsection{SMH simulation Module (\cref{M_SMHSim})}
-
-\begin{description}
-\item[Secrets:] Algorithm to simulate the SMH from the reference image
-\item[Services:] Simulate the SMH in Fourier space using the pixel size $p$ of $I_{\mathit{SMH}_{\texttt{exp}}}$ using the Fourier transform the image reference $I_{C_{\texttt{ref}}}$
-\item[Implemented By:] \progname{}
-\end{description}
-
-\subsubsection{Strain calculation Module (\cref{M_StrainCalc})}
-
-\begin{description}
-\item[Secrets:] Algorithm to calculate the strain from distortion matrix
-\item[Services:] Calculate the strain level on each pixel of the data
-\item[Implemented By:] \progname{}
-\end{description}
-
-\subsubsection{Control Module (\cref{M_Control})}
-
-\begin{description}
-\item[Secrets:] Execution flow of \progname{}
-\item[Services:] Calls the different modules in the appropriate order
-\item[Implemented By:] \progname{}
-\end{description}
-
-\subsubsection{Moir{\'e} to Crystal conversion Module (\cref{M_MtoCConv})}
-
-\begin{description}
-\item[Secrets:] Algorithm to convert a Moir{\'e} wave vector to a crystalline wave vector
-\item[Services:] Affine vectorial transformation using the Moir{\'e} data from GPA and the sampling vectors user inputs.
-\item[Implemented By:] \progname{}
-\end{description}
-
-\subsubsection{Unstrained reference calculation Module (\cref{M_URef})}
-
-\begin{description}
-\item[Secrets:] Algorithm to calculate the unstrained reference
-\item[Services:] Calculation of the unstrained reference based on the user input $U$ and the result of the fitting method.
-\item[Implemented By:] \progname{}
-\end{description}
-
-\subsubsection{Mask Module (\cref{M_Mask})}
-
-\begin{description}
-\item[Secrets:] Algorithm to isolate a portion of an image
-\item[Services:] Function isolating and weighting a sub area of an image
-\item[Implemented By:] \progname{}
-\end{description}
-
-\subsubsection{GPA Module (\cref{M_GPA})}
-
-\begin{description}
-\item[Secrets:] GPA method
-\item[Services:] Map the variation of a vector in Fourier space related the the variation of the periodicity in real space
-\item[Implemented By:] \progname{}
-\end{description}
-
-
-\subsection{Software Decision Module}
-
-\subsubsection{Plotting Module (\cref{M_Plot})}
-
-\begin{description}
-\item[Secrets:] Method to transforming the data format into plot format
-\item[Services:] Transform data into format usable by the hardware to display data into readable format for the user
- 
-\item[Implemented By:] External Python library
-\end{description}
-
-\subsubsection{GUI Module (\cref{M_GUI})}
-
-\begin{description}
-\item[Secrets:] Method to interact with the user
-\item[Services:] Provide an interactive interface for the user to feed the information needed for the proper execution of \progname{}. 
- 
-\item[Implemented By:] External Python library
-\end{description}
-
-\subsubsection{Data Structure Module (\cref{M_DataStruct})}
+\subsubsection{Data Structure Module (\texorpdfstring{\cref{M_DataStruct}}))}
 
 \begin{description}
 \item[Secrets:] Data format for an image
-\item[Services:] Provide convenient format to store, read and manipulate all elements (pixel) from an image
- 
-\item[Implemented By:] External Python library
+\item[Services:] Provides convenient format to store, read and manipulate all elements (pixel) from an image.
+\item[Implemented By:] Python library
 \end{description}
 
+\subsubsection{Object Structure Module (\texorpdfstring{\cref{M_ObjectStruct}}))}
 
+\begin{description}
+\item[Secrets:] format for the object carried by the control module
+\item[Services:] Provides object format usable by module called by the control module.
+\item[Implemented By:] Python library
+\end{description}
+
+\subsubsection{Generic GUI/Plot Module (\texorpdfstring{\cref{M_GUIGene}}))}
+
+\begin{description}
+\item[Secrets:] Generic methods to interact with the user.
+\item[Services:] Provides the generic interface methods such as buttons, windows, plotting, entry fields to interact with a user.
+\item[Implemented By:] Python library
+\end{description}
 
 \section{Traceability Matrix} \label{SecTM}
 
@@ -569,17 +572,20 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+\cref{SRS:R_1} & \cref{M_GUISMG}, \cref{M_Control}, \cref{M_Hardware} \\
+\cref{SRS:R_2} & \cref{M_InputFormat} \\
+\cref{SRS:R_3} & \cref{M_SMHSim}, \cref{M_Control} \\
+\cref{SRS:R_4} & \cref{M_GUISMG}, \cref{M_Hardware} \\
+\cref{SRS:R_5} & \cref{M_GUISMG}, \cref{M_Hardware} \\
+\cref{SRS:R_6} & \cref{M_InputFormat} \\
+\cref{SRS:R_7} & \cref{M_GPA}, \cref{M_Mask}, \cref{M_Control} \\
+\cref{SRS:R_8} & \cref{M_GUISMG}, \cref{M_Hardware} \\
+\cref{SRS:R_9} & \cref{M_InputFormat} \\
+\cref{SRS:R_10} & \cref{M_URef}, \cref{M_Control} \\
+\cref{SRS:R_11} & \cref{M_GUISMG}, \cref{M_Hardware} \\
+\cref{SRS:R_12} & \cref{M_MtoCConv}, \cref{M_InputFormat}, \cref{M_Control} \\
+\cref{SRS:R_13} & \cref{M_StrainCalc} \\
+\cref{SRS:R_14} & \cref{M_GUISMG}, \cref{M_Hardware}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -592,18 +598,16 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \toprule
 \textbf{AC} & \textbf{Modules}\\
 \midrule
-\acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\cref{AC_Hardware} & \cref{M_Hardware}\\
+\cref{AC_FormatFile} & \cref{M_InputFormat}\\
+\cref{AC_Assum_SmallStrain} & \cref{M_StrainCalc}\\
+\cref{AC_SMH_algo} & \cref{M_SMHSim}\\
+\cref{AC_GPA_algo} & \cref{M_GPA}\\
+\cref{AC_Mask} & \cref{M_Mask}\\
+\cref{AC_RefFit} & \cref{M_LSFM}\\
+\cref{AC_Output} & \cref{M_GUISMG}\\
+\cref{AC_Data} & \cref{M_DataStruct}\\
+\cref{AC_Object} & \cref{M_ObjectStruct}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -625,7 +629,7 @@ because they use modules from the lower levels.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\linewidth]{Figure_Hierarchy.png}
+\includegraphics[width=\linewidth]{test.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
