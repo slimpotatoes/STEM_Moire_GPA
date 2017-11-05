@@ -94,7 +94,7 @@ STEM Moir{\'e} GPA}
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-31/10/2017 & 1.0 & First Draft\\
+5/11/2017 & 1.0 & First Draft\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -134,7 +134,9 @@ Our design follows the rules layed out by \cite{ParnasEtAl1984}, as follows:
 \end{itemize}
 
 After completing the first stage of the design, the Software Requirements
-Specification (SRS), the Module Guide (MG) is developed~\cite{ParnasEtAl1984}. The MGspecifies the modular structure of the system and is intended to allow bothdesigners and maintainers to easily identify the parts of the software. The
+Specification (SRS), the Module Guide (MG) is developed~\cite{ParnasEtAl1984}. 
+The MGspecifies the modular structure of the system and is intended to allow 
+bothdesigners and maintainers to easily identify the parts of the software. The
 potential readers of this document are as follows:
 
 \begin{itemize}
@@ -153,7 +155,11 @@ potential readers of this document are as follows:
 \fi
 %End comment
 
-The module guide document is providing to the reader the decomposition of \progname{} into smaller pieces to help the implementation phase. The decomposition is based on the principle of information hiding~\cite{Parnas1972a} which interest relies on its flexibility to design change. The module design follows the rules layed out by \cite{ParnasEtAl1984}, as follows:
+The module guide document is providing to the reader the decomposition of 
+\progname{} into smaller pieces to help the implementation phase. The 
+decomposition is based on the principle of information hiding~\cite{Parnas1972a} 
+which interest relies on its flexibility to design change. The module design 
+follows the rules layed out by \cite{ParnasEtAl1984}, as follows:
 \begin{itemize}
 \item System details that are likely to change independently should be the
   secrets of separate modules.
@@ -162,7 +168,18 @@ The module guide document is providing to the reader the decomposition of \progn
   structures must obtain it by calling access programs belonging to that module.
 \end{itemize}
 
-The module guide (MG) follows the Software Requirements Specification (SRS) available in the documentation tree. Terminologies, symbols and acronyms used in the document are described in the SRS and TestPlan documents. The rest of the document is organized as follows. \Cref{SecChange} lists the anticipated and unlikely changes of the software requirements. \Cref{SecMH} summarizes the module decomposition that was constructed according to the likely changes. \Cref{SecConnection} specifies the connections between the software requirements and the modules. \Cref{SecMD} gives a detailed description of the modules. Section \cref{SecTM} includes two traceability matrices. One checks the completeness of the design against the requirements provided in the SRS. The other shows the relation between anticipated changes and the modules. \Cref{SecUse} describes the use relation between modules.
+The module guide (MG) follows the Software Requirements Specification (SRS) 
+available in the documentation tree. Terminologies, symbols and acronyms used in 
+the document are described in the SRS and TestPlan documents. The rest of the 
+document is organized as follows. \Cref{SecChange} lists the anticipated and 
+unlikely changes of the software requirements. \Cref{SecMH} summarizes the 
+module decomposition that was constructed according to the likely changes. 
+\Cref{SecConnection} specifies the connections between the software requirements 
+and the modules. \Cref{SecMD} gives a detailed description of the modules. 
+Section \cref{SecTM} includes two traceability matrices. One checks the 
+completeness of the design against the requirements provided in the SRS. The 
+other shows the relation between anticipated changes and the modules. 
+\Cref{SecUse} describes the use relation between modules.
 
 \section{Anticipated and Unlikely Changes} \label{SecChange}
 
@@ -181,7 +198,9 @@ require changing the one module that hides the associated decision.
 \label{AC_Hardware}
 \end{AC}
 
-\begin{AC}\normalfont $I_{\mathit{SMH}_{\texttt{exp}}},I_{\mathit{C}_{\texttt{ref}}}$ inputs file format
+\begin{AC}\normalfont 
+$I_{\mathit{SMH}_{\texttt{exp}}},I_{\mathit{C}_{\texttt{ref}}}$ inputs file 
+format
 \label{AC_FormatFile}
 \end{AC}
 
@@ -217,16 +236,6 @@ require changing the one module that hides the associated decision.
 \label{AC_Object}
 \end{AC}
 
-\iffalse
-\begin{description}
-\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-  hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
-\end{description}
-\fi
-
 \subsection{Unlikely Changes} \label{SecUchange}
 
 \iffalse
@@ -238,7 +247,10 @@ will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
 \fi
 
-The unlikely changes are design decisions fixing some aspects of \progname{}. The lack of modularity is compensated by a simplification in the software design. If any of the elements are modified, important changes would be expected in the design. Therefore the following decisions are expected to stay unchanged.
+The unlikely changes are design decisions fixing some aspects of \progname{}. 
+The lack of modularity is compensated by a simplification in the software 
+design. If any of the elements are modified, important changes would be expected 
+in the design. Therefore the following decisions are expected to stay unchanged.
 
 \begin{UC}\normalfont SMH data type (2D arrays)
 \label{UC_Input_data}
@@ -256,29 +268,12 @@ The unlikely changes are design decisions fixing some aspects of \progname{}. Th
 \label{UC_Assum_Hardware}
 \end{UC}
 
-\iffalse
-\begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucInput}:] There will always be
-  a source of input data external to the software.
-\item ...
-\end{description}
-\fi
-
 \section{Module Hierarchy} \label{SecMH}
 
 This section provides an overview of the module design. Modules are summarized
 in a hierarchy decomposed by secrets in \cref{TblMH}. The modules listed
 below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
-
-\iffalse
-\begin{description}
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
-\end{description}
-\fi
 
 \begin{M}\normalfont Hardware-Hiding Module
 \label{M_Hardware}
@@ -411,8 +406,11 @@ selected.
 \subsection{Hardware Hiding Modules (\texorpdfstring{\cref{M_Hardware}}))}
 
 \begin{description}
-\item[Secrets:]The data structure and algorithm used to implement the virtual hardware.
-\item[Services:]Serves as a virtual hardware used by the rest of the system. This module provides the interface between the hardware and the software. So, the system can use it to display outputs or to accept inputs.
+\item[Secrets:]The data structure and algorithm used to implement the virtual 
+hardware.
+\item[Services:]Serves as a virtual hardware used by the rest of the system. 
+This module provides the interface between the hardware and the software. So, 
+the system can use it to display outputs or to accept inputs.
 \item[Implemented By:] OS
 \end{description}
 
@@ -440,8 +438,10 @@ selected.
 
 \subsubsection{\progname{} GUI (\texorpdfstring{\cref{M_GUISMG}}))}
 \begin{description}
-\item[Secrets:] Methods to interact with user to make run \progname{}
-\item[Services:] Serves as interface between the user and the software through the hardware by outputting calculation results and collecting user information that are going to be used as inputs for the calculation modules.
+\item[Secrets:] Methods to interact with user to make run \progname{}.
+\item[Services:] Serves as interface between the user and the software through 
+the hardware by outputting calculation results and collecting user information 
+(user inputs) for the calculation modules.
 \item[Implemented By:] \progname{}
 \end{description}
 
@@ -449,15 +449,19 @@ selected.
 
 \begin{description}
 \item[Secrets:] The format and structure of the input data.
-\item[Services:] Loads, verifies and converts the input data into the appropriate data and object structure.
+\item[Services:] Loads, verifies and stores the input data into the appropriate 
+data and object structure.
 \item[Implemented By:] \progname{}
 \end{description}
 
 \subsubsection{SMH simulation Module (\texorpdfstring{\cref{M_SMHSim}}))}
 
 \begin{description}
-\item[Secrets:] Algorithm to simulate the SMH from the reference image
-\item[Services:] Simulates the SMH in Fourier space using the pixel size $p$ of $I_{\mathit{SMH}_{\texttt{exp}}}$ using the Fourier transform the image reference $I_{C_{\texttt{ref}}}$.
+\item[Secrets:] Algorithm to simulate the SMH from the reference image 
+$I_{C_{\texttt{Ref}}}$.
+\item[Services:] Simulates the SMH in Fourier space using the pixel size $p$ of 
+$I_{\mathit{SMH}_{\texttt{exp}}}$ and the Fourier transform the image reference 
+$I_{C_{\texttt{ref}}}$.
 \item[Implemented By:] \progname{}
 \end{description}
 
@@ -465,38 +469,43 @@ selected.
 
 \begin{description}
 \item[Secrets:] GPA algorithm.
-\item[Services:] Calculates the variation of masked Moir{\'e} wave vector on each element of the array.
+\item[Services:] Calculates the variation of masked Moir{\'e} wave vector on 
+each element of the array.
 \item[Implemented By:] \progname{}
 \end{description}
 
 \subsubsection{Mask Module (\texorpdfstring{\cref{M_Mask}}))}
 
 \begin{description}
-\item[Secrets:] Algorithm to isolate a portion of an image
-\item[Services:] Isolates and weights a sub area of an image by fixing the parameter $M_j$
+\item[Secrets:] Algorithm to isolate a portion of an image.
+\item[Services:] Isolates and weights a sub area of an image by fixing the 
+parameter $M_j$.
 \item[Implemented By:] \progname{}
 \end{description}
 
 \subsubsection{Unstrained region Module (\texorpdfstring{\cref{M_URef}}))}
 
 \begin{description}
-\item[Secrets:] Algorithm to calculate the unstrained reference
-\item[Services:] Calculates the unstrained reference based on the user input $U$ and the result of the fitting method.
+\item[Secrets:] Algorithm to calculate the unstrained reference.
+\item[Services:] Calculates the unstrained reference based on the user input $U$ 
+and the result of the fitting method.
 \item[Implemented By:] \progname{}
 \end{description}
 
 \subsubsection{Conversion Module (\texorpdfstring{\cref{M_MtoCConv}}))}
 
 \begin{description}
-\item[Secrets:] Algorithm to convert a Moir{\'e} wave vector to a crystalline wave vector
-\item[Services:] Performs the affine vectorial transformation using the Moir{\'e} wave vectors and the sampling vectors as inputs.
+\item[Secrets:] Algorithm to convert a Moir{\'e} wave vector to a crystalline 
+wave vector.
+\item[Services:] Performs the affine vectorial transformation using the 
+Moir{\'e} wave vectors and the sampling vectors as inputs.
 \item[Implemented By:] \progname{}
 \end{description}
 
 \subsubsection{2D strain tensor Module (\texorpdfstring{\cref{M_StrainCalc}}))}
 
 \begin{description}
-\item[Secrets:] Algorithm to calculate the strain from distortion matrix
+\item[Secrets:] Algorithm to calculate the strain from distortion matrix.
 \item[Services:] Calculates the strain tensor on each pixel of the array.
 \item[Implemented By:] \progname{}
 \end{description}
@@ -506,48 +515,54 @@ selected.
 \subsubsection{Fourier Transform Module (\texorpdfstring{\cref{M_FT}}))}
 
 \begin{description}
-\item[Secrets:] Fourier transform algorithm
-\item[Services:] Transforms data into its Fourier transform
+\item[Secrets:] Fourier transform algorithm.
+\item[Services:] Transforms data into its Fourier transform.
 \item[Implemented By:]Python library
 \end{description}
 
 \subsubsection{Gradient Module (\texorpdfstring{\cref{M_Gradient}}))}
 
 \begin{description}
-\item[Secrets:] 2D Gradient algorithm
+\item[Secrets:] 2D Gradient algorithm.
 \item[Services:] Performs the 2D derivative of function.
 \item[Implemented By:]Python library
 \end{description}
 
-\subsubsection{Least Square Fitting Method Module (\texorpdfstring{\cref{M_LSFM}}))}
+\subsubsection{Least Square Fitting Method Module 
+(\texorpdfstring{\cref{M_LSFM}}))}
 
 \begin{description}
-\item[Secrets:] Least Square Fitting algorithm
-\item[Services:] Fits a set of data into a 2D linear function using the Least squares method
+\item[Secrets:] Least Square Fitting algorithm.
+\item[Services:] Fits a set of data into a 2D linear function using the Least 
+squares method.
 \item[Implemented By:] Python library
 \end{description}
 
 \subsubsection{Phase Module (\texorpdfstring{\cref{M_Phase}}))}
 
 \begin{description}
-\item[Secrets:] Algorithm to wrap/unwrap the phase
-\item[Services:] Wraps/unwraps the phase by adding/removing discontinuities in the interval [0,2$\pi$]
+\item[Secrets:] Algorithm to wrap/unwrap the phase.
+\item[Services:] Wraps/unwraps the phase by adding/removing discontinuities in 
+the interval [0,2$\pi$].
 \item[Implemented By:]Python library
 \end{description}
 
 \subsubsection{Data Structure Module (\texorpdfstring{\cref{M_DataStruct}}))}
 
 \begin{description}
-\item[Secrets:] Data format for an image
-\item[Services:] Provides convenient format to store, read and manipulate all elements (pixel) from an image.
+\item[Secrets:] Data format for an image.
+\item[Services:] Provides convenient format to store, read and manipulate all 
+elements (pixel) from an image.
 \item[Implemented By:] Python library
 \end{description}
 
-\subsubsection{Object Structure Module (\texorpdfstring{\cref{M_ObjectStruct}}))}
+\subsubsection{Object Structure Module 
+(\texorpdfstring{\cref{M_ObjectStruct}}))}
 
 \begin{description}
-\item[Secrets:] format for the object carried by the control module
-\item[Services:] Provides object format usable by module called by the control module.
+\item[Secrets:] Format for the object carried by the control module.
+\item[Services:] Provides object format usable by module called by the control 
+module.
 \item[Implemented By:] Python library
 \end{description}
 
@@ -555,7 +570,8 @@ selected.
 
 \begin{description}
 \item[Secrets:] Generic methods to interact with the user.
-\item[Services:] Provides the generic interface methods such as buttons, windows, plotting, entry fields to interact with a user.
+\item[Services:] Provides the generic interface methods such as buttons, 
+windows, plotting, entry fields to interact with a user.
 \item[Implemented By:] Python library
 \end{description}
 
@@ -629,7 +645,7 @@ because they use modules from the lower levels.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\linewidth]{test.png}
+\includegraphics[width=\linewidth]{Figure_Hierarchy.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
