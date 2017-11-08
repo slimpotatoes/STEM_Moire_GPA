@@ -133,20 +133,44 @@ Symbols, Abbreviations and Acronyms used in the Test Plan document are regrouped
 
 \subsection{Purpose}
 
-The purpose of the document is to provide the plan for testing \progname{} software with respect to the requirements specified in the SRS document. 
+The purpose of the document is to provide the plan for testing
+\progname{} software with respect to the requirements specified in the
+SRS document.  \wss{An explicit web-link to your GitHub repo would be nice.}
 
 \subsection{Scope}
 
 The scope of the test plan is described below:
 \begin{itemize}
 \item \progname{} will be written in Python.
-\item The proposed test plan is focusing on system and unit testing to verify the functional and non functional requirements of \progname{}. Because of the nature of \cref{ext:IM_1}, \cref{ext:IM_2} and \cref{ext:IM_3} (see SRS document), a complete verification of their respective outputs is not possible. In these cases, the system tests are designed as validation tests (including algorithm errors) and will not catch a code error. A physical understanding of the test output is recommended to interpret properly its quantitative aspect since, an assessment by the test team on the quality of the test results is required to validate it (reasonable error?). If the error observed is unreasonably high, an error in the code tested might be postulated.
-\item Regarding the numerous requirements of \progname{} and their relative complexity to be fully verified, only a portion of \progname{} is proposed to be tested. A specific focus is proposed on key aspects that are identified as the highest potential source of errors. The testing of the GUI won't be approached in this document but should be definitely considered in the future.
+\item The proposed test plan is focusing on system and unit testing to
+  verify the functional and non functional requirements of
+  \progname{}. Because of the nature of \cref{ext:IM_1},
+  \cref{ext:IM_2} and \cref{ext:IM_3} (see SRS document), a complete
+  verification of their respective outputs is not possible. In these
+  cases, the system tests are designed as validation tests (including
+  algorithm errors) and will not catch a code error \wss{Do you mean
+    ``will not distinguish a code error for a modelling error''?}. A physical
+  understanding of the test output is recommended to interpret
+  properly its quantitative aspect, since an assessment by the test
+  team on the quality of the test results is required to validate it
+  (reasonable error?). If the error observed is unreasonably high, an
+  error in the code tested might be postulated.
+\item Regarding the numerous requirements of \progname{} and their
+  relative complexity to be fully verified, only a portion of
+  \progname{} is proposed to be tested. A specific focus is proposed
+  on key aspects that are identified as the highest potential source
+  of errors. The testing of the GUI won't be approached in this
+  document but should be definitely considered in the future.
 \end{itemize}
+
+\wss{The text is better for version control, and for reading in other editors,
+  if you use a hard-wrap at 80 characters}
 
 \section{Plan}
 
 Based on the scope of the test plan, only \cref{ext:R_2}, \cref{ext:R_3}, \cref{ext:R_6}, \cref{ext:R_7}, \cref{ext:R_9}, \cref{ext:R_10}, \cref{ext:R_12}, \cref{ext:R_13}, \cref{ext:NR_1}, \cref{ext:NR_2}, \cref{ext:NR_8} and \cref{ext:NR_9} are planned to be verified and/or validated. 
+
+\wss{Nice to see the external references!}
 	
 \subsection{Software Description}
 
@@ -166,7 +190,10 @@ With respect to the limited experience of the test team regarding verification a
 
 \subsection{Non-Testing Based Verification}
 
-N/A\an{Possible to put Isobel to go through the code but I don't want to add it in this document since the code inspection is a favor and not part of the plan :).}
+N/A\an{Possible to put Isobel to go through the code but I don't want
+  to add it in this document since the code inspection is a favor and
+  not part of the plan :).}  \wss{Okay.  That sound fair.}
+
 \section{System Test Description}
 	
 \subsection{Tests for Functional Requirements}
@@ -236,7 +263,24 @@ The position in frequency space of the aliased frequency (transformation of one 
 \end{itemize}
 \end{Test}						
 
-Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} in SRS document), errors from the algorithm are added to the errors from the code. Both are probed at the same time in the tests and cannot be fully separated. \Cref{T_Phase-Extraction-No-Strain} is probing the accuracy and the precision in the most basic case possible (no strain) and is a first indicator of the \cref{ext:IM_2} performance. \Cref{T_Phase-Extraction-Known-Strain} and \cref{T_Phase-Extraction-Mask} are closer to a real case scenario and highlight a more realistic version of \cref{ext:IM_2} performance. To get quantitative trends, the error will be characterized as a function of the mask properties (such as the radius) and the deformation magnitude. This characterization will allow the GPA algorithm of \progname{} to be compared with other software using the same GPA algorithm. Another interest of the performance characterization is to see a quantitative effect of the user inputs on \cref{ext:IM_2} and provide a ``good practice guidance'' in the user manual.
+Because the GPA method is itself based on an approximation (see
+\cref{ext:IM_2} in SRS document), errors from the algorithm are added
+to the errors from the code. Both are probed at the same time in the
+tests and cannot be fully
+separated. \Cref{T_Phase-Extraction-No-Strain} is probing the accuracy
+and the precision in the most basic case possible (no strain) and is a
+first indicator of the \cref{ext:IM_2}
+performance. \Cref{T_Phase-Extraction-Known-Strain} and
+\cref{T_Phase-Extraction-Mask} are closer to a real case scenario and
+highlight a more realistic version of \cref{ext:IM_2} performance. To
+get quantitative trends, the error will be characterized as a function
+of the mask properties (such as the radius) and the deformation
+magnitude. This characterization will allow the GPA algorithm of
+\progname{} to be compared with other software using the same GPA
+algorithm. Another interest of the performance characterization is to
+see a quantitative effect of the user inputs on \cref{ext:IM_2} and
+provide a ``good practice guidance'' in the user manual.  \wss{I like
+  this idea!}
 
 \paragraph{Test \cref{ext:R_10} in \cref{ext:IM_3}: Correctness of the unstrained reference calculation}	
 
@@ -260,7 +304,8 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{itemize}
 \end{Test}
 
-\Cref{T_constant-delta-g} is not realistic but test the code directly. Increasing the size of U, should have absolutely no effect on the output. 
+\Cref{T_constant-delta-g} is not realistic but test the code
+directly. Increasing the size of U, \wss{write as $U$}should have absolutely no effect on the output. 
 
 \begin{Test}\normalfont\underline{Test-constant-delta-g-with-noise}
 \label{T_constant-delta-g-with-noise}
@@ -283,7 +328,18 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \end{itemize}
 \end{Test}
 
-\Cref{T_constant-delta-g-with-noise} is more representative of a real case than \cref{T_constant-delta-g} and will be use to characterize the evolution of the error with respect to the level of noise and the size of U. If the error is unreasonably high, an error in the code can be postulated. The evaluation of $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}$ is critical on the quantitative estimation of strain and rotation.
+\Cref{T_constant-delta-g-with-noise} is more representative of a real
+case than \cref{T_constant-delta-g} and will be use to characterize
+the evolution of the error with respect to the level of noise and the
+size of U. If the error is unreasonably high, an error in the code can
+be postulated. The evaluation of
+$\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}$ is critical on the
+quantitative estimation of strain and rotation.  \wss{I like this
+  test, but (as for several other tests), there are still decisions
+  that could be made that you have postponed.  Specifically, what are
+  the values of $m$ and $n$?  If the data is difficult to specify,
+  maybe you could point to a sample file in your repo that you are
+  going to use?}
 
 \begin{Test}\normalfont\underline{Test-varying-delta-g}
 \label{T_varying-delta-g}
@@ -334,6 +390,9 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 
 \Cref{black_box_STEM_Moire_GPA} looks more like a validation test than a verification test. Nevertheless, if the error in \cref{black_box_STEM_Moire_GPA} is unreasonably high, it is possible to consider the presence of a mistake in the code somewhere. On the validation side, \cref{black_box_STEM_Moire_GPA} is highlighting the accuracy (without noise), and the precision (with noise) of \progname{} seen by the end-user (code, user and algorithm errors included). The performance is then characterized as the error output function of the noise (or of the quality factor of $I_{\mathit{SMH}_{\text{exp}}}$ like the signal on noise ratio $\mathit{SNR}=\frac{I_{\mathit{SMH}_\text{exp}}}{N}$). The performance characterization can be used to see from which quality factor the accuracy and sensitivity of \progname{} is too poor to consider the strain and rotation results reliable and warn the user in this case. The performance graph can also be as a base of comparison with another software (if it exists) doing the same data treatment.
 
+\wss{I like how you have used the words verification and validation
+  consistently and correctly.}
+
 \subsubsection{Evolution of the time calculations with data size}
 		
 \paragraph{Test \cref{ext:NR_2}}
@@ -341,10 +400,18 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 \begin{Test}\normalfont\underline{Test-stress-STEM-Moir{\'e}-GPA}
 \label{stress_test_STEM_Moire_GPA}
 \begin{itemize}
-\item Type: Functional, Dynimical, Black box, Manual
+\item Type: Functional, Dynimical, \wss{spell check!} Black box, Manual
 \item Initial State: All user inputs are predefined ($p,M_1,M_2,U,\overrightarrow{q_{n_1,m_1}},\overrightarrow{q_{n_2,m_2}}$) except the STEM Moir{\'e} hologram
 \item Input: STEM Moir{\'e} holograms with different 2D array size.
-\item Expected output $\forall \vec{r} \in \mathbb{I}, \ \varepsilon(\vec{r})^{t}=\varepsilon(\vec{r}) \wedge \omega\vec({r})^{t}=\omega(\vec{r})$ in a reasonable time frame
+\item Expected output $\forall \vec{r} \in \mathbb{I}, \
+  \varepsilon(\vec{r})^{t}=\varepsilon(\vec{r}) \wedge
+  \omega\vec({r})^{t}=\omega(\vec{r})$ in a reasonable time frame
+  \wss{This could be less ambiguous.  Specifying a specific time would
+    not be much more meaningful, but maybe you could do a usability
+    test?  More realistically, you could just record the times for the
+    tests and plot this data for others to consider.  Rather than
+    specify the performance, you are simply describing the performance
+    as observed experimentally.}
 \item Output: Time to perform all the calculations
 \end{itemize}
 \end{Test}
@@ -397,6 +464,12 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 	\end{itemize}
 \end{itemize}
 \end{Test}
+
+\wss{Your outputs are unlikely to be an exact match.  There will be
+  some epsilon error.  Maybe you could add a blanket statement at the
+  start that points this out.  Part of your output could be a summary
+  of the observed errors (hopefully as relative errors, not absolute
+  errors) for each test output in comparison to the ideal output.}
 
 \begin{Test}\normalfont\underline{Test-Black-Box-STEM-Moir{\'e}-GPA-Mac}
 \label{black_box_STEM_Moire_GPA-predif-Mac}
@@ -487,6 +560,13 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 	\end{itemize}
 \end{itemize}
 \end{Test}
+
+\wss{Copying the same test 3 times in a row, with as far as I can tell
+  the only difference being the OS is a maintenance headache.  If you
+  realize you have to change the test, you have to change it three
+  times.  A better version is to give the full test case once, and
+  then the subsequence tests can say it is the same, with the one
+  variability of OS changed.}
 
 \an{Technically x86 architecture should be also tested.}
 
@@ -844,7 +924,10 @@ Because the GPA method is itself based on an approximation (see \cref{ext:IM_2} 
 	\end{bmatrix} $
 	\end{itemize} 
 \item Output:
-Error message $Err_{G_{\text{uns}}^{\text{exp}}}$ should match: \enquote{Matrix $G_{\text{uns}}^{\text{exp}}$ non invertible, the crystalline wave vectors are linked (collinear). Please chose another combination of crystalline wave vectors.}
+Error message $Err_{G_{\text{uns}}^{\text{exp}}}$ should match:
+\enquote{Matrix $G_{\text{uns}}^{\text{exp}}$ non invertible, the
+  crystalline wave vectors are linked (collinear). Please chose
+  \wss{choose} another combination of crystalline wave vectors.}
 \end{itemize}
 \end{Test}
 
@@ -898,7 +981,8 @@ Error message $Err_{\Delta G^{\text{exp}}}$ should match: \enquote{Matrix $G^{\t
 \cref{ext:NR_8} & \cref{black_box_STEM_Moire_GPA}\\
 \cref{ext:NR_9} & \cref{black_box_STEM_Moire_GPA}\\
 \bottomrule
-\caption{\textbf{Traceability table: Test vs Requirements}}
+\caption{\textbf{Traceability table: Test vs Requirements}
+  \wss{Capitalize Table}}
 \label{table_traceability}
 \end{longtable}
 
@@ -920,9 +1004,11 @@ P4 & \cref{ext:NR_8} (\cref{black_box_STEM_Moire_GPA}) , \cref{ext:NR_9} (\cref{
 P5 & \cref{ext:NR_1} (\cref{black_box_STEM_Moire_GPA-predif-Linux}, \cref{black_box_STEM_Moire_GPA-predif-Mac}, \cref{black_box_STEM_Moire_GPA-predif-Windows}), \cref{ext:NR_2} (\cref{stress_test_STEM_Moire_GPA}) \\
 P6 & GUI and other lower priority tasks \\
 \bottomrule
-\caption{\textbf{Priority table}}
+\caption{\textbf{Priority table} \wss{Capitalize Table}}
 \label{priority_table}
 \end{longtable}
+
+\wss{Great work!}
 
 \bibliography{TestPlan_biblio}
 \bibliographystyle{ieeetr}
