@@ -1,0 +1,10 @@
+*.lot
+*.aux
+*.log
+*.toc
+*.gz
+*.out
+*.blg
+*.bbl
+*.lof
+Doc/Comments.tex
