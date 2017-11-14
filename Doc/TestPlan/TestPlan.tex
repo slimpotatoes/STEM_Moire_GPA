@@ -95,6 +95,7 @@
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 23/10/2017 & 1.0 & First Draft\\
+13/11/2017 & 1.1 & Multiple modifications + Test dataset to be implemented\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -134,8 +135,9 @@ Symbols, Abbreviations and Acronyms used in the Test Plan document are regrouped
 \subsection{Purpose}
 
 The purpose of the document is to provide the plan for testing
-\progname{} software with respect to the requirements specified in the
-SRS document.  \wss{An explicit web-link to your GitHub repo would be nice.}
+\href{https://github.com/slimpotatoes/STEM_Moire_GPA}{\progname{}} software with 
+respect to the requirements specified in the SRS document.
+
 
 \subsection{Scope}
 
@@ -148,37 +150,39 @@ The scope of the test plan is described below:
   \cref{ext:IM_2} and \cref{ext:IM_3} (see SRS document), a complete
   verification of their respective outputs is not possible. In these
   cases, the system tests are designed as validation tests (including
-  algorithm errors) and will not catch a code error \wss{Do you mean
-    ``will not distinguish a code error for a modelling error''?}. A physical
+  algorithm errors) and will not catch a code error from a modelling error. A 
+physical
   understanding of the test output is recommended to interpret
   properly its quantitative aspect, since an assessment by the test
-  team on the quality of the test results is required to validate it
-  (reasonable error?). If the error observed is unreasonably high, an
-  error in the code tested might be postulated.
+  team on the quality of the test results is required to validate it. If the 
+error observed is unreasonably high, an
+  error in the code tested might be postulated. At current stage of the 
+development, an \enquote{unreasonable error} is difficult to qualify, however a 
+relative error greater than 50{\%} of the expected results is not acceptable for 
+\progname{}. This limit is excessively high but will be adjusted once the error 
+of the GPA algorithm is analytically studied.
 \item Regarding the numerous requirements of \progname{} and their
   relative complexity to be fully verified, only a portion of
   \progname{} is proposed to be tested. A specific focus is proposed
   on key aspects that are identified as the highest potential source
   of errors. The testing of the GUI won't be approached in this
   document but should be definitely considered in the future.
+
 \end{itemize}
 
-\wss{The text is better for version control, and for reading in other editors,
-  if you use a hard-wrap at 80 characters}
+
 
 \section{Plan}
 
 Based on the scope of the test plan, only \cref{ext:R_2}, \cref{ext:R_3}, \cref{ext:R_6}, \cref{ext:R_7}, \cref{ext:R_9}, \cref{ext:R_10}, \cref{ext:R_12}, \cref{ext:R_13}, \cref{ext:NR_1}, \cref{ext:NR_2}, \cref{ext:NR_8} and \cref{ext:NR_9} are planned to be verified and/or validated. 
 
-\wss{Nice to see the external references!}
-	
 \subsection{Software Description}
 
 \progname{} software is converting a STEM Moir{\'e} hologram into deformation maps. Details on the goal and the requirements of \progname{} are provided in the Problem Statement and the SRS documents.
 
 \subsection{Test Team}
 
-The author of the document is the only member of the test team.
+Alexandre Pofelski is the only member of the test team.
 
 \subsection{Automated Testing Approach}
 
@@ -190,11 +194,11 @@ With respect to the limited experience of the test team regarding verification a
 
 \subsection{Non-Testing Based Verification}
 
-N/A\an{Possible to put Isobel to go through the code but I don't want
-  to add it in this document since the code inspection is a favor and
-  not part of the plan :).}  \wss{Okay.  That sound fair.}
+N/A
 
 \section{System Test Description}
+
+Numerous system tests are using analytical functions as inputs and sometimes expect analytical functions as outputs. Those functions need to be implemented into proper format for \progname{} using specific values for the parameters. Dedicated test dataset (inputs and expected outputs) will be explicitly described and stored in the \href{https://github.com/slimpotatoes/STEM_Moire_GPA}{\progname{}} repository once they are designed. 
 	
 \subsection{Tests for Functional Requirements}
 \renewcommand{\labelitemi}{$\star$}
@@ -279,8 +283,7 @@ magnitude. This characterization will allow the GPA algorithm of
 \progname{} to be compared with other software using the same GPA
 algorithm. Another interest of the performance characterization is to
 see a quantitative effect of the user inputs on \cref{ext:IM_2} and
-provide a ``good practice guidance'' in the user manual.  \wss{I like
-  this idea!}
+provide a ``good practice guidance'' in the user manual. 
 
 \paragraph{Test \cref{ext:R_10} in \cref{ext:IM_3}: Correctness of the unstrained reference calculation}	
 
@@ -305,7 +308,7 @@ provide a ``good practice guidance'' in the user manual.  \wss{I like
 \end{Test}
 
 \Cref{T_constant-delta-g} is not realistic but test the code
-directly. Increasing the size of U, \wss{write as $U$}should have absolutely no effect on the output. 
+directly. Increasing the size of $U$ should have absolutely no effect on the output. 
 
 \begin{Test}\normalfont\underline{Test-constant-delta-g-with-noise}
 \label{T_constant-delta-g-with-noise}
@@ -339,7 +342,9 @@ quantitative estimation of strain and rotation.  \wss{I like this
   that could be made that you have postponed.  Specifically, what are
   the values of $m$ and $n$?  If the data is difficult to specify,
   maybe you could point to a sample file in your repo that you are
-  going to use?}
+  going to use?} \an{I fully agree. Will do it later once the tests dataset are 
+designed} 
+
 
 \begin{Test}\normalfont\underline{Test-varying-delta-g}
 \label{T_varying-delta-g}
@@ -361,7 +366,14 @@ quantitative estimation of strain and rotation.  \wss{I like this
 \end{itemize}
 \end{Test}
 
-\Cref{T_varying-delta-g} might be impossible to properly interpret but the idea is to see the effect an improper choice of an unstrained reference. If a non uniform deformation field is present in the reference, \progname{} is trying to find the best linear fit. A solution is calculated whatever the precision of the fit. However, if the quality of the fit is poor, it could be possible that \progname{} informs/warns the user of a potential problem in the reference chosen.
+\Cref{T_varying-delta-g} might be impossible to properly interpret but the idea 
+is to see the effect an improper choice of an unstrained reference. If a non 
+uniform deformation field is present in the reference, \progname{} is trying to 
+find the best linear fit. A solution is calculated whatever the precision of the 
+fit. However, if the quality of the fit is poor, it could be possible that 
+\progname{} informs/warns the user of a potential problem in the reference 
+chosen.
+
 
 
 \subsection{Tests for Nonfunctional Requirements}
@@ -373,7 +385,7 @@ quantitative estimation of strain and rotation.  \wss{I like this
 \begin{Test}\normalfont\underline{Test-Black-Box-STEM-Moir{\'e}-GPA}
 \label{black_box_STEM_Moire_GPA}
 \begin{itemize}
-\item Type: Functional, Dynamical, Black box, , Manual (can be automated)
+\item Type: Functional, Dynamical, Black box, Manual (can be automated)
 \item Initial State: All user inputs are predefined ($p,M_1,M_2,U,\overrightarrow{q_{n_1,m_1}},\overrightarrow{q_{n_2,m_2}}$) except the STEM Moir{\'e} hologram
 \item Input: STEM Moir{\'e} holograms with different level of noise (from no noise to high level of noise): 
 	\begin{itemize}
@@ -388,10 +400,21 @@ quantitative estimation of strain and rotation.  \wss{I like this
 \end{itemize}
 \end{Test}
 
-\Cref{black_box_STEM_Moire_GPA} looks more like a validation test than a verification test. Nevertheless, if the error in \cref{black_box_STEM_Moire_GPA} is unreasonably high, it is possible to consider the presence of a mistake in the code somewhere. On the validation side, \cref{black_box_STEM_Moire_GPA} is highlighting the accuracy (without noise), and the precision (with noise) of \progname{} seen by the end-user (code, user and algorithm errors included). The performance is then characterized as the error output function of the noise (or of the quality factor of $I_{\mathit{SMH}_{\text{exp}}}$ like the signal on noise ratio $\mathit{SNR}=\frac{I_{\mathit{SMH}_\text{exp}}}{N}$). The performance characterization can be used to see from which quality factor the accuracy and sensitivity of \progname{} is too poor to consider the strain and rotation results reliable and warn the user in this case. The performance graph can also be as a base of comparison with another software (if it exists) doing the same data treatment.
+\Cref{black_box_STEM_Moire_GPA} looks more like a validation test than a 
+verification test. Nevertheless, if the error in \cref{black_box_STEM_Moire_GPA} 
+is unreasonably high, it is possible to consider the presence of a mistake in 
+the code somewhere. On the validation side, \cref{black_box_STEM_Moire_GPA} is 
+highlighting the accuracy (without noise), and the precision (with noise) of 
+\progname{} seen by the end-user (code, user and algorithm errors included). The 
+performance is then characterized as the error output function of the noise (or 
+of the quality factor of $I_{\mathit{SMH}_{\text{exp}}}$ like the signal on 
+noise ratio $\mathit{SNR}=\frac{I_{\mathit{SMH}_\text{exp}}}{N}$). The 
+performance characterization can be used to see from which quality factor the 
+accuracy and sensitivity of \progname{} is too poor to consider the strain and 
+rotation results reliable and warn the user in this case. The performance graph 
+can also be as a base of comparison with another software (if it exists) doing 
+the same data treatment.
 
-\wss{I like how you have used the words verification and validation
-  consistently and correctly.}
 
 \subsubsection{Evolution of the time calculations with data size}
 		
@@ -400,19 +423,10 @@ quantitative estimation of strain and rotation.  \wss{I like this
 \begin{Test}\normalfont\underline{Test-stress-STEM-Moir{\'e}-GPA}
 \label{stress_test_STEM_Moire_GPA}
 \begin{itemize}
-\item Type: Functional, Dynimical, \wss{spell check!} Black box, Manual
+\item Type: Functional, Dynamical, Black box, Manual
 \item Initial State: All user inputs are predefined ($p,M_1,M_2,U,\overrightarrow{q_{n_1,m_1}},\overrightarrow{q_{n_2,m_2}}$) except the STEM Moir{\'e} hologram
 \item Input: STEM Moir{\'e} holograms with different 2D array size.
-\item Expected output $\forall \vec{r} \in \mathbb{I}, \
-  \varepsilon(\vec{r})^{t}=\varepsilon(\vec{r}) \wedge
-  \omega\vec({r})^{t}=\omega(\vec{r})$ in a reasonable time frame
-  \wss{This could be less ambiguous.  Specifying a specific time would
-    not be much more meaningful, but maybe you could do a usability
-    test?  More realistically, you could just record the times for the
-    tests and plot this data for others to consider.  Rather than
-    specify the performance, you are simply describing the performance
-    as observed experimentally.}
-\item Output: Time to perform all the calculations
+\item Output: Time to perform \progname{} calculations and plot execution time vs data size.
 \end{itemize}
 \end{Test}
 
@@ -420,11 +434,11 @@ quantitative estimation of strain and rotation.  \wss{I like this
 
 \paragraph{Test \cref{ext:NR_1}}						
 
-\begin{Test}\normalfont\underline{Test-Black-Box-STEM-Moir{\'e}-GPA-Linux}
-\label{black_box_STEM_Moire_GPA-predif-Linux}
+\begin{Test}\normalfont\underline{Test-Black-Box-STEM-Moir{\'e}-GPA-env}
+\label{black_box_STEM_Moire_GPA-env}
 \begin{itemize}
 \item Type: Functional, Dynamical, Black box, Manual
-\item Initial State: x64 Linux environment with all user inputs are predefined ($p,M_1,M_2,U,\overrightarrow{q_{n_1,m_1}},\overrightarrow{q_{n_2,m_2}}$) except $I_{\mathit{SMH}_\text{exp}}$ 
+\item Initial State: Various environments (x64 Linux, x64 Windows, x64 Mac OS X) with all user inputs are predefined ($p,M_1,M_2,U,\overrightarrow{q_{n_1,m_1}},\overrightarrow{q_{n_2,m_2}}$) except $I_{\mathit{SMH}_\text{exp}}$ 
 \item Input: A perfect generated STEM Moir{\'e} hologram representing all the strain state in each quadrant $\mathbb{I}_{i}$ of the array $\mathbb{I}$ (unstrained in $\mathbb{I}_{1}$, 1{\%} uniaxial strain along $\vec{u_x}$ and $\vec{u_y}$ in $\mathbb{I}_{2}$, 1{\%} shear strain in $\mathbb{I}_{3}$, and  20 mrad rotation $\mathbb{I}_{4}$)
 \item Expected output: In each quadrant
 \begin{itemize}
@@ -459,116 +473,18 @@ quantitative estimation of strain and rotation.  \wss{I like this
 \end{itemize}
 \item Output: $\varepsilon(\vec{r})^{t}, \omega(\vec{r})^{t}$
 	\begin{itemize}
-	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\varepsilon\text{ Linux}}=|\varepsilon(\vec{r})^{t}-\varepsilon(\vec{r})|$
-	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\omega\text{ Linux}}=|\omega(\vec{r})^{t}-\omega(\vec{r})|$
+	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\varepsilon\text{ env}}=|\varepsilon(\vec{r})^{t}-\varepsilon(\vec{r})|$
+	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\omega\text{ env}}=|\omega(\vec{r})^{t}-\omega(\vec{r})|$
 	\end{itemize}
 \end{itemize}
 \end{Test}
 
-\wss{Your outputs are unlikely to be an exact match.  There will be
-  some epsilon error.  Maybe you could add a blanket statement at the
-  start that points this out.  Part of your output could be a summary
-  of the observed errors (hopefully as relative errors, not absolute
-  errors) for each test output in comparison to the ideal output.}
+The output of \cref{black_box_STEM_Moire_GPA-env} is not expected to be a 
+perfect match but should be matching errors obtained in 
+\cref{black_box_STEM_Moire_GPA} (or relatively close to). The errors will be 
+then displayed as a function of the environment (Linux, Windows and Mac). The 
+relative errors between the different environments can be also considered. 
 
-\begin{Test}\normalfont\underline{Test-Black-Box-STEM-Moir{\'e}-GPA-Mac}
-\label{black_box_STEM_Moire_GPA-predif-Mac}
-\begin{itemize}
-\item Type: Functional, Dynamical, Black box, Manual
-\item Initial State: x64 Mac OS X environment with all user inputs are predefined ($p,M_1,M_2,U,\overrightarrow{q_{n_1,m_1}},\overrightarrow{q_{n_2,m_2}}$) except $I_{\mathit{SMH}_\text{exp}}$ 
-\item Input: A perfect generated STEM Moir{\'e} hologram representing all the strain state in each quadrant $\mathbb{I}_{i}$ of the array $\mathbb{I}$ (unstrained in $\mathbb{I}_{1}$, 1{\%} uniaxial strain along $\vec{u_x}$ and $\vec{u_y}$ in $\mathbb{I}_{2}$, 1{\%} shear strain in $\mathbb{I}_{3}$, and  20 mrad rotation $\mathbb{I}_{4}$)
-\item Expected output: In each quadrant
-\begin{itemize}
-\item $\forall \vec{r} \in \mathbb{I}_{1}, \ \varepsilon(\vec{r})=\begin{bmatrix}
-0 & 0 \\
-0 & 0
-\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
-0 & 0 \\
-0 & 0
-\end{bmatrix}$
-\item $\forall \vec{r} \in \mathbb{I}_{2}, \ \varepsilon(\vec{r})=\begin{bmatrix}
-0.01 & 0 \\
-0 & 0.01
-\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
-0 & 0 \\
-0 & 0
-\end{bmatrix}$
-\item $\forall \vec{r} \in \mathbb{I}_{3}, \ \varepsilon(\vec{r})=\begin{bmatrix}
-0 & 0.01 \\
-0.01 & 0
-\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
-0 & 0 \\
-0 & 0
-\end{bmatrix}$
-\item $\forall \vec{r} \in \mathbb{I}_{4}, \ \varepsilon(\vec{r})=\begin{bmatrix}
-0 & 0 \\
-0 & 0
-\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
-0 & 0.2 \\
--0.2 & 0
-\end{bmatrix}$
-\end{itemize}
-\item Output: $\varepsilon(\vec{r})^{t}, \omega(\vec{r})^{t}$
-	\begin{itemize}
-	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\varepsilon\text{ Linux}}=|\varepsilon(\vec{r})^{t}-\varepsilon(\vec{r})|$
-	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\omega\text{ Linux}}=|\omega(\vec{r})^{t}-\omega(\vec{r})|$
-	\end{itemize}
-\end{itemize}
-\end{Test}
-
-\begin{Test}\normalfont\underline{Test-Black-Box-STEM-Moir{\'e}-GPA-Windows}
-\label{black_box_STEM_Moire_GPA-predif-Windows}
-\begin{itemize}
-\item Type: Functional, Dynamical, Black box, Manual
-\item Initial State: x64 Windows environment with all user inputs are predefined ($p,M_1,M_2,U,\overrightarrow{q_{n_1,m_1}},\overrightarrow{q_{n_2,m_2}}$) except $I_{\mathit{SMH}_\text{exp}}$ 
-\item Input: A perfect generated STEM Moir{\'e} hologram representing all the strain state in each quadrant $\mathbb{I}_{i}$ of the array $\mathbb{I}$ (unstrained in $\mathbb{I}_{1}$, 1{\%} uniaxial strain along $\vec{u_x}$ and $\vec{u_y}$ in $\mathbb{I}_{2}$, 1{\%} shear strain in $\mathbb{I}_{3}$, and  20 mrad rotation $\mathbb{I}_{4}$)
-\item Expected output: In each quadrant
-\begin{itemize}
-\item $\forall \vec{r} \in \mathbb{I}_{1}, \ \varepsilon(\vec{r})=\begin{bmatrix}
-0 & 0 \\
-0 & 0
-\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
-0 & 0 \\
-0 & 0
-\end{bmatrix}$
-\item $\forall \vec{r} \in \mathbb{I}_{2}, \ \varepsilon(\vec{r})=\begin{bmatrix}
-0.01 & 0 \\
-0 & 0.01
-\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
-0 & 0 \\
-0 & 0
-\end{bmatrix}$
-\item $\forall \vec{r} \in \mathbb{I}_{3}, \ \varepsilon(\vec{r})=\begin{bmatrix}
-0 & 0.01 \\
-0.01 & 0
-\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
-0 & 0 \\
-0 & 0
-\end{bmatrix}$
-\item $\forall \vec{r} \in \mathbb{I}_{4}, \ \varepsilon(\vec{r})=\begin{bmatrix}
-0 & 0 \\
-0 & 0
-\end{bmatrix} \ \wedge \ \omega\vec({r})=\begin{bmatrix}
-0 & 0.2 \\
--0.2 & 0
-\end{bmatrix}$
-\end{itemize}
-\item Output: $\varepsilon(\vec{r})^{t}, \omega(\vec{r})^{t}$
-	\begin{itemize}
-	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\varepsilon\text{ Linux}}=|\varepsilon(\vec{r})^{t}-\varepsilon(\vec{r})|$
-	\item $\forall \vec{r} \in \mathbb{I}, \ E^{\text{\progname{}}}_{\omega\text{ Linux}}=|\omega(\vec{r})^{t}-\omega(\vec{r})|$
-	\end{itemize}
-\end{itemize}
-\end{Test}
-
-\wss{Copying the same test 3 times in a row, with as far as I can tell
-  the only difference being the OS is a maintenance headache.  If you
-  realize you have to change the test, you have to change it three
-  times.  A better version is to give the full test case once, and
-  then the subsequence tests can say it is the same, with the one
-  variability of OS changed.}
-
-\an{Technically x86 architecture should be also tested.}
 
 \section{Unit Testing Plan}
 		
@@ -601,8 +517,8 @@ quantitative estimation of strain and rotation.  \wss{I like this
 \begin{itemize}
 \item Type: Dynamical, Automated
 \item Initial State: Waiting for $I_{\mathit{SMH}_{\text{exp}}}$ or $I_{C_{\text{ref}}}$ user input
-\item Input: Pre defined random 2D array in dm3 format with specific tags (calibration, microscope, high tension, ...)
-\item Output: Read the tag from the dm3 file and and test each tag collected with the pre defined tags
+\item Input: dm3 file with pre defined tags (calibration, microscope, high tension, ...)
+\item Output: Read the tag from the dm3 file and and test if each tag collected matches with the pre defined tags
 \end{itemize}
 \end{Test}
 
@@ -664,7 +580,7 @@ quantitative estimation of strain and rotation.  \wss{I like this
 \begin{itemize}
 \item Type: Dynamical, Automated
 \item Initial State: Waiting for $M$ user input on $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$
-\item Input: $M$ improper format (such as 1D array, 2D array out of bounds if  
+\item Input: $M$ improper format (such as 1D array, 2D array out of bounds)
 \item Output:  Error message $Err_{M}$ should match: \enquote{Improper mask format}
 \end{itemize}
 \end{Test}
@@ -714,8 +630,6 @@ quantitative estimation of strain and rotation.  \wss{I like this
 \item Output: Rectangle center position $(20,25)$, short length $l=20$ pixels and long length $L=30$ pixels
 \end{itemize}
 \end{Test}
-
-\an{GUI should be tested again here}
 
 \subsection{Output Verification test}
 
@@ -926,8 +840,9 @@ quantitative estimation of strain and rotation.  \wss{I like this
 \item Output:
 Error message $Err_{G_{\text{uns}}^{\text{exp}}}$ should match:
 \enquote{Matrix $G_{\text{uns}}^{\text{exp}}$ non invertible, the
-  crystalline wave vectors are linked (collinear). Please chose
-  \wss{choose} another combination of crystalline wave vectors.}
+  crystalline wave vectors are linked (collinear). Please choose another 
+combination of crystalline wave vectors.}
+
 \end{itemize}
 \end{Test}
 
@@ -971,7 +886,7 @@ Error message $Err_{\Delta G^{\text{exp}}}$ should match: \enquote{Matrix $G^{\t
 \cref{ext:R_12} & \cref{Test-Basic-affine-transformation}, \cref{Test-Error-q-affine-transformation}, \cref{Test-Error-pixel-affine-transformation} \\
 \cref{ext:R_13} & \cref{T_No-2D-strain}, \cref{T_known-constant-2D-strain}, \cref{T_Bad-G_ref}, \cref{T_Bad-Delta-G}\\
 \cref{ext:R_14} & Not covered in the Test Plan (GUI)\\
-\cref{ext:NR_1} & \cref{black_box_STEM_Moire_GPA-predif-Linux}, \cref{black_box_STEM_Moire_GPA-predif-Mac}, \cref{black_box_STEM_Moire_GPA-predif-Windows}\\
+\cref{ext:NR_1} & \cref{black_box_STEM_Moire_GPA-env}\\
 \cref{ext:NR_2} & \cref{stress_test_STEM_Moire_GPA}\\
 \cref{ext:NR_3} & Not covered in the Test Plan (GUI)\\
 \cref{ext:NR_4} & Not covered in the Test Plan (GUI)\\
@@ -981,8 +896,7 @@ Error message $Err_{\Delta G^{\text{exp}}}$ should match: \enquote{Matrix $G^{\t
 \cref{ext:NR_8} & \cref{black_box_STEM_Moire_GPA}\\
 \cref{ext:NR_9} & \cref{black_box_STEM_Moire_GPA}\\
 \bottomrule
-\caption{\textbf{Traceability table: Test vs Requirements}
-  \wss{Capitalize Table}}
+\caption{\textbf{Traceability Table: Test vs Requirements}}
 \label{table_traceability}
 \end{longtable}
 
@@ -990,25 +904,23 @@ Error message $Err_{\Delta G^{\text{exp}}}$ should match: \enquote{Matrix $G^{\t
 The resources available for the test phase of \progname{} are relatively limited and all aspects of the test plan won't be covered. Therefore, the test tasks have been prioritized by focusing first on the system tests targeting the functional requirements, then the unit tests testing the functional requirements and finally the system tests assessing the non functional requirements. The details of the prioritization are described in the following table.
 
 \noindent 
-\begin{longtable}{l p{10cm}}
+\begin{longtable}{l p{3cm} p{7cm}}
 
 \toprule
-\textbf{Priority} & \textbf{Requirement tested}\\
+\textbf{Priority} & \textbf{Requirement tested} & \textbf{Associated Tests} \\
 \midrule
 \endhead
-P0 & \cref{ext:R_3} (\cref{aliasing-frequency-simple}), \cref{ext:R_7} (\cref{T_Phase-Extraction-No-Strain}, \cref{T_Phase-Extraction-Known-Strain}), \cref{ext:R_10} (\cref{T_constant-delta-g}, \cref{T_constant-delta-g-with-noise}) \\
-P1 & \cref{ext:R_13} (\cref{T_No-2D-strain}, \cref{T_known-constant-2D-strain}, \cref{T_Bad-G_ref}, \cref{T_Bad-Delta-G}), \cref{ext:R_12}  (\cref{Test-Basic-affine-transformation}, \cref{Test-Error-q-affine-transformation}, \cref{Test-Error-pixel-affine-transformation}) \\
-P2 & \cref{ext:R_7} (\cref{T_Phase-Extraction-Mask}), \cref{ext:R_10} (\cref{T_varying-delta-g}) \\
-P3 & \cref{ext:R_2} (\cref{Test-Existence-SMH}, \cref{Test-Format-SMH}, \cref{Test-read-dm3-format}, \cref{Test-Existence-pixel}, \cref{Test-Format-pixel}, \cref{Test-Format-Reference}, \cref{Test-Existence-Reference}), \cref{ext:R_6}  (\cref{Test-Existence-Mask}, \cref{Test-Format-Mask}, \cref{Test-Position-Radius-Mask}), \cref{ext:R_9} (\cref{Test-Existence-U}, \cref{Test-Format-U}, \cref{Test-Position-U}) \\
-P4 & \cref{ext:NR_8} (\cref{black_box_STEM_Moire_GPA}) , \cref{ext:NR_9} (\cref{black_box_STEM_Moire_GPA}) \\
-P5 & \cref{ext:NR_1} (\cref{black_box_STEM_Moire_GPA-predif-Linux}, \cref{black_box_STEM_Moire_GPA-predif-Mac}, \cref{black_box_STEM_Moire_GPA-predif-Windows}), \cref{ext:NR_2} (\cref{stress_test_STEM_Moire_GPA}) \\
-P6 & GUI and other lower priority tasks \\
+P0 & \cref{ext:R_3}, \cref{ext:R_7}, \cref{ext:R_10} & \cref{aliasing-frequency-simple}, \cref{T_Phase-Extraction-No-Strain}, \cref{T_Phase-Extraction-Known-Strain}, \cref{T_constant-delta-g}, \cref{T_constant-delta-g-with-noise} \\
+P1 & \cref{ext:R_12}, \cref{ext:R_13} & \cref{Test-Basic-affine-transformation}, \cref{Test-Error-pixel-affine-transformation}, \cref{Test-Error-q-affine-transformation}, \cref{T_No-2D-strain}, \cref{T_known-constant-2D-strain}, \cref{T_Bad-G_ref}, \cref{T_Bad-Delta-G}\\
+P2 & \cref{ext:R_7}, \cref{ext:R_10} & \cref{T_Phase-Extraction-Mask}, \cref{T_varying-delta-g} \\
+P3 & \cref{ext:R_2}, \cref{ext:R_6}, \cref{ext:R_9} & \cref{Test-Existence-SMH}, \cref{Test-Format-SMH}, \cref{Test-read-dm3-format}, \cref{Test-Existence-pixel}, \cref{Test-Format-pixel}, \cref{Test-Format-Reference}, \cref{Test-Existence-Reference}, \cref{Test-Existence-Mask}, \cref{Test-Format-Mask}, \cref{Test-Position-Radius-Mask}, \cref{Test-Existence-U}, \cref{Test-Format-U}, \cref{Test-Position-U} \\
+P4 & \cref{ext:NR_8}, \cref{ext:NR_9} & \cref{black_box_STEM_Moire_GPA} \\
+P5 & \cref{ext:NR_1}, \cref{ext:NR_2} & \cref{black_box_STEM_Moire_GPA-env}, \cref{stress_test_STEM_Moire_GPA} \\
+P6 & GUI and other lower priority tasks & N/A \\
 \bottomrule
-\caption{\textbf{Priority table} \wss{Capitalize Table}}
+\caption{\textbf{Priority Table}}
 \label{priority_table}
 \end{longtable}
-
-\wss{Great work!}
 
 \bibliography{TestPlan_biblio}
 \bibliographystyle{ieeetr}
