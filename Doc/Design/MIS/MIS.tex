@@ -1,15 +1,20 @@
 \documentclass[12pt, titlepage]{article}
 
-\usepackage{amsmath, mathtools}
 
-\usepackage[round]{natbib}
+% Author's up-front packages
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+
+%Packages from template
+\usepackage{amsmath, mathtools}
+%\usepackage[round]{natbib}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{colortbl}
-\usepackage{xr}
+\usepackage{xr-hyper}
 \usepackage{hyperref}
-\usepackage{longtable}
 \usepackage{xfrac}
 \usepackage{tabularx}
 \usepackage{float}
@@ -19,6 +24,13 @@
 \usepackage[section]{placeins}
 \usepackage{caption}
 \usepackage{fullpage}
+
+% Author's packages
+
+\usepackage{cite}
+\usepackage{indentfirst}
+\usepackage{csquotes}
+\usepackage{cleveref}
 
 \hypersetup{
 bookmarks=true,     % show bookmarks bar?
@@ -33,13 +45,26 @@ urlcolor=cyan          % color of external links
 
 \input{../../Comments}
 
-\newcommand{\progname}{Program Name}
+\newcommand{\progname}{STEM Moir{\'e} GPA}
+\externaldocument[SRS:]{../../SRS/SRS}
+\externaldocument[TP:]{../../TestPlan/TestPlan}
+\externaldocument[MG:]{../MG/MG}
+
+%Set the custom referencing syste
+	% Module
+\newtheorem{M}{M}
+\crefname{M}{M}{Ms}
+	% Module Interface Specification
+\newtheorem{MIS}{MIS}
+\crefname{MIS}{MIS}{MISs}
 
 \begin{document}
 
-\title{Module Interface Specification for ...}
+\title{Module Interface Specification for \progname{}}
 
-\author{Author Name}
+\author{Alexandre Pofelski \\
+		macid: pofelska \\
+		github: slimpotatoes}
 
 \date{\today}
 
@@ -52,8 +77,7 @@ urlcolor=cyan          % color of external links
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+14/11/2017 & 1.0 & First draft \\
 \bottomrule
 \end{tabularx}
 
@@ -61,7 +85,9 @@ Date 2 & 1.1 & Notes\\
 
 \section{Symbols, Abbreviations and Acronyms}
 
-See SRS Documentation at \wss{give url}
+The same Symbols, Abbreviations and Acronyms as in the SRS, the TestPlan and the MG (available in \href{https://github.com/slimpotatoes/STEM_Moire_GPA}{\progname{}} repository) are used in the Module Interface Specifications document. 
+
+addition to document
 
 \wss{Also add any additional symbols, abbreviations or acronyms}
 
@@ -75,22 +101,17 @@ See SRS Documentation at \wss{give url}
 
 \section{Introduction}
 
-The following document details the Module Interface Specifications for
-\wss{Fill in your project name and description}
-
-Complementary documents include the System Requirement Specifications
-and Module Guide.  The full documentation and implementation can be
-found at \url{...}.  \wss{provide the url for your repo}
+The following document details the Module Interface Specifications for \progname{}. The full documentation and implementation can be found in \href{https://github.com/slimpotatoes/STEM_Moire_GPA}{\progname{}} repository.
 
 \section{Notation}
 
 \wss{You should describe your notation.  You can use what is below as
   a starting point.}
 
-The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
+The structure of the MIS for modules comes from \cite{HoffmanAndStrooper1995},
 with the addition that template modules have been adapted from
 \cite{GhezziEtAl2003}.  The mathematical notation comes from Chapter 3 of
-\citet{HoffmanAndStrooper1995}.  For instance, the symbol := is used for a
+\cite{HoffmanAndStrooper1995}.  For instance, the symbol := is used for a
 multiple assignment statement and conditional rules follow the form $(c_1
 \Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.
 
@@ -104,15 +125,15 @@ The following table summarizes the primitive data types used by \progname.
 \textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
 \midrule
 character & char & a single symbol or digit\\
-integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
-natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
-real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
+integer & $\mathbb{Z}$ & an integer number \\
+natural number & $\mathbb{N}$ & a natural number \\
+real & $\mathbb{R}$ & a real number \\
 \bottomrule
 \end{tabular} 
 \end{center}
 
 \noindent
-The specification of \progname \ uses some derived data types: sequences, strings, and
+The specification of \progname{} uses some derived data types: sequences, strings, and
 tuples. Sequences are lists filled with elements of the same data type. Strings
 are sequences of characters. Tuples contain a list of values, potentially of
 different types. In addition, \progname \ uses functions, which
@@ -123,28 +144,35 @@ described by giving their type signature followed by their specification.
 
 The following table is taken directly from the Module Guide document for this project.
 
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
 \toprule
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
 
-{Hardware-Hiding} & ~ \\
+{Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
-& Output Format\\
-& Output Verification\\
-& Temperature ODEs\\
-& Energy Equations\\ 
-& Control Module\\
-& Specification Parameters Module\\
+\multirow{10}{0.3\textwidth}{Behaviour-Hiding Module} & Input\\
+& \progname{} Control \\
+& \progname{} GUI \\
+& User Input \\
+& SMH simulation \\
+& GPA \\
+& Mask \\
+& Unstrained region \\
+& Conversion \\
+& 2D strain tensor \\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}\\
-& ODE Solver\\
-& Plotting\\
+\multirow{7}{0.3\textwidth}{Software Decision Module} & Fourier Transform \\
+& Least square fitting method \\
+& Phase calculation \\
+& Gradient \\
+& Generic GUI/Plot \\
+& Data structure \\
+& Object structure \\
 \bottomrule
 
 \end{tabular}
@@ -152,17 +180,18 @@ The following table is taken directly from the Module Guide document for this pr
 \label{TblMH}
 \end{table}
 
-\newpage
-~\newpage
+LIST ALL MIS to refer them in other document
 
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for cross-referencing}
+\newpage
+
+\section{MIS of Hardware Hiding Module (\texorpdfstring{\cref{MG:M_Hardware}}))} \label{MIS_Hardware}
 
 \subsection{Module}
 
 \wss{Short name for the module}
 
 \subsection{Uses}
-
+Data Structure
 
 \subsection{Syntax}
 
@@ -192,10 +221,592 @@ The following table is taken directly from the Module Guide document for this pr
 \item exception: \wss{if appropriate} 
 \end{itemize}
 
+\section{MIS of STEM Moir{\'e} GPA Control Module (\texorpdfstring{\cref{MG:M_Control}}))} \label{MIS_Control}
+
+\subsection{Module}
+main
+\subsection{Uses}
+\begin{itemize}
+\item STEM Moi{\'e} GPA GUI
+\item Processing modules \begin{itemize}
+	\item Unstrained region 
+	\item Conversion
+	\item SMH Simulation
+	\item GPA
+	\item 2D Strain Tensors
+\end{itemize}
+\item Data Structure
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+\wss{accessProg} & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\progname{} is designed to have the different steps of the process flow driven by user directly through GUI{\_}SMG. The STEM Moir{\'e} GPA Control Module uses the events in STEM Moi{\'e} GPA GUI to use the processing modules in the order defined by the user.
+
+\subsubsection{State Variables}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \wss{accessProg}():
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: \wss{if appropriate} 
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+\section{MIS of STEM Moir{\'e} GPA GUI Module (\texorpdfstring{\cref{MG:M_GUISMG}}))} \label{MIS_GUISMG}
+
+\subsection{Module}
+GUI{\_}SMG
+\subsection{Uses}
+\begin{itemize}
+\item Generic GUI/Plot
+\item Data Structure
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+\wss{accessProg} & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\progname{} process flow is driven by user through GUI{\_}SMG. User triggers the events that start the wished processing step. 
+
+\subsubsection{State Variables}
+
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \wss{accessProg}():
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: \wss{if appropriate} 
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+\section{MIS of Imput Module (\texorpdfstring{\cref{MG:M_InputFormat}}))} \label{MIS_Input}
+
+\subsection{Module}
+Input
+\subsection{Uses}
+\begin{itemize}
+\item STEM Moi{\'e} GPA GUI
+\item Data Structure
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+\wss{accessProg} & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \wss{accessProg}():
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: \wss{if appropriate} 
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+\section{MIS of SMH Simulation (\texorpdfstring{\cref{MG:M_SMHSim}}))} \label{MIS_SHMSim}
+
+\subsection{Module}
+SMHSim
+\subsection{Uses}
+\begin{itemize}
+\item Fourier Transform
+\item Input
+\item Data Structure
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+\wss{accessProg} & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \wss{accessProg}():
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: \wss{if appropriate} 
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+\section{MIS of GPA Module (\texorpdfstring{\cref{MG:M_GPA}}))} \label{MIS_GPA}
+
+\subsection{Module}
+GPA
+\subsection{Uses}
+\begin{itemize}
+\item Mask
+\item Fourier Transform
+\item Phase
+\item Gradient
+\item Data Structure
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+\wss{accessProg} & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \wss{accessProg}():
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: \wss{if appropriate} 
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+\section{MIS of Mask Module (\texorpdfstring{\cref{MG:M_Mask}}))} \label{MIS_Mask}
+
+\subsection{Module}
+GPA
+\subsection{Uses}
+\begin{itemize}
+\item Mask
+\item Fourier Transform
+\item Phase
+\item Gradient
+\item Data Structure
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+\wss{accessProg} & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \wss{accessProg}():
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: \wss{if appropriate} 
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+\section{MIS of Unstrained region (\texorpdfstring{\cref{MG:M_URef}}))} \label{MIS_URef}
+
+\subsection{Module}
+URef
+\subsection{Uses}
+\begin{itemize}
+\item Least Square Fit
+\item Input
+\item Data Structure
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+\wss{accessProg} & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \wss{accessProg}():
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: \wss{if appropriate} 
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+\section{MIS of Conversion Module (\texorpdfstring{\cref{MG:M_MtoCConv}}))} \label{MIS_MtoCConv}
+
+\subsection{Module}
+MtoCConv
+\subsection{Uses}
+\begin{itemize}
+\item Input
+\item Data Structure
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+\wss{accessProg} & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \wss{accessProg}():
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: \wss{if appropriate} 
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+\section{MIS of 2D Strain Tensor Module (\texorpdfstring{\cref{MG:M_StrainCalc}}))} \label{MIS_StrainCalc}
+
+\subsection{Module}
+2D{\_}Strain
+\subsection{Uses}
+Data Structure
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+\wss{accessProg} & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \wss{accessProg}():
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: \wss{if appropriate} 
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+\section{MIS of Fourier Transform Module (\texorpdfstring{\cref{MG:M_FT}}))} \label{MIS_FT}
+\textit{{\#} 2D Fourier transform}
+\subsection{Module}
+FTCalc
+\subsection{Uses}
+Data Structure
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+$\mathcal{FT}$ & $f:\mathbb{R}^2\rightarrow\mathbb{R}$ & $f:\mathbb{R}^2\rightarrow\mathbb{C}$ & - \\
+i$\mathcal{FT}$ & $f:\mathbb{R}^2\rightarrow\mathbb{C}$ & $f:\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent\textit{{\#} Calculating the 2D Fourier transform of a function $f$} \medskip
+
+\noindent $\mathcal{FT}$($f(x,y)$):
+\begin{itemize} 
+\item output: $\widetilde{f}(\nu,\mu)$ such that 
+\begin{equation*}
+\forall (\nu,\mu) \in \mathbb{R}^2 \wedge \forall (x,y) \in \mathbb{R}^2, \ \widetilde{f}(\nu,\mu)\int\int_{-\infty}^{\infty}f(x,y)e^{-2i\pi(\nu x+\mu y)}dxdy
+\end{equation*}
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+\noindent\textit{{\#} Calculating the inverse 2D Fourier transform of a function $\widetilde{f}$}\medskip
+
+\noindent i$\mathcal{FT}$($\widetilde{f}(\nu,\mu)$):
+\begin{itemize} 
+\item output: $f(x,y)$ such that 
+\begin{equation*}
+\forall (x,y) \in \mathbb{R}^2 \wedge \forall (\nu,\mu) \in \mathbb{R}^2 , \ f(x,y)=\int\int_{-\infty}^{\infty}\widetilde{f}(\nu,\mu)e^{2i\pi(\nu x+\mu y)}dxdy
+\end{equation*}
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+\section{MIS of Gradient Module (\texorpdfstring{\cref{MG:M_Gradient}}))} \label{MIS_Gradient}
+
+\subsection{Module}
+Gradient
+\subsection{Uses}
+Data Structure
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+\wss{accessProg} & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \wss{accessProg}():
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: \wss{if appropriate} 
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+\section{MIS of Least Square Fit Method Module (\texorpdfstring{\cref{MG:M_LSFM}}))} \label{MIS_LSFM}
+
+\subsection{Module}
+LSFM
+\subsection{Uses}
+Data Structure
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+\wss{accessProg} & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \wss{accessProg}():
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: \wss{if appropriate} 
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+
+\section{MIS of Phase Operation Module (\texorpdfstring{\cref{MG:M_Phase}}))} \label{MIS_Phase}
+
+\subsection{Module}
+PhaseCalc
+\subsection{Uses}
+Data Structure
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+\wss{accessProg} & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \wss{accessProg}():
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: \wss{if appropriate} 
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+
+\section{MIS of Data Structure Module (\texorpdfstring{\cref{MG:M_DataStruct}}))} \label{MIS_DataStruct}
+
+\subsection{Module}
+DataStruct
+\subsection{Uses}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+set & Metadata & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \wss{accessProg}():
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: \wss{if appropriate} 
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+\section{MIS of Generic GUI/Plot Module (\texorpdfstring{\cref{MG:M_GUIGene}}))} \label{MIS_GUIGene}
+
+\subsection{Module}
+GUIGene
+\subsection{Uses}
+Hardware-Hiding
+Data Structure
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+\wss{accessProg} & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \wss{accessProg}():
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: \wss{if appropriate} 
+\item exception: \wss{if appropriate} 
+\end{itemize}
+
+
 \newpage
 
-\bibliographystyle {plainnat}
-\bibliography {../../../ReferenceMaterial/References}
+\bibliographystyle{ieeetr}
+\bibliography{MG}
 
 \newpage
 

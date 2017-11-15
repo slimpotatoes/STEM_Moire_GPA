@@ -47,16 +47,6 @@
 
 \input{../../Comments}
 
-\newcounter{acnum}
-\newcommand{\actheacnum}{AC\theacnum}
-\newcommand{\acref}[1]{AC\ref{#1}}
-
-\newcounter{ucnum}
-\newcommand{\uctheucnum}{UC\theucnum}
-\newcommand{\uref}[1]{UC\ref{#1}}
-
-\newcounter{mnum}
-\newcommand{\mthemnum}{M\themnum}
 \newcommand{\mref}[1]{M\ref{#1}}
 
 
@@ -95,9 +85,28 @@ STEM Moir{\'e} GPA}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 5/11/2017 & 1.0 & First Draft\\
+14/11/2017 & 1.1 & Object Structure Module removed \\
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\newpage
+\section{Symbols, Abbreviations and Acronyms}
+\label{symbols}
+
+Symbols, Abbreviations and Acronyms used in the Module guide document are regrouped under the following table, in \cref{SRS:table_symbols_SRS} and in \cref{SRS:table_acro_SRS} of the SRS document, and in \cref{TP:table_acro_Test_Plan} of the Test Plan document. Documents are available on \href{https://github.com/slimpotatoes/STEM_Moire_GPA}{\progname{}} repository. \par\bigskip
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l l} 
+  \toprule		
+  \textbf{symbol} & \textbf{description}\\
+  \midrule 
+  GPA & Geometrical Phase Analysis \\
+  LSFM & Least Square Fit Method \\
+  FT & Fourier Transform \\
+  \bottomrule
+  \label{table_acro_Test_Plan}
+\end{tabular}
 
 \newpage
 
@@ -232,9 +241,11 @@ format
 \label{AC_Data}
 \end{AC}
 
+\iffalse
 \begin{AC}\normalfont Internal Object strucutre
 \label{AC_Object}
 \end{AC}
+\fi
 
 \subsection{Unlikely Changes} \label{SecUchange}
 
@@ -275,71 +286,73 @@ in a hierarchy decomposed by secrets in \cref{TblMH}. The modules listed
 below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
-\begin{M}\normalfont Hardware-Hiding Module
+\begin{M}\normalfont Hardware-Hiding Module (described in \cref{MG_Hardware})
 \label{M_Hardware}
 \end{M}
 
-\begin{M}\normalfont \progname{}  Control Module
+\begin{M}\normalfont \progname{}  Control Module (described in \cref{MG_Control})
 \label{M_Control}
 \end{M}
 
-\begin{M}\normalfont \progname{} GUI Module
+\begin{M}\normalfont \progname{} GUI Module (described in \cref{MG_GUISMG})
 \label{M_GUISMG}
 \end{M}
 
-\begin{M}\normalfont User input Module
+\begin{M}\normalfont User input Module (described in \cref{MG_InputFormat})
 \label{M_InputFormat}
 \end{M}
 
-\begin{M}\normalfont SMH simulation Module
+\begin{M}\normalfont SMH simulation Module (described in \cref{MG_SMHSim})
 \label{M_SMHSim}
 \end{M}
 
-\begin{M}\normalfont GPA Module
+\begin{M}\normalfont GPA Module (described in \cref{MG_GPA})
 \label{M_GPA}
 \end{M}
 
-\begin{M}\normalfont Mask Module
+\begin{M}\normalfont Mask Module (described in \cref{MG_Mask})
 \label{M_Mask}
 \end{M}
 
-\begin{M}\normalfont Unstrained region Module
+\begin{M}\normalfont Unstrained region Module (described in \cref{MG_URef})
 \label{M_URef}
 \end{M}
 
-\begin{M}\normalfont Conversion Module
+\begin{M}\normalfont Conversion Module (described in \cref{MG_MtoCConv})
 \label{M_MtoCConv}
 \end{M}
 
-\begin{M}\normalfont 2D strain tensor Module
+\begin{M}\normalfont 2D strain tensor Module (described in \cref{MG_StrainCalc})
 \label{M_StrainCalc}
 \end{M}
 
-\begin{M}\normalfont Fourier Transform Module
+\begin{M}\normalfont Fourier Transform Module (described in \cref{MG_FT})
 \label{M_FT}
 \end{M}
 
-\begin{M}\normalfont Gradient Module
+\begin{M}\normalfont Gradient Module (described in \cref{MG_Gradient})
 \label{M_Gradient}
 \end{M}
 
-\begin{M}\normalfont Least Square Fitting Method Module
+\begin{M}\normalfont Least Square Fitting Method Module (described in \cref{MG_LSFM})
 \label{M_LSFM}
 \end{M}
 
-\begin{M}\normalfont Phase operation Module
+\begin{M}\normalfont Phase operation Module (described in \cref{MG_Phase})
 \label{M_Phase}
 \end{M}
 
-\begin{M}\normalfont Data Structure Module
+\begin{M}\normalfont Data Structure Module (described in \cref{MG_DataStruct})
 \label{M_DataStruct}
 \end{M}
 
-\begin{M}\normalfont Object Structure Module
+\iffalse
+\begin{M}\normalfont Object Structure Module (described in \cref{MG_ObjectStruct})
 \label{M_ObjectStruct}
 \end{M}
+\fi
 
-\begin{M}\normalfont Generic GUI/Plot Module
+\begin{M}\normalfont Generic GUI/Plot Module (described in \cref{MG_GUIGene})
 \label{M_GUIGene}
 \end{M}
 
@@ -371,7 +384,6 @@ actually be implemented.
 & Gradient \\
 & Generic GUI/Plot \\
 & Data structure \\
-& Object structure \\
 \bottomrule
 
 \end{tabular}
@@ -404,7 +416,7 @@ not this module is implemented depends on the programming language
 selected.
 
 \subsection{Hardware Hiding Modules (\texorpdfstring{\cref{M_Hardware}}))}
-
+\label{MG_Hardware}
 \begin{description}
 \item[Secrets:]The data structure and algorithm used to implement the virtual 
 hardware.
@@ -413,6 +425,7 @@ This module provides the interface between the hardware and the software. So,
 the system can use it to display outputs or to accept inputs.
 \item[Implemented By:] OS
 \end{description}
+
 
 \subsection{Behaviour-Hiding Module}
 
@@ -429,7 +442,7 @@ the system can use it to display outputs or to accept inputs.
 \fi
 
 \subsubsection{\progname{} Control Module (\texorpdfstring{\cref{M_Control}}))}
-
+\label{MG_Control}
 \begin{description}
 \item[Secrets:] Execution flow of \progname{}.
 \item[Services:] Calls the different modules in the appropriate order.
@@ -437,16 +450,17 @@ the system can use it to display outputs or to accept inputs.
 \end{description}
 
 \subsubsection{\progname{} GUI (\texorpdfstring{\cref{M_GUISMG}}))}
+\label{MG_GUISMG}
 \begin{description}
 \item[Secrets:] Methods to interact with user to make run \progname{}.
 \item[Services:] Serves as interface between the user and the software through 
 the hardware by outputting calculation results and collecting user information 
-(user inputs) for the calculation modules.
+(user inputs) for the calculation modules. 
 \item[Implemented By:] \progname{}
 \end{description}
 
 \subsubsection{Input Module (\texorpdfstring{\cref{M_InputFormat}}))}
-
+\label{MG_InputFormat}
 \begin{description}
 \item[Secrets:] The format and structure of the input data.
 \item[Services:] Loads, verifies and stores the input data into the appropriate 
@@ -455,7 +469,7 @@ data and object structure.
 \end{description}
 
 \subsubsection{SMH simulation Module (\texorpdfstring{\cref{M_SMHSim}}))}
-
+\label{MG_SMHSim}
 \begin{description}
 \item[Secrets:] Algorithm to simulate the SMH from the reference image 
 $I_{C_{\texttt{Ref}}}$.
@@ -466,7 +480,7 @@ $I_{C_{\texttt{ref}}}$.
 \end{description}
 
 \subsubsection{GPA Module (\texorpdfstring{\cref{M_GPA}}))}
-
+\label{MG_GPA}
 \begin{description}
 \item[Secrets:] GPA algorithm.
 \item[Services:] Calculates the variation of masked Moir{\'e} wave vector on 
@@ -475,7 +489,7 @@ each element of the array.
 \end{description}
 
 \subsubsection{Mask Module (\texorpdfstring{\cref{M_Mask}}))}
-
+\label{MG_Mask}
 \begin{description}
 \item[Secrets:] Algorithm to isolate a portion of an image.
 \item[Services:] Isolates and weights a sub area of an image by fixing the 
@@ -484,7 +498,7 @@ parameter $M_j$.
 \end{description}
 
 \subsubsection{Unstrained region Module (\texorpdfstring{\cref{M_URef}}))}
-
+\label{MG_URef}
 \begin{description}
 \item[Secrets:] Algorithm to calculate the unstrained reference.
 \item[Services:] Calculates the unstrained reference based on the user input $U$ 
@@ -493,7 +507,7 @@ and the result of the fitting method.
 \end{description}
 
 \subsubsection{Conversion Module (\texorpdfstring{\cref{M_MtoCConv}}))}
-
+\label{MG_MtoCConv}
 \begin{description}
 \item[Secrets:] Algorithm to convert a Moir{\'e} wave vector to a crystalline 
 wave vector.
@@ -503,7 +517,7 @@ Moir{\'e} wave vectors and the sampling vectors as inputs.
 \end{description}
 
 \subsubsection{2D strain tensor Module (\texorpdfstring{\cref{M_StrainCalc}}))}
-
+\label{MG_StrainCalc}
 \begin{description}
 \item[Secrets:] Algorithm to calculate the strain from distortion matrix.
 \item[Services:] Calculates the strain tensor on each pixel of the array.
@@ -513,7 +527,7 @@ Moir{\'e} wave vectors and the sampling vectors as inputs.
 \subsection{Software Decision Module}
 
 \subsubsection{Fourier Transform Module (\texorpdfstring{\cref{M_FT}}))}
-
+\label{MG_FT}
 \begin{description}
 \item[Secrets:] Fourier transform algorithm.
 \item[Services:] Transforms data into its Fourier transform.
@@ -521,16 +535,15 @@ Moir{\'e} wave vectors and the sampling vectors as inputs.
 \end{description}
 
 \subsubsection{Gradient Module (\texorpdfstring{\cref{M_Gradient}}))}
-
+\label{MG_Gradient}
 \begin{description}
 \item[Secrets:] 2D Gradient algorithm.
 \item[Services:] Performs the 2D derivative of function.
 \item[Implemented By:]Python library
 \end{description}
 
-\subsubsection{Least Square Fitting Method Module 
-(\texorpdfstring{\cref{M_LSFM}}))}
-
+\subsubsection{Least Square Fitting Method Module (\texorpdfstring{\cref{M_LSFM}}))}
+\label{MG_LSFM}
 \begin{description}
 \item[Secrets:] Least Square Fitting algorithm.
 \item[Services:] Fits a set of data into a 2D linear function using the Least 
@@ -539,7 +552,7 @@ squares method.
 \end{description}
 
 \subsubsection{Phase Module (\texorpdfstring{\cref{M_Phase}}))}
-
+\label{MG_Phase}
 \begin{description}
 \item[Secrets:] Algorithm to wrap/unwrap the phase.
 \item[Services:] Wraps/unwraps the phase by adding/removing discontinuities in 
@@ -548,7 +561,7 @@ the interval [0,2$\pi$].
 \end{description}
 
 \subsubsection{Data Structure Module (\texorpdfstring{\cref{M_DataStruct}}))}
-
+\label{MG_DataStruct}
 \begin{description}
 \item[Secrets:] Data format for an image.
 \item[Services:] Provides convenient format to store, read and manipulate all 
@@ -556,18 +569,19 @@ elements (pixel) from an image.
 \item[Implemented By:] Python library
 \end{description}
 
-\subsubsection{Object Structure Module 
-(\texorpdfstring{\cref{M_ObjectStruct}}))}
-
+\iffalse
+\subsubsection{Object Structure Module (\texorpdfstring{\cref{M_ObjectStruct}}))}
+\label{MG_ObjectStruct}
 \begin{description}
 \item[Secrets:] Format for the object carried by the control module.
 \item[Services:] Provides object format usable by module called by the control 
 module.
 \item[Implemented By:] Python library
 \end{description}
+\fi
 
 \subsubsection{Generic GUI/Plot Module (\texorpdfstring{\cref{M_GUIGene}}))}
-
+\label{MG_GUIGene}
 \begin{description}
 \item[Secrets:] Generic methods to interact with the user.
 \item[Services:] Provides the generic interface methods such as buttons, 
@@ -623,7 +637,6 @@ requirements and between the modules and the anticipated changes.
 \cref{AC_RefFit} & \cref{M_LSFM}\\
 \cref{AC_Output} & \cref{M_GUISMG}\\
 \cref{AC_Data} & \cref{M_DataStruct}\\
-\cref{AC_Object} & \cref{M_ObjectStruct}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -649,6 +662,8 @@ because they use modules from the lower levels.
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
+
+\an{I will remove Object Stucture Module since I think I don't need it}
 
 %\section*{References}
 
