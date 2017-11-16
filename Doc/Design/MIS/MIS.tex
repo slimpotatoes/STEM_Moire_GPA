@@ -607,44 +607,45 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent\textit{{\#} Calculating the 2D Fourier transform of a function $f$} \medskip
+\noindent\textit{{\#} Calculate the 2D Fourier transform of a function $f$} \medskip
 
 \noindent $\mathcal{FT}$($f(x,y)$):
 \begin{itemize} 
 \item output: $\widetilde{f}(\nu,\mu)$ such that 
 \begin{equation*}
-\forall (\nu,\mu) \in \mathbb{R}^2 \wedge \forall (x,y) \in \mathbb{R}^2, \ \widetilde{f}(\nu,\mu)\int\int_{-\infty}^{\infty}f(x,y)e^{-2i\pi(\nu x+\mu y)}dxdy
+\forall (\nu,\mu) \in \mathbb{R}^2 \wedge \forall (x,y) \in \mathbb{R}^2, \ \widetilde{f}(\nu,\mu)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}f(x,y)e^{-2i\pi(\nu x+\mu y)}dxdy
 \end{equation*}
 \item exception: \wss{if appropriate} 
 \end{itemize}
 
-\noindent\textit{{\#} Calculating the inverse 2D Fourier transform of a function $\widetilde{f}$}\medskip
+\noindent\textit{{\#} Calculate the 2D inverse Fourier transform of a function $\widetilde{f}$}\medskip
 
 \noindent i$\mathcal{FT}$($\widetilde{f}(\nu,\mu)$):
 \begin{itemize} 
 \item output: $f(x,y)$ such that 
 \begin{equation*}
-\forall (x,y) \in \mathbb{R}^2 \wedge \forall (\nu,\mu) \in \mathbb{R}^2 , \ f(x,y)=\int\int_{-\infty}^{\infty}\widetilde{f}(\nu,\mu)e^{2i\pi(\nu x+\mu y)}dxdy
+\forall (x,y) \in \mathbb{R}^2 \wedge \forall (\nu,\mu) \in \mathbb{R}^2 , \ f(x,y)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\widetilde{f}(\nu,\mu)e^{2i\pi(\nu x+\mu y)}dxdy
 \end{equation*}
 \item exception: \wss{if appropriate} 
 \end{itemize}
 
 \section{MIS of Gradient Module (\texorpdfstring{\cref{MG:M_Gradient}}))} \label{MIS_Gradient}
 
+\textit{{\#} 2D Gradient} \medskip
+
 \subsection{Module}
-Gradient
+GradCalc
 \subsection{Uses}
 Data Structure
 \subsection{Syntax}
 
 \subsubsection{Exported Access Programs}
-
 \begin{center}
 \begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+grad & $f:\mathbb{R}^2\rightarrow\mathbb{R}$  & $f:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & -\\
 \hline
 \end{tabular}
 \end{center}
@@ -656,17 +657,26 @@ Data Structure
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
-\begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
+\noindent\textit{{\#} Calculate the 2D gradient of a 2D function $f$} \medskip
+
+\noindent grad($(f(x,y)$):
+\begin{itemize} 
+\item output:$ \nabla f(x,y)$ such that
+\begin{equation*}
+\forall (x,y) \in \mathbb{R}^2, \ \nabla f(x,y) = \begin{bmatrix}
+\frac{\partial f}{\partial x}(x,y) \\
+\frac{\partial f}{\partial y}(x,y)
+\end{bmatrix}
+\end{equation*}
 \item exception: \wss{if appropriate} 
 \end{itemize}
 
 \section{MIS of Least Square Fit Method Module (\texorpdfstring{\cref{MG:M_LSFM}}))} \label{MIS_LSFM}
 
+\textit{{\#} 2D linear least square method to fit a function $f$} \medskip
+
 \subsection{Module}
-LSFM
+LSFMCalc
 \subsection{Uses}
 Data Structure
 \subsection{Syntax}
@@ -678,7 +688,7 @@ Data Structure
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+lsfm & $f:\mathbb{R}^2\rightarrow\mathbb{R}$ & $f:\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -690,10 +700,18 @@ Data Structure
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent\textit{{\#} Calculate the 2D fit of a function $f$ using the linear least square method on a domain $U=([x_0,x_1];[y_0,y_1]) \in \mathbb{R}^2$} \medskip
+
+\noindent lsfm(f,U):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
+\item output: $fit(x,y)=ax + by$ such that
+\begin{equation*}
+\begin{gathered}
+\forall (x,y) \in U, \ E(a,b)=\int_{x_0}^{x_1}\int_{y_0}^{y_1}[f(x,y)-fit(x,y)]^2dxdy \ \ \text{is minimized} \\
+\Rightarrow \frac{\partial E}{\partial a} =0 \wedge \frac{\partial E}{\partial b} =0
+\Rightarrow a = \frac{\int_{x_0}^{x_1}\int_{y_0}^{y_1}xf(x,y)dxdy}{\int_{x_0}^{x_1}\int_{y_0}^{y_1}x^2dxdy} \wedge  b= \frac{\int_{x_0}^{x_1}\int_{y_0}^{y_1}yf(x,y)dxdy}{\int_{x_0}^{x_1}\int_{y_0}^{y_1}y^2dxdy}
+\end{gathered}
+\end{equation*}
 \item exception: \wss{if appropriate} 
 \end{itemize}
 
@@ -713,7 +731,8 @@ Data Structure
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+unwrap & $f:\mathbb{R}^2\rightarrow[-\pi,\pi[$ & $f:\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
+wrap & $f:\mathbb{R}^2\rightarrow\mathbb{R}$ & $f:\mathbb{R}^2\rightarrow[-\pi,\pi[$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -725,11 +744,25 @@ Data Structure
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
-\begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\noindent wrap($f$):
+\begin{itemize} 
+\item output: $g$ such that
+\begin{equation*}
+\forall (x,y) \in \mathbb{R}^2, \exists k \in \mathbb{Z} | g(x,y) =f(x,y)+ 2k\pi \wedge g(x,y) \in [-\pi,\pi[
+\end{equation*} 
+\item exception:
+\end{itemize}
+
+\noindent unwrap($f$):
+\begin{itemize} 
+\item output: $g$ such that
+\begin{equation*}
+\begin{gathered}
+\forall (x,y) \in \mathbb{R}^2, \exists k \in \mathbb{Z} | g(x,y) =f(x,y) + 2k\pi \wedge g \ \text{is} \  \text{continous}\\
+\Rightarrow \forall (x,y) \in \mathbb{R}^2, \exists k \in \mathbb{Z} | \lim_{(x,y)\to (x_0,y_0)} g(x,y) = g(x_0,y_0) = f(x_0,y_0) + 2k\pi
+\end{gathered}
+\end{equation*}
+\item exception:
 \end{itemize}
 
 
