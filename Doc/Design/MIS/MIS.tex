@@ -166,13 +166,12 @@ The following table is taken directly from the Module Guide document for this pr
 & 2D strain tensor \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Software Decision Module} & Fourier Transform \\
+\multirow{6}{0.3\textwidth}{Software Decision Module} & Fourier Transform \\
 & Least square fitting method \\
 & Phase calculation \\
 & Gradient \\
 & Generic GUI/Plot \\
 & Data structure \\
-& Object structure \\
 \bottomrule
 
 \end{tabular}
@@ -184,42 +183,6 @@ LIST ALL MIS to refer them in other document
 
 \newpage
 
-\section{MIS of Hardware Hiding Module (\texorpdfstring{\cref{MG:M_Hardware}}))} \label{MIS_Hardware}
-
-\subsection{Module}
-
-\wss{Short name for the module}
-
-\subsection{Uses}
-Data Structure
-
-\subsection{Syntax}
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-\wss{accessProg} & - & - & - \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-
-\subsubsection{Access Routine Semantics}
-
-\noindent \wss{accessProg}():
-\begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
-\end{itemize}
 
 \section{MIS of STEM Moir{\'e} GPA Control Module (\texorpdfstring{\cref{MG:M_Control}}))} \label{MIS_Control}
 
@@ -309,7 +272,7 @@ GUI{\_}SMG
 \item exception: \wss{if appropriate} 
 \end{itemize}
 
-\section{MIS of Imput Module (\texorpdfstring{\cref{MG:M_InputFormat}}))} \label{MIS_Input}
+\section{MIS of Input Module (\texorpdfstring{\cref{MG:M_InputFormat}}))} \label{MIS_Input}
 
 \subsection{Module}
 Input
@@ -350,7 +313,7 @@ Input
 \section{MIS of SMH Simulation (\texorpdfstring{\cref{MG:M_SMHSim}}))} \label{MIS_SHMSim}
 
 \subsection{Module}
-SMHSim
+SMHSimCalc
 \subsection{Uses}
 \begin{itemize}
 \item Fourier Transform
@@ -367,7 +330,7 @@ SMHSim
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+SMHsim & $I_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R} $ $ I_{C_{\text{ref}}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $p \in \mathbb{R}^{+*}$ , $p_{\text{ref}} \in \mathbb{R}^{+*}$ & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ $N_{\text{lim}} \in \mathbb{N}^{*}$ & Nlim.zero() \\
 \hline
 \end{tabular}
 \end{center}
@@ -375,15 +338,27 @@ SMHSim
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
-
+None
 \subsubsection{Access Routine Semantics}
-
-\noindent \wss{accessProg}():
-\begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+%Add event from INPUT
+\noindent SMHsim($I_{\mathit{SMH}_{\text{exp}}},I_{C_{\text{ref}}}, p, p_{\text{ref}}$):
+\begin{itemize} 
+\item output: 
+	\begin{itemize}
+	\item $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ such that
+	\begin{equation*}
+	\widetilde{I}_{\mathit{SMH}_{\text{exp}}}(\vec{\nu})=\mathcal{FT}[I_{\mathit{SMH}_{\text{exp}}}(\vec{r})]
+	\end{equation*}
+	\item $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}$ such that
+	\begin{equation*}
+	\begin{gathered}
+	\widetilde{I}_{\mathit{SMH}_{\text{sim}}}(\vec{\nu})=\frac{1}{p^2}\sum_{\vec{q}\in Q_{lim}}\mathcal{FT}[I_{C_{\text{ref}}}(\vec{\nu}-\frac{\vec{q}}{p})] \\
+	\text{with } Q_{\text{lim}}=\{\forall (n,m) \in \mathbb{Z}^{2}\cap[-N_{\text{lim}},N_{\text{lim}}]^2, \ \vec{q}=n\vec{u_x}+m\vec{u_y}\} \\
+	\text{and } N_{\text{lim}}=\Xi(\frac{p}{p_{\text{ref}}}) \text{ with } \Xi \text{ the floor function } 
+	\end{gathered}
+	\end{equation*}
+	\end{itemize}
+\item exception:
 \end{itemize}
 
 \section{MIS of GPA Module (\texorpdfstring{\cref{MG:M_GPA}}))} \label{MIS_GPA}
@@ -408,7 +383,7 @@ GPA
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+Phase & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ , $M:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\overrightarrow{g_0} :\mathbb{R}^2\rightarrow\mathbb{R}$ & $P_{\vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\overrightarrow{\Delta g}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $P_{\Delta \vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -420,24 +395,34 @@ GPA
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent Phase($\widetilde{I}_{\mathit{SMH}_{\text{exp}}},M,\overrightarrow{g_0}$):
+\begin{itemize} 
+\item output: 
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+	\item $P_{\vec{g}}$ such that
+	\begin{equation*}
+	\forall \vec{r} \in \mathbb{R}^2, \ P_{\vec{g}}(\vec{r})=\text{arg}(i\mathcal{FT}[M\times\widetilde{I}_{\mathit{SMH}_{\text{exp}}}])
+	\end{equation*}
+	\item $\overrightarrow{\Delta g}$ such that
+	\begin{equation*}
+	\forall \vec{r} \in \mathbb{R}^2, \ \Delta \overrightarrow{g}(\vec{r})=\frac{1}{2\pi}\text{grad}(\text{unwrap}(P_{\vec{g}}(\vec{r})))-\overrightarrow{g_0}(\vec{r})
+	\end{equation*}
+	\item $P_{\Delta \vec{g}}$ such that
+	\begin{equation*}
+	\forall \vec{r} \in \mathbb{R}^2, \ P_{\Delta \vec{g}}(\vec{r})=\text{wrap}(\text{unwrap}[P_{\vec{g}}(\vec{r})]-2\pi\overrightarrow{g_0}(\vec{0})\cdot \vec{r})
+	\end{equation*}
+\end{itemize}
+\item exception:  
 \end{itemize}
 
 \section{MIS of Mask Module (\texorpdfstring{\cref{MG:M_Mask}}))} \label{MIS_Mask}
 
 \subsection{Module}
-GPA
+Mask
 \subsection{Uses}
 \begin{itemize}
-\item Mask
-\item Fourier Transform
-\item Phase
-\item Gradient
-\item Data Structure
+\item Input
+\item Data structure
 \end{itemize}
 
 \subsection{Syntax}
@@ -449,7 +434,7 @@ GPA
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+MCirc & $(x_c,y_c) \in \mathbb{N}^2$ , $R \in \mathbb{R}^{+*}$ & $M:\mathbb{R}^2\rightarrow\mathbb{R}$, $\overrightarrow{g_0} :\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -461,17 +446,32 @@ GPA
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
-\begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
+\noindent MaskGene($x_c,y_c,R$):
+\begin{itemize} 
+\item output: 
+	\begin{itemize}
+	\item $M$ such that
+	\begin{equation*}
+	M(x,y)=\begin{cases}
+	1, \ (x-x_c)^2+(y-y_c)^2\leq R^2 \\
+	0, \ (x-x_c)^2+(y-y_c)^2> R^2
+	\end{cases}
+	\end{equation*}
+	\item $\overrightarrow{g_0}$ such that
+	\begin{equation*}
+	\forall \vec{r} \in \mathbb{R}^2, \ \overrightarrow{g_0}(\vec{r})=\begin{bmatrix}
+	x_c\\
+	y_c
+	\end{bmatrix}
+	\end{equation*}
+	\end{itemize}
 \item exception: \wss{if appropriate} 
 \end{itemize}
 
 \section{MIS of Unstrained region (\texorpdfstring{\cref{MG:M_URef}}))} \label{MIS_URef}
 
 \subsection{Module}
-URef
+URefCalc
 \subsection{Uses}
 \begin{itemize}
 \item Least Square Fit
@@ -488,7 +488,7 @@ URef
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+ZeroStrain & $\overrightarrow{\Delta g}^M:\mathbb{R}^2\rightarrow\mathbb{R}^2$, $bla$  & $\overrightarrow{\Delta g}^M:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -526,7 +526,7 @@ MtoCConv
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+conversion & $p \in \mathbb{R}$ , $(n,m) \in \mathbb{N}^2$, $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & $\overrightarrow{g_{j}}_{uns}^{C_{exp}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -538,11 +538,17 @@ MtoCConv
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent conversion($p,\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}$):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item output: $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}$ such that
+	\begin{equation*}
+	\forall \vec{r} \in \mathbb{R}^2, \
+	\overrightarrow{g_{j}}_{\text{uns}}^{C_{\text{exp}}}(\vec{r})= \overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}(\vec{r}) + p \times \begin{bmatrix}
+	n \\
+	m
+	\end{bmatrix}
+	\end{equation*}
+\item exception:  
 \end{itemize}
 
 \section{MIS of 2D Strain Tensor Module (\texorpdfstring{\cref{MG:M_StrainCalc}}))} \label{MIS_StrainCalc}
@@ -560,7 +566,7 @@ Data Structure
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+CalcStrain & $g_{1_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $g_{2_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $\Delta g_{1_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $\Delta g_{2_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$  & $T:\mathbb{R}^2\rightarrow\mathbb{R}^4$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -572,10 +578,9 @@ Data Structure
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent CalcStrain($g_{1_{{\text{uns}}}}^{C_{\text{exp}}},g_{2_{{\text{uns}}}}^{C_{\text{exp}}},\Delta g_{1_{{\text{uns}}}}^{C_{\text{exp}}},\Delta g_{2_{{\text{uns}}}}^{C_{\text{exp}}}$):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
+\item output:  
 \item exception: \wss{if appropriate} 
 \end{itemize}
 
@@ -659,7 +664,7 @@ grad & $f:\mathbb{R}^2\rightarrow\mathbb{R}$  & $f:\mathbb{R}^2\rightarrow\mathb
 
 \noindent\textit{{\#} Calculate the 2D gradient of a 2D function $f$} \medskip
 
-\noindent grad($(f(x,y)$):
+\noindent grad($f$):
 \begin{itemize} 
 \item output:$ \nabla f(x,y)$ such that
 \begin{equation*}
@@ -731,8 +736,9 @@ Data Structure
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-unwrap & $f:\mathbb{R}^2\rightarrow[-\pi,\pi[$ & $f:\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
-wrap & $f:\mathbb{R}^2\rightarrow\mathbb{R}$ & $f:\mathbb{R}^2\rightarrow[-\pi,\pi[$ & - \\
+unwrap & $f:\mathbb{R}^2\rightarrow]-\pi,\pi]$ & $f:\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
+wrap & $f:\mathbb{R}^2\rightarrow\mathbb{R}$ & $f:\mathbb{R}^2\rightarrow]-\pi,\pi]$ & - \\
+arg & $z \in \mathbb{C}$ & $\phi \in ]-\pi,\pi]$ & \\
 \hline
 \end{tabular}
 \end{center}
@@ -748,7 +754,7 @@ wrap & $f:\mathbb{R}^2\rightarrow\mathbb{R}$ & $f:\mathbb{R}^2\rightarrow[-\pi,\
 \begin{itemize} 
 \item output: $g$ such that
 \begin{equation*}
-\forall (x,y) \in \mathbb{R}^2, \exists k \in \mathbb{Z} | g(x,y) =f(x,y)+ 2k\pi \wedge g(x,y) \in [-\pi,\pi[
+\forall (x,y) \in \mathbb{R}^2, \exists k \in \mathbb{Z} | g(x,y) =f(x,y)+ 2k\pi \wedge g(x,y) \in ]-\pi,\pi]
 \end{equation*} 
 \item exception:
 \end{itemize}
@@ -761,6 +767,15 @@ wrap & $f:\mathbb{R}^2\rightarrow\mathbb{R}$ & $f:\mathbb{R}^2\rightarrow[-\pi,\
 \forall (x,y) \in \mathbb{R}^2, \exists k \in \mathbb{Z} | g(x,y) =f(x,y) + 2k\pi \wedge g \ \text{is} \  \text{continous}\\
 \Rightarrow \forall (x,y) \in \mathbb{R}^2, \exists k \in \mathbb{Z} | \lim_{(x,y)\to (x_0,y_0)} g(x,y) = g(x_0,y_0) = f(x_0,y_0) + 2k\pi
 \end{gathered}
+\end{equation*}
+\item exception:
+\end{itemize}
+
+\noindent arg($z$):
+\begin{itemize} 
+\item output: $\phi$ such that
+\begin{equation*}
+\phi=\text{arg}(z)=\text{atan2}(z)=\text{atan2}(\frac{\text{Im(z)}}{\text{Re(z)}})
 \end{equation*}
 \item exception:
 \end{itemize}
