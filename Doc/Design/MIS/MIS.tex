@@ -57,6 +57,12 @@ urlcolor=cyan          % color of external links
 	% Module Interface Specification
 \newtheorem{MIS}{MIS}
 \crefname{MIS}{MIS}{MISs}
+	% Requirements
+\newtheorem{R}{R}
+\crefname{R}{R}{Rs}
+	% Instance Model
+\newtheorem{IM}{IM}
+\crefname{IM}{IM}{IMs}
 
 \begin{document}
 
@@ -190,7 +196,7 @@ LIST ALL MIS to refer them in other document
 main
 \subsection{Uses}
 \begin{itemize}
-\item STEM Moi{\'e} GPA GUI
+\item STEM Moir{\'e} GPA GUI
 \item Processing modules \begin{itemize}
 	\item Unstrained region 
 	\item Conversion
@@ -198,7 +204,7 @@ main
 	\item GPA
 	\item 2D Strain Tensors
 \end{itemize}
-\item Data Structure
+\item Input
 \end{itemize}
 
 \subsection{Syntax}
@@ -210,7 +216,7 @@ main
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+main & - & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -224,11 +230,20 @@ main
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent main():
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition: A reflechir 
+
+GUI():
+\noindent\textit{{\#} Software permanently running until user abort it by closing the GUI} \medskip
+
+$(\text{event{\_}Input()} \\ \rightarrow \text{Get the path pathISMH and pathIC from the user} \  \wedge \\ \text{load{\_}files(pathISMH,pathIC)})$\\
+$(\text{event{\_}SimSMH()} \rightarrow \text{SMHsim}())$\\
+$(\text{event{\_}GPA()} \rightarrow \text{gpa}())$\\
+$(\text{event{\_}URef()} \rightarrow \text{ZeroStrain}())$\\
+$(\text{event{\_}Conversion()} \rightarrow \text{conversion}())$\\
+$(\text{event{\_}StrainCalc()} \rightarrow \text{CalcStrain}())$\\
+
 \end{itemize}
 
 \section{MIS of STEM Moir{\'e} GPA GUI Module (\texorpdfstring{\cref{MG:M_GUISMG}}))} \label{MIS_GUISMG}
@@ -246,31 +261,86 @@ GUI{\_}SMG
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{2cm} p{2cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+GUI & - & - & - \\
+event{\_}Input() & - & - & - \\
+event{\_}SMHSim() & - & - & - \\
+event{\_}GPA() & - & - & - \\
+event{\_}URef() & - & - & - \\
+event{\_}StrainCalc() & - & - & - \\
+GUI{\_}Mask & - & - & - \\
+GUI{\_}U & - & - & - \\
+GUI{\_}nm & - & - & - \\
 \hline
 \end{tabular}
 \end{center}
 
 \subsection{Semantics}
 
-\progname{} process flow is driven by user through GUI{\_}SMG. User triggers the events that start the wished processing step. 
+\progname{} process flow is driven by user through GUI{\_}SMG. User triggers the events that start the selected processing step. 
 
 \subsubsection{State Variables}
 
+Win{\_}Flow: Window with the following buttons triggering events: button{\_}Input, button{\_}SMHSim, button{\_}GPA, button{\_}URef, button{\_}StrainCalc.
+
+Win{\_}SMHSim: Window with areas to display $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ and $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}$
+
+Win{\_}Phase: Window with areas to display $\Delta \overrightarrow{g}^{M_{\text{exp}}}$ and let the user input the variable $U$
+
+Win{\_}FTSMH: Window with areas to display Window with areas to display $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ and let the user input the variable.
+
+Win{\_}Conv: Window with entry field to get $n$ and $m$ from the user
 
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent GUI():
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition: Win{\_}Flow displayed 
 \end{itemize}
+
+\noindent event{\_}Input():
+\begin{itemize}
+\item transition: Trigger event{\_}Input when button{\_}Input pressed
+\end{itemize}
+
+\noindent event{\_}SMHSim():
+\begin{itemize}
+\item transition: Trigger event{\_}SMHSim when button{\_}SMHSim pressed
+\end{itemize}
+
+\noindent event{\_}GPA():
+\begin{itemize}
+\item transition: Trigger event{\_}GPA when button{\_}GPA pressed
+\end{itemize}
+
+\noindent event{\_}URef():
+\begin{itemize}
+\item transition: Trigger event{\_}URef when button{\_}URef pressed
+\end{itemize}
+
+\noindent event{\_}StrainCalc():
+\begin{itemize}
+\item transition: Trigger event{\_}StrainCalc when button{\_}StrainCalc press
+\end{itemize} 
+
+\noindent event{\_}GUI{\_}Mask():
+\begin{itemize}
+\item transition: Trigger event{\_}StrainCalc when button{\_}StrainCalc press
+\end{itemize}
+
+\noindent event{\_}GUI{\_}U():
+\begin{itemize}
+\item transition: Trigger event{\_}StrainCalc when button{\_}StrainCalc press
+\end{itemize} 
+
+\noindent event{\_}GUI{\_}nm():
+\begin{itemize}
+\item transition: Trigger event{\_}StrainCalc when button{\_}StrainCalc press
+\end{itemize}  
 
 \section{MIS of Input Module (\texorpdfstring{\cref{MG:M_InputFormat}}))} \label{MIS_Input}
 
@@ -287,11 +357,23 @@ Input
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+load{\_}files & string & - & FilePath \\
+load{\_}mask & GUI object & - & NoMask \\
+load{\_}U & GUI object & - & NoU \\
+load{\_}nm & GUI object & - & NoConv \\
+$I_{\mathit{SMH}_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}$ & - \\
+$p$ & - & $\mathbb{R}^{+*}$ & - \\
+$I_{C_{\text{ref}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}$ & - \\
+$p_{\text{ref}}$ & - & $\mathbb{R}^{+*}$ & - \\
+$U$ & - & - & - \\
+$M$ & - & $(x_c,y_c) \in \mathbb{R}^2$ , $R \in \mathbb{R}^{+*}$ & - \\
+$n$ & - & $\mathbb{Z}$ & - \\
+$m$ & - & $\mathbb{Z}$ & - \\
+
 \hline
 \end{tabular}
 \end{center}
@@ -300,13 +382,34 @@ Input
 
 \subsubsection{State Variables}
 
+\noindent For \cref{SRS:R_1} and \cref{SRS:IM_1} in the SRS document,\\
+\noindent$I_{\mathit{SMH}_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}$ \\
+$p$ : $\mathbb{R}^{+*}$\\
+$I_{C_{\text{ref}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}$\\
+$p_{\text{ref}}$ : $\mathbb{R}^{+*}$ \\
+
+\noindent For \cref{SRS:R_5} and \cref{SRS:IM_2} in the SRS document,\\
+\noindent$M$ : $(x_c,y_c) \in \mathbb{R}^2$ , $R \in \mathbb{R}^{+*}$\\
+
+\noindent For \cref{SRS:R_8} and \cref{SRS:IM_3} in the SRS document,\\
+\noindent$U$ :\\ 
+
+\noindent For \cref{SRS:R_11} and For \cref{SRS:IM_4} in the SRS document,\\
+\noindent$n$ : $\mathbb{Z}$\\
+$m$ : $\mathbb{Z}$\\
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent load{\_}files(pathISMH,pathIC):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
+\item transition: pathISMH and pathIC are the file paths for the input files. The following procedure is performed:
+\begin{enumerate}
+\item The .dm3 files are read and their respective  metafiles are collected.
+\item From the metafile, $I_{\mathit{SMH}_{\text{exp}}}$, $I_{C_{\text{ref}}}$, $p$ and $p_{\text{ref}}$ are extracted to modify their respective state variable.
+\item 
+\item The variables $I_{\mathit{SMH}_{\text{exp}}}$, $I_{C_{\text{ref}}}$, $p$ and $p_{\text{ref}}$ are stored in the data structure using the access program store 
+\end{enumerate}  
+\item output:  $I_{\mathit{SMH}_{\text{exp}}}$, $I_{C_{\text{ref}}}$, $p$, $p_{\text{ref}}$ 
 \item exception: \wss{if appropriate} 
 \end{itemize}
 
@@ -364,7 +467,7 @@ None
 \section{MIS of GPA Module (\texorpdfstring{\cref{MG:M_GPA}}))} \label{MIS_GPA}
 
 \subsection{Module}
-GPA
+GPACalc
 \subsection{Uses}
 \begin{itemize}
 \item Mask
@@ -383,7 +486,7 @@ GPA
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-Phase & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ , $M:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\overrightarrow{g_0} :\mathbb{R}^2\rightarrow\mathbb{R}$ & $P_{\vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\overrightarrow{\Delta g}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $P_{\Delta \vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
+gpa & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ , $M:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\overrightarrow{g_0} :\mathbb{R}^2\rightarrow\mathbb{R}$ & $P_{\vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\overrightarrow{\Delta g}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $P_{\Delta \vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -395,7 +498,7 @@ Phase & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathb
 
 \subsubsection{Access Routine Semantics}
 
-\noindent Phase($\widetilde{I}_{\mathit{SMH}_{\text{exp}}},M,\overrightarrow{g_0}$):
+\noindent gpa($\widetilde{I}_{\mathit{SMH}_{\text{exp}}},M,\overrightarrow{g_0}$):
 \begin{itemize} 
 \item output: 
 \begin{itemize}
@@ -434,7 +537,7 @@ Mask
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-MCirc & $(x_c,y_c) \in \mathbb{N}^2$ , $R \in \mathbb{R}^{+*}$ & $M:\mathbb{R}^2\rightarrow\mathbb{R}$, $\overrightarrow{g_0} :\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
+MCirc & $(x_c,y_c) \in \mathbb{N}^2$ , $R \in \mathbb{R}^{+*}$ & $M:\mathbb{R}^2\rightarrow\mathbb{R}$, $\overrightarrow{g_0} :\mathbb{R}^2\rightarrow\mathbb{R}^2$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -662,7 +765,7 @@ grad & $f:\mathbb{R}^2\rightarrow\mathbb{R}$  & $f:\mathbb{R}^2\rightarrow\mathb
 
 \subsubsection{Access Routine Semantics}
 
-\noindent\textit{{\#} Calculate the 2D gradient of a 2D function $f$} \medskip
+\noindent\textit{{\#} Calculate the gradient of a 2D function $f$} \medskip
 
 \noindent grad($f$):
 \begin{itemize} 
@@ -792,11 +895,26 @@ DataStruct
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-set & Metadata & - & - \\
+store & - & - & - \\
+read & - & - & - \\
+load{\_}FT{\_}SMH{\_}exp & datastruct & - & - \\
+load{\_}$\Delta$g{\_}moire & datastruct & - & - \\
+load{\_}g{\_}mask{\_}moire & datastruct & - & - \\
+load{\_}g{\_}uns{\_}moire & datastruct & - & - \\
+load{\_}$\Delta$g{\_}moire{\_}cor & datastruct & - & - \\
+$\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{C}$ & - \\
+$\Delta \overrightarrow{g}^{M_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
+$\overrightarrow{g}^{M_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
+$\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
+$\Delta\overrightarrow{g}_{\text{cor}}^{M_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
+$\overrightarrow{g}_{1_{\text{uns}}}^{C_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
+$\overrightarrow{g}_{2_{\text{uns}}}^{C_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
+$\Delta \overrightarrow{g}_{1_{\text{uns}}}^{C_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
+$\Delta \overrightarrow{g}_{2_{\text{uns}}}^{C_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -805,10 +923,20 @@ set & Metadata & - & - \\
 
 \subsubsection{State Variables}
 
+bla \\
+$\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{C}$ \\
+$\Delta \overrightarrow{g}^{M_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
+$\overrightarrow{g}^{M_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
+$\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
+$\Delta\overrightarrow{g}_{\text{cor}}^{M_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
+$\overrightarrow{g}_{1_{\text{uns}}}^{C_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
+$\overrightarrow{g}_{2_{\text{uns}}}^{C_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
+$\Delta \overrightarrow{g}_{1_{\text{uns}}}^{C_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
+$\Delta \overrightarrow{g}_{2_{\text{uns}}}^{C_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent store():
 \begin{itemize}
 \item transition: \wss{if appropriate} 
 \item output: \wss{if appropriate} 
