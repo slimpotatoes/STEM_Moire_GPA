@@ -234,7 +234,7 @@ main & - & - & - \\
 \begin{itemize}
 \item transition: A reflechir 
 
-GUI():
+GUIFlow():
 \noindent\textit{{\#} Software permanently running until user abort it by closing the GUI} \medskip
 
 $(\text{event{\_}Input()} \\ \rightarrow \text{Get the path pathISMH and pathIC from the user} \  \wedge \\ \text{load{\_}files(pathISMH,pathIC)})$\\
@@ -265,15 +265,15 @@ GUI{\_}SMG
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-GUI & - & - & - \\
+GUIFlow & - & - & - \\
+GUI{\_}SMH & - & - & - \\
+GUI{\_}Phase & - & - & - \\
+GUI{\_}Conv & - & - & - \\
 event{\_}Input() & - & - & - \\
 event{\_}SMHSim() & - & - & - \\
 event{\_}GPA() & - & - & - \\
 event{\_}URef() & - & - & - \\
 event{\_}StrainCalc() & - & - & - \\
-GUI{\_}Mask & - & - & - \\
-GUI{\_}U & - & - & - \\
-GUI{\_}nm & - & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -284,63 +284,108 @@ GUI{\_}nm & - & - & - \\
 
 \subsubsection{State Variables}
 
-Win{\_}Flow: Window with the following buttons triggering events: button{\_}Input, button{\_}SMHSim, button{\_}GPA, button{\_}URef, button{\_}StrainCalc.
-
-Win{\_}SMHSim: Window with areas to display $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ and $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}$
-
-Win{\_}Phase: Window with areas to display $\Delta \overrightarrow{g}^{M_{\text{exp}}}$ and let the user input the variable $U$
-
-Win{\_}FTSMH: Window with areas to display Window with areas to display $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ and let the user input the variable.
-
-Win{\_}Conv: Window with entry field to get $n$ and $m$ from the user
+Win{\_}Flow: GUI object
+Win{\_}SMHSim: GUI object
+Win{\_}Phase: GUI object
+Win{\_}FTSMH: GUI object
+Win{\_}Conv: GUI object
 
 
 \subsubsection{Access Routine Semantics}
 
-\noindent GUI():
+\noindent\textit{{\#} GUI embedding the process flow into buttons triggering events. It is the user role to execute the process flow}\medskip
+
+\noindent GUIFlow():
 \begin{itemize}
-\item transition: Win{\_}Flow displayed 
+\item transition: 
+	\begin{enumerate}
+	\item Win{\_}Flow=fig('Win{\_}Flow') 
+	\item button(Win{\_}Flow,5,'Input','SMHSim','GPA','URef','StrainCalc') 
+	\item plot()
+	\end{enumerate} 
 \end{itemize}
+\bigskip
+
+\noindent\textit{{\#} Events triggered by each button pressed by the user}\medskip
 
 \noindent event{\_}Input():
 \begin{itemize}
-\item transition: Trigger event{\_}Input when button{\_}Input pressed
+\item transition: Trigger event{\_}Inpu when button{\_}Input pressed
 \end{itemize}
-
+\bigskip
 \noindent event{\_}SMHSim():
 \begin{itemize}
 \item transition: Trigger event{\_}SMHSim when button{\_}SMHSim pressed
 \end{itemize}
-
+\bigskip
 \noindent event{\_}GPA():
 \begin{itemize}
 \item transition: Trigger event{\_}GPA when button{\_}GPA pressed
 \end{itemize}
-
+\bigskip
 \noindent event{\_}URef():
 \begin{itemize}
 \item transition: Trigger event{\_}URef when button{\_}URef pressed
 \end{itemize}
-
+\bigskip
 \noindent event{\_}StrainCalc():
 \begin{itemize}
 \item transition: Trigger event{\_}StrainCalc when button{\_}StrainCalc press
-\end{itemize} 
+\end{itemize}
+\bigskip
 
+\noindent\textit{{\#} GUI to display the simulation of the STEM Moir{\'e} hologram using the reference image and to let the user input $M$ (from \cref{SRS:R_4}, \cref{SRS:R_5})}\medskip
+
+\noindent GUI{\_}SMH():
+\begin{itemize}
+\item transition: 
+	\begin{enumerate}
+	\item Win{\_}SMHSim=fig('Win{\_}SMHSim',read($I_{\mathit{SMH}_{\text{exp}}}$),load($\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$),load($\widetilde{I}_{\mathit{SMH}_{\text{sim}}}$),circle($M$))
+	\item plot()
+	\end{enumerate} 
+\end{itemize}
+\bigskip
+
+\noindent\textit{{\#} GUI to display the phase resulting from the GPA algorithm and to let the user input $U$ (from \cref{SRS:R_8})}\medskip
+
+\noindent GUI{\_}Phase():
+\begin{itemize}
+\item transition: 
+	\begin{enumerate}
+	\item Win{\_}Phase=fig('Win{\_}Phase',red($\Delta \overrightarrow{g}^{M_{\text{exp}}}$),rectangle($U$))
+	\item plot()
+	\end{enumerate} 
+\end{itemize}
+\bigskip
+
+\noindent\textit{{\#} GUI to display the window to let the user input $n$ and $m$ (from \cref{SRS:R_11})}\medskip
+
+\noindent GUI{\_}Conv():
+\begin{itemize}
+\item transition: 
+	\begin{enumerate}
+	\item Win{\_}Conv=fig('Win{\_}Conv',entry{\_}field($n$),entry{\_}field($m$))
+	\item plot()
+	\end{enumerate} 
+\end{itemize}
+\bigskip
+
+\iffalse
 \noindent event{\_}GUI{\_}Mask():
 \begin{itemize}
 \item transition: Trigger event{\_}StrainCalc when button{\_}StrainCalc press
 \end{itemize}
-
+\bigskip
 \noindent event{\_}GUI{\_}U():
 \begin{itemize}
 \item transition: Trigger event{\_}StrainCalc when button{\_}StrainCalc press
 \end{itemize} 
-
+\bigskip
 \noindent event{\_}GUI{\_}nm():
 \begin{itemize}
 \item transition: Trigger event{\_}StrainCalc when button{\_}StrainCalc press
 \end{itemize}  
+\fi
 
 \section{MIS of Input Module (\texorpdfstring{\cref{MG:M_InputFormat}}))} \label{MIS_Input}
 
@@ -524,7 +569,7 @@ gpa & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{
 Mask
 \subsection{Uses}
 \begin{itemize}
-\item Input
+\item STEM Moir{\'e} GPA GUI
 \item Data structure
 \end{itemize}
 
@@ -878,7 +923,7 @@ arg & $z \in \mathbb{C}$ & $\phi \in ]-\pi,\pi]$ & \\
 \begin{itemize} 
 \item output: $\phi$ such that
 \begin{equation*}
-\phi=\text{arg}(z)=\text{atan2}(z)=\text{atan2}(\frac{\text{Im(z)}}{\text{Re(z)}})
+\phi=\text{arg}(z) \text{ with } z=e^{i\phi}
 \end{equation*}
 \item exception:
 \end{itemize}
@@ -889,7 +934,7 @@ arg & $z \in \mathbb{C}$ & $\phi \in ]-\pi,\pi]$ & \\
 \subsection{Module}
 DataStruct
 \subsection{Uses}
-
+None
 \subsection{Syntax}
 
 \subsubsection{Exported Access Programs}
@@ -899,22 +944,8 @@ DataStruct
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-store & - & - & - \\
-read & - & - & - \\
-load{\_}FT{\_}SMH{\_}exp & datastruct & - & - \\
-load{\_}$\Delta$g{\_}moire & datastruct & - & - \\
-load{\_}g{\_}mask{\_}moire & datastruct & - & - \\
-load{\_}g{\_}uns{\_}moire & datastruct & - & - \\
-load{\_}$\Delta$g{\_}moire{\_}cor & datastruct & - & - \\
-$\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{C}$ & - \\
-$\Delta \overrightarrow{g}^{M_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
-$\overrightarrow{g}^{M_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
-$\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
-$\Delta\overrightarrow{g}_{\text{cor}}^{M_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
-$\overrightarrow{g}_{1_{\text{uns}}}^{C_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
-$\overrightarrow{g}_{2_{\text{uns}}}^{C_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
-$\Delta \overrightarrow{g}_{1_{\text{uns}}}^{C_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
-$\Delta \overrightarrow{g}_{2_{\text{uns}}}^{C_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$ & - \\
+store & string $\times$ object & - & - \\
+read & string & object & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -923,24 +954,37 @@ $\Delta \overrightarrow{g}_{2_{\text{uns}}}^{C_{\text{exp}}}$ & - & $f:\mathbb{N
 
 \subsubsection{State Variables}
 
-bla \\
-$\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{C}$ \\
-$\Delta \overrightarrow{g}^{M_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
-$\overrightarrow{g}^{M_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
-$\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
-$\Delta\overrightarrow{g}_{\text{cor}}^{M_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
-$\overrightarrow{g}_{1_{\text{uns}}}^{C_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
-$\overrightarrow{g}_{2_{\text{uns}}}^{C_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
-$\Delta \overrightarrow{g}_{1_{\text{uns}}}^{C_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
-$\Delta \overrightarrow{g}_{2_{\text{uns}}}^{C_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}^2$\\
+\noindent\textit{{\#} Structure of the object carrying the data information}\medskip
+
+data() : object
+\begin{itemize}
+\item data(ISMHexp)=$I_{\mathit{SMH}_{\text{exp}}}$
+\item data(pISMHexp)= $p$
+\item data(ICref)=$I_{\mathit{C}_{\text{ref}}}$
+\item data(pICref)=$p_{\text{ref}}$
+\item data(FTISMHexp)=$\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$
+\item data(FTSMHsim)=$\widetilde{I}_{\mathit{SMH}_{\text{sim}}}$
+\item for each $j$ data(T$j$):object 
+	\begin{itemize}
+	\item data(T$j$)(g$j$Muns)=$\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}$
+	\item data(T$j$)(deltag$j$M)=$\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}$
+	\item data(T$j$)(Phaseg$j$M)=$P_{\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}}$
+	\item data(T$j$)(shift$j$)=$(n_j,m_j)$
+	\item data(T$j$)(g$j$Cuns)=$\overrightarrow{g_{j}}_{\text{uns}}^{C_{\text{exp}}}$
+	\end{itemize}
+
+\end{itemize}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent store():
+\noindent store($a$,$b$):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition: data($a$)=$b$
+\end{itemize}
+
+\noindent load($a$):
+\begin{itemize}
+\item output: data($a$)=$b$
 \end{itemize}
 
 \section{MIS of Generic GUI/Plot Module (\texorpdfstring{\cref{MG:M_GUIGene}}))} \label{MIS_GUIGene}
@@ -959,7 +1003,12 @@ Data Structure
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+plot & GUI objects & - & - \\
+fig & string $\times$ GUI objects &  GUI object & - \\
+button & $k \in \mathbb{N}$ , {string}$^{k}$ &  GUI object & - \\
+entry{\_}field & string &  GUI object & - \\
+circle & - &  GUI object & - \\
+rectangle& - & GUI object & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -971,14 +1020,41 @@ Data Structure
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent plot():
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition:
+\item output: Display on the Hardware all the GUI objects 
 \end{itemize}
 
+\noindent fig('label', optional GUI objects):
+\begin{itemize}
+\item transition: 
+\item output: Create a window GUI object with the optional GUI objects
+\end{itemize}
 
+\noindent button($number$,'labels'):
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: Create $number$ buttons GUI objects with their respective 'labels'
+\end{itemize}
+
+\noindent entry{\_}field($b$):
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: Create a entry field GUI object to collect the input $b$ from the user
+\end{itemize}
+
+\noindent circle($C$(user{\_}param)):
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: Create a circle $C$ GUI object drawn by the user 
+\end{itemize}
+
+\noindent rectangle($R$(user{\_}param)):
+\begin{itemize}
+\item transition: \wss{if appropriate} 
+\item output: Create a rectangle $R$ GUI object drawn by the user 
+\end{itemize}
 \newpage
 
 \bibliographystyle{ieeetr}
@@ -989,5 +1065,17 @@ Data Structure
 \section{Appendix} \label{Appendix}
 
 \wss{Extra information if required}
+
+All variables
+
+$P_{\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}}(\vec{r}), \overrightarrow{g_{j}}^{M_{\text{exp}}}, \Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r})$
+
+$\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r}),U,\overrightarrow{g_{j}}^{M_{\text{exp}}}$
+
+$\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}, \Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}(\vec{r})$
+
+$\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}},\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}(\vec{r}),\overrightarrow{q_{n_j,m_j}},p$
+
+$\Delta \overrightarrow{g_{j}}^{C_{exp}}(\vec{r}),\overrightarrow{g_{j}}_{uns}^{C_{exp}}$
 
 \end{document}
