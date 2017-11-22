@@ -214,6 +214,13 @@ format
 \end{AC}
 
 \begin{AC}\normalfont Small strain and small gradient of strain assumption
+  \wss{You think you will likely change this assumption?  I see that it is
+    linked to a 2D strain tensor module.  Can you really isolate this change to
+    one module?  I am not familiar enough with your area, but I have prior
+    experience with continuum mechanics and computational mechanics.  The switch
+    from a small strain tensor to one of the several available finite
+    deformation tensors would have a greater impact than just changing the
+    values in one tensor.}
 \label{AC_Assum_SmallStrain}
 \end{AC}
 
@@ -287,7 +294,8 @@ below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
 \begin{M}\normalfont Hardware-Hiding Module (described in \cref{MG_Hardware})
-\label{M_Hardware}
+\label{M_Hardware} \wss{The links in the document are very handy for navigating
+  through it.  Thank you.}
 \end{M}
 
 \begin{M}\normalfont \progname{}  Control Module (described in \cref{MG_Control})
@@ -666,6 +674,10 @@ because they use modules from the lower levels.
 \an{I will remove Object Stucture Module since I think I don't need it}
 
 %\section*{References}
+
+\wss{Great start for your design.  You might need to iterate based on what you
+  learn writing the access programs for the modules in the MIS, but you are
+  building from a good foundation.}
 
 \bibliographystyle{ieeetr}
 \bibliography{MG}
