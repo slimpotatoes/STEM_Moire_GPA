@@ -235,13 +235,16 @@ main & - & - & - \\
 \begin{itemize}
 \item transition: A reflechir 
 
-GUIFlow():
+GUIFlow()
 \noindent\textit{{\#} Software permanently running until user abort it by closing the GUI} \medskip
 
-$(\text{event{\_}Input()} \\ \rightarrow \text{Get the path pathISMH and pathIC from the user} \  \wedge \\ \text{load{\_}files(pathISMH,pathIC)})$\\
-$(\text{event{\_}SimSMH()} \rightarrow \text{SMHsim}(\text{load(ISMHexp)},\text{load(ICref)},\text{load(pISMHexp)},\text{load(pICref)})$\\
-$(\text{event{\_}GPA()} \rightarrow  \text{gpa}(\text{load(FTISMHexp)},\text{MCirc}(\text{collect{\_}}(M)))$\\
-$(\text{event{\_}URef()} \rightarrow \text{ZeroStrain}())$\\
+
+$(\text{event{\_}Input()} \\ \rightarrow \text{Get the path pathISMH and pathIC from the user} \  \rightarrow \\ \text{load{\_}files(pathISMH,pathIC)})\rightarrow \text{GUI{\_}SMHexp}())$
+\\
+$(\text{event{\_}SimSMH()} \rightarrow \text{SMHsim}(\text{load(ISMHexp)},\text{load(ICref)},\text{load(pISMHexp)},\text{load(pICref)}) \\ \rightarrow \text{GUI{\_}SMHsim}())$
+\\
+$(\text{event{\_}GPA()} \rightarrow  \text{gpa}(\text{load(FTISMHexp)},\text{MCirc}(\text{collect{\_}circ}(M))\\ \rightarrow \text{GUI{\_}Phase}())$\\
+$(\text{event{\_}URef()} \rightarrow \text{ZeroStrain}(\text{load}(),\text{collect{\_}rect}(U))$\\
 $(\text{event{\_}Conversion()} \rightarrow \text{conversion}())$\\
 $(\text{event{\_}StrainCalc()} \rightarrow \text{CalcStrain}())$\\
 
@@ -276,8 +279,8 @@ event{\_}SMHSim & - & - & - \\
 event{\_}GPA & - & - & - \\
 event{\_}URef & - & - & - \\
 event{\_}StrainCalc & - & - & - \\
-collect{\_}M & GUI object & object & - \\
-collect{\_}U & GUI object & object & -\\
+collect{\_}circ & GUI object & object & - \\
+collect{\_}rect & GUI object & object & -\\
 \hline
 \end{tabular}
 \end{center}
@@ -390,22 +393,25 @@ Win{\_}Conv: GUI object\\
 
 \noindent\textit{{\#} Reader of the GUI objects drawn by the user (circle $M$ or rectangle $U$)} \medskip
 
-\noindent collect{\_}M($A$)
+\noindent collect{\_}circ($A$)
 \begin{itemize}
 \item output: $C$ such that
 	\begin{enumerate}
-	\item Verify the type GUI $A$ to match a circle
-	\item $C$=$(x_c,y_c,R)$ with $(x_c,y_c)$ the coordinate (pixel number) of the center of the circle $A$ and $R$ the radius of the circle $A$.
+	\item Execute read{\_}user{\_}GUI($A$)
+	\item Verify the type of the object read{\_}user{\_}GUI($A$) to match a circle
+	\item Output $C$=$(x_c,y_c,R)$ with $(x_c,y_c)$ the coordinate (pixel number) of the center of the circle $A$ and $R$ the radius of the circle $A$.
 	\end{enumerate} 
 \end{itemize}
 \bigskip
 
-\noindent collect{\_}U($A$)
+\noindent collect{\_}rect($A$)
 \begin{itemize}
-\item output: $r$ such that
+\item output: $S$ such that
 	\begin{enumerate}
-	\item Verify the type GUI $A$ to match a rectangle
-	\item $r$=$bla$ with $(x_c,y_c)$ 
+	\item Execute read{\_}user{\_}GUI($A$)
+	\item Verify the type of the object read{\_}user{\_}GUI($A$) to match a rectangle
+	\item Get the coordinate of the upper left corner $(x_0,y_0)$ and the coordinate of the bottom right corner $(x_1,y_1)$. 
+	\item output $S=([x_0,x_1],[y_0,y_1])$
 	\end{enumerate} 
 \end{itemize}
 \bigskip
