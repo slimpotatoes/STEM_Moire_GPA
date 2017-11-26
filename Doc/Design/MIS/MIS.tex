@@ -83,7 +83,7 @@ urlcolor=cyan          % color of external links
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-14/11/2017 & 1.0 & First draft \\
+26/11/2017 & 1.0 & MIS First draft \\
 \bottomrule
 \end{tabularx}
 
@@ -111,17 +111,16 @@ The following document details the Module Interface Specifications for \progname
 
 \section{Notation}
 
-\wss{You should describe your notation.  You can use what is below as
-  a starting point.}
-
 The structure of the MIS for modules comes from \cite{HoffmanAndStrooper1995},
 with the addition that template modules have been adapted from
-\cite{GhezziEtAl2003}.  The mathematical notation comes from Chapter 3 of
+\cite{GhezziEtAl2003}. The following table summarizes the primitive data types used by \progname.
+
+\iffalse
+The mathematical notation comes from Chapter 3 of
 \cite{HoffmanAndStrooper1995}.  For instance, the symbol := is used for a
 multiple assignment statement and conditional rules follow the form $(c_1
 \Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.
-
-The following table summarizes the primitive data types used by \progname. 
+\fi
 
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
@@ -132,8 +131,9 @@ The following table summarizes the primitive data types used by \progname.
 \midrule
 character & char & a single symbol or digit\\
 integer & $\mathbb{Z}$ & an integer number \\
-natural number & $\mathbb{N}$ & a natural number \\
+natural & $\mathbb{N}$ & a natural number \\
 real & $\mathbb{R}$ & a real number \\
+image & $\mathbb{I}$ & blabla \\
 \bottomrule
 \end{tabular} 
 \end{center}
@@ -160,32 +160,30 @@ The following table is taken directly from the Module Guide document for this pr
 {Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{10}{0.3\textwidth}{Behaviour-Hiding Module} & Input\\
-& \progname{} Control \\
-& \progname{} GUI \\
-& User Input \\
-& SMH simulation \\
-& GPA \\
-& Mask \\
-& Unstrained region \\
-& Conversion \\
-& 2D strain tensor \\
+\multirow{9}{0.3\textwidth}{Behaviour-Hiding Module} 
+& \progname{} Control (\cref{MG:M_Control}, \cref{MIS_Control})\\
+& \progname{} GUI (\cref{MG:M_GUISMG}, \cref{MIS_GUISMG})\\
+& Input (\cref{MG:M_InputFormat}, \cref{MIS_Input})\\
+& SMH simulation (\cref{MG:M_SMHSim}, \cref{MIS_SMHSim})\\
+& GPA (\cref{MG:M_GPA}, \cref{MIS_GPA})\\
+& Mask (\cref{MG:M_Mask}, \cref{MIS_Mask})\\
+& Unstrained region (\cref{MG:M_URef}, \cref{MIS_URef})\\
+& Conversion (\cref{MG:M_MtoCConv}, \cref{MIS_MtoCConv})\\
+& 2D strain tensor (\cref{MG:M_StrainCalc}, \cref{MIS_StrainCalc})\\
 \midrule
 
-\multirow{6}{0.3\textwidth}{Software Decision Module} & Fourier Transform \\
-& Least square fitting method \\
-& Phase calculation \\
-& Gradient \\
-& Generic GUI/Plot \\
-& Data structure \\
+\multirow{6}{0.3\textwidth}{Software Decision Module} & Fourier Transform (\cref{MG:M_FT}, \cref{MIS_FT}) \\
+& Gradient (\cref{MG:M_Gradient}, \cref{MIS_Gradient}) \\
+& Least square fitting method (\cref{MG:M_LSFM}, \cref{MIS_LSFM})  \\
+& Phase Operation (\cref{MG:M_Phase}, \cref{MIS_Phase}) \\
+& Data structure (\cref{MG:M_DataStruct}, \cref{MIS_DataStruct}) \\
+& Generic GUI/Plot (\cref{MG:M_GUIGene}, \cref{MIS_GUIGene}) \\
 \bottomrule
 
 \end{tabular}
 \caption{Module Hierarchy}
 \label{TblMH}
 \end{table}
-
-LIST ALL MIS to refer them in other document
 
 \newpage
 
@@ -196,16 +194,16 @@ LIST ALL MIS to refer them in other document
 main
 \subsection{Uses}
 \begin{itemize}
-\item STEM Moir{\'e} GPA GUI
+\item STEM Moir{\'e} GPA GUI (\cref{MG:M_GUISMG}, \cref{MIS_GUISMG})
 \item Processing modules \begin{itemize}
-	\item Unstrained region 
-	\item Conversion
-	\item SMH Simulation
-	\item GPA
-	\item 2D Strain Tensors
+	\item Unstrained region (\cref{MG:M_URef}, \cref{MIS_URef})
+	\item Conversion (\cref{MG:M_MtoCConv}, \cref{MIS_MtoCConv})
+	\item SMH Simulation (\cref{MG:M_SMHSim}, \cref{MIS_SMHSim})
+	\item GPA(\cref{MG:M_GPA}, \cref{MIS_GPA})
+	\item 2D Strain Tensors (\cref{MG:M_StrainCalc}, \cref{MIS_StrainCalc})
 \end{itemize}
-\item Input
-\item Data Structure
+\item Input (\cref{MG:M_InputFormat}, \cref{MIS_Input})
+\item Data Structure (\cref{MG:M_DataStruct}, \cref{MIS_DataStruct})
 \end{itemize}
 
 \subsection{Syntax}
@@ -224,7 +222,7 @@ main & - & - & - \\
 
 \subsection{Semantics}
 
-\progname{} is designed to have the different steps of the process flow driven by user directly through GUI{\_}SMG. The STEM Moir{\'e} GPA Control Module uses the events in STEM Moi{\'e} GPA GUI to use the processing modules in the order defined by the user.
+\progname{} is designed to have the process flow driven by user directly through GUI{\_}SMG. The STEM Moir{\'e} GPA Control Module uses the events in STEM Moi{\'e} GPA GUI to use the processing modules in the order defined by the user.
 
 \subsubsection{State Variables}
 
@@ -237,17 +235,22 @@ main & - & - & - \\
 
 GUIFlow()
 \noindent\textit{{\#} Software permanently running until user abort it by closing the GUI} \medskip
+GUI{\_}Conv()
+\noindent\textit{{\#} Open the entry field GUI for the conversion process} \medskip
 
-
-$(\text{event{\_}Input()} \\ \rightarrow \text{Get the path pathISMH and pathIC from the user} \  \rightarrow \\ \text{load{\_}files(pathISMH,pathIC)})\rightarrow \text{GUI{\_}SMHexp}())$
-\\
-$(\text{event{\_}SimSMH()} \rightarrow \text{SMHsim}(\text{load(ISMHexp)},\text{load(ICref)},\text{load(pISMHexp)},\text{load(pICref)}) \\ \rightarrow \text{GUI{\_}SMHsim}())$
-\\
-$(\text{event{\_}GPA()} \rightarrow  \text{gpa}(\text{load(FTISMHexp)},\text{MCirc}(\text{collect{\_}circ}(M))\\ \rightarrow \text{GUI{\_}Phase}())$\\
-$(\text{event{\_}URef()} \rightarrow \text{ZeroStrain}(\text{load}(),\text{collect{\_}rect}(U))$\\
-$(\text{event{\_}Conversion()} \rightarrow \text{conversion}())$\\
-$(\text{event{\_}StrainCalc()} \rightarrow \text{CalcStrain}())$\\
-
+If one of the event below is triggered by the user, an action is performed by \progname{}. The possible events are :
+	\begin{itemize}
+	\item $(\text{event{\_}Input()} \\ \rightarrow \text{Get the path pathISMH and pathIC from the user} \  \rightarrow \\ \text{load{\_}files(pathISMH,pathIC)})\rightarrow \text{GUI{\_}SMHexp}())$
+	\item $(\text{event{\_}SimSMH()} \rightarrow \\ \text{SMHsim}(\text{load(ISMHexp)},\text{load(ICref)}, \text{load(pISMHexp)},\text{load(pICref)} \\ \rightarrow \text{GUI{\_}SMHsim}())$
+	\item $\text{For each GUI object mask } M_j \text{ with } j=\{1,2\} \\ \text{ drawn by the user in the of GUI{\_}SMHsim() window }: $
+		\begin{enumerate}
+		\item $(\text{event{\_}GPA()} \rightarrow  \text{gpa}(\text{load(FTISMHexp)},\text{collect{\_}circ}(M_j),\text{id}(M_j)) \\ \rightarrow \text{GUI{\_}Phase}())$
+		\item $(\text{event{\_}URef()} \rightarrow \\ \text{ZeroStrain}(\text{load{\_}g}(\text{id}(M_j))(\text{deltagM}),\text{load{\_}g}(\text{id}(M_j))(\text{gMuns}),\\ \text{collect{\_}rect}(U),\text{id}(M_j))\rightarrow \text{update GUI{\_}Phase}())$
+		\item $(\text{event{\_}Conversion()} \rightarrow \text{Read the $n$ and $m$ entry fields in GUI{\_}Conv} \rightarrow \\ \text{conversion}(\text{load{\_}g}(\text{id}(M_j))(\text{pISMHexp}),\text{load{\_}g}(\text{id}(M_j)(\text{gMuns})),\text{id}(M_j))$
+		\end{enumerate}
+	\item $(\text{event{\_}StrainCalc()} \rightarrow \\
+	 \text{CalcStrain}(\text{load}(\text{id}(M_1),\text{gCuns}),\text{load}(\text{id}(M_2),\text{gCuns}),\text{load}(\text{id}(M_1),\text{deltagM}),\\ \text{load}(\text{id}(M_2),\text{deltagM})) \rightarrow \text{GUI{\_}Strain}())$
+	\end{itemize}
 \end{itemize}
 
 \section{MIS of STEM Moir{\'e} GPA GUI Module (\texorpdfstring{\cref{MG:M_GUISMG}}))} \label{MIS_GUISMG}
@@ -256,8 +259,8 @@ $(\text{event{\_}StrainCalc()} \rightarrow \text{CalcStrain}())$\\
 GUI{\_}SMG
 \subsection{Uses}
 \begin{itemize}
-\item Generic GUI/Plot
-\item Data Structure
+\item Generic GUI/Plot (\cref{MG:M_GUIGene}, \cref{MIS_GUIGene})
+\item Data Structure (\cref{MG:M_DataStruct}, \cref{MIS_DataStruct})
 \end{itemize}
 
 \subsection{Syntax}
@@ -274,6 +277,7 @@ GUI{\_}SMHexp & - & - & - \\
 GUI{\_}SMHSim & - & - & - \\
 GUI{\_}Phase & - & - & - \\
 GUI{\_}Conv & - & - & - \\
+GUI{\_}Strain & - & - & - \\
 event{\_}Input & - & - & - \\
 event{\_}SMHSim & - & - & - \\
 event{\_}GPA & - & - & - \\
@@ -297,6 +301,8 @@ Win{\_}SMHSim: GUI object\\
 Win{\_}Phase: GUI object\\
 Win{\_}FTSMH: GUI object\\
 Win{\_}Conv: GUI object\\
+Win{\_}Deltag: GUI object\\
+Win{\_}Strain: GUI object\\
 
 
 \subsubsection{Access Routine Semantics}
@@ -361,7 +367,7 @@ Win{\_}Conv: GUI object\\
 \begin{itemize}
 \item transition: 
 	\begin{enumerate}
-	\item Win{\_}SMHSim=fig('Win{\_}SMHSim',load($\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$),load($\widetilde{I}_{\mathit{SMH}_{\text{sim}}}$),circle($M$))
+	\item Win{\_}SMHSim=fig('Win{\_}SMHSim',load(FTISMHexp),load(FTISMHsim),circle($M$))
 	\item plot()
 	\end{enumerate} 
 \end{itemize}
@@ -369,11 +375,12 @@ Win{\_}Conv: GUI object\\
 
 \noindent\textit{{\#} GUI to display the phase resulting from the GPA algorithm and to let the user input $U$ (from \cref{SRS:R_8})}\medskip
 
-\noindent GUI{\_}Phase():
+\noindent GUI{\_}Phase($id$):
 \begin{itemize}
 \item transition: 
 	\begin{enumerate}
-	\item Win{\_}Phase=fig('Win{\_}Phase',red($\Delta \overrightarrow{g}^{M_{\text{exp}}}$),rectangle($U$))
+	\item Win{\_}Phase=fig('Win{\_}Phase',load{\_}g($id$)(PhasegM),rectangle($U$))
+	\item Win{\_}Deltag=fig('Win{\_}Deltag',load{\_}g($id$)(deltagM))
 	\item plot()
 	\end{enumerate} 
 \end{itemize}
@@ -390,6 +397,19 @@ Win{\_}Conv: GUI object\\
 	\end{enumerate} 
 \end{itemize}
 \bigskip
+
+\noindent\textit{{\#} GUI to display the window showing the final strain maps (from \cref{SRS:R_14})}\medskip
+
+\noindent GUI{\_}Strain():
+\begin{itemize}
+\item transition: 
+	\begin{enumerate}
+	\item Win{\_}Strain=fig('Win{\_}Strain',load(Exx),load(Eyy),load(Exy),load(Rxx))
+	\item plot()
+	\end{enumerate} 
+\end{itemize}
+\bigskip
+
 
 \noindent\textit{{\#} Reader of the GUI objects drawn by the user (circle $M$ or rectangle $U$)} \medskip
 
@@ -422,8 +442,8 @@ Win{\_}Conv: GUI object\\
 Input
 \subsection{Uses}
 \begin{itemize}
-\item STEM Moi{\'e} GPA GUI
-\item Data Structure
+\item STEM Moi{\'e} GPA GUI (\cref{MG:M_GUISMG}, \cref{MIS_GUISMG})
+\item Data Structure (\cref{MG:M_DataStruct}, \cref{MIS_DataStruct})
 \end{itemize}
 
 \subsection{Syntax}
@@ -443,6 +463,8 @@ load{\_}files & string & - & FilePath \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
+
+data : object
 
 \iffalse
 load{\_}mask & GUI object & - & NoMask \\
@@ -481,7 +503,7 @@ $m$ : $\mathbb{Z}$\\
 \item transition: pathISMH and pathIC are the file paths for the input files. The following procedure is performed:
 \begin{enumerate}
 \item The .dm3 files are read and their respective  metafiles are collected.
-\item From the metafile, $I_{\mathit{SMH}_{\text{exp}}}$, $I_{C_{\text{ref}}}$, $p$ and $p_{\text{ref}}$ are extracted to modify their respective state variable.
+\item From the metafile, $I_{\mathit{SMH}_{\text{exp}}}$, $I_{C_{\text{ref}}}$, $p$ and $p_{\text{ref}}$ are extracted.
 \item The variables $I_{\mathit{SMH}_{\text{exp}}}$, $I_{C_{\text{ref}}}$, $p$ and $p_{\text{ref}}$ are stored in the data structure:
 \begin{itemize}
 \item store(ISMHexp, $I_{\mathit{SMH}_{\text{exp}}}$)
@@ -489,19 +511,18 @@ $m$ : $\mathbb{Z}$\\
 \item store(ICref, $I_{C_{\text{ref}}}$)
 \item store(pICref, $p_{\text{ref}}$)
 \end{itemize}
-\end{enumerate}  
-\item output:  $I_{\mathit{SMH}_{\text{exp}}}$, $I_{C_{\text{ref}}}$, $p$, $p_{\text{ref}}$ 
-\item exception: \wss{if appropriate} 
+\end{enumerate}   
+\item exception: 
 \end{itemize}
 
-\section{MIS of SMH Simulation (\texorpdfstring{\cref{MG:M_SMHSim}}))} \label{MIS_SHMSim}
+\section{MIS of SMH Simulation (\texorpdfstring{\cref{MG:M_SMHSim}}))} \label{MIS_SMHSim}
 
 \subsection{Module}
 SMHSimCalc
 \subsection{Uses}
 \begin{itemize}
-\item Fourier Transform
-\item Data Structure
+\item Fourier Transform (\cref{MG:M_FT}, \cref{MIS_FT})
+\item Data Structure (\cref{MG:M_DataStruct}, \cref{MIS_DataStruct})
 \end{itemize}
 
 \subsection{Syntax}
@@ -529,7 +550,7 @@ data : object
 \noindent SMHsim($I_{\mathit{SMH}_{\text{exp}}},I_{C_{\text{ref}}}, p, p_{\text{ref}}$):
 \begin{itemize} 
 \item transition:
-\begin{itemize}
+	\begin{enumerate}
 	\item store(FTISMHexp, $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}$) such that
 	\begin{equation*}
 	\widetilde{I}_{\mathit{SMH}_{\text{exp}}}(\vec{\nu})=\mathcal{FT}[I_{\mathit{SMH}_{\text{exp}}}(\vec{r})]
@@ -542,7 +563,7 @@ data : object
 	\text{and } N_{\text{lim}}=\Xi(\frac{p}{p_{\text{ref}}}) \text{ with } \Xi \text{ the floor function } 
 	\end{gathered}
 	\end{equation*}
-	\end{itemize}
+	\end{enumerate}
 
 \item exception:
 \end{itemize}
@@ -553,11 +574,11 @@ data : object
 GPACalc
 \subsection{Uses}
 \begin{itemize}
-\item Mask
-\item Fourier Transform
-\item Phase
-\item Gradient
-\item Data Structure
+\item Mask (\cref{MG:M_Mask}, \cref{MIS_Mask})
+\item Fourier Transform (\cref{MG:M_FT}, \cref{MIS_FT})
+\item Phase (\cref{MG:M_Phase}, \cref{MIS_Phase})
+\item Gradient (\cref{MG:M_Gradient}, \cref{MIS_Gradient})
+\item Data Structure (\cref{MG:M_DataStruct}, \cref{MIS_DataStruct})
 \end{itemize}
 
 \subsection{Syntax}
@@ -569,7 +590,7 @@ GPACalc
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-gpa & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ , $M:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\overrightarrow{g}^{M_{\text{exp}}} :\mathbb{R}^2\rightarrow\mathbb{R}$ & $P_{\vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\overrightarrow{\Delta g}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $P_{\Delta \vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
+gpa & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ , $M:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\overrightarrow{g}^{M_{\text{exp}}} :\mathbb{R}^2\rightarrow\mathbb{R}$ , $id : \text{id GUI object}$ & $P_{\vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\overrightarrow{\Delta g}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $P_{\Delta \vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -582,23 +603,25 @@ data : object
 
 \subsubsection{Access Routine Semantics}
 
-\noindent gpa($\widetilde{I}_{\mathit{SMH}_{\text{exp}}},M,\overrightarrow{g}^{M_{\text{exp}}}$):
+\noindent gpa($\widetilde{I}_{\mathit{SMH}_{\text{exp}}},M,id$):
 \begin{itemize} 
-\item output: 
-\begin{itemize}
-	\item $P_{\vec{g}}$ such that
+\item transition: 
+	\begin{enumerate}
+	\item $M,\overrightarrow{g}^{M_{\text{exp}}}=\text{MCirc}(M)$
+	\item store{\_}g($id$,gMuns,$\overrightarrow{g}^{M_{\text{exp}}}$)
+	\item Calculate $P_{\vec{g}}$ such that
 	\begin{equation*}
 	\forall \vec{r} \in \mathbb{R}^2, \ P_{\vec{g}}(\vec{r})=\text{arg}(i\mathcal{FT}[M\times\widetilde{I}_{\mathit{SMH}_{\text{exp}}}])
 	\end{equation*}
-	\item $\overrightarrow{\Delta g}$ such that
+	\item store($id$,deltagM,$\overrightarrow{\Delta g}$) such that
 	\begin{equation*}
 	\forall \vec{r} \in \mathbb{R}^2, \ \Delta \overrightarrow{g}(\vec{r})=\frac{1}{2\pi}\text{grad}(\text{unwrap}(P_{\vec{g}}(\vec{r})))-\overrightarrow{g}^{M_{\text{exp}}}(\vec{r})
 	\end{equation*}
-	\item $P_{\Delta \vec{g}}$ such that
+	\item store($id$,PhasegM,$P_{\Delta \vec{g}}$) such that
 	\begin{equation*}
 	\forall \vec{r} \in \mathbb{R}^2, \ P_{\Delta \vec{g}}(\vec{r})=\text{wrap}(\text{unwrap}[P_{\vec{g}}(\vec{r})]-2\pi\overrightarrow{g}^{M_{\text{exp}}}(\vec{0})\cdot \vec{r})
 	\end{equation*}
-\end{itemize}
+	\end{enumerate}
 \item exception:  
 \end{itemize}
 
@@ -607,10 +630,7 @@ data : object
 \subsection{Module}
 Mask
 \subsection{Uses}
-\begin{itemize}
-\item STEM Moir{\'e} GPA GUI
-\item Data structure
-\end{itemize}
+None
 
 \subsection{Syntax}
 
@@ -629,13 +649,13 @@ MCirc & $(x_c,y_c) \in \mathbb{N}^2$ , $R \in \mathbb{R}^{+*}$ & $M:\mathbb{R}^2
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
+None
 
 \subsubsection{Access Routine Semantics}
 
 \noindent MCirc($x_c,y_c,R$):
 \begin{itemize} 
-\item output: ($M$,$\overrightarrow{g_0}$)
+\item output: $M$,$\overrightarrow{g_0}$
 	\begin{itemize}
 	\item $M$ such that
 	\begin{equation*}
@@ -652,7 +672,7 @@ MCirc & $(x_c,y_c) \in \mathbb{N}^2$ , $R \in \mathbb{R}^{+*}$ & $M:\mathbb{R}^2
 	\end{bmatrix}
 	\end{equation*}
 	\end{itemize}
-\item exception: \wss{if appropriate} 
+\item exception:
 \end{itemize}
 
 \section{MIS of Unstrained region (\texorpdfstring{\cref{MG:M_URef}}))} \label{MIS_URef}
@@ -661,9 +681,9 @@ MCirc & $(x_c,y_c) \in \mathbb{N}^2$ , $R \in \mathbb{R}^{+*}$ & $M:\mathbb{R}^2
 URefCalc
 \subsection{Uses}
 \begin{itemize}
-\item Least Square Fit
-\item STEM Moir{\'e} GPA GUI
-\item Data Structure
+\item Least Square Fit (\cref{MG:M_LSFM}, \cref{MIS_LSFM})
+\item STEM Moir{\'e} GPA GUI (\cref{MG:M_GUISMG}, \cref{MIS_GUISMG})
+\item Data Structure (\cref{MG:M_DataStruct}, \cref{MIS_DataStruct})
 \end{itemize}
 
 \subsection{Syntax}
@@ -675,7 +695,7 @@ URefCalc
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-ZeroStrain & $\overrightarrow{\Delta g}^M:\mathbb{R}^2\rightarrow\mathbb{R}^2$, $U \in \mathbb{R}^2$  & $\overrightarrow{\Delta g}_{\text{cor}}^M:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & - \\
+ZeroStrain & $\overrightarrow{\Delta g}^M:\mathbb{R}^2\rightarrow\mathbb{R}^2$, $U \in \mathbb{R}^2$ , $\overrightarrow{g}^{M_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $id : \text{id GUI object}$  & $\overrightarrow{\Delta g}_{\text{cor}}^M:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -687,13 +707,19 @@ ZeroStrain & $\overrightarrow{\Delta g}^M:\mathbb{R}^2\rightarrow\mathbb{R}^2$, 
 
 \subsubsection{Access Routine Semantics}
 
-\noindent ZeroStrain($\overrightarrow{\Delta g}^M$, $U$):
-\begin{itemize}
-\item transition:  
-\item output: $\overrightarrow{\Delta g}_{\text{cor}}^M$ such that
-\begin{equation*}
+\noindent ZeroStrain($\overrightarrow{\Delta g}^M$, $U$, $id$):
+\begin{itemize}  
+\item transition:
+	\begin{enumerate}
+	\item store($id$,deltagM,$\overrightarrow{\Delta g}_{\text{cor}}^M$) such that
+	\begin{equation*}
 \overrightarrow{\Delta g}_{\text{cor}}^M = \overrightarrow{\Delta g}^M - \text{lsfm}(\overrightarrow{\Delta g}^M,U)
-\end{equation*}
+	\end{equation*}
+	\item store($id$,gMuns,$\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}$) such that
+	\begin{equation*}
+\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}} = \overrightarrow{g}^{M_{\text{exp}}} + \text{lsfm}(\overrightarrow{\Delta g}^M,U)
+	\end{equation*}
+	\end{enumerate}	 
 \item exception: 
 \end{itemize}
 
@@ -703,8 +729,7 @@ ZeroStrain & $\overrightarrow{\Delta g}^M:\mathbb{R}^2\rightarrow\mathbb{R}^2$, 
 MtoCConv
 \subsection{Uses}
 \begin{itemize}
-\item Input
-\item Data Structure
+\item Data Structure (\cref{MG:M_DataStruct}, \cref{MIS_DataStruct})
 \end{itemize}
 
 \subsection{Syntax}
@@ -716,7 +741,7 @@ MtoCConv
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-conversion & $p \in \mathbb{R}$ , $(n,m) \in \mathbb{N}^2$, $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & $\overrightarrow{g_{uns}}^{C_{exp}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & - \\
+conversion & $p \in \mathbb{R}$ , $(n,m) \in \mathbb{N}^2$, $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $id : \text{id GUI object}$  & $\overrightarrow{g_{uns}}^{C_{exp}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -724,13 +749,13 @@ conversion & $p \in \mathbb{R}$ , $(n,m) \in \mathbb{N}^2$, $\overrightarrow{g}_
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
+data : object
 
 \subsubsection{Access Routine Semantics}
 
-\noindent conversion($p,\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}$):
+\noindent conversion($p,n,m,\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}},id$):
 \begin{itemize}
-\item output: $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}$ such that
+\item transition: store{\_}g($id$,gCuns,$\overrightarrow{g_{j}}_{\text{uns}}^{C_{\text{exp}}}$) such that
 	\begin{equation*}
 	\forall \vec{r} \in \mathbb{R}^2, \
 	\overrightarrow{g_{j}}_{\text{uns}}^{C_{\text{exp}}}(\vec{r})= \overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}(\vec{r}) + p \times \begin{bmatrix}
@@ -746,7 +771,7 @@ conversion & $p \in \mathbb{R}$ , $(n,m) \in \mathbb{N}^2$, $\overrightarrow{g}_
 \subsection{Module}
 2D{\_}Strain
 \subsection{Uses}
-Data Structure
+Data Structure (\cref{MG:M_DataStruct}, \cref{MIS_DataStruct})
 \subsection{Syntax}
 
 \subsubsection{Exported Access Programs}
@@ -756,7 +781,7 @@ Data Structure
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-CalcStrain & $g_{1_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $g_{2_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $\Delta g_{1_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $\Delta g_{2_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$  & $T:\mathbb{R}^2\rightarrow\mathbb{R}^4$ & - \\
+CalcStrain & $g_{1_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $g_{2_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $\Delta g_{1_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $\Delta g_{2_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$  & $\varepsilon_{\mathit{xx}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\varepsilon_{\mathit{yy}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\varepsilon_{\mathit{xy}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\omega_{\mathit{xy}}:\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -764,14 +789,49 @@ CalcStrain & $g_{1_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\math
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
+data : object
 
 \subsubsection{Access Routine Semantics}
 
 \noindent CalcStrain($g_{1_{{\text{uns}}}}^{C_{\text{exp}}},g_{2_{{\text{uns}}}}^{C_{\text{exp}}},\Delta g_{1_{{\text{uns}}}}^{C_{\text{exp}}},\Delta g_{2_{{\text{uns}}}}^{C_{\text{exp}}}$):
 \begin{itemize}
-\item output:  
-\item exception: \wss{if appropriate} 
+\item transition:
+\begin{enumerate}
+\item Form ${{G_{\text{uns}}^{\text{exp}}}}$ and $\Delta G^{\text{exp}}$ matrices such that
+\begin{equation*}
+\begin{gathered}
+G_{\text{uns}}^{\text{exp}} =
+	\begin{bmatrix}
+	g_{1_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} \\
+	g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_y}}^{C_{\text{exp}}} 
+	\end{bmatrix}, \ 
+\Delta G^{\text{exp}}(\vec{r})=
+	\begin{bmatrix}
+	\Delta g_{1_{x}}^{C_{\text{exp}}} & \Delta g_{1_{y}}^{C_{\text{exp}}}\\
+	\Delta g_{2_{x}}^{C_{\text{exp}}} & \Delta g_{2_{y}}^{C_{\text{exp}}}
+	\end{bmatrix}
+\end{gathered}
+\end{equation*}
+\item Calculate $\nabla u^{\text{exp}}$ such that
+\begin{equation*}
+\nabla u^{\text{exp}} = ({[{G_{\text{uns}}^{\text{exp}}}+\Delta G^{\text{exp}}}]^{T})^{-1}{{G_{\text{uns}}^{\text{exp}}}}^{T}-I_{d}
+\end{equation*}
+\item Calculate $\varepsilon^{\text{exp}}$ and $\omega^{\text{exp}}$
+\begin{equation*}
+\begin{gathered}
+\varepsilon^{\text{exp}} = \frac{1}{2}(\nabla u^{\text{exp}}+(\nabla u^{\text{exp}})^{T})= \begin{bmatrix}
+	\varepsilon_{\mathit{xx}} & \varepsilon_{\mathit{xy}} \\
+	\varepsilon_{\mathit{xy}} & \varepsilon_{\mathit{yy}}
+	\end{bmatrix} \\
+\omega^{\text{exp}} = \frac{1}{2}(\nabla u^{\text{exp}}-(\nabla u^{\text{exp}})^{T})= \begin{bmatrix}
+	0 & \omega_{\mathit{xy}} \\
+	-\omega_{\mathit{xy}} & 0
+	\end{bmatrix}
+\end{gathered}
+\end{equation*}
+\item store(Exx,$\varepsilon_{\mathit{xx}}$), store(Eyy,$\varepsilon_{\mathit{yy}}$), store(Exy,$\varepsilon_{\mathit{xy}}$), store(Rxy,$\omega_{\mathit{xy}}$) 
+\end{enumerate}  
+\item exception:
 \end{itemize}
 
 \section{MIS of Fourier Transform Module (\texorpdfstring{\cref{MG:M_FT}}))} \label{MIS_FT}
@@ -779,7 +839,7 @@ CalcStrain & $g_{1_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\math
 \subsection{Module}
 FTCalc
 \subsection{Uses}
-Data Structure
+None
 \subsection{Syntax}
 
 \subsubsection{Exported Access Programs}
@@ -810,7 +870,7 @@ None
 \begin{equation*}
 \forall (\nu,\mu) \in \mathbb{R}^2 \wedge \forall (x,y) \in \mathbb{R}^2, \ \widetilde{f}(\nu,\mu)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}f(x,y)e^{-2i\pi(\nu x+\mu y)}dxdy
 \end{equation*}
-\item exception: \wss{if appropriate} 
+\item exception:
 \end{itemize}
 
 \noindent\textit{{\#} Calculate the 2D inverse Fourier transform of a function $\widetilde{f}$}\medskip
@@ -821,7 +881,7 @@ None
 \begin{equation*}
 \forall (x,y) \in \mathbb{R}^2 \wedge \forall (\nu,\mu) \in \mathbb{R}^2 , \ f(x,y)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\widetilde{f}(\nu,\mu)e^{2i\pi(\nu x+\mu y)}dxdy
 \end{equation*}
-\item exception: \wss{if appropriate} 
+\item exception:
 \end{itemize}
 
 \section{MIS of Gradient Module (\texorpdfstring{\cref{MG:M_Gradient}}))} \label{MIS_Gradient}
@@ -831,7 +891,7 @@ None
 \subsection{Module}
 GradCalc
 \subsection{Uses}
-Data Structure
+None
 \subsection{Syntax}
 
 \subsubsection{Exported Access Programs}
@@ -863,7 +923,7 @@ grad & $f:\mathbb{R}^2\rightarrow\mathbb{R}$  & $f:\mathbb{R}^2\rightarrow\mathb
 \frac{\partial f}{\partial y}(x,y)
 \end{bmatrix}
 \end{equation*}
-\item exception: \wss{if appropriate} 
+\item exception: 
 \end{itemize}
 
 \section{MIS of Least Square Fit Method Module (\texorpdfstring{\cref{MG:M_LSFM}}))} \label{MIS_LSFM}
@@ -873,7 +933,7 @@ grad & $f:\mathbb{R}^2\rightarrow\mathbb{R}$  & $f:\mathbb{R}^2\rightarrow\mathb
 \subsection{Module}
 LSFMCalc
 \subsection{Uses}
-Data Structure
+None
 \subsection{Syntax}
 
 \subsubsection{Exported Access Programs}
@@ -907,7 +967,7 @@ lsfm & $f:\mathbb{R}^2\rightarrow\mathbb{R}^2$, $U$ & $f:\mathbb{R}^2\rightarrow
 \Rightarrow a = \frac{\int_{x_0}^{x_1}\int_{y_0}^{y_1}xf(x,y)dxdy}{\int_{x_0}^{x_1}\int_{y_0}^{y_1}x^2dxdy} \wedge  b= \frac{\int_{x_0}^{x_1}\int_{y_0}^{y_1}yf(x,y)dxdy}{\int_{x_0}^{x_1}\int_{y_0}^{y_1}y^2dxdy}
 \end{gathered}
 \end{equation*}
-\item exception: \wss{if appropriate} 
+\item exception:
 \end{itemize}
 
 
@@ -916,7 +976,7 @@ lsfm & $f:\mathbb{R}^2\rightarrow\mathbb{R}^2$, $U$ & $f:\mathbb{R}^2\rightarrow
 \subsection{Module}
 PhaseCalc
 \subsection{Uses}
-Data Structure
+None
 \subsection{Syntax}
 
 \subsubsection{Exported Access Programs}
@@ -988,6 +1048,8 @@ None
 \hline
 store & string $\times$ object & - & - \\
 read & string & object & - \\
+store{\_}g & GUI object $\times$ string $\times$ object & - & - \\
+read{\_}g & GUI object $\times$ string & object & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -1014,7 +1076,10 @@ data : object
 	\item data(T$j$)(shift)=$(n_j,m_j)$
 	\item data(T$j$)(gCuns)=$\overrightarrow{g_{j}}_{\text{uns}}^{C_{\text{exp}}}$
 	\end{itemize}
-
+\item data(Exx)=$\varepsilon_{\text{xx}}$
+\item data(Eyy)=$I\varepsilon_{\text{yy}}$
+\item data(Exy)=$I\varepsilon_{\text{xy}}$
+\item data(Rxy)=$Iomega_{\text{xy}}$
 \end{itemize}
 
 \subsubsection{Access Routine Semantics}
@@ -1027,6 +1092,16 @@ data : object
 \noindent load($a$):
 \begin{itemize}
 \item output: data($a$)
+\end{itemize}
+
+\noindent store{\_}g($id$,$a$,$b$):
+\begin{itemize}
+\item transition: data($id$)($a$)=$b$
+\end{itemize}
+
+\noindent load{\_}g($id$,$a$):
+\begin{itemize}
+\item output: data($id$)($a$)
 \end{itemize}
 
 \section{MIS of Generic GUI/Plot Module (\texorpdfstring{\cref{MG:M_GUIGene}}))} \label{MIS_GUIGene}
@@ -1107,7 +1182,7 @@ read{\_}user{\_}GUI & GUI object & object \\
 \bigskip
 
 \bibliographystyle{ieeetr}
-\bibliography{MG}
+\bibliography{MIS}
 
 \newpage
 
@@ -1126,5 +1201,38 @@ $\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}, \Delta\overrightarrow{g_{
 $\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}},\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}(\vec{r}),\overrightarrow{q_{n_j,m_j}},p$
 
 $\Delta \overrightarrow{g_{j}}^{C_{exp}}(\vec{r}),\overrightarrow{g_{j}}_{uns}^{C_{exp}}$
+
+\begin{equation}
+\begin{gathered}
+\forall \vec{r} \in \mathbb{I}, \ G_{\text{uns}}^{\text{exp}} =
+	\begin{bmatrix}
+	g_{1_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} \\
+	g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_y}}^{C_{\text{exp}}} 
+	\end{bmatrix} \\
+\forall \vec{r} \in \mathbb{I}, \	\Delta G^{\text{exp}}(\vec{r})=
+	\begin{bmatrix}
+	\Delta g_{1_{x}}^{C_{\text{exp}}}(\vec{r}) & \Delta g_{1_{y}}^{C_{\text{exp}}}(\vec{r}) \\
+	\Delta g_{2_{x}}^{C_{\text{exp}}}(\vec{r}) & \Delta g_{2_{y}}^{C_{\text{exp}}}(\vec{r})
+	\end{bmatrix} \\
+	\forall \vec{r} \in \mathbb{I}, \	G^{\text{exp}}(\vec{r})= G_{\text{uns}}^{\text{exp}} + \Delta G^{\text{exp}}(\vec{r})\\
+\forall \vec{r} \in \mathbb{I}, \	\nabla u^{\text{exp}}(\vec{r}) = ({{G^{\text{exp}}}(\vec{r})}^{T})^{-1}{{G_{\text{uns}}^{\text{exp}}}}^{T}-I_{d}
+\end{gathered}
+\end{equation}
+Then, the rotation $\omega^{\text{exp}}$ and strain $\varepsilon^{\text{exp}}$ tensors are determined on each pixel as follows:
+\begin{equation}
+\begin{gathered}
+\forall \vec{r} \in \mathbb{I}, \ \nabla u^{\text{exp}}(\vec{r}) = \varepsilon^{\text{exp}}(\vec{r}) + \omega^{\text{exp}}(\vec{r}) \\
+\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	\varepsilon_{\mathit{xx}^{\text{exp}}}(\vec{r}) & \varepsilon_{\mathit{xy}^{\text{exp}}}(\vec{r}) \\
+	\varepsilon_{\mathit{xy}^{\text{exp}}}(\vec{r}) & \varepsilon_{\mathit{yy^{\text{exp}}}}(\vec{r})
+	\end{bmatrix} \\
+\forall \vec{r} \in \mathbb{I}, \ \omega^{\text{exp}}(\vec{r}) = \begin{bmatrix}
+	0 & \omega_{\mathit{xy}^{\text{exp}}}(\vec{r}) \\
+	-\omega_{\mathit{xy}^{\text{exp}}}(\vec{r}) & 0 
+	\end{bmatrix} \\ 
+\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \frac{1}{2}(\nabla u^{\text{exp}}(\vec{r})+(\nabla u^{\text{exp}}(\vec{r}))^{T}) \\
+\forall \vec{r} \in \mathbb{I}, \ \omega^{\text{exp}}(\vec{r}) = \frac{1}{2}(\nabla u^{\text{exp}}(\vec{r})-(\nabla u^{\text{exp}}(\vec{r}))^{T})
+\end{gathered}
+\end{equation}
 
 \end{document}
