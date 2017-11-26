@@ -86,6 +86,7 @@ STEM Moir{\'e} GPA}
 \midrule
 5/11/2017 & 1.0 & First Draft\\
 14/11/2017 & 1.1 & Object Structure Module removed \\
+26/11/2017 & 1.2 & \cref{AC_Assum_SmallStrain} statement modified to target exclusively \cref{M_StrainCalc} module\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -213,7 +214,7 @@ format
 \label{AC_FormatFile}
 \end{AC}
 
-\begin{AC}\normalfont Small strain and small gradient of strain assumption
+\begin{AC}\normalfont Gradient of displacement field tensor decomposition
   \wss{You think you will likely change this assumption?  I see that it is
     linked to a 2D strain tensor module.  Can you really isolate this change to
     one module?  I am not familiar enough with your area, but I have prior
@@ -221,6 +222,7 @@ format
     from a small strain tensor to one of the several available finite
     deformation tensors would have a greater impact than just changing the
     values in one tensor.}
+    \an{I agree. AC statement changed to target the module}
 \label{AC_Assum_SmallStrain}
 \end{AC}
 
@@ -294,8 +296,7 @@ below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
 \begin{M}\normalfont Hardware-Hiding Module (described in \cref{MG_Hardware})
-\label{M_Hardware} \wss{The links in the document are very handy for navigating
-  through it.  Thank you.}
+\label{M_Hardware}
 \end{M}
 
 \begin{M}\normalfont \progname{}  Control Module (described in \cref{MG_Control})
