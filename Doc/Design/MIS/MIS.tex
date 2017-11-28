@@ -83,7 +83,7 @@ urlcolor=cyan          % color of external links
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-26/11/2017 & 1.0 & MIS First draft \\
+27/11/2017 & 1.0 & MIS First draft \\
 \bottomrule
 \end{tabularx}
 
@@ -92,10 +92,6 @@ urlcolor=cyan          % color of external links
 \section{Symbols, Abbreviations and Acronyms}
 
 The same Symbols, Abbreviations and Acronyms as in the SRS, the TestPlan and the MG (available in \href{https://github.com/slimpotatoes/STEM_Moire_GPA}{\progname{}} repository) are used in the Module Interface Specifications document. 
-
-addition to document
-
-\wss{Also add any additional symbols, abbreviations or acronyms}
 
 \newpage
 
@@ -226,12 +222,13 @@ main & - & - & - \\
 
 \subsubsection{State Variables}
 
+None
 
 \subsubsection{Access Routine Semantics}
 
 \noindent main():
 \begin{itemize}
-\item transition: A reflechir 
+\item transition:
 
 GUIFlow()
 \noindent\textit{{\#} Software permanently running until user abort it by closing the GUI} \medskip
@@ -255,6 +252,8 @@ If one of the event below is triggered by the user, an action is performed by \p
 
 \section{MIS of STEM Moir{\'e} GPA GUI Module (\texorpdfstring{\cref{MG:M_GUISMG}}))} \label{MIS_GUISMG}
 
+\noindent\textit{{\#} Specific GUI module to respect the requirements from the SRS}\medskip
+
 \subsection{Module}
 GUI{\_}SMG
 \subsection{Uses}
@@ -266,6 +265,8 @@ GUI{\_}SMG
 \subsection{Syntax}
 
 \subsubsection{Exported Access Programs}
+
+\noindent\textit{{\#} For the moment, the GUI exceptions are not mentioned to cover the other aspects of \progname{}}\medskip
 
 \begin{center}
 \begin{tabular}{p{4cm} p{2cm} p{2cm} p{2cm}}
@@ -285,6 +286,7 @@ event{\_}URef & - & - & - \\
 event{\_}StrainCalc & - & - & - \\
 collect{\_}circ & GUI object & object & - \\
 collect{\_}rect & GUI object & object & -\\
+id & GUI object & object & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -294,6 +296,9 @@ collect{\_}rect & GUI object & object & -\\
 \progname{} process flow is driven by user through GUI{\_}SMG. User triggers the events that start the selected processing step. 
 
 \subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
 
 \noindent Win{\_}Flow: GUI object\\
 Win{\_}SMHexp: GUI object\\
@@ -303,6 +308,11 @@ Win{\_}FTSMH: GUI object\\
 Win{\_}Conv: GUI object\\
 Win{\_}Deltag: GUI object\\
 Win{\_}Strain: GUI object\\
+button{\_}Input: GUI object\\
+button{\_}SMHSim: GUI object\\
+button{\_}GPA: GUI object\\
+button{\_}URef: GUI object\\
+button{\_}StrainCalc: GUI object\\
 
 
 \subsubsection{Access Routine Semantics}
@@ -324,7 +334,7 @@ Win{\_}Strain: GUI object\\
 
 \noindent event{\_}Input():
 \begin{itemize}
-\item transition: Trigger event{\_}Inpu when button{\_}Input pressed
+\item transition: Trigger event{\_}Input when button{\_}Input pressed
 \end{itemize}
 \bigskip
 \noindent event{\_}SMHSim():
@@ -436,6 +446,14 @@ Win{\_}Strain: GUI object\\
 \end{itemize}
 \bigskip
 
+\noindent\textit{{\#} Function to read the unique id of a GUI object} \medskip
+
+\noindent id($A$)
+\begin{itemize}
+\item output: $B$ such that $B$ is the id part of the read{\_}user{\_}GUI($A$) output from the Generic GUI/Plot Module.
+\end{itemize}
+\bigskip
+
 \section{MIS of Input Module (\texorpdfstring{\cref{MG:M_InputFormat}}))} \label{MIS_Input}
 
 \subsection{Module}
@@ -451,11 +469,11 @@ Input
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{2cm} p{2cm} p{1cm} p{8cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-load{\_}files & string & - & FilePath \\
+load{\_}files & string & - & badFilePath, badPixelP, badPixelPref, badIC, badISMH, badFileFormat \\
 \hline
 \end{tabular}
 \end{center}
@@ -498,12 +516,18 @@ $m$ : $\mathbb{Z}$\\
 
 \subsubsection{Access Routine Semantics}
 
+\noindent\textit{{\#} Function to load $I_{\mathit{SMH}_{\text{exp}}}$, $I_{C_{\text{ref}}}$, $p$ and $p_{\text{ref}}$ and respect \cref{SRS:R_1} from the SRS.}
+\medskip
+
 \noindent load{\_}files(pathISMH,pathIC):
 \begin{itemize}
 \item transition: pathISMH and pathIC are the file paths for the input files. The following procedure is performed:
 \begin{enumerate}
+\item Verify the format of the files to be .dm3
 \item The .dm3 files are read and their respective  metafiles are collected.
 \item From the metafile, $I_{\mathit{SMH}_{\text{exp}}}$, $I_{C_{\text{ref}}}$, $p$ and $p_{\text{ref}}$ are extracted.
+\item Verify $I_{\mathit{SMH}_{\text{exp}}}$, $I_{C_{\text{ref}}}$ to be 2D arrays of real numbers.
+\item Verify  $p$ and $p_{\text{ref}}$ to be strictly positive
 \item The variables $I_{\mathit{SMH}_{\text{exp}}}$, $I_{C_{\text{ref}}}$, $p$ and $p_{\text{ref}}$ are stored in the data structure:
 \begin{itemize}
 \item store(ISMHexp, $I_{\mathit{SMH}_{\text{exp}}}$)
@@ -512,7 +536,15 @@ $m$ : $\mathbb{Z}$\\
 \item store(pICref, $p_{\text{ref}}$)
 \end{itemize}
 \end{enumerate}   
-\item exception: 
+\item exception:
+\noindent \begin{longtable*}[l]{l l} 
+$\neg (p > 0)$ & $\Rightarrow$ badPixelP\\
+$\neg (p_{\text{ref}} > 0)$ & $\Rightarrow$ badPixelP\\
+($\exists \vec{r} \in \mathbb{I}, \ I_{\mathit{SMH}_{\text{exp}}}(\vec{r}) \notin \mathbb{R})$ & $\Rightarrow$ badISMH\\
+($\exists \vec{r} \in \mathbb{I}, \ II_{C_{\text{ref}}}(\vec{r}) \notin \mathbb{R})$ & $\Rightarrow$ badIC\\
+If the file targeted by pathISMH or pathIC doesn't exist & $\Rightarrow$ badFilePath\\
+If the file format is not appropriate & $\Rightarrow$ badFileFormat\\
+\end{longtable*}
 \end{itemize}
 
 \section{MIS of SMH Simulation (\texorpdfstring{\cref{MG:M_SMHSim}}))} \label{MIS_SMHSim}
@@ -534,7 +566,7 @@ SMHSimCalc
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-SMHsim & $I_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R} $ $ I_{C_{\text{ref}}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $p \in \mathbb{R}^{+*}$ , $p_{\text{ref}} \in \mathbb{R}^{+*}$ & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ $N_{\text{lim}} \in \mathbb{N}^{*}$ & Nlim.zero() \\
+SMHsim & $I_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R} $ $ I_{C_{\text{ref}}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $p \in \mathbb{R}^{+*}$ , $p_{\text{ref}} \in \mathbb{R}^{+*}$ & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ $N_{\text{lim}} \in \mathbb{N}^{*}$ & WarnNlim.zero() \\
 \hline
 \end{tabular}
 \end{center}
@@ -590,7 +622,7 @@ GPACalc
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-gpa & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ , $M:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\overrightarrow{g}^{M_{\text{exp}}} :\mathbb{R}^2\rightarrow\mathbb{R}$ , $id : \text{id GUI object}$ & $P_{\vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\overrightarrow{\Delta g}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $P_{\Delta \vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
+gpa & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ , $M:\mathbb{N}^2\times\mathbb{R}^{+*}$ , $id : \text{id GUI object}$ & $P_{\vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\overrightarrow{\Delta g}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $P_{\Delta \vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ & NoMask, NoId\\
 \hline
 \end{tabular}
 \end{center}
@@ -622,7 +654,10 @@ data : object
 	\forall \vec{r} \in \mathbb{R}^2, \ P_{\Delta \vec{g}}(\vec{r})=\text{wrap}(\text{unwrap}[P_{\vec{g}}(\vec{r})]-2\pi\overrightarrow{g}^{M_{\text{exp}}}(\vec{0})\cdot \vec{r})
 	\end{equation*}
 	\end{enumerate}
-\item exception:  
+\item exception:
+\newline
+$(M=\emptyset\Rightarrow\text{NoMask})$\\
+ $(id=\emptyset\Rightarrow\text{NoId})$\\
 \end{itemize}
 
 \section{MIS of Mask Module (\texorpdfstring{\cref{MG:M_Mask}}))} \label{MIS_Mask}
@@ -641,7 +676,7 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-MCirc & $(x_c,y_c) \in \mathbb{N}^2$ , $R \in \mathbb{R}^{+*}$ & $M:\mathbb{R}^2\rightarrow\mathbb{R}$, $\overrightarrow{g_0} :\mathbb{R}^2\rightarrow\mathbb{R}^2$ & - \\
+MCirc & $(x_c,y_c) \in \mathbb{N}^2$ , $R \in \mathbb{R}^{+*}$ & $M:\mathbb{R}^2\rightarrow\mathbb{R}$, $\overrightarrow{g_0} :\mathbb{R}^2\rightarrow\mathbb{R}^2$ & BadRadius, BadCenter\\
 \hline
 \end{tabular}
 \end{center}
@@ -673,6 +708,9 @@ None
 	\end{equation*}
 	\end{itemize}
 \item exception:
+\newline
+$(\neg R>0 \Rightarrow \text{BadRadius})$\\
+$(\neg (x_c \in \mathbb{N} \wedge y_c \in \mathbb{N}) \Rightarrow \text{BadCenter})$
 \end{itemize}
 
 \section{MIS of Unstrained region (\texorpdfstring{\cref{MG:M_URef}}))} \label{MIS_URef}
@@ -695,7 +733,7 @@ URefCalc
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-ZeroStrain & $\overrightarrow{\Delta g}^M:\mathbb{R}^2\rightarrow\mathbb{R}^2$, $U \in \mathbb{R}^2$ , $\overrightarrow{g}^{M_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $id : \text{id GUI object}$  & $\overrightarrow{\Delta g}_{\text{cor}}^M:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & - \\
+ZeroStrain & $\overrightarrow{\Delta g}^M:\mathbb{R}^2\rightarrow\mathbb{R}^2$, $U \in \mathbb{R}^2$ , $\overrightarrow{g}^{M_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $id : \text{id GUI object}$  & $\overrightarrow{\Delta g}_{\text{cor}}^M:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & BadU \\
 \hline
 \end{tabular}
 \end{center}
@@ -704,6 +742,7 @@ ZeroStrain & $\overrightarrow{\Delta g}^M:\mathbb{R}^2\rightarrow\mathbb{R}^2$, 
 
 \subsubsection{State Variables}
 
+data : object
 
 \subsubsection{Access Routine Semantics}
 
@@ -741,7 +780,7 @@ MtoCConv
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-conversion & $p \in \mathbb{R}$ , $(n,m) \in \mathbb{N}^2$, $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $id : \text{id GUI object}$  & $\overrightarrow{g_{uns}}^{C_{exp}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & - \\
+conversion & $p \in \mathbb{R}$ , $(n,m) \in \mathbb{N}^2$, $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $id : \text{id GUI object}$  & $\overrightarrow{g_{uns}}^{C_{exp}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & BadNM \\
 \hline
 \end{tabular}
 \end{center}
@@ -943,7 +982,7 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-lsfm & $f:\mathbb{R}^2\rightarrow\mathbb{R}^2$, $U$ & $f:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & - \\
+lsfm & $f:\mathbb{R}^2\rightarrow\mathbb{R}^2$, $U in \mathbb{R}^2$ & $f:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -1048,8 +1087,8 @@ None
 \hline
 store & string $\times$ object & - & - \\
 read & string & object & - \\
-store{\_}g & GUI object $\times$ string $\times$ object & - & - \\
-read{\_}g & GUI object $\times$ string & object & - \\
+store{\_}g & id GUI object $\times$ string $\times$ object & - & - \\
+read{\_}g & id GUI object $\times$ string & object & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -1077,9 +1116,9 @@ data : object
 	\item data(T$j$)(gCuns)=$\overrightarrow{g_{j}}_{\text{uns}}^{C_{\text{exp}}}$
 	\end{itemize}
 \item data(Exx)=$\varepsilon_{\text{xx}}$
-\item data(Eyy)=$I\varepsilon_{\text{yy}}$
-\item data(Exy)=$I\varepsilon_{\text{xy}}$
-\item data(Rxy)=$Iomega_{\text{xy}}$
+\item data(Eyy)=$\varepsilon_{\text{yy}}$
+\item data(Exy)=$\varepsilon_{\text{xy}}$
+\item data(Rxy)=$\omega_{\text{xy}}$
 \end{itemize}
 
 \subsubsection{Access Routine Semantics}
@@ -1116,7 +1155,7 @@ Data Structure
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{3cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -1140,37 +1179,31 @@ read{\_}user{\_}GUI & GUI object & object \\
 
 \noindent plot():
 \begin{itemize}
-\item transition:
 \item output: Display on the Hardware all the GUI objects 
 \end{itemize}
 
 \noindent fig('label', optional GUI objects):
 \begin{itemize}
-\item transition: 
 \item output: Create a window GUI object with the optional GUI objects
 \end{itemize}
 
 \noindent button($number$,'labels'):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
 \item output: Create $number$ buttons GUI objects with their respective 'labels'
 \end{itemize}
 
 \noindent entry{\_}field($b$):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
 \item output: Create a entry field GUI object to collect the input $b$ from the user
 \end{itemize}
 
 \noindent circle($C$(user{\_}param)):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
 \item output: Create a circle $C$ GUI object drawn by the user 
 \end{itemize}
 
 \noindent rectangle($R$(user{\_}param)):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
 \item output: Create a rectangle $R$ GUI object drawn by the user 
 \end{itemize}
 \newpage
@@ -1201,38 +1234,5 @@ $\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}, \Delta\overrightarrow{g_{
 $\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}},\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}(\vec{r}),\overrightarrow{q_{n_j,m_j}},p$
 
 $\Delta \overrightarrow{g_{j}}^{C_{exp}}(\vec{r}),\overrightarrow{g_{j}}_{uns}^{C_{exp}}$
-
-\begin{equation}
-\begin{gathered}
-\forall \vec{r} \in \mathbb{I}, \ G_{\text{uns}}^{\text{exp}} =
-	\begin{bmatrix}
-	g_{1_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} \\
-	g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} & g_{2_{{\text{uns}}_y}}^{C_{\text{exp}}} 
-	\end{bmatrix} \\
-\forall \vec{r} \in \mathbb{I}, \	\Delta G^{\text{exp}}(\vec{r})=
-	\begin{bmatrix}
-	\Delta g_{1_{x}}^{C_{\text{exp}}}(\vec{r}) & \Delta g_{1_{y}}^{C_{\text{exp}}}(\vec{r}) \\
-	\Delta g_{2_{x}}^{C_{\text{exp}}}(\vec{r}) & \Delta g_{2_{y}}^{C_{\text{exp}}}(\vec{r})
-	\end{bmatrix} \\
-	\forall \vec{r} \in \mathbb{I}, \	G^{\text{exp}}(\vec{r})= G_{\text{uns}}^{\text{exp}} + \Delta G^{\text{exp}}(\vec{r})\\
-\forall \vec{r} \in \mathbb{I}, \	\nabla u^{\text{exp}}(\vec{r}) = ({{G^{\text{exp}}}(\vec{r})}^{T})^{-1}{{G_{\text{uns}}^{\text{exp}}}}^{T}-I_{d}
-\end{gathered}
-\end{equation}
-Then, the rotation $\omega^{\text{exp}}$ and strain $\varepsilon^{\text{exp}}$ tensors are determined on each pixel as follows:
-\begin{equation}
-\begin{gathered}
-\forall \vec{r} \in \mathbb{I}, \ \nabla u^{\text{exp}}(\vec{r}) = \varepsilon^{\text{exp}}(\vec{r}) + \omega^{\text{exp}}(\vec{r}) \\
-\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \begin{bmatrix}
-	\varepsilon_{\mathit{xx}^{\text{exp}}}(\vec{r}) & \varepsilon_{\mathit{xy}^{\text{exp}}}(\vec{r}) \\
-	\varepsilon_{\mathit{xy}^{\text{exp}}}(\vec{r}) & \varepsilon_{\mathit{yy^{\text{exp}}}}(\vec{r})
-	\end{bmatrix} \\
-\forall \vec{r} \in \mathbb{I}, \ \omega^{\text{exp}}(\vec{r}) = \begin{bmatrix}
-	0 & \omega_{\mathit{xy}^{\text{exp}}}(\vec{r}) \\
-	-\omega_{\mathit{xy}^{\text{exp}}}(\vec{r}) & 0 
-	\end{bmatrix} \\ 
-\forall \vec{r} \in \mathbb{I}, \ \varepsilon^{\text{exp}}(\vec{r}) = \frac{1}{2}(\nabla u^{\text{exp}}(\vec{r})+(\nabla u^{\text{exp}}(\vec{r}))^{T}) \\
-\forall \vec{r} \in \mathbb{I}, \ \omega^{\text{exp}}(\vec{r}) = \frac{1}{2}(\nabla u^{\text{exp}}(\vec{r})-(\nabla u^{\text{exp}}(\vec{r}))^{T})
-\end{gathered}
-\end{equation}
 
 \end{document}
