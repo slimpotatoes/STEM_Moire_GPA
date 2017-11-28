@@ -129,7 +129,8 @@ character & char & a single symbol or digit\\
 integer & $\mathbb{Z}$ & an integer number \\
 natural & $\mathbb{N}$ & a natural number \\
 real & $\mathbb{R}$ & a real number \\
-image & $\mathbb{I}$ & blabla \\
+complex & $\mathbb{C}$ & a complex number \\
+image space & $\mathbb{I}$ & subset of $\mathbb{N}^2$ such that $\mathbb{I}=\{(x,y)\in \mathbb{N} \times \mathbb{N} : 0 \leq x \leq N-1 \wedge 0 \leq y \leq N-1 \} $ with $N \in \mathbb{N}$ representing the number of pixels of the image\\
 \bottomrule
 \end{tabular} 
 \end{center}
@@ -460,7 +461,7 @@ button{\_}StrainCalc: GUI object\\
 Input
 \subsection{Uses}
 \begin{itemize}
-\item STEM Moi{\'e} GPA GUI (\cref{MG:M_GUISMG}, \cref{MIS_GUISMG})
+\item STEM Moir{\'e} GPA GUI (\cref{MG:M_GUISMG}, \cref{MIS_GUISMG})
 \item Data Structure (\cref{MG:M_DataStruct}, \cref{MIS_DataStruct})
 \end{itemize}
 
@@ -474,6 +475,10 @@ Input
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 load{\_}files & string & - & badFilePath, badPixelP, badPixelPref, badIC, badISMH, badFileFormat \\
+verifyM & - & - & NoMask, BadMask \\
+verifyU & - & - & BadU, NoU \\
+verifyMdiff & - & - & SameMask \\
+verifyNM & - & - & BadNM\\
 \hline
 \end{tabular}
 \end{center}
@@ -547,6 +552,40 @@ If the file format is not appropriate & $\Rightarrow$ badFileFormat\\
 \end{longtable*}
 \end{itemize}
 
+\noindent\textit{{\#} Functions to verify the size of the unstrained reference input $U$ (see \cref{SRS:R_9}), the size of the mask input $M_j$ and if both masks are different (see \cref{SRS:R_6}).}
+\medskip
+
+\noindent verifyU($U$):
+\begin{itemize}
+\item transition: TO DO !!!
+\item exception:\newline
+$(U=\emptyset\Rightarrow\text{NoU})$\\
+$(\text{image space of $U$}>\mathbb{I}\Rightarrow \text{BadU})$
+\end{itemize}
+
+\noindent verifyM($M_j$):
+\begin{itemize}
+\item transition: TO DO !!!
+\item exception:\newline
+$(M_j=\emptyset\Rightarrow\text{NoMask})$\\
+Add something for bad Mj
+\end{itemize}
+
+\noindent verifyMdiff($M_1,M_2$):
+\begin{itemize}
+\item transition: TO DO !!!
+\item exception:\newline
+$(M_1=M_2\Rightarrow\text{SameMask})$
+\end{itemize}
+
+\noindent verifyMN($M_1,M_2$):
+\begin{itemize}
+\item transition: TO DO !!!
+\item exception:\newline
+\newline
+$(\neg (n \in \mathbb{N} \wedge m \in \mathbb{N}) \Rightarrow \text{BadNM})$
+\end{itemize}
+
 \section{MIS of SMH Simulation (\texorpdfstring{\cref{MG:M_SMHSim}}))} \label{MIS_SMHSim}
 
 \subsection{Module}
@@ -566,7 +605,7 @@ SMHSimCalc
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-SMHsim & $I_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R} $ $ I_{C_{\text{ref}}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $p \in \mathbb{R}^{+*}$ , $p_{\text{ref}} \in \mathbb{R}^{+*}$ & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ $N_{\text{lim}} \in \mathbb{N}^{*}$ & WarnNlim.zero() \\
+SMHsim & $I_{\mathit{SMH}_{\text{exp}}}:\mathbb{I}\rightarrow\mathbb{R} $ $ I_{C_{\text{ref}}}:\mathbb{I}\rightarrow\mathbb{R}$ , $p \in \mathbb{R}^{+*}$ , $p_{\text{ref}} \in \mathbb{R}^{+*}$ & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{I}\rightarrow\mathbb{C}$ $\widetilde{I}_{\mathit{SMH}_{\text{sim}}}:\mathbb{I}\rightarrow\mathbb{C}$ $N_{\text{lim}} \in \mathbb{N}^{*}$ & WarnNlimzero\\
 \hline
 \end{tabular}
 \end{center}
@@ -598,6 +637,8 @@ data : object
 	\end{enumerate}
 
 \item exception:
+\newline
+$(N_{lim}=0 \Rightarrow \text{WarnNlimzero})$
 \end{itemize}
 
 \section{MIS of GPA Module (\texorpdfstring{\cref{MG:M_GPA}}))} \label{MIS_GPA}
@@ -622,7 +663,7 @@ GPACalc
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-gpa & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{C}$ , $M:\mathbb{N}^2\times\mathbb{R}^{+*}$ , $id : \text{id GUI object}$ & $P_{\vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\overrightarrow{\Delta g}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $P_{\Delta \vec{g}}:\mathbb{R}^2\rightarrow\mathbb{R}$ & NoMask, NoId\\
+gpa & $\widetilde{I}_{\mathit{SMH}_{\text{exp}}}:\mathbb{I}\rightarrow\mathbb{C}$ , $M:\mathbb{N}^2\times\mathbb{R}^{+*}$ , $id : \text{id GUI object}$ & $P_{\vec{g}}:\mathbb{I}\rightarrow\mathbb{R}$ , $\overrightarrow{\Delta g}:\mathbb{I}\rightarrow\mathbb{R}^2$ , $P_{\Delta \vec{g}}:\mathbb{I}\rightarrow\mathbb{R}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -655,9 +696,6 @@ data : object
 	\end{equation*}
 	\end{enumerate}
 \item exception:
-\newline
-$(M=\emptyset\Rightarrow\text{NoMask})$\\
- $(id=\emptyset\Rightarrow\text{NoId})$\\
 \end{itemize}
 
 \section{MIS of Mask Module (\texorpdfstring{\cref{MG:M_Mask}}))} \label{MIS_Mask}
@@ -676,7 +714,7 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-MCirc & $(x_c,y_c) \in \mathbb{N}^2$ , $R \in \mathbb{R}^{+*}$ & $M:\mathbb{R}^2\rightarrow\mathbb{R}$, $\overrightarrow{g_0} :\mathbb{R}^2\rightarrow\mathbb{R}^2$ & BadRadius, BadCenter\\
+MCirc & $(x_c,y_c) \in \mathbb{N}^2$ , $R \in \mathbb{R}^{+*}$ & $M:\mathbb{I}\rightarrow\mathbb{R}$, $\overrightarrow{g_0} :\mathbb{I}\rightarrow\mathbb{R}^2$ & BadRadius, BadCenter\\
 \hline
 \end{tabular}
 \end{center}
@@ -694,14 +732,14 @@ None
 	\begin{itemize}
 	\item $M$ such that
 	\begin{equation*}
-	M(x,y)=\begin{cases}
+	\forall \vec{r} \in \mathbb{I}, \ M(x,y)=\begin{cases}
 	1, \ (x-x_c)^2+(y-y_c)^2\leq R^2 \\
 	0, \ (x-x_c)^2+(y-y_c)^2> R^2
 	\end{cases}
 	\end{equation*}
 	\item $\overrightarrow{g_0}$ such that
 	\begin{equation*}
-	\forall \vec{r} \in \mathbb{R}^2, \ \overrightarrow{g_0}(\vec{r})=\begin{bmatrix}
+	\forall \vec{r} \in \mathbb{I}, \ \overrightarrow{g_0}(\vec{r})=\begin{bmatrix}
 	x_c\\
 	y_c
 	\end{bmatrix}
@@ -733,7 +771,7 @@ URefCalc
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-ZeroStrain & $\overrightarrow{\Delta g}^M:\mathbb{R}^2\rightarrow\mathbb{R}^2$, $U \in \mathbb{R}^2$ , $\overrightarrow{g}^{M_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $id : \text{id GUI object}$  & $\overrightarrow{\Delta g}_{\text{cor}}^M:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & BadU \\
+ZeroStrain & $\overrightarrow{\Delta g}^M:\mathbb{I}\rightarrow\mathbb{R}^2$, $U \in \text{ subset of } \mathbb{I}$ , $\overrightarrow{g}^{M_{\text{exp}}}:\mathbb{I}\rightarrow\mathbb{R}^2$ , $id : \text{id GUI object}$  & $\overrightarrow{\Delta g}_{\text{cor}}^M:\mathbb{I}\rightarrow\mathbb{R}^2$ , $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}:\mathbb{I}\rightarrow\mathbb{R}^2$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -759,7 +797,7 @@ data : object
 \overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}} = \overrightarrow{g}^{M_{\text{exp}}} + \text{lsfm}(\overrightarrow{\Delta g}^M,U)
 	\end{equation*}
 	\end{enumerate}	 
-\item exception: 
+\item exception:
 \end{itemize}
 
 \section{MIS of Conversion Module (\texorpdfstring{\cref{MG:M_MtoCConv}}))} \label{MIS_MtoCConv}
@@ -780,7 +818,7 @@ MtoCConv
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-conversion & $p \in \mathbb{R}$ , $(n,m) \in \mathbb{N}^2$, $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $id : \text{id GUI object}$  & $\overrightarrow{g_{uns}}^{C_{exp}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & BadNM \\
+conversion & $p \in \mathbb{R}$ , $(n,m) \in \mathbb{N}^2$, $\overrightarrow{g}_{\text{uns}}^{M_{\text{exp}}}:\mathbb{I}\rightarrow\mathbb{R}^2$ , $id : \text{id GUI object}$  & $\overrightarrow{g_{uns}}^{C_{exp}}:\mathbb{I}\rightarrow\mathbb{R}^2$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -796,13 +834,13 @@ data : object
 \begin{itemize}
 \item transition: store{\_}g($id$,gCuns,$\overrightarrow{g_{j}}_{\text{uns}}^{C_{\text{exp}}}$) such that
 	\begin{equation*}
-	\forall \vec{r} \in \mathbb{R}^2, \
+	\forall \vec{r} \in \mathbb{I}, \
 	\overrightarrow{g_{j}}_{\text{uns}}^{C_{\text{exp}}}(\vec{r})= \overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}(\vec{r}) + p \times \begin{bmatrix}
 	n \\
 	m
 	\end{bmatrix}
 	\end{equation*}
-\item exception:  
+\item exception:
 \end{itemize}
 
 \section{MIS of 2D Strain Tensor Module (\texorpdfstring{\cref{MG:M_StrainCalc}}))} \label{MIS_StrainCalc}
@@ -820,7 +858,7 @@ Data Structure (\cref{MG:M_DataStruct}, \cref{MIS_DataStruct})
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-CalcStrain & $g_{1_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $g_{2_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $\Delta g_{1_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$ , $\Delta g_{2_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{R}^2\rightarrow\mathbb{R}^2$  & $\varepsilon_{\mathit{xx}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\varepsilon_{\mathit{yy}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\varepsilon_{\mathit{xy}}:\mathbb{R}^2\rightarrow\mathbb{R}$ , $\omega_{\mathit{xy}}:\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
+CalcStrain & $g_{1_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{I}\rightarrow\mathbb{R}^2$ , $g_{2_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{I}\rightarrow\mathbb{R}^2$ , $\Delta g_{1_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{I}\rightarrow\mathbb{R}^2$ , $\Delta g_{2_{{\text{uns}}}}^{C_{\text{exp}}}:\mathbb{I}\rightarrow\mathbb{R}^2$  & $\varepsilon_{\mathit{xx}}:\mathbb{I}\rightarrow\mathbb{R}$ , $\varepsilon_{\mathit{yy}}:\mathbb{I}\rightarrow\mathbb{R}$ , $\varepsilon_{\mathit{xy}}:\mathbb{I}\rightarrow\mathbb{R}$ , $\omega_{\mathit{xy}}:\mathbb{I}\rightarrow\mathbb{R}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -947,7 +985,7 @@ grad & $f:\mathbb{R}^2\rightarrow\mathbb{R}$  & $f:\mathbb{R}^2\rightarrow\mathb
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
+None
 
 \subsubsection{Access Routine Semantics}
 
@@ -982,7 +1020,7 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-lsfm & $f:\mathbb{R}^2\rightarrow\mathbb{R}^2$, $U in \mathbb{R}^2$ & $f:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & - \\
+lsfm & $f:\mathbb{R}^2\rightarrow\mathbb{R}^2$, $U \in \mathbb{R}^2$ & $f:\mathbb{R}^2\rightarrow\mathbb{R}^2$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -990,7 +1028,7 @@ lsfm & $f:\mathbb{R}^2\rightarrow\mathbb{R}^2$, $U in \mathbb{R}^2$ & $f:\mathbb
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
+None
 
 \subsubsection{Access Routine Semantics}
 
@@ -1025,9 +1063,9 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-unwrap & $f:\mathbb{R}^2\rightarrow]-\pi,\pi]$ & $f:\mathbb{R}^2\rightarrow\mathbb{R}$ & - \\
+unwrap & $f:\mathbb{R}^2\rightarrow]-\pi,\pi]$ & $f:\mathbb{R}^2\rightarrow\mathbb{R}$ & -  \\
 wrap & $f:\mathbb{R}^2\rightarrow\mathbb{R}$ & $f:\mathbb{R}^2\rightarrow]-\pi,\pi]$ & - \\
-arg & $z \in \mathbb{C}$ & $\phi \in ]-\pi,\pi]$ & \\
+arg & $z \in \mathbb{C}$ & $\phi \in ]-\pi,\pi]$ &  - \\
 \hline
 \end{tabular}
 \end{center}
@@ -1035,7 +1073,7 @@ arg & $z \in \mathbb{C}$ & $\phi \in ]-\pi,\pi]$ & \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
+None
 
 \subsubsection{Access Routine Semantics}
 
@@ -1148,8 +1186,7 @@ data : object
 \subsection{Module}
 GUIGene
 \subsection{Uses}
-Hardware-Hiding
-Data Structure
+Hardware-Hiding (\cref{MG:M_Hardware})
 \subsection{Syntax}
 
 \subsubsection{Exported Access Programs}
@@ -1173,7 +1210,7 @@ read{\_}user{\_}GUI & GUI object & object \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
+None
 
 \subsubsection{Access Routine Semantics}
 
@@ -1206,7 +1243,6 @@ read{\_}user{\_}GUI & GUI object & object \\
 \begin{itemize}
 \item output: Create a rectangle $R$ GUI object drawn by the user 
 \end{itemize}
-\newpage
 
 \noindent read{\_}user{\_}GUI($A$):
 \begin{itemize}
@@ -1214,25 +1250,13 @@ read{\_}user{\_}GUI & GUI object & object \\
 \end{itemize}
 \bigskip
 
+\newpage
+
 \bibliographystyle{ieeetr}
 \bibliography{MIS}
 
 \newpage
 
 \section{Appendix} \label{Appendix}
-
-\wss{Extra information if required}
-
-All variables
-
-$P_{\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}}(\vec{r}), \overrightarrow{g_{j}}^{M_{\text{exp}}}, \Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r})$
-
-$\Delta \overrightarrow{g_{j}}^{M_{\text{exp}}}(\vec{r}),U,\overrightarrow{g_{j}}^{M_{\text{exp}}}$
-
-$\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}}, \Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}(\vec{r})$
-
-$\overrightarrow{g_{j}}_{\text{uns}}^{M_{\text{exp}}},\Delta\overrightarrow{g_{j}}_{\text{cor}}^{M_{\text{exp}}}(\vec{r}),\overrightarrow{q_{n_j,m_j}},p$
-
-$\Delta \overrightarrow{g_{j}}^{C_{exp}}(\vec{r}),\overrightarrow{g_{j}}_{uns}^{C_{exp}}$
 
 \end{document}
