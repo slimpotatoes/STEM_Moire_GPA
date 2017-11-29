@@ -33,7 +33,7 @@
 \usepackage{cleveref}
 
 \hypersetup{
-bookmarks=true,     % show bookmarks bar?
+%bookmarks=true,     % show bookmarks bar?
 colorlinks=true,       % false: boxed links; true: colored links
 linkcolor=red,          % color of internal links (change box color with linkbordercolor)
 citecolor=blue,      % color of links to bibliography
@@ -80,12 +80,15 @@ urlcolor=cyan          % color of external links
 
 \section{Revision History}
 
+\begin{table}[h]
+\caption{\bf Revision History}
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-28/11/2017 & 1.0 & MIS First draft \\
+29/11/2017 & 1.0 & MIS First Draft\\
 \bottomrule
 \end{tabularx}
+\end{table}
 
 ~\newpage
 
@@ -221,7 +224,7 @@ main
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{2cm} p{3cm} p{3cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -248,39 +251,39 @@ None
 
 GUIFlow()
 \noindent\textit{{\#} Software permanently running until user abort it by 
-closing the GUI} \medskip
+closing the GUI.} \medskip
 GUI{\_}Conv()
-\noindent\textit{{\#} Open the entry field GUI for the conversion process} 
+\noindent\textit{{\#} Open the entry field GUI for the conversion process.} 
 \medskip
 
 If one of the event below is triggered by the user, an action is performed by 
-\progname{}. The possible events are :
+\progname{}. The possible events are:
 	\begin{itemize}
-	\item $(\text{event{\_}Input()} \\ \rightarrow \text{Get the path pathISMH and 
+	\item $\text{event{\_}Input()} \\ \rightarrow \text{Get the path pathISMH and 
 pathIC from the user} \  \rightarrow \\ 
-\text{load{\_}files(pathISMH,pathIC)})\rightarrow \text{GUI{\_}SMHexp}())$
-	\item $(\text{event{\_}SimSMH()} \rightarrow \text{SMHsim}() \rightarrow 
-\text{GUI{\_}SMHsim}())$
+\text{load{\_}files(pathISMH,pathIC)})\rightarrow \text{GUI{\_}SMHexp}()$
+	\item $\text{event{\_}SimSMH()} \rightarrow \text{SMHsim}() \rightarrow 
+\text{GUI{\_}SMHsim}()$
 	\item $\text{For each circle GUI object } C_j \text{ with } j=\{1,2\} \\ \text{ 
 drawn by the user in the of GUI{\_}SMHsim() window }: $
 		\begin{enumerate}
-		\item $(\text{event{\_}GPA()} \rightarrow 
+		\item $\text{event{\_}GPA()} \rightarrow 
 \text{verifyM}(\text{collect{\_}circ}(C_j)) \rightarrow \\ 
 \text{gpa}(\text{collect{\_}circ}(C_j),\text{id}(C_j)) \rightarrow 
-\text{GUI{\_}Phase}())$
-		\item $(\text{event{\_}URef()} \rightarrow 
+\text{GUI{\_}Phase}()$
+		\item $\text{event{\_}URef()} \rightarrow 
 \text{verifyU}(\text{collect{\_}rect}(Rec))\rightarrow \\ \text{ZeroStrain}( 
 \text{collect{\_}rect}(Rec),\text{id}(C_j))\rightarrow \text{update 
-GUI{\_}Phase}())$
-		\item $(\text{event{\_}Conversion()} \rightarrow \text{Read the $n$ and $m$ 
+GUI{\_}Phase}()$
+		\item $\text{event{\_}Conversion()} \rightarrow \text{Read the $n$ and $m$ 
 entry fields in GUI{\_}Conv} \rightarrow \\ \text{verifyNM}(n,m)\rightarrow 
-\text{conversion}(n,m,\text{id}(C_j))$
+\text{conversion}(n,m,\text{id}(C_j)$
 		\end{enumerate}
-	\item $(\text{event{\_}StrainCalc()} \rightarrow 
+	\item $\text{event{\_}StrainCalc()} \rightarrow 
 \text{verifyMdiff}(\text{collect{\_}circ}(C_1),\text{collect{\_}circ}(C_2)) 
 \rightarrow \\
 	 \text{CalcStrain}(\text{id}(C_1),\text{id}(C_2))\rightarrow 
-\text{GUI{\_}Strain}())$
+\text{GUI{\_}Strain}()$
 	\end{itemize}
 \end{itemize}
 
@@ -292,7 +295,7 @@ their intermediate results to only choose the two best ones for the final
 calculation (StrainCalc(id1,id2)). For that, I would need a new module that 
 could reference the different maks and enable the user to navigate through them. 
 I didn't thought about that enough in advance and got stuck with that version. I 
-will improve that in the future}
+will improve that in the future.}
 
 \section{MIS of STEM Moir{\'e} GPA GUI Module 
 (\texorpdfstring{\cref{MG:M_GUISMG}}))} \label{MIS_GUISMG}
@@ -313,10 +316,10 @@ GUI{\_}SMG
 \subsubsection{Exported Access Programs}
 
 \noindent\textit{{\#} For the moment, the GUI exceptions are not mentioned to 
-cover the other aspects of \progname{}}\medskip
+cover the other aspects of \progname{}.}\medskip
 
 \begin{center}
-\begin{tabular}{p{4cm} p{2cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{3cm} p{3cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -367,7 +370,7 @@ button{\_}StrainCalc: GUI object\\
 \subsubsection{Access Routine Semantics}
 
 \noindent\textit{{\#} GUI embedding the process flow into buttons triggering 
-events. It is the user role to execute the process flow}\medskip
+events. It is the user role to execute the process flow.}\medskip
 
 \noindent GUIFlow():
 \begin{itemize}
@@ -381,36 +384,36 @@ events. It is the user role to execute the process flow}\medskip
 \bigskip
 
 \noindent\textit{{\#} Events triggered by each button pressed by the 
-user}\medskip
+user.}\medskip
 
 \noindent event{\_}Input():
 \begin{itemize}
-\item transition: Trigger event{\_}Input when button{\_}Input pressed
+\item transition: Trigger event{\_}Input when button{\_}Input pressed.
 \end{itemize}
 \bigskip
 \noindent event{\_}SMHSim():
 \begin{itemize}
-\item transition: Trigger event{\_}SMHSim when button{\_}SMHSim pressed
+\item transition: Trigger event{\_}SMHSim when button{\_}SMHSim pressed.
 \end{itemize}
 \bigskip
 \noindent event{\_}GPA():
 \begin{itemize}
-\item transition: Trigger event{\_}GPA when button{\_}GPA pressed
+\item transition: Trigger event{\_}GPA when button{\_}GPA pressed.
 \end{itemize}
 \bigskip
 \noindent event{\_}URef():
 \begin{itemize}
-\item transition: Trigger event{\_}URef when button{\_}URef pressed
+\item transition: Trigger event{\_}URef when button{\_}URef pressed.
 \end{itemize}
 \bigskip
 \noindent event{\_}StrainCalc():
 \begin{itemize}
-\item transition: Trigger event{\_}StrainCalc when button{\_}StrainCalc press
+\item transition: Trigger event{\_}StrainCalc when button{\_}StrainCalc press.
 \end{itemize}
 \bigskip
 
 \noindent\textit{{\#} GUI to display the display the input files 
-$I_{\mathit{SMH}_{\text{exp}}}$, $I_{C_{\text{ref}}}$}\medskip
+$I_{\mathit{SMH}_{\text{exp}}}$, $I_{C_{\text{ref}}}$.}\medskip
 
 \noindent GUI{\_}SMHexp():
 \begin{itemize}
@@ -426,21 +429,23 @@ load($I_{C_{\text{ref}}}$))
 
 \noindent\textit{{\#} GUI to display the simulated STEM Moir{\'e} hologram using 
 the reference image and to let the user input $M$ on the experimental STEM 
-Moir{\'e} hologram (from \cref{SRS:R_4}, \cref{SRS:R_5})}\medskip
+Moir{\'e} hologram (from \cref{SRS:R_4}, \cref{SRS:R_5}).}\medskip
 
 \noindent GUI{\_}SMHSim():
 \begin{itemize}
 \item transition: 
 	\begin{enumerate}
 	\item 
-Win{\_}SMHSim=fig('Win{\_}SMHSim',load(FTISMHexp),load(FTISMHsim),circle($M$))
+Win{\_}SMHSim=fig('Win{\_}SMHSim',load(FTISMHexp), \\ 
+load(FTISMHsim),circle($M$))
 	\item plot()
 	\end{enumerate} 
 \end{itemize}
 \bigskip
 
+
 \noindent\textit{{\#} GUI to display the phase resulting from the GPA algorithm 
-and to let the user input $U$ (from \cref{SRS:R_8})}\medskip
+and to let the user input $U$ (from \cref{SRS:R_8}).}\medskip
 
 \noindent GUI{\_}Phase($id$):
 \begin{itemize}
@@ -454,7 +459,7 @@ and to let the user input $U$ (from \cref{SRS:R_8})}\medskip
 \bigskip
 
 \noindent\textit{{\#} GUI to display the window to let the user input $n$ and 
-$m$ (from \cref{SRS:R_11})}\medskip
+$m$ (from \cref{SRS:R_11}).}\medskip
 
 \noindent GUI{\_}Conv():
 \begin{itemize}
@@ -467,7 +472,7 @@ $m$ (from \cref{SRS:R_11})}\medskip
 \bigskip
 
 \noindent\textit{{\#} GUI to display the window showing the final strain maps 
-(from \cref{SRS:R_14})}\medskip
+(from \cref{SRS:R_14}).}\medskip
 
 \noindent GUI{\_}Strain():
 \begin{itemize}
@@ -482,7 +487,7 @@ Win{\_}Strain=fig('Win{\_}Strain',load(Exx),load(Eyy),load(Exy),load(Rxx))
 
 
 \noindent\textit{{\#} Reader of the GUI objects drawn by the user (circle $M$ or 
-rectangle $U$)} \medskip
+rectangle $U$).} \medskip
 
 \noindent collect{\_}circ($A$)
 \begin{itemize}
@@ -510,7 +515,7 @@ coordinate of the bottom right corner $(x_1,y_1)$.
 \end{itemize}
 \bigskip
 
-\noindent\textit{{\#} Function to read the unique id of a GUI object} \medskip
+\noindent\textit{{\#} Function to read the unique id of a GUI object.} \medskip
 
 \noindent id($A$)
 \begin{itemize}
@@ -533,7 +538,6 @@ sure.}
 Input
 \subsection{Uses}
 \begin{itemize}
-\item STEM Moir{\'e} GPA GUI (\cref{MG:M_GUISMG}, \cref{MIS_GUISMG})
 \item Data Structure (\cref{MG:M_DataStruct}, \cref{MIS_DataStruct})
 \end{itemize}
 
@@ -673,7 +677,7 @@ $\neg (U \subset \mathbb{I}) \Rightarrow \text{BadSizeU}$
 \item output: None
 \item exception:\newline
 $(M_j=\emptyset)\Rightarrow\text{NoMask}$\\
-$\neg((x_c,y_c) \in \mathbb{I})\Rightarrow \text{BadMask}$\\
+$\neg((x_j,y_j) \in \mathbb{I})\Rightarrow \text{BadMask}$\\
 \end{itemize}
 \bigskip
 
@@ -696,7 +700,7 @@ $\neg (n \in \mathbb{N} \wedge m \in \mathbb{N}) \Rightarrow \text{BadNM}$
 \label{MIS_SMHSim}
 
 \noindent\textit{{\#} Module simulating the STEM Moir{\'e} hologram using a 
-reference image (see \cref{SRS:R_3} in the SRS)}
+reference image (see \cref{SRS:R_3} in the SRS).}
 
 \subsection{Module}
 SMHSimCalc
@@ -711,7 +715,7 @@ SMHSimCalc
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{3cm} p{3cm} p{3cm} p{4cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -763,14 +767,14 @@ $(N_{lim}=0) \Rightarrow \text{WarnNlimzero}$
 \textit{{\#} Exception warns the user that the sampling parameter chosen is 
 oversampling the crystal periodicity. Classic HRSTEM GPA case !! It's not a STEM 
 Moir{\'e} interferometry experiment but the software still works for the classic 
-case}
+case.}
 
 \end{itemize}
 
 \section{MIS of GPA Module (\texorpdfstring{\cref{MG:M_GPA}}))} \label{MIS_GPA}
 
 \noindent\textit{{\#} Module performing the GPA algorithm to isolate one spatial 
-frequency and output the phase component (see \cref{SRS:R_7} in the SRS)}
+frequency and output the phase component (see \cref{SRS:R_7} in the SRS).}
 
 \subsection{Module}
 GPACalc
@@ -788,7 +792,7 @@ GPACalc
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -851,12 +855,12 @@ None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{2cm} p{4cm} p{5cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 MCirc & $(x_c,y_c) \in \mathbb{I}$ , $R \in \mathbb{R}^{+*}$ & 
-$M:\mathbb{I}\rightarrow\mathbb{R}$, $\overrightarrow{g_0} 
+$M:\mathbb{I}\rightarrow\mathbb{R}$ , $\overrightarrow{g_0} 
 :\mathbb{I}\rightarrow\mathbb{R}^2$ & BadRadius, BadCenter\\
 \hline
 \end{tabular}
@@ -898,7 +902,7 @@ $\neg ((x_c,y_c) \in \mathbb{I}) \Rightarrow \text{BadCenter}$
 \label{MIS_URef}
 
 \noindent\textit{{\#} Module correcting the g vector of reference using the user 
-input U (see \cref{SRS:R_10} in the SRS)}
+input U (see \cref{SRS:R_10} in the SRS).}
 
 \subsection{Module}
 URefCalc
@@ -913,11 +917,11 @@ URefCalc
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{2.5cm} p{5cm} p{2cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-ZeroStrain & $U \subset \mathbb{I}$ , $id : \text{id of GUI object}$  & - & - \\
+ZeroStrain & $U \subset \mathbb{I}$ , $id :$ id of GUI object & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -958,7 +962,7 @@ $(\neg U \subset \mathbb{I} \Rightarrow \text{BadSizeU})$
 \label{MIS_MtoCConv}
 
 \noindent\textit{{\#} Module converting the Moire g vector into the crystalline 
-g vector (see \cref{SRS:R_12} in the SRS)}
+g vector (see \cref{SRS:R_12} in the SRS).}
 
 \subsection{Module}
 MtoCConv
@@ -972,7 +976,7 @@ MtoCConv
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -1016,7 +1020,7 @@ such that
 (\texorpdfstring{\cref{MG:M_StrainCalc}}))} \label{MIS_StrainCalc}
 
 \noindent\textit{{\#} Module calculating the strain and rotation tensors using 
-two non collinear crystalline wave vectors (see \cref{SRS:R_13} in the SRS)}
+two non collinear crystalline wave vectors (see \cref{SRS:R_13} in the SRS).}
 
 \subsection{Module}
 2D{\_}Strain
@@ -1027,7 +1031,7 @@ Data Structure (\cref{MG:M_DataStruct}, \cref{MIS_DataStruct})
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4.5cm} p{3cm} p{2cm}}
+\begin{tabular}{p{3cm} p{4.5cm} p{3cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -1118,7 +1122,7 @@ None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -1178,7 +1182,7 @@ None
 
 \subsubsection{Exported Access Programs}
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -1195,7 +1199,7 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent\textit{{\#} Calculate the gradient of a 2D function $f$} \medskip
+\noindent\textit{{\#} Calculate the gradient of a 2D function $f$.} \medskip
 
 \noindent grad($f$):
 \begin{itemize} 
@@ -1212,7 +1216,7 @@ None
 \section{MIS of Least Square Fit Method Module 
 (\texorpdfstring{\cref{MG:M_LSFM}}))} \label{MIS_LSFM}
 
-\textit{{\#} 2D linear least square method to fit a function $f$} \medskip
+\textit{{\#} 2D linear least square method to fit a function $f$.} \medskip
 
 \subsection{Module}
 LSFMCalc
@@ -1223,7 +1227,7 @@ None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -1241,7 +1245,7 @@ None
 \subsubsection{Access Routine Semantics}
 
 \noindent\textit{{\#} Calculate the 2D fit of a function $f$ using the linear 
-least square method on a domain $U=([x_0,x_1];[y_0,y_1]) \in \mathbb{R}^2$} 
+least square method on a domain $U=([x_0,x_1];[y_0,y_1]) \in \mathbb{R}^2$.} 
 \medskip
 
 \noindent lsfm(f,U):
@@ -1280,7 +1284,7 @@ None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -1348,7 +1352,7 @@ None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{3cm} p{4cm} p{3cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -1365,7 +1369,7 @@ read{\_}g & id GUI object $\times$ string & object & - \\
 \subsubsection{State Variables}
 
 \noindent\textit{{\#} Structure of the object carrying the data 
-information}\medskip
+information.}\medskip
 
 data : object
 \begin{itemize}
@@ -1438,7 +1442,7 @@ Hardware-Hiding (\cref{MG:M_Hardware})
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{3cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{3cm} p{4cm} p{4cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -1462,39 +1466,40 @@ None
 
 \noindent plot():
 \begin{itemize}
-\item output: Display on the Hardware all the GUI objects 
+\item output: Display on the Hardware all the GUI objects.
 \end{itemize}
 
 \noindent fig('label', optional GUI objects):
 \begin{itemize}
-\item output: Create a window GUI object with the optional GUI objects
+\item output: Create a window GUI object with the optional GUI objects.
 \end{itemize}
 
 \noindent button($number$,'labels'):
 \begin{itemize}
-\item output: Create $number$ buttons GUI objects with their respective 'labels'
+\item output: Create $number$ buttons GUI objects with their respective 
+'labels'.
 \end{itemize}
 
 \noindent entry{\_}field($b$):
 \begin{itemize}
 \item output: Create a entry field GUI object to collect the input $b$ from the 
-user
+user.
 \end{itemize}
 
 \noindent circle($C$(user{\_}param)):
 \begin{itemize}
-\item output: Create a circle $C$ GUI object drawn by the user 
+\item output: Create a circle $C$ GUI object drawn by the user.
 \end{itemize}
 
 \noindent rectangle($R$(user{\_}param)):
 \begin{itemize}
-\item output: Create a rectangle $R$ GUI object drawn by the user 
+\item output: Create a rectangle $R$ GUI object drawn by the user. 
 \end{itemize}
 
 \noindent read{\_}user{\_}GUI($A$):
 \begin{itemize}
 \item output:  $B$ such that B includes the id of the GUI and the type of the 
-GUI
+GUI.
 \end{itemize}
 \bigskip
 
