@@ -120,13 +120,6 @@ with the addition that template modules have been adapted from
 \cite{GhezziEtAl2003}. The following table summarizes the primitive data types 
 used by \progname.
 
-\iffalse
-The mathematical notation comes from Chapter 3 of
-\cite{HoffmanAndStrooper1995}.  For instance, the symbol := is used for a
-multiple assignment statement and conditional rules follow the form $(c_1
-\Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.
-\fi
-
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
 \noindent 
@@ -200,8 +193,7 @@ project.
 \newpage
 
 
-\section{MIS of STEM Moir{\'e} GPA Control Module 
-(\texorpdfstring{\cref{MG:M_Control}}))} \label{MIS_Control}
+\section{MIS of STEM Moir{\'e} GPA Control Module (\texorpdfstring{\cref{MG:M_Control}}))} \label{MIS_Control}
 
 \subsection{Module}
 main
@@ -297,8 +289,7 @@ could reference the different maks and enable the user to navigate through them.
 I didn't thought about that enough in advance and got stuck with that version. I 
 will improve that in the future.}
 
-\section{MIS of STEM Moir{\'e} GPA GUI Module 
-(\texorpdfstring{\cref{MG:M_GUISMG}}))} \label{MIS_GUISMG}
+\section{MIS of STEM Moir{\'e} GPA GUI Module (\texorpdfstring{\cref{MG:M_GUISMG}}))} \label{MIS_GUISMG}
 
 \noindent\textit{{\#} Specific GUI module to respect the requirements from the 
 SRS}\medskip
@@ -528,11 +519,11 @@ output from the Generic GUI/Plot Module.
 \label{MIS_Input}
 
 \an{I made lots of changes with the Input Module between the MG and the MIS. The 
-original design was not optimal and I tried to fit every verification step in 
-this input module. This is clearly not appropriate and I should design another 
-module to verify the GUI inputs (M,U,n and m) separately. I just realized it too 
-late to make the modification before the deadline but I will change that for 
-sure.}
+original design was not optimal and I tried to fit every verification step of 
+the inputs in 
+this input module. It seems to work but I keep in mind the possibility to verify 
+(M,U,n and m) separately in another module}
+
 
 \subsection{Module}
 Input
@@ -546,18 +537,18 @@ Input
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{2cm} p{1cm} p{8cm}}
+\begin{tabular}{p{2cm} p{3cm} p{1cm} p{7cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 load{\_}files & string & - & badFilePath, badPixelP, badPixelPref, badIC, 
 badISMH, badFileFormat \\
-verifyI & - & - & Not2Darray, NotReal\\
-verifyp & - & - & BadPixelP\\
-verifyM & - & - & NoMask, BadMask \\
-verifyU & - & - & BadSizeU, NoU \\
-verifyMdiff & - & - & SameMask \\
-verifyNM & - & - & BadNM\\
+verifyI & $I:\mathbb{I}\rightarrow\mathbb{R}$ & - & Not2Darray, NotReal\\
+verifyp & $p \in \mathbb{R}^{+*}$ & - & BadPixelP\\
+verifyM & $M \in \mathbb{I} \times \mathbb{R}$ & - & NoMask, BadMask \\
+verifyU & $U \subset \mathbb{I}$ & - & BadSizeU, NoU \\
+verifyMdiff & $(M \in \mathbb{I} \times \mathbb{R})^2$ & - & SameMask \\
+verifyNM & $(n,m)\in\mathbb{N}^2$ & - & BadNM\\
 \hline
 \end{tabular}
 \end{center}
@@ -567,38 +558,6 @@ verifyNM & - & - & BadNM\\
 \subsubsection{State Variables}
 
 data : object
-
-\iffalse
-load{\_}mask & GUI object & - & NoMask \\
-load{\_}U & GUI object & - & NoU \\
-load{\_}nm & GUI object & - & NoConv \\
-$I_{\mathit{SMH}_{\text{exp}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}$ & - 
-\\
-$p$ & - & $\mathbb{R}^{+*}$ & - \\
-$I_{C_{\text{ref}}}$ & - & $f:\mathbb{N}^2\rightarrow\mathbb{R}$ & - \\
-$p_{\text{ref}}$ & - & $\mathbb{R}^{+*}$ & - \\
-$U$ & - & - & - \\
-$M$ & - & $(x_c,y_c) \in \mathbb{R}^2$ , $R \in \mathbb{R}^{+*}$ & - \\
-$n$ & - & $\mathbb{Z}$ & - \\
-$m$ & - & $\mathbb{Z}$ & - \\
-
-\noindent For \cref{SRS:R_1} and \cref{SRS:IM_1} in the SRS document,\\
-\noindent$I_{\mathit{SMH}_{\text{exp}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}$ 
-\\
-$p$ : $\mathbb{R}^{+*}$\\
-$I_{C_{\text{ref}}}$ : $f:\mathbb{N}^2\rightarrow\mathbb{R}$\\
-$p_{\text{ref}}$ : $\mathbb{R}^{+*}$ \\
-
-\noindent For \cref{SRS:R_5} and \cref{SRS:IM_2} in the SRS document,\\
-\noindent$M$ : $(x_c,y_c) \in \mathbb{R}^2$ , $R \in \mathbb{R}^{+*}$\\
-
-\noindent For \cref{SRS:R_8} and \cref{SRS:IM_3} in the SRS document,\\
-\noindent$U$ :\\ 
-
-\noindent For \cref{SRS:R_11} and For \cref{SRS:IM_4} in the SRS document,\\
-\noindent$n$ : $\mathbb{Z}$\\
-$m$ : $\mathbb{Z}$\\
-\fi
 
 \subsubsection{Access Routine Semantics}
 
@@ -796,7 +755,7 @@ GPACalc
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-gpa & $C \in \mathbb{N}^2\times\mathbb{R}$ , $id : \text{id of GUI object}$ & - 
+gpa & $C \in \mathbb{I}\times\mathbb{R}$ , $id : \text{id of GUI object}$ & - 
 & - \\
 \hline
 \end{tabular}
@@ -1502,6 +1461,43 @@ user.
 GUI.
 \end{itemize}
 \bigskip
+
+\iffalse
+\section{MIS of Navigation Mask Module (\texorpdfstring{\cref{MG:M_GUIInputVerif}}))} \label{MIS_GUIInputVerif}
+
+\an{Module to allow the user to select a specific mask to perform the calculation on this specific mask. NEED TO THINK ABOUT IT FIRST.}
+
+\subsection{Module}
+GUIInputVerif
+\subsection{Uses}
+\item STEM Moir{\'e} GPA GUI (\cref{MG:M_GUISMG}, \cref{MIS_GUISMG})
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{3cm} p{4cm} p{4cm} p{3cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+blabla & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+MaskList
+
+\subsubsection{Access Routine Semantics}
+\noindent blabla():
+\begin{itemize}
+\item output: 
+\end{itemize}
+
+\fi
 
 \newpage
 
