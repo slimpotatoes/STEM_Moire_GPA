@@ -1,5 +1,15 @@
 # Test blabla
 import matplotlib.pyplot as plt
 import dm3_lib as dm3
+import gui as gui
 
-print('Hello World')
+
+def main():
+    SMGgui = gui.SMGGUI()
+    SMGgui.guiflow()
+    plt.show()
+
+if __name__ == "__main__":
+    main()
+
+
