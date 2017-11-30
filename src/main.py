@@ -7,6 +7,7 @@ import gui as gui
 def main():
     SMGgui = gui.SMGGUI()
     SMGgui.guiflow()
+    SMGgui.guiconv()
     plt.show()
 
 if __name__ == "__main__":
