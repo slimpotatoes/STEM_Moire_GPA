@@ -1,8 +1,9 @@
-# STEM Moire GPA Control Module
+# STEM Moire GPA Control Module)
 import matplotlib.pyplot as plt
 import gui as gui
 import data as data
 import userinput as userinput
+
 
 
 def main():
@@ -10,7 +11,9 @@ def main():
     def flow_input(event):
         if not event.inaxes == smggui.event_input.ax:
             raise Exception('Improper input axis')
-        userinput.UserInput.load_files(smgdata)
+        userinput.load_files(smgdata)
+        smggui.guismhexp(smgdata)
+
 
     def flow_smhsim(event):
         if not event.inaxes == smggui.event_smhsim.ax:
@@ -40,8 +43,9 @@ def main():
     smggui = gui.SMGGUI()
     smgdata = data.SMGData()
 
-    smggui.guiconv()
+    #smggui.guiconv()
     smggui.guiflow()
+    #smggui.guismhexp()
 
     smggui.event_input.on_clicked(flow_input)
     smggui.event_smhsim.on_clicked(flow_smhsim)
