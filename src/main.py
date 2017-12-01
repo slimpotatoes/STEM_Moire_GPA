@@ -43,9 +43,8 @@ def main():
     smggui = gui.SMGGUI()
     smgdata = data.SMGData()
 
-    #smggui.guiconv()
+    smggui.guiconv()
     smggui.guiflow()
-    #smggui.guismhexp()
 
     smggui.event_input.on_clicked(flow_input)
     smggui.event_smhsim.on_clicked(flow_smhsim)
