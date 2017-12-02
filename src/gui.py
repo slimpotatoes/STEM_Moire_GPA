@@ -1,10 +1,15 @@
 # STEM Moire GPA GUI Module
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as grid
+import matplotlib.patches as patch
+import matplotlib.cm as cm
+import matplotlib.colors as colors
 from matplotlib.widgets import Button
 from matplotlib.widgets import TextBox
 from matplotlib_scalebar.scalebar import ScaleBar
 import data as data
+import numpy as np
+
 
 class SMGGUI(object):
 
@@ -16,8 +21,8 @@ class SMGGUI(object):
         self.event_ref = None
         self.event_convert = None
         self.event_strain = None
-        self.fig_GUI_SMHexp = None
-        #self.fig_SMHSim = plt.figure(num='SMH Simulation')
+        self.fig_SMHexp = None
+        self.fig_SMHSim = None
         #self.fig_GPA = plt.figure(num='GPA')
         self.fig_NM = None
         #self.fig_strain = plt.figure(num='Strain maps')
@@ -40,13 +45,25 @@ class SMGGUI(object):
                 'Vertical shift', initial='0', label_pad=0.01)
 
     def guismhexp(self, datastruct):
-        self.fig_GUI_SMHexp = plt.figure(num='SMH and reference image')
-        self.fig_GUI_SMHexp.add_axes(plt.subplot(self.fig_GUI_SMHexp.add_subplot(1, 2, 1))).imshow(
+        self.fig_SMHexp = plt.figure(num='SMH and reference image')
+        self.fig_SMHexp.add_axes(plt.subplot(self.fig_SMHexp.add_subplot(1, 2, 1))).imshow(
             data.SMGData.load(datastruct, 'ISMHexp'), cmap='gray')
-        ScaleBar1 = ScaleBar(data.SMGData.load(datastruct, 'p') * 10 ** -9)
-        plt.gca().add_artist(ScaleBar1)
-        self.fig_GUI_SMHexp.add_axes(plt.subplot(self.fig_GUI_SMHexp.add_subplot(1, 2, 2))).imshow(
+        scalebar1 = ScaleBar(data.SMGData.load(datastruct, 'p') * 10 ** -9)
+        plt.gca().add_artist(scalebar1)
+        self.fig_SMHexp.add_axes(plt.subplot(self.fig_SMHexp.add_subplot(1, 2, 2))).imshow(
             data.SMGData.load(datastruct, 'ICref'), cmap='gray')
-        ScaleBar2 = ScaleBar(data.SMGData.load(datastruct, 'pref') * 10 ** -9)
-        plt.gca().add_artist(ScaleBar2)
+        scalebar2 = ScaleBar(data.SMGData.load(datastruct, 'pref') * 10 ** -9)
+        plt.gca().add_artist(scalebar2)
         plt.show(block=False)
+
+    def guismhsim(self, datastruct):
+        self.fig_SMHsim = plt.figure(num='SMH Simulation')
+        self.fig_SMHsim.add_axes(plt.subplot(self.fig_SMHsim.add_subplot(1, 2, 1))).imshow(
+            np.log1p(self.fft_display(data.SMGData.load(datastruct, 'FTISMHexp'))), cmap='gray')
+        self.fig_SMHsim.add_axes(plt.subplot(self.fig_SMHsim.add_subplot(1, 2, 2))).imshow(
+            np.log1p(data.SMGData.load(datastruct, 'FTISMHsim')), cmap='gray')
+        plt.show(block=False)
+
+    @staticmethod
+    def fft_display(fft):
+        return np.fft.fftshift(np.abs(fft ** 2))

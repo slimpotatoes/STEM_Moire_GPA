@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import gui as gui
 import data as data
 import userinput as userinput
+import smhsimulation as smhsimu
 
 
 def main():
@@ -16,7 +17,8 @@ def main():
     def flow_smhsim(event):
         if not event.inaxes == smggui.event_smhsim.ax:
             raise Exception('Improper shmsim axis')
-        print('smhsim')
+        smgsmhsim.smh_sim(smgdata)
+        smggui.guismhsim(smgdata)
 
     def flow_gpa(event):
         if not event.inaxes == smggui.event_gpa.ax:
@@ -41,6 +43,7 @@ def main():
     smggui = gui.SMGGUI()
     smgdata = data.SMGData()
     smginput = userinput.UserInput()
+    smgsmhsim = smhsimu.SMHSim()
 
     smggui.guiconv()
     smggui.guiflow()
