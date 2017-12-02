@@ -1,9 +1,9 @@
 # STEM Moire GPA GUI Module
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as grid
-import matplotlib.patches as patch
-import matplotlib.cm as cm
-import matplotlib.colors as colors
+# import matplotlib.patches as patch
+# import matplotlib.cm as cm
+# import matplotlib.colors as colors
 from matplotlib.widgets import Button
 from matplotlib.widgets import TextBox
 from matplotlib_scalebar.scalebar import ScaleBar
@@ -23,9 +23,9 @@ class SMGGUI(object):
         self.event_strain = None
         self.fig_SMHexp = None
         self.fig_SMHSim = None
-        #self.fig_GPA = plt.figure(num='GPA')
+#        self.fig_GPA = plt.figure(num='GPA')
         self.fig_NM = None
-        #self.fig_strain = plt.figure(num='Strain maps')
+#        self.fig_strain = plt.figure(num='Strain maps')
 
     def guiflow(self):
         self.fig_GUIFlow = plt.figure(num='SMG Flow', figsize=(2, 5))
