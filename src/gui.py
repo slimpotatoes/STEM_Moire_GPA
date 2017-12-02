@@ -39,14 +39,14 @@ class SMGGUI(object):
         TextBox(self.fig_NM.add_axes(plt.subplot(self.fig_NM.add_subplot(2, 1, 2))),
                 'Vertical shift', initial='0', label_pad=0.01)
 
-    def guismhexp(self, a):
+    def guismhexp(self, datastruct):
         self.fig_GUI_SMHexp = plt.figure(num='SMH and reference image')
         self.fig_GUI_SMHexp.add_axes(plt.subplot(self.fig_GUI_SMHexp.add_subplot(1, 2, 1))).imshow(
-            data.SMGData.load(a, 'ISMHexp'), cmap='gray')
-        ScaleBar1 = ScaleBar(data.SMGData.load(a, 'p') * 10 ** -9)
+            data.SMGData.load(datastruct, 'ISMHexp'), cmap='gray')
+        ScaleBar1 = ScaleBar(data.SMGData.load(datastruct, 'p') * 10 ** -9)
         plt.gca().add_artist(ScaleBar1)
         self.fig_GUI_SMHexp.add_axes(plt.subplot(self.fig_GUI_SMHexp.add_subplot(1, 2, 2))).imshow(
-            data.SMGData.load(a, 'ICref'), cmap='gray')
-        ScaleBar2 = ScaleBar(data.SMGData.load(a, 'pref') * 10 ** -9)
+            data.SMGData.load(datastruct, 'ICref'), cmap='gray')
+        ScaleBar2 = ScaleBar(data.SMGData.load(datastruct, 'pref') * 10 ** -9)
         plt.gca().add_artist(ScaleBar2)
         plt.show(block=False)

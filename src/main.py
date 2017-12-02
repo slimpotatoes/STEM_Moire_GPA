@@ -5,15 +5,13 @@ import data as data
 import userinput as userinput
 
 
-
 def main():
 
     def flow_input(event):
         if not event.inaxes == smggui.event_input.ax:
             raise Exception('Improper input axis')
-        userinput.load_files(smgdata)
+        smginput.load_files(smgdata)
         smggui.guismhexp(smgdata)
-
 
     def flow_smhsim(event):
         if not event.inaxes == smggui.event_smhsim.ax:
@@ -42,6 +40,7 @@ def main():
 
     smggui = gui.SMGGUI()
     smgdata = data.SMGData()
+    smginput = userinput.UserInput()
 
     smggui.guiconv()
     smggui.guiflow()
