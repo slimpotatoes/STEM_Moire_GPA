@@ -9,6 +9,7 @@ class SMGData(object):
         self.SMGData['pref'] = None
         self.SMGData['FTISMHexp'] = None
         self.SMGData['FTISMHsim'] = None
+        self.SMGData['FTISMHsimDisplay'] = None
         self.SMGData['Uref'] = None
         self.SMGData['Exx'] = None
         self.SMGData['Eyy'] = None
