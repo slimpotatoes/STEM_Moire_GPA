@@ -38,7 +38,6 @@ class UserInput(object):
     @staticmethod
     def verify_p(p, pref):
         if p < 0 or isinstance(p, float) is False:
-            print(p)
             raise Exception('The pixel size of the STEM Moire hologram is not a real number strictly positive.')
         if pref < 0 or isinstance(pref, float) is False:
             raise Exception('The pixel size of the Reference image is not a real number strictly positive.')

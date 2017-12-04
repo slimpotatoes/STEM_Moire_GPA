@@ -1,5 +1,6 @@
 # Data Structure Module
 class SMGData(object):
+    """Module storing and loading intermediate data used during the processing"""
 
     def __init__(self):
         self.SMGData = dict()
@@ -17,6 +18,8 @@ class SMGData(object):
         self.SMGData['Rxy'] = None
 
     def create_branch(self, gui_id):
+        """Create a (sub)dictionary in dictionary SMGData associated with the string key gui_id
+        representing the id of a the mask GUI object."""
         self.SMGData[gui_id] = dict()
         self.SMGData[gui_id]['Mask'] = None
         self.SMGData[gui_id]['gMuns'] = None
@@ -26,18 +29,21 @@ class SMGData(object):
         self.SMGData[gui_id]['gCuns'] = None
 
     def store(self, key, a):
+        """Store in dictionary SMGData an object a associated with the string key."""
         if key in self.SMGData.keys():
             self.SMGData[key] = a
         else:
             raise Exception('Key does not exist in the data structure')
 
     def load(self, key):
+        """Return from dictionary SMGData the object associated with the string key."""
         if key in self.SMGData.keys():
             return self.SMGData[key]
         else:
             raise Exception('Key does not exist in the data structure')
 
     def store_g(self, gui_id, key, a):
+        """Store in (sub)dictionary SMGData[gui_id] an object a associated with the string key."""
         if gui_id in self.SMGData.keys():
             if key in self.SMGData[gui_id].keys():
                     self.SMGData[gui_id][key] = a
@@ -47,6 +53,7 @@ class SMGData(object):
             raise Exception('Gui id does not exist in the data structure')
 
     def load_g(self, gui_id, key):
+        """Return from dictionary SMGData[gui_id] the object associated with the string key."""
         if gui_id in self.SMGData.keys():
             if key in self.SMGData[gui_id].keys():
                     return self.SMGData[gui_id][key]
