@@ -54,7 +54,7 @@ class SMGGUI(object):
             data.SMGData.load(datastruct, 'ICref'), cmap='gray')
         scalebar2 = ScaleBar(data.SMGData.load(datastruct, 'pref') * 10 ** -9)
         plt.gca().add_artist(scalebar2)
-        plt.show(block=False)
+        plt.show()
 
     def guismhsim(self, datastruct):
         self.fig_SMHsim = plt.figure(num='SMH Simulation')
@@ -92,18 +92,19 @@ class SMGGUI(object):
                 icsplitaxis.xaxis.set_visible(False)
                 icsplitaxis.yaxis.set_visible(False)
                 count += 1
-        '''
+
         smgmaskcreate = maskmanag.MaskCreator(self.fig_SMHsim_axis,ftsmhexp)
         circle1 = smgmaskcreate.make_circle()
-        circle2 = smgmaskcreate.make_circle()
-        print(self.fig_SMHsim_axis.artists)
-        circles = [circle1[1], circle2[1]]
+        circle2 = smgmaskcreate.make_circle(colored='b',off_center=(20,20))
         drs = []
         for circle in self.fig_SMHsim_axis.artists:
+            print(circle)
+            print(dir(circle))
             smgmaskedit = maskmanag.MaskEditor(circle)
             smgmaskedit.connect()
-            drs.append(smgmaskedit)'''
-        plt.show(block=False)
+            drs.append(smgmaskedit)
+            print(drs)
+        plt.show()
 
     @staticmethod
     def fft_display(fft):
