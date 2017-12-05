@@ -1,9 +1,6 @@
 # STEM Moire GPA GUI Module
-import matplotlib
-matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as grid
-# import matplotlib.patches as patch
 import matplotlib.cm as cm
 import matplotlib.colors as colors
 from matplotlib.widgets import Button
@@ -11,6 +8,7 @@ from matplotlib.widgets import TextBox
 from matplotlib_scalebar.scalebar import ScaleBar
 import data as data
 import numpy as np
+import maskmanager as maskmanag
 
 
 class SMGGUI(object):
@@ -60,16 +58,19 @@ class SMGGUI(object):
 
     def guismhsim(self, datastruct):
         self.fig_SMHsim = plt.figure(num='SMH Simulation')
-        self.fig_SMHsim.add_axes(plt.subplot(self.fig_SMHsim.add_subplot(1, 2, 1))).imshow(
-            np.log1p(self.fft_display(data.SMGData.load(datastruct, 'FTISMHexp'))), cmap='gray')
+        #self.fig_SMHsim.add_axes(plt.subplot(self.fig_SMHsim.add_subplot(1, 2, 1))).imshow(
+        #    np.log1p(self.fft_display(data.SMGData.load(datastruct, 'FTISMHexp'))), cmap='gray')
+        self.fig_SMHsim_axis = self.fig_SMHsim.add_subplot(1,2,1)
+        ftsmhexp = data.SMGData.load(datastruct, 'FTISMHexp')
+        self.fig_SMHsim_axis.imshow(np.log1p(self.fft_display(ftsmhexp)), cmap='gray')
         self.fig_SMHsim.add_axes(plt.subplot(self.fig_SMHsim.add_subplot(1, 2, 2))).imshow(
             np.log1p(data.SMGData.load(datastruct, 'FTISMHsim')), cmap='gray')
 
         fticsquare = data.SMGData.load(datastruct, 'FTISMHsimDisplay')
-        colormaps_Moire, colormaps_IC = self.generate_colormap_smhsim(fticsquare)
+        colormaps_Moire, colormaps_IC = self.generate_colormap_smhsim(fticsquare.shape[0] * fticsquare.shape[1])
         ftsmhsim = plt.figure(num='Simulated SMH with colors')
         icsplit = plt.figure(num='Ic split into tiles')
-# A cleaner
+        # A cleaner
         ZERO = np.zeros(fticsquare[0][0].shape)
         ftsmhsimaxis = ftsmhsim.add_subplot(1,1,1)
         ftsmhsimaxis.imshow(ZERO, cmap="gray", alpha=1)
@@ -84,13 +85,24 @@ class SMGGUI(object):
                 Test[mask] = 0
                 cmap_moire = colors.LinearSegmentedColormap.from_list('my_cmap', colormaps_Moire[count])
                 cmap_ic = colors.LinearSegmentedColormap.from_list('my_cmap', colormaps_IC[count])
-                ftsmhsimaxis.imshow(Test, cmap = cmap_moire, alpha = .7, clim=(10, 40))
+                ftsmhsimaxis.imshow(Test, cmap = cmap_moire, alpha = .7, clim=(20, 40))
                 # Color on split HRES FFT
                 icsplitaxis = icsplit.add_subplot(fticsquare.shape[0], fticsquare.shape[0], count + 1)
                 icsplitaxis.imshow(np.log1p(fticsquare[i, j]), cmap=cmap_ic, clim=(27.5, 34.5))
                 icsplitaxis.xaxis.set_visible(False)
                 icsplitaxis.yaxis.set_visible(False)
                 count += 1
+        '''
+        smgmaskcreate = maskmanag.MaskCreator(self.fig_SMHsim_axis,ftsmhexp)
+        circle1 = smgmaskcreate.make_circle()
+        circle2 = smgmaskcreate.make_circle()
+        print(self.fig_SMHsim_axis.artists)
+        circles = [circle1[1], circle2[1]]
+        drs = []
+        for circle in self.fig_SMHsim_axis.artists:
+            smgmaskedit = maskmanag.MaskEditor(circle)
+            smgmaskedit.connect()
+            drs.append(smgmaskedit)'''
         plt.show(block=False)
 
     @staticmethod
@@ -98,8 +110,7 @@ class SMGGUI(object):
         return np.fft.fftshift(np.abs(fft ** 2))
 
     @staticmethod
-    def generate_colormap_smhsim(fticsquare):
-        total_tiles = fticsquare.shape[0] * fticsquare.shape[1]
+    def generate_colormap_smhsim(total_tiles):
         initial_color_map = cm.get_cmap(name="jet")
         coef_weighted_color = np.arange(0, total_tiles).astype(float) / (total_tiles- 1)
         customized_color_map_max = []

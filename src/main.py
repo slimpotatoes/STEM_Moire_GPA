@@ -4,6 +4,7 @@ import gui as gui
 import data as data
 import userinput as userinput
 import smhsimulation as smhsimu
+import maskmanager as maskmanag
 
 
 def main():
@@ -13,6 +14,7 @@ def main():
             raise Exception('Improper input axis')
         smginput.load_files(smgdata)
         smggui.guismhexp(smgdata)
+        plt.draw()
 
     def flow_smhsim(event):
         if not event.inaxes == smggui.event_smhsim.ax:
