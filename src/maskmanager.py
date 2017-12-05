@@ -19,7 +19,7 @@ class MaskCreator(object):
     def disconnect(self):
         """disconnect for future use"""
 
-    def make_circle(self, colored='r', off_center=(0,0)):
+    def make_circle(self, mask_id, colored='r', off_center=(0,0)):
         self.colored = colored
         self.off_center = off_center
         """Create circle gui object"""
@@ -27,9 +27,11 @@ class MaskCreator(object):
         print(self.image.shape[0])
         print(self.image.shape[1])
         self.circle = Circle((self.image.shape[0]/2 + self.off_center[0], self.image.shape[1]/2+self.off_center[1]),
-                             self.image.shape[0]/6, color=self.colored, fill=False, alpha=0.3)
-        self.axis.add_artist(self.circle)
+                             self.image.shape[0]/6, color=self.colored, fill=True, alpha=0.3, linewidth=3)
+        circle_artist = self.axis.add_artist(self.circle)
+        circle_artist.set_gid(mask_id)
         self.axis.figure.canvas.draw()
+        print()
         return artist.Artist.get_gid(self.circle), self.axis
 
 class MaskEditor(object):
@@ -37,6 +39,7 @@ class MaskEditor(object):
     def __init__(self, artist):
         self.artist = artist
         self.press = None
+        self.mask_selected = None
 
     def connect(self):
         'connect to all the events we need'
@@ -54,12 +57,15 @@ class MaskEditor(object):
         contains, attrd = self.artist.contains(event)
         if not contains:
             self.artist.fill = True
+            self.artist.figure.canvas.draw()
+            self.mask_selected = None
             return
-        print('event contains', self.artist.axes)
         (x0, y0) = self.artist.center
         self.press = x0, y0, event.xdata, event.ydata
         self.artist.fill = False
         self.artist.figure.canvas.draw()
+        print(artist.Artist.get_gid(self.artist))
+        self.mask_selected = artist.Artist.get_gid(self.artist)
 
     def on_motion(self, event):
         'on motion we will move the artist if the mouse is over us'
@@ -94,4 +100,7 @@ class MaskEditor(object):
         'disconnect all the stored connection ids'
         self.artist.figure.canvas.mpl_disconnect(self.cidpress)
         self.artist.figure.canvas.mpl_disconnect(self.cidrelease)
+        self.artist.figure.canvas.mpl_disconnect(self.cidmotion)
+
+    def disconnect_edit(self):
         self.artist.figure.canvas.mpl_disconnect(self.cidmotion)

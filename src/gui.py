@@ -26,6 +26,8 @@ class SMGGUI(object):
 #        self.fig_GPA = plt.figure(num='GPA')
         self.fig_NM = None
 #        self.fig_strain = plt.figure(num='Strain maps')
+        self.mask_id = []
+        self.mask_selected = None
 
     def guiflow(self):
         self.fig_GUIFlow = plt.figure(num='SMG Flow', figsize=(2, 5))
@@ -57,7 +59,34 @@ class SMGGUI(object):
         plt.show()
 
     def guismhsim(self, datastruct):
+
+        def edit_mode(event):
+            if event.key == 'e':
+                print('Edit mode open, please edit your masks')
+                for circle in self.circles:
+                    circle.connect()
+                for element in self.mask_id:
+                    data.SMGData.remove_branch(datastruct, element)
+
+            if event.key == 'd':
+                print('Edit mode closed, please select the mask for the GPA process')
+                for circle in self.circles:
+                    circle.disconnect_edit()
+                for element in self.mask_id:
+                    data.SMGData.create_branch(datastruct, element)
+        '''
+        def mask_selection(event):
+            if event.inaxes != self.fig_SMHsim_axis: return
+            print('on est ds mask selection')
+            for circle in self.circles:
+                if circle.mask_selected is not None:
+                    self.mask_selected = circle.mask_selected
+                    print('Mask selected')
+                    print(self.mask_selected)'''
+
+
         self.fig_SMHsim = plt.figure(num='SMH Simulation')
+        self.fig_SMHsim.canvas.mpl_connect('key_press_event', edit_mode)
         #self.fig_SMHsim.add_axes(plt.subplot(self.fig_SMHsim.add_subplot(1, 2, 1))).imshow(
         #    np.log1p(self.fft_display(data.SMGData.load(datastruct, 'FTISMHexp'))), cmap='gray')
         self.fig_SMHsim_axis = self.fig_SMHsim.add_subplot(1,2,1)
@@ -94,16 +123,18 @@ class SMGGUI(object):
                 count += 1
 
         smgmaskcreate = maskmanag.MaskCreator(self.fig_SMHsim_axis,ftsmhexp)
-        circle1 = smgmaskcreate.make_circle()
-        circle2 = smgmaskcreate.make_circle(colored='b',off_center=(20,20))
-        drs = []
+        circle1 = smgmaskcreate.make_circle('Mask1')
+        circle2 = smgmaskcreate.make_circle('Mask2', colored='b',off_center=(20,20))
+        self.mask_id.append(circle1[0])
+        self.mask_id.append(circle2[0])
+        print(self.mask_id)
+        self.circles = []
         for circle in self.fig_SMHsim_axis.artists:
             print(circle)
             print(dir(circle))
             smgmaskedit = maskmanag.MaskEditor(circle)
-            smgmaskedit.connect()
-            drs.append(smgmaskedit)
-            print(drs)
+            self.circles.append(smgmaskedit)
+
         plt.show()
 
     @staticmethod
@@ -123,3 +154,11 @@ class SMGGUI(object):
             customized_color_maps_Moire.append([(0, 0, 0, 0.0), elements])
             customized_color_maps_Ic.append([(0, 0, 0, 0.8), elements])
         return customized_color_maps_Moire, customized_color_maps_Ic
+
+    def mask_selection(self):
+        for circle in self.circles:
+            if circle.mask_selected is not None:
+                self.mask_selected = circle.mask_selected
+                print('Mask selected')
+                print(self.mask_selected)
+                return self.mask_selected

@@ -20,13 +20,24 @@ class SMGData(object):
     def create_branch(self, gui_id):
         """Create a (sub)dictionary in dictionary SMGData associated with the string key gui_id
         representing the id of a the mask GUI object."""
-        self.SMGData[gui_id] = dict()
-        self.SMGData[gui_id]['Mask'] = None
-        self.SMGData[gui_id]['gMuns'] = None
-        self.SMGData[gui_id]['deltagM'] = None
-        self.SMGData[gui_id]['phasegM'] = None
-        self.SMGData[gui_id]['shiftg'] = None
-        self.SMGData[gui_id]['gCuns'] = None
+        if gui_id not in self.SMGData.keys():
+            self.SMGData[gui_id] = dict()
+            self.SMGData[gui_id]['Mask'] = None
+            self.SMGData[gui_id]['gMuns'] = None
+            self.SMGData[gui_id]['deltagM'] = None
+            self.SMGData[gui_id]['phasegM'] = None
+            self.SMGData[gui_id]['shiftg'] = None
+            self.SMGData[gui_id]['gCuns'] = None
+        else:
+            raise Exception('Key gui_id already exists, branch creation aborted')
+
+    def remove_branch(self, gui_id):
+        """Remove the (sub)dictionary in dictionary SMGData associated with the string key gui_id
+                representing the id of a the mask GUI object."""
+        if gui_id in self.SMGData.keys():
+            del self.SMGData[gui_id]
+        else:
+            raise Warning('Key gui_id does not exist, the deletion process did not occur')
 
     def store(self, key, a):
         """Store in dictionary SMGData an object a associated with the string key."""

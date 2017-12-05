@@ -24,6 +24,7 @@ def main():
     def flow_gpa(event):
         if not event.inaxes == smggui.event_gpa.ax:
             raise Exception('Improper gpa axis')
+        mask_selected = smggui.mask_selection()
         print('gpa')
 
     def flow_ref(event):
