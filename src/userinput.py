@@ -6,11 +6,14 @@ import data as data
 
 
 class UserInput(object):
+    """Module aiming to load the input files and verify physical properties"""
 
     def __init__(self):
         pass
 
     def load_files(self, datastruct):
+        """Load the files by asking the user the filepath and store the appropriate data in the data structure object.
+        Before storing, the data are verified"""
         file_path_smh = filedialog.askopenfilename(title="Load the STEM Moire hologram")
         file_path_ic = filedialog.askopenfilename(title="Load the reference image")
         dm3_meta_smh = dm3_lib.DM3(file_path_smh)
@@ -28,6 +31,7 @@ class UserInput(object):
 
     @staticmethod
     def verify_i(ismh, ic):
+        """Verify if the input images ismh and ic are 2D arrays of real numbers"""
         for value in np.nditer(np.isreal(ismh)):
             if value is False:
                 raise Exception('The STEM Moire hologram is not composed of real numbers.')
@@ -37,6 +41,7 @@ class UserInput(object):
 
     @staticmethod
     def verify_p(p, pref):
+        """Verify if the pixel size input p and pref are real numbers strictly positive and if there are different."""
         if p < 0 or isinstance(p, float) is False:
             raise Exception('The pixel size of the STEM Moire hologram is not a real number strictly positive.')
         if pref < 0 or isinstance(pref, float) is False:
@@ -47,6 +52,7 @@ class UserInput(object):
 
     @staticmethod
     def verify_p_unit(unit_p, unit_pref):
+        """Verify if the unit of the pixel size inputs unit_p and unit_pref are in nm"""
         if unit_p != 'nm':
             raise Exception('The pixel size of the STEM Moire hologram is not in nanometer.')
         if unit_pref != 'nm':
