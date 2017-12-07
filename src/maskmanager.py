@@ -1,7 +1,6 @@
-# Module Mask Manager
+# Module Mask Manager that is used by GUI
 from matplotlib.patches import Circle
 import matplotlib.artist as artist
-import matplotlib.pyplot as plt
 import math
 
 class MaskCreator(object):
@@ -23,16 +22,13 @@ class MaskCreator(object):
         self.colored = colored
         self.off_center = off_center
         """Create circle gui object"""
-        print(self.image.shape)
-        print(self.image.shape[0])
-        print(self.image.shape[1])
         self.circle = Circle((self.image.shape[0]/2 + self.off_center[0], self.image.shape[1]/2+self.off_center[1]),
                              self.image.shape[0]/6, color=self.colored, fill=True, alpha=0.3, linewidth=3)
         circle_artist = self.axis.add_artist(self.circle)
         circle_artist.set_gid(mask_id)
         self.axis.figure.canvas.draw()
-        print()
-        return artist.Artist.get_gid(self.circle), self.axis
+        print(self.circle)
+        return artist.Artist.get_gid(self.circle), (self.circle.center, self.circle.radius)
 
 class MaskEditor(object):
 
@@ -40,6 +36,7 @@ class MaskEditor(object):
         self.artist = artist
         self.press = None
         self.mask_selected = None
+        self.circle = None
 
     def connect(self):
         'connect to all the events we need'

@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as grid
 import matplotlib.cm as cm
 import matplotlib.colors as colors
+import matplotlib.artist as artist
 from matplotlib.widgets import Button
 from matplotlib.widgets import TextBox
 from matplotlib_scalebar.scalebar import ScaleBar
@@ -26,7 +27,7 @@ class SMGGUI(object):
 #        self.fig_GPA = plt.figure(num='GPA')
         self.fig_NM = None
 #        self.fig_strain = plt.figure(num='Strain maps')
-        self.mask_id = []
+        self.mask =dict()
         self.mask_selected = None
 
     def guiflow(self):
@@ -65,25 +66,17 @@ class SMGGUI(object):
                 print('Edit mode open, please edit your masks')
                 for circle in self.circles:
                     circle.connect()
-                for element in self.mask_id:
+                for element in self.mask.keys():
                     data.SMGData.remove_branch(datastruct, element)
 
             if event.key == 'd':
                 print('Edit mode closed, please select the mask for the GPA process')
                 for circle in self.circles:
+                    self.mask[artist.Artist.get_gid(circle.artist)] = (circle.artist.center, circle.artist.radius)
                     circle.disconnect_edit()
-                for element in self.mask_id:
+                for element in self.mask.keys():
                     data.SMGData.create_branch(datastruct, element)
-        '''
-        def mask_selection(event):
-            if event.inaxes != self.fig_SMHsim_axis: return
-            print('on est ds mask selection')
-            for circle in self.circles:
-                if circle.mask_selected is not None:
-                    self.mask_selected = circle.mask_selected
-                    print('Mask selected')
-                    print(self.mask_selected)'''
-
+                    data.SMGData.store_g(datastruct, element, 'Mask', self.mask[element])
 
         self.fig_SMHsim = plt.figure(num='SMH Simulation')
         self.fig_SMHsim.canvas.mpl_connect('key_press_event', edit_mode)
@@ -125,14 +118,19 @@ class SMGGUI(object):
         smgmaskcreate = maskmanag.MaskCreator(self.fig_SMHsim_axis,ftsmhexp)
         circle1 = smgmaskcreate.make_circle('Mask1')
         circle2 = smgmaskcreate.make_circle('Mask2', colored='b',off_center=(20,20))
-        self.mask_id.append(circle1[0])
-        self.mask_id.append(circle2[0])
-        print(self.mask_id)
+        self.mask[circle1[0]] = circle1[1]
+        self.mask[circle2[0]] = circle2[1]
+        print(self.mask)
+        '''
         self.circles = []
-        for circle in self.fig_SMHsim_axis.artists:
-            print(circle)
-            print(dir(circle))
-            smgmaskedit = maskmanag.MaskEditor(circle)
+        for artist in self.fig_SMHsim_axis.artists:
+            print(artist)
+            smgmaskedit = maskmanag.MaskEditor(artist)
+            self.circles.append(smgmaskedit)'''
+        self.circles = []
+        for el in self.fig_SMHsim_axis.artists:
+            print(el)
+            smgmaskedit = maskmanag.MaskEditor(el)
             self.circles.append(smgmaskedit)
 
         plt.show()
