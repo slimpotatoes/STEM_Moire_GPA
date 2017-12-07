@@ -24,7 +24,8 @@ class SMGGUI(object):
         self.event_strain = None
         self.fig_SMHexp = None
         self.fig_SMHSim = None
-#        self.fig_GPA = plt.figure(num='GPA')
+        self.fig_GPA_M1 = None
+        self.fig_GPA_M2 = None
         self.fig_NM = None
 #        self.fig_strain = plt.figure(num='Strain maps')
         self.mask =dict()
@@ -134,6 +135,21 @@ class SMGGUI(object):
             self.circles.append(smgmaskedit)
 
         plt.show()
+
+    def guiphase(self, mask_id, datastruct):
+        if mask_id == 'Mask1':
+            self.fig_GPA_M1 = plt.figure(num='GPA - Mask Red')
+            self.fig_GPA_M1_ax = self.fig_GPA_M1.add_subplot(1, 1, 1)
+            self.fig_GPA_M1_ax.imshow(data.SMGData.load_g(datastruct, mask_id, 'phasegM'), cmap='gray')
+            plt.show()
+        if mask_id == 'Mask2':
+            self.fig_GPA_M2 = plt.figure(num='GPA - Mask Blue')
+            self.fig_GPA_M2_ax = self.fig_GPA_M2.add_subplot(1, 1, 1)
+            self.fig_GPA_M2_ax.imshow(data.SMGData.load_g(datastruct, mask_id, 'phasegM'), cmap='gray')
+            plt.show()
+        else:
+            return
+
 
     @staticmethod
     def fft_display(fft):

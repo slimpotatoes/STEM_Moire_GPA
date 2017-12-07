@@ -7,7 +7,9 @@ import dm3_lib as dm3_lib'''
 
 
 def mask_classic(center, r, shape):
-    g_0 = [(shape[0] / 2 - center[0]) * np.ones(shape), (shape[1] / 2 - center[1]) * np.ones(shape)]
+    '''Do not forget event coordinate (x,y) should be switched compared to array indexing'''
+    g_0 = [(center[1] - 0.5 * shape[0]) / shape[0] * np.ones(shape),
+           (center[0] - 0.5 * shape[1]) / shape[1] * np.ones(shape)]
     mask = np.ndarray(shape=shape)
     '''Do not forget event coordinate (x,y) should be switched compared to array indexing'''
     for i in range(0, shape[1]):
@@ -20,7 +22,10 @@ def mask_classic(center, r, shape):
 
 
 def mask_gaussian(center, r, shape):
-    g_0 = [(shape[0] / 2 - center[0]) * np.ones(shape), (shape[1] / 2 - center[1]) * np.ones(shape)]
+    '''Do not forget event coordinate (x,y) should be switched compared to array indexing'''
+    g_0 = [(center[1] - 0.5 * shape[0]) / shape[0] * np.ones(shape),
+           (center[0] - 0.5 * shape[1]) / shape[1] * np.ones(shape)]
+    '''Do not forget event coordinate (x,y) should be switched compared to array indexing'''
     const = 1 / (2 * (2 / 3 * r) ** 2)
     mesh_x, mesh_y = np.meshgrid(np.arange(shape[0]), np.arange(shape[1]))
     delta_x = (mesh_x - center[0]) ** 2

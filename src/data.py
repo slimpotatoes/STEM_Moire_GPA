@@ -28,7 +28,6 @@ class SMGData(object):
             self.SMGData[gui_id]['phasegM'] = None
             self.SMGData[gui_id]['shiftg'] = None
             self.SMGData[gui_id]['gCuns'] = None
-            print(self.SMGData[gui_id])
         else:
             raise Exception('Key gui_id already exists, branch creation aborted')
 
@@ -60,7 +59,6 @@ class SMGData(object):
         if gui_id in self.SMGData.keys():
             if key in self.SMGData[gui_id].keys():
                     self.SMGData[gui_id][key] = a
-                    print(self.SMGData[gui_id])
             else:
                 raise Exception('Key is gui_id does not exist in the data structure')
         else:
