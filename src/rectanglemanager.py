@@ -26,6 +26,7 @@ class RectEditor(object):
     def connect(self):
         self.cidpress = self.fig.canvas.mpl_connect('button_press_event', self.on_press)
         self.cidrelease = self.fig.canvas.mpl_connect('button_release_event', self.on_release)
+        self.cidclose = self.fig.canvas.mpl_connect('close_event', self.window_closed)
 
     def on_press(self, event):
         if event.inaxes == self.axis:
@@ -44,3 +45,10 @@ class RectEditor(object):
             self.fig.canvas.draw()
         else:
             return
+
+    def window_closed(self, event):
+        self.fig.canvas.mpl_disconnect(self.cidpress)
+        self.fig.canvas.mpl_disconnect(self.cidrelease)
+        self.fig.canvas.mpl_disconnect(self.cidclose)
+        self.fig = None
+

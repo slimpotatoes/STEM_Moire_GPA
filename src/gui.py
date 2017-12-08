@@ -28,6 +28,10 @@ class SMGGUI(object):
         self.fig_SMHSim = None
         self.fig_GPA_M1 = None
         self.fig_GPA_M2 = None
+        self.fig_GPA_M1_ax = None
+        self.fig_GPA_M2_ax= None
+        self.rectangle_M1 = None
+        self.rectangle_M2 = None
         self.fig_NM = None
 #        self.fig_strain = plt.figure(num='Strain maps')
         self.mask =dict()
@@ -133,6 +137,37 @@ class SMGGUI(object):
 
     def guiphase(self, mask_id, datastruct):
 
+        def close_window(event):
+            if event.canvas.figure == self.fig_GPA_M1:
+                self.fig_GPA_M1.canvas.mpl_disconnect(cid1close)
+                self.fig_GPA_M1.canvas.mpl_disconnect(cid1draw)
+                self.fig_GPA_M1 = None
+            elif event.canvas.figure == self.fig_GPA_M2:
+                self.fig_GPA_M2.canvas.mpl_disconnect(cid2close)
+                #self.fig_GPA_M1.canvas.mpl_disconnect(cid2draw)
+                self.fig_GPA_M2 = None
+
+        def change_rectangle(event):
+            print(event.canvas.figure)
+            print(self.fig_GPA_M1)
+            print(self.fig_GPA_M2)
+            if event.canvas.figure == self.fig_GPA_M1 and self.fig_GPA_M2 != None:
+                self.rectangle_M1 = phaseref.rectangle
+                self.rectangle_M2.remove()
+                self.rectangle_M2 = Rectangle(self.rectangle_M1.get_xy(), self.rectangle_M1.get_width(),
+                                              self.rectangle_M1.get_height(), color='g', linewidth=3, fill=False)
+                self.fig_GPA_M2_ax.add_artist(self.rectangle_M2)
+                self.fig_GPA_M2.canvas.draw()
+            #elif event.canvas.figure == self.fig_GPA_M2 and self.fig_GPA_M1 != None:
+             #   self.rectangle_M2 = phaseref2.rectangle
+              #  self.rectangle_M1 = Rectangle(self.rectangle_M2.get_xy(), self.rectangle_M2.get_width(),
+               #                               self.rectangle_M2.get_height(), color='g', linewidth=3, fill=False)
+                #self.fig_GPA_M1_ax.add_artist(self.rectangle_M1)
+                #self.fig_GPA_M1.canvas.draw()
+            else:
+                return
+
+
         if mask_id == 'Mask1':
             if self.fig_GPA_M1 == None:
                 self.fig_GPA_M1 = plt.figure(num='GPA - Mask Red')
@@ -142,6 +177,8 @@ class SMGGUI(object):
                 self.rectangle_M1 = rectmanag.make_rectangle(self.fig_GPA_M1_ax, phase)
                 phaseref = rectmanag.RectEditor(self.fig_GPA_M1, self.fig_GPA_M1_ax, self.rectangle_M1)
                 phaseref.connect()
+                cid1close = self.fig_GPA_M1.canvas.mpl_connect('close_event', close_window)
+                cid1draw = self.fig_GPA_M1.canvas.mpl_connect('draw_event', change_rectangle)
                 plt.show()
             else:
                 self.fig_GPA_M1_ax.imshow(data.SMGData.load_g(datastruct, mask_id, 'phasegM'), cmap='gray')
@@ -153,8 +190,10 @@ class SMGGUI(object):
                 phase = data.SMGData.load_g(datastruct, mask_id, 'phasegM')
                 self.fig_GPA_M2_ax.imshow(phase, cmap='gray')
                 self.rectangle_M2 = rectmanag.make_rectangle(self.fig_GPA_M2_ax, phase)
-                phaseref = rectmanag.RectEditor(self.fig_GPA_M2, self.fig_GPA_M2_ax, self.rectangle_M2)
-                phaseref.connect()
+                #phaseref2 = rectmanag.RectEditor(self.fig_GPA_M2, self.fig_GPA_M2_ax, self.rectangle_M2)
+                #phaseref2.connect()
+                cid2close = self.fig_GPA_M2.canvas.mpl_connect('close_event', close_window)
+                #cid2draw = self.fig_GPA_M2.canvas.mpl_connect('draw_event', change_rectangle)
                 plt.show()
             else:
                 self.fig_GPA_M2_ax.imshow(data.SMGData.load_g(datastruct, mask_id, 'phasegM'), cmap='gray')
