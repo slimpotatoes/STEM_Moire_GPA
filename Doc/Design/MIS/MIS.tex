@@ -140,6 +140,9 @@ of the image in one direction\\
 \end{tabular} 
 \end{center}
 
+\wss{I like the introduction of the image space type.  This will help with the
+  specification.}
+
 \noindent
 The specification of \progname{} uses some derived data types: sequences, 
 strings, and
@@ -288,11 +291,22 @@ calculation (StrainCalc(id1,id2)). For that, I would need a new module that
 could reference the different maks and enable the user to navigate through them. 
 I didn't thought about that enough in advance and got stuck with that version. I 
 will improve that in the future.}
+\wss{An environment variable for the GUI would help your specification.  The
+  environment variable could have fields for SelectInput, SelectSimSMH, Close,
+  etc.  You could then write your specification in terms of the values of the
+  GUI environment variable.}
+
+\wss{This document is easier to read if every module starts on a new page.}
 
 \section{MIS of STEM Moir{\'e} GPA GUI Module (\texorpdfstring{\cref{MG:M_GUISMG}}))} \label{MIS_GUISMG}
 
 \noindent\textit{{\#} Specific GUI module to respect the requirements from the 
 SRS}\medskip
+
+\wss{I'm confused by there being both a control module and a GUI module.  It
+  seems that the GUI module has an environment variable like I was suggesting
+  above, which makes me think I missed the point of the previous module, or you
+  don't need the previous module?}
 
 \subsection{Module}
 GUI{\_}SMG
@@ -599,6 +613,16 @@ If the file format is not appropriate & $\Rightarrow$ badFileFormat\\
 \end{longtable*}
 \end{itemize}
 
+\wss{Your document has proven easy to navigate.  I was wondering what the type
+  is for $I_{\mathit{SMH}_{\text{exp}}}$, and following your documentation, I
+  easily found the answer in Section 19.  Since ISMHexp is a function from I to
+  R, how will it be possible for the resulting type to be anything other than R?
+  Thinking about this further, it is probably because for certain inputs the
+  function evaluation will not be real, like the square root of a negative
+  number.  This does seem like a situation that would come up, and your
+  programming language is going to generate an exception in those cases, so you
+  will be able to implement your proposed interface.  Looks good.}
+ 
 \noindent verifyp($p$):
 \begin{itemize}
 \item output: None
@@ -693,7 +717,14 @@ data : object
 
 \noindent SMHsim():
 \begin{itemize} 
-\item transition:
+\item transition: \wss{The idea of your data object providing a load method (or
+    read method) is fine.  However, if you want to simplify your documentation,
+    you could use the dot notation directly to access fields of your ADT.  You
+    could just write data.$I_{\mathit{SMH}_{\text{exp}}}$.  Since you have the
+    correct uses clause and state variable (data), you could think about
+    skipping the data part and just go with the name of the field directly.
+    Given the number of symbols you have though, your approach might be better
+    because it makes the connection explicit.}
 	\begin{enumerate}
 	\item Load the inputs from the data object
 	\begin{itemize}
@@ -1302,6 +1333,20 @@ $(\exists (x_0,y_0) \in \mathbb{R}^2 : f(x_0,y_0) \notin ]-\pi,\pi])\Rightarrow
 \section{MIS of Data Structure Module 
 (\texorpdfstring{\cref{MG:M_DataStruct}}))} \label{MIS_DataStruct}
 
+\wss{The role of your data structure module isn't entirely clear to me.  Many of
+  your modules have a data object as a state variable.  As far as I can tell,
+  each module only changes a few of the fields of the data object.  I don't see
+  a way to access the state variable data from outside the modules.  For
+  instance, the 2D\_Strain module calculates the strain and modifies the data
+  object, but the external world doesn't have an interface to actually get the
+  values from the data object.  Should your data object actually be a parameter
+  that is passed between modules?  You have documented data as an abstract
+  object, not an ADT, so this implies to me that there is only one data object
+  for the life of your program.  If this is the case, then you probably want to
+  remove data as a state variable.  The modules can change the state of the one
+  data object and anyone that needs to can read and write the data fields, as
+  appropriate.}
+
 \subsection{Module}
 DataStruct
 \subsection{Uses}
@@ -1322,6 +1367,8 @@ read{\_}g & id GUI object $\times$ string & object & - \\
 \hline
 \end{tabular}
 \end{center}
+
+\wss{I think in your spec  you changed read to load.}
 
 \subsection{Semantics}
 
@@ -1499,9 +1546,18 @@ MaskList
 
 \fi
 
+\wss{Great work!  I do not have the time (or the expertise) to review the
+  details, but everything I looked at had the required detail and the pieces fit
+  together.  My only real question is about the data object, as mentioned above
+  (in Section 19).  It would be great to do a proper review of the pieces of
+  your design with an actual expert.  If there is anyone in your lab that has an
+  interest, you might want to get their feedback.}
+
 \newpage
 
 \bibliographystyle{ieeetr}
 \bibliography{MIS}
+
+\wss{Missing bib items}
 
 \end{document}
