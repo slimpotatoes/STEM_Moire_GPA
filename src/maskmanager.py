@@ -11,13 +11,6 @@ class MaskCreator(object):
         self.image = image
         self.circle = None
 
-
-    def connect(self):
-        """connect for future use"""
-
-    def disconnect(self):
-        """disconnect for future use"""
-
     def make_circle(self, mask_id, colored='r', off_center=(0,0)):
         self.colored = colored
         self.off_center = off_center
@@ -40,12 +33,9 @@ class MaskEditor(object):
 
     def connect(self):
         'connect to all the events we need'
-        self.cidpress = self.artist.figure.canvas.mpl_connect(
-            'button_press_event', self.on_press)
-        self.cidrelease = self.artist.figure.canvas.mpl_connect(
-            'button_release_event', self.on_release)
-        self.cidmotion = self.artist.figure.canvas.mpl_connect(
-            'motion_notify_event', self.on_motion)
+        self.cidpress = self.artist.figure.canvas.mpl_connect('button_press_event', self.on_press)
+        self.cidrelease = self.artist.figure.canvas.mpl_connect('button_release_event', self.on_release)
+        self.cidmotion = self.artist.figure.canvas.mpl_connect('motion_notify_event', self.on_motion)
 
     def on_press(self, event):
         'on button press we will see if the mouse is over the artist and store some data'
@@ -80,7 +70,6 @@ class MaskEditor(object):
         if event.button == 3:
             x0, y0, xpress, ypress = self.press
             R = math.sqrt((event.xdata-x0) ** 2 + (event.ydata-y0) ** 2)
-            print(R)
         #print('x0=%f, xpress=%f, event.xdata=%f, dx=%f, x0+dx=%f' %
         #      (x0, xpress, event.xdata, dx, x0+dx))
             self.artist.set_radius(R)

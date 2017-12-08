@@ -7,9 +7,11 @@ import matplotlib.artist as artist
 from matplotlib.widgets import Button
 from matplotlib.widgets import TextBox
 from matplotlib_scalebar.scalebar import ScaleBar
+from matplotlib.patches import Rectangle
 import data as data
 import numpy as np
 import maskmanager as maskmanag
+import rectanglemanager as rectmanag
 
 
 class SMGGUI(object):
@@ -121,13 +123,6 @@ class SMGGUI(object):
         circle2 = smgmaskcreate.make_circle('Mask2', colored='b',off_center=(20,20))
         self.mask[circle1[0]] = circle1[1]
         self.mask[circle2[0]] = circle2[1]
-        print(self.mask)
-        '''
-        self.circles = []
-        for artist in self.fig_SMHsim_axis.artists:
-            print(artist)
-            smgmaskedit = maskmanag.MaskEditor(artist)
-            self.circles.append(smgmaskedit)'''
         self.circles = []
         for el in self.fig_SMHsim_axis.artists:
             print(el)
@@ -137,16 +132,33 @@ class SMGGUI(object):
         plt.show()
 
     def guiphase(self, mask_id, datastruct):
+
         if mask_id == 'Mask1':
-            self.fig_GPA_M1 = plt.figure(num='GPA - Mask Red')
-            self.fig_GPA_M1_ax = self.fig_GPA_M1.add_subplot(1, 1, 1)
-            self.fig_GPA_M1_ax.imshow(data.SMGData.load_g(datastruct, mask_id, 'phasegM'), cmap='gray')
-            plt.show()
+            if self.fig_GPA_M1 == None:
+                self.fig_GPA_M1 = plt.figure(num='GPA - Mask Red')
+                self.fig_GPA_M1_ax = self.fig_GPA_M1.add_subplot(1, 1, 1)
+                phase = data.SMGData.load_g(datastruct, mask_id, 'phasegM')
+                self.fig_GPA_M1_ax.imshow(phase, cmap='gray')
+                self.rectangle_M1 = rectmanag.make_rectangle(self.fig_GPA_M1_ax, phase)
+                phaseref = rectmanag.RectEditor(self.fig_GPA_M1, self.fig_GPA_M1_ax, self.rectangle_M1)
+                phaseref.connect()
+                plt.show()
+            else:
+                self.fig_GPA_M1_ax.imshow(data.SMGData.load_g(datastruct, mask_id, 'phasegM'), cmap='gray')
+                plt.draw()
         if mask_id == 'Mask2':
-            self.fig_GPA_M2 = plt.figure(num='GPA - Mask Blue')
-            self.fig_GPA_M2_ax = self.fig_GPA_M2.add_subplot(1, 1, 1)
-            self.fig_GPA_M2_ax.imshow(data.SMGData.load_g(datastruct, mask_id, 'phasegM'), cmap='gray')
-            plt.show()
+            if self.fig_GPA_M2 == None:
+                self.fig_GPA_M2 = plt.figure(num='GPA - Mask Blue')
+                self.fig_GPA_M2_ax = self.fig_GPA_M2.add_subplot(1, 1, 1)
+                phase = data.SMGData.load_g(datastruct, mask_id, 'phasegM')
+                self.fig_GPA_M2_ax.imshow(phase, cmap='gray')
+                self.rectangle_M2 = rectmanag.make_rectangle(self.fig_GPA_M2_ax, phase)
+                phaseref = rectmanag.RectEditor(self.fig_GPA_M2, self.fig_GPA_M2_ax, self.rectangle_M2)
+                phaseref.connect()
+                plt.show()
+            else:
+                self.fig_GPA_M2_ax.imshow(data.SMGData.load_g(datastruct, mask_id, 'phasegM'), cmap='gray')
+                plt.draw()
         else:
             return
 
@@ -174,5 +186,4 @@ class SMGGUI(object):
             if circle.mask_selected is not None:
                 self.mask_selected = circle.mask_selected
                 print('Mask selected')
-                print(self.mask_selected)
                 return self.mask_selected
