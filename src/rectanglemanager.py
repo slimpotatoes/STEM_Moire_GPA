@@ -22,6 +22,7 @@ class RectEditor(object):
         self.y0 = 0
         self.x1 = 0
         self.y1 = 0
+        self.done = 0
 
     def connect(self):
         self.cidpress = self.fig.canvas.mpl_connect('button_press_event', self.on_press)
@@ -30,7 +31,7 @@ class RectEditor(object):
 
     def on_press(self, event):
         if event.inaxes == self.axis:
-            print(event.xdata, event.ydata)
+            self.done = 1
             self.x0, self.y0 = event.xdata, event.ydata
         else:
             return
@@ -51,4 +52,13 @@ class RectEditor(object):
         self.fig.canvas.mpl_disconnect(self.cidrelease)
         self.fig.canvas.mpl_disconnect(self.cidclose)
         self.fig = None
+
+    def remove_rectangle(self):
+        self.rectangle.remove()
+        self.fig.canvas.draw()
+
+    def create_rectangle(self, rec):
+        self.rectangle = Rectangle(rec.get_xy(), rec.get_width(), rec.get_height(), color='g', linewidth=3, fill=False)
+        self.axis.add_artist(self.rectangle)
+        self.fig.canvas.draw()
 
