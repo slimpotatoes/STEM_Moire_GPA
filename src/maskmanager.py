@@ -3,15 +3,17 @@ from matplotlib.patches import Circle
 import matplotlib.artist as artist
 import math
 
+
 class MaskCreator(object):
 
     def __init__(self, axis, image):
-        """add when needed"""
         self.axis = axis
         self.image = image
         self.circle = None
+        self.colored = None
+        self.off_center = None
 
-    def make_circle(self, mask_id, colored='r', off_center=(0,0)):
+    def make_circle(self, mask_id, colored='r', off_center=(0, 0)):
         self.colored = colored
         self.off_center = off_center
         """Create circle gui object"""
@@ -21,7 +23,8 @@ class MaskCreator(object):
         circle_artist.set_gid(mask_id)
         self.axis.figure.canvas.draw()
         print(self.circle)
-        return artist.Artist.get_gid(self.circle), (self.circle.center, self.circle.radius)
+        return Circle.get_gid(self.circle), (self.circle.center, self.circle.radius),
+
 
 class MaskEditor(object):
 
@@ -30,17 +33,18 @@ class MaskEditor(object):
         self.press = None
         self.mask_selected = None
         self.circle = None
+        self.cidpress = None
+        self.cidrelease = None
+        self.cidmotion = None
 
     def connect(self):
-        'connect to all the events we need'
         self.cidpress = self.artist.figure.canvas.mpl_connect('button_press_event', self.on_press)
         self.cidrelease = self.artist.figure.canvas.mpl_connect('button_release_event', self.on_release)
         self.cidmotion = self.artist.figure.canvas.mpl_connect('motion_notify_event', self.on_motion)
 
     def on_press(self, event):
-        'on button press we will see if the mouse is over the artist and store some data'
-        if event.inaxes != self.artist.axes: return
-
+        if event.inaxes != self.artist.axes:
+            return
         contains, attrd = self.artist.contains(event)
         if not contains:
             self.artist.fill = True
@@ -55,35 +59,26 @@ class MaskEditor(object):
         self.mask_selected = artist.Artist.get_gid(self.artist)
 
     def on_motion(self, event):
-        'on motion we will move the artist if the mouse is over us'
-        if self.press is None: return
-        if event.inaxes != self.artist.axes: return
-
+        if self.press is None:
+            return
+        if event.inaxes != self.artist.axes:
+            return
         if event.button == 1:
             x0, y0, xpress, ypress = self.press
             dx = event.xdata - xpress
             dy = event.ydata - ypress
-        #print('x0=%f, xpress=%f, event.xdata=%f, dx=%f, x0+dx=%f' %
-        #      (x0, xpress, event.xdata, dx, x0+dx))
             self.artist.center = x0 + dx, y0 + dy
-
         if event.button == 3:
             x0, y0, xpress, ypress = self.press
-            R = math.sqrt((event.xdata-x0) ** 2 + (event.ydata-y0) ** 2)
-        #print('x0=%f, xpress=%f, event.xdata=%f, dx=%f, x0+dx=%f' %
-        #      (x0, xpress, event.xdata, dx, x0+dx))
-            self.artist.set_radius(R)
-
+            r = math.sqrt((event.xdata-x0) ** 2 + (event.ydata-y0) ** 2)
+            self.artist.set_radius(r)
         self.artist.figure.canvas.draw()
 
-
     def on_release(self, event):
-        'on release we reset the press data'
         self.press = None
         self.artist.figure.canvas.draw()
 
     def disconnect(self):
-        'disconnect all the stored connection ids'
         self.artist.figure.canvas.mpl_disconnect(self.cidpress)
         self.artist.figure.canvas.mpl_disconnect(self.cidrelease)
         self.artist.figure.canvas.mpl_disconnect(self.cidmotion)

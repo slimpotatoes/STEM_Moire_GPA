@@ -41,8 +41,6 @@ def main():
             uref.update_zerostrain(mask_id, smgdata)
             smggui.update_phase(mask_id, smgdata)
 
-        print('Uref')
-
     def flow_convert(event):
         """Moire to crystal data conversion Process"""
         if not event.inaxes == smggui.event_convert.ax:

@@ -13,7 +13,6 @@ def gpa(mask_id, datastruct):
     data.SMGData.store_g(datastruct, mask_id, 'gMuns', g_uns)
     masked_ft_ismh_exp = np.multiply(m, np.fft.fftshift(ft_ismh_exp))
     phase_g_m = np.angle(np.fft.ifft2(np.fft.ifftshift(masked_ft_ismh_exp)))
-    '''GOOD jusque la'''
     g_m = [1 / (2 * np.pi) * np.gradient(unwrap_phase(phase_g_m))[0],
            1 / (2 * np.pi) * np.gradient(unwrap_phase(phase_g_m))[1]]
     delta_g_m = np.subtract(g_m, g_uns)

@@ -1,16 +1,14 @@
 # Module Rectangle Manager that is used by GUI
 from matplotlib.patches import Rectangle
-import matplotlib.artist as artist
-import matplotlib.patches as patch
-import math
 
 
 def make_rectangle(axis, image, colored='g'):
     rectangle = Rectangle((image.shape[0] / 2 - image.shape[1] / 8, image.shape[0] / 2 + image.shape[1] / 8),
-                               image.shape[0] / 4, image.shape[1] / 4, color=colored, linewidth=3, fill=False)
+                          image.shape[0] / 4, image.shape[1] / 4, color=colored, linewidth=3, fill=False)
     axis.add_artist(rectangle)
     axis.figure.canvas.draw()
     return rectangle
+
 
 class RectEditor(object):
 
@@ -23,6 +21,9 @@ class RectEditor(object):
         self.x1 = 0
         self.y1 = 0
         self.done = 0
+        self.cidpress = None
+        self.cidrelease = None
+        self.cidclose = None
 
     def connect(self):
         self.cidpress = self.fig.canvas.mpl_connect('button_press_event', self.on_press)
@@ -48,10 +49,11 @@ class RectEditor(object):
             return
 
     def window_closed(self, event):
-        self.fig.canvas.mpl_disconnect(self.cidpress)
-        self.fig.canvas.mpl_disconnect(self.cidrelease)
-        self.fig.canvas.mpl_disconnect(self.cidclose)
-        self.fig = None
+        if event.canvas.figure == self.fig:
+            self.fig.canvas.mpl_disconnect(self.cidpress)
+            self.fig.canvas.mpl_disconnect(self.cidrelease)
+            self.fig.canvas.mpl_disconnect(self.cidclose)
+            self.fig = None
 
     def remove_rectangle(self):
         self.rectangle.remove()
@@ -61,4 +63,3 @@ class RectEditor(object):
         self.rectangle = Rectangle(rec.get_xy(), rec.get_width(), rec.get_height(), color='g', linewidth=3, fill=False)
         self.axis.add_artist(self.rectangle)
         self.fig.canvas.draw()
-

@@ -34,4 +34,3 @@ def smh_sim(datastruct):
                         int(0.5*(ft_ismh_sim.shape[0] - tile)):int(0.5*(ft_ismh_sim.shape[0] + tile)),
                         int(0.5*(ft_ismh_sim.shape[0] - tile)):int(0.5*(ft_ismh_sim.shape[0] + tile))])
     data.SMGData.store(datastruct, 'FTISMHsimDisplay', ft_ic_square)
-
