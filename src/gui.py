@@ -13,6 +13,7 @@ import data as data
 import numpy as np
 import maskmanager as maskmanag
 import rectanglemanager as rectmanag
+import unstrainref as uref
 
 
 class SMGGUI(object):
@@ -105,7 +106,7 @@ class SMGGUI(object):
         ftsmhsimaxis = ftsmhsim.add_subplot(1,1,1)
         ftsmhsimaxis.imshow(ZERO, cmap="gray", alpha=1)
         max_general = np.max(np.max(np.max(np.max(np.log1p(fticsquare)))))
-        print(max_general)
+
         count = 0
         for i in range(0, fticsquare.shape[0]):
             for j in range(0, fticsquare.shape[1]):
@@ -130,7 +131,6 @@ class SMGGUI(object):
         self.mask[circle2[0]] = circle2[1]
         self.circles = []
         for el in self.fig_SMHsim_axis.artists:
-            print(el)
             smgmaskedit = maskmanag.MaskEditor(el)
             self.circles.append(smgmaskedit)
 
@@ -154,11 +154,15 @@ class SMGGUI(object):
                 self.phaseref2.remove_rectangle()
                 rectangle = self.fig_GPA_M1_ax.findobj(patch.Rectangle)[0]
                 self.phaseref2.create_rectangle(rectangle)
+                U = self.reference_extract(rectangle)
+                data.SMGData.store(datastruct, 'Uref', U)
             elif event.canvas.figure == self.fig_GPA_M2 and self.fig_GPA_M1 != None and self.phaseref2.done == 1:
                 self.phaseref2.done = 0
                 self.phaseref.remove_rectangle()
                 rectangle = self.fig_GPA_M2_ax.findobj(patch.Rectangle)[0]
                 self.phaseref.create_rectangle(rectangle)
+                U = self.reference_extract(rectangle)
+                data.SMGData.store(datastruct, 'Uref', U)
             else:
                 return
 
@@ -168,7 +172,7 @@ class SMGGUI(object):
                 self.fig_GPA_M1 = plt.figure(num='GPA - Mask Red')
                 self.fig_GPA_M1_ax = self.fig_GPA_M1.add_subplot(1, 1, 1)
                 phase = data.SMGData.load_g(datastruct, mask_id, 'phasegM')
-                self.fig_GPA_M1_ax.imshow(phase, cmap='gray')
+                self.image_mask_1 = self.fig_GPA_M1_ax.imshow(phase, cmap='gray')
                 self.rectangle_M1 = rectmanag.make_rectangle(self.fig_GPA_M1_ax, phase)
                 self.phaseref = rectmanag.RectEditor(self.fig_GPA_M1, self.fig_GPA_M1_ax, self.rectangle_M1)
                 self.phaseref.connect()
@@ -183,7 +187,7 @@ class SMGGUI(object):
                 self.fig_GPA_M2 = plt.figure(num='GPA - Mask Blue')
                 self.fig_GPA_M2_ax = self.fig_GPA_M2.add_subplot(1, 1, 1)
                 phase = data.SMGData.load_g(datastruct, mask_id, 'phasegM')
-                self.fig_GPA_M2_ax.imshow(phase, cmap='gray')
+                self.image_mask_2 = self.fig_GPA_M2_ax.imshow(phase, cmap='gray')
                 self.rectangle_M2 = rectmanag.make_rectangle(self.fig_GPA_M2_ax, phase)
                 self.phaseref2 = rectmanag.RectEditor(self.fig_GPA_M2, self.fig_GPA_M2_ax, self.rectangle_M2)
                 self.phaseref2.connect()
@@ -195,7 +199,6 @@ class SMGGUI(object):
                 plt.draw()
         else:
             return
-
 
     @staticmethod
     def fft_display(fft):
@@ -221,3 +224,27 @@ class SMGGUI(object):
                 self.mask_selected = circle.mask_selected
                 print('Mask selected')
                 return self.mask_selected
+
+    def reference_extract(self, rectangle):
+        x0, y0 = rectangle.get_xy()
+        x1, y1 = x0 + rectangle.get_height(), y0 + rectangle.get_width()
+        print(int(x0), int(y0), int(x1), int(y1))
+        return int(x0), int(y0), int(x1), int(y1)
+
+    def update_phase(self, mask_id, datastruct):
+        if mask_id == 'Mask1':
+            phase = data.SMGData.load_g(datastruct, mask_id, 'phasegM')
+            print('Mask 1 update')
+            print(self.image_mask_1)
+            self.image_mask_1.remove()
+            self.fig_GPA_M1_ax.imshow(phase, cmap='gray')
+            self.fig_GPA_M1.canvas.draw()
+        elif mask_id == 'Mask2':
+            print('Mask 2 update')
+            phase = data.SMGData.load_g(datastruct, mask_id, 'phasegM')
+            print(self.image_mask_2)
+            self.image_mask_2.remove()
+            self.fig_GPA_M2_ax.imshow(phase, cmap='gray')
+            self.fig_GPA_M2.canvas.draw()
+        else:
+            pass

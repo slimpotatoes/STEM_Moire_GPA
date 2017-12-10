@@ -5,6 +5,7 @@ import data as data
 import userinput as userinput
 import smhsimulation as smhsimu
 import gpa as gpa
+import unstrainref as uref
 
 
 def main():
@@ -36,6 +37,10 @@ def main():
         """Unstrain reference definition Process"""
         if not event.inaxes == smggui.event_ref.ax:
             raise Exception('Improper ref axis')
+        for mask_id in ['Mask1', 'Mask2']:
+            uref.update_zerostrain(mask_id, smgdata)
+            smggui.update_phase(mask_id, smgdata)
+
         print('Uref')
 
     def flow_convert(event):
