@@ -24,6 +24,7 @@ class SMGData(object):
             self.SMGData[gui_id] = dict()
             self.SMGData[gui_id]['Mask'] = None
             self.SMGData[gui_id]['gMuns'] = None
+            self.SMGData[gui_id]['phaseraw'] = None
             self.SMGData[gui_id]['deltagM'] = None
             self.SMGData[gui_id]['phasegM'] = None
             self.SMGData[gui_id]['shiftg'] = None

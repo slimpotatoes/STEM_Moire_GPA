@@ -227,7 +227,7 @@ class SMGGUI(object):
 
     def reference_extract(self, rectangle):
         x0, y0 = rectangle.get_xy()
-        x1, y1 = x0 + rectangle.get_height(), y0 + rectangle.get_width()
+        x1, y1 = x0 + rectangle.get_width(), y0 + rectangle.get_height()
         print(int(x0), int(y0), int(x1), int(y1))
         return int(x0), int(y0), int(x1), int(y1)
 
@@ -235,15 +235,15 @@ class SMGGUI(object):
         if mask_id == 'Mask1':
             phase = data.SMGData.load_g(datastruct, mask_id, 'phasegM')
             print('Mask 1 update')
-            print(self.image_mask_1)
-            self.image_mask_1.remove()
+            #print(self.image_mask_1)
+            #self.image_mask_1.remove()
             self.fig_GPA_M1_ax.imshow(phase, cmap='gray')
             self.fig_GPA_M1.canvas.draw()
         elif mask_id == 'Mask2':
             print('Mask 2 update')
             phase = data.SMGData.load_g(datastruct, mask_id, 'phasegM')
-            print(self.image_mask_2)
-            self.image_mask_2.remove()
+            #print(self.image_mask_2)
+            #self.image_mask_2.remove()
             self.fig_GPA_M2_ax.imshow(phase, cmap='gray')
             self.fig_GPA_M2.canvas.draw()
         else:

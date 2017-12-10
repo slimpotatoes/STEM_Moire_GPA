@@ -38,6 +38,7 @@ def main():
         if not event.inaxes == smggui.event_ref.ax:
             raise Exception('Improper ref axis')
         for mask_id in ['Mask1', 'Mask2']:
+            print('Flow ref mask id', mask_id)
             uref.update_zerostrain(mask_id, smgdata)
             smggui.update_phase(mask_id, smgdata)
 
