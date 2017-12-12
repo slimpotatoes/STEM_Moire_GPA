@@ -22,7 +22,7 @@ def strain_calculation(mask_id_1, mask_id_2, datastruct):
     '''g_ref = np.array([[g_c_uns_1[0, :, :], g_c_uns_2[0, :, :]],
                       [g_c_uns_1[1, :, :], g_c_uns_2[1, :, :]]])
     delta_g = np.array([[delta_g_1[0, :, :], delta_g_2[0, :, :]],
-                        [delta_g_1[0, :, :], delta_g_2[0, :, :]]])'''
+                        [delta_g_1[1, :, :], delta_g_2[1, :, :]]])'''
 
     # Data rotated by 90 degrees R = ([0, -1],[1. 0])
     '''g_ref = np.array([[g_c_uns_2[0, :, :], (-1) * g_c_uns_1[0, :, :]],
@@ -31,10 +31,16 @@ def strain_calculation(mask_id_1, mask_id_2, datastruct):
                         [delta_g_2[1, :, :], (-1) * delta_g_1[1, :, :]]])'''
 
     # Data rotated by 90 degrees R = ([0, 1],[-1. 0]) --- Base rotation not vector rotation
-    g_ref = np.array([[(-1) * g_c_uns_2[0, :, :], g_c_uns_1[0, :, :]],
+    '''g_ref = np.array([[(-1) * g_c_uns_2[0, :, :], g_c_uns_1[0, :, :]],
                       [(-1) * g_c_uns_2[1, :, :], g_c_uns_1[1, :, :]]])
     delta_g = np.array([[(-1) * delta_g_2[0, :, :], delta_g_1[0, :, :]],
-                        [(-1) * delta_g_2[1, :, :], delta_g_1[1, :, :]]])
+                        [(-1) * delta_g_2[1, :, :], delta_g_1[1, :, :]]])'''
+
+    # Raw data adapted to base rotation
+    g_ref = np.array([[(-1) * g_c_uns_1[1, :, :], (-1) * g_c_uns_2[1, :, :]],
+                      [g_c_uns_1[0, :, :], g_c_uns_2[0, :, :]]])
+    delta_g = np.array([[(-1) * delta_g_1[1, :, :], (-1) * delta_g_2[1, :, :]],
+                        [delta_g_1[0, :, :], delta_g_2[0, :, :]]])
 
     print(g_ref.shape)
     print(delta_g.shape)
