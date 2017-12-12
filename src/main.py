@@ -1,4 +1,22 @@
-# STEM Moire GPA Control Module
+# ############################# #
+#                               #
+#    STEM Moire GPA Software    #
+#                               #
+# ############################# #
+#
+# #####################################################################################
+
+# Python script calculating the 2D relative strain maps from a STEM Moire hologram.
+# Alexandre POFELSKI <pofelska@mcmaster.ca>
+# https://github.com/slimpotatoes/STEM_Moire_GPA
+# v.1.0.0
+# 12 December 2017
+#
+# #####################################################################################
+
+
+# STEM Moire GPA control Module
+
 import matplotlib.pyplot as plt
 import gui as gui
 import data as data
@@ -17,7 +35,8 @@ def main():
         """Input Process"""
         if not event.inaxes == smggui.event_input.ax:
             raise Exception('Improper input axis')
-        userinput.load_files(smgdata)
+        file_path_smh, file_path_ic= smggui.open_files()
+        userinput.load_files(file_path_smh, file_path_ic, smgdata)
         smggui.guismhexp(smgdata)
 
     def flow_smhsim(event):
@@ -36,7 +55,7 @@ def main():
         smggui.guiphase(mask_selected, smgdata)
 
     def flow_ref(event):
-        """Unstrain reference definition Process"""
+        """Unstrained reference definition Process"""
         if not event.inaxes == smggui.event_ref.ax:
             raise Exception('Improper ref axis')
         for mask_id in ['Mask1', 'Mask2']:
@@ -59,16 +78,15 @@ def main():
         strain.strain_calculation('Mask1', 'Mask2', smgdata)
         smggui.guistrain(smgdata)
 
-
     """Creation of the GUI and the Data object"""
     smggui = gui.SMGGUI()
     smgdata = data.SMGData()
 
-    """Call of the GUI module to pop up the initial windows for the user"""
+    """Call of the GUI module functions to pop up the initial windows for the user"""
     smggui.guiconv()
     smggui.guiflow()
 
-    """Connection of a the event "button clicked by the user" to a function"""
+    """Connection of the event "button clicked by the user" to a function"""
     smggui.event_input.on_clicked(flow_input)
     smggui.event_smhsim.on_clicked(flow_smhsim)
     smggui.event_gpa.on_clicked(flow_gpa)

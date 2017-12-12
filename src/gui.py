@@ -5,6 +5,7 @@ import matplotlib.cm as cm
 import matplotlib.colors as colors
 import matplotlib.artist as artist
 import matplotlib.patches as patch
+from tkinter import filedialog
 from matplotlib.widgets import Button
 from matplotlib.widgets import TextBox
 from matplotlib_scalebar.scalebar import ScaleBar
@@ -317,3 +318,9 @@ class SMGGUI(object):
             self.fig_GPA_M2.canvas.draw()
         else:
             pass
+
+    @staticmethod
+    def open_files():
+        file_path_smh = filedialog.askopenfilename(title="Load the STEM Moire hologram")
+        file_path_ic = filedialog.askopenfilename(title="Load the reference image")
+        return file_path_smh, file_path_ic

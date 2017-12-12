@@ -1,15 +1,12 @@
 # Input Module
-from tkinter import filedialog
 import dm3_lib as dm3_lib
 import numpy as np
 import data as data
 
 
-def load_files(datastruct):
-    """Load the files by asking the user the filepath and store the appropriate data in the data structure object.
-    Before storing, the data are verified"""
-    file_path_smh = filedialog.askopenfilename(title="Load the STEM Moire hologram")
-    file_path_ic = filedialog.askopenfilename(title="Load the reference image")
+def load_files(file_path_smh, file_path_ic, datastruct):
+    """Load the files by asking the controller the filepaths smh and ic provided by the user and store the appropriate
+    data in the data structure object (dictionary). Before storing, the data are verified"""
     dm3_meta_smh = dm3_lib.DM3(file_path_smh)
     dm3_meta_ic = dm3_lib.DM3(file_path_ic)
     verify_i(dm3_meta_smh.imagedata, dm3_meta_ic.imagedata)
