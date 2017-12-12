@@ -7,6 +7,7 @@ import smhsimulation as smhsimu
 import gpa as gpa
 import unstrainref as uref
 import conversion as conversion
+import straincalc as strain
 
 
 def main():
@@ -55,7 +56,9 @@ def main():
         """Strain tensor calculation from two non collinear crystalline wave vector Process"""
         if not event.inaxes == smggui.event_strain.ax:
             raise Exception('Improper strain axis')
-        print('strain')
+        strain.strain_calculation('Mask1', 'Mask2', smgdata)
+        smggui.guistrain(smgdata)
+
 
     """Creation of the GUI and the Data object"""
     smggui = gui.SMGGUI()

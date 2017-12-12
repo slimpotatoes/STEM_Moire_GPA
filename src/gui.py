@@ -13,7 +13,6 @@ import data as data
 import numpy as np
 import maskmanager as maskmanag
 import rectanglemanager as rectmanag
-import unstrainref as uref
 
 
 class SMGGUI(object):
@@ -35,7 +34,7 @@ class SMGGUI(object):
         self.rectangle_M1 = None
         self.rectangle_M2 = None
         self.fig_NM = None
-#        self.fig_strain = plt.figure(num='Strain maps')
+        self.fig_strain = None
         self.mask =dict()
         self.mask_selected = None
         self.h_1 = 0
@@ -256,6 +255,19 @@ class SMGGUI(object):
                 plt.draw()
         else:
             return
+
+    def guistrain(self, datastruct):
+        self.fig_strain = plt.figure(num='Strain maps')
+        self.fig_strain.add_subplot(2, 2, 1).imshow(data.SMGData.load(datastruct,'Exx'), cmap='bwr', vmin=-0.02,
+                                                    vmax=0.02)
+        self.fig_strain.add_subplot(2, 2, 2).imshow(data.SMGData.load(datastruct, 'Eyy'), cmap='bwr', vmin=-0.02,
+                                                    vmax=0.02)
+        self.fig_strain.add_subplot(2, 2, 3).imshow(data.SMGData.load(datastruct, 'Exy'), cmap='bwr', vmin=-0.02,
+                                                    vmax=0.02)
+        self.fig_strain.add_subplot(2, 2, 4).imshow(data.SMGData.load(datastruct, 'Rxy'), cmap='bwr', vmin=-0.02,
+                                                    vmax=0.02)
+        plt.show()
+
 
     @staticmethod
     def fft_display(fft):
