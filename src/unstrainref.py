@@ -31,16 +31,16 @@ def update_zerostrain(mask_id, datastruct):
     delta_g_m = data.SMGData.load_g(datastruct, mask_id, 'deltagM')
     g_uns = data.SMGData.load_g(datastruct, mask_id, 'gMuns')
     phase = data.SMGData.load_g(datastruct, mask_id, 'phaseraw')
-    print('deltagM', delta_g_m.shape)
-    print('gMuns', g_uns.shape, g_uns)
-    print('phasegM', phase.shape)
+    # print('deltagM', delta_g_m.shape)
+    # print('gMuns', g_uns.shape, g_uns)
+    # print('phasegM', phase.shape)
 
     # Restrain on U
     phase_u = phase[u[1]:u[3], u[0]:u[2]]
     delta_g_m_u = delta_g_m[:, u[1]:u[3], u[0]:u[2]]
     delta_g_model_u = np.array([0, 0])
-    print('Restriction on u')
-    print('deltag', delta_g_m_u.shape)
+    # print('Restriction on u')
+    # print('deltag', delta_g_m_u.shape)
 
     """fig = plt.figure()
     fig.add_subplot(1, 3, 1).imshow(delta_g_m_u[0, :, :])
@@ -62,8 +62,8 @@ def update_zerostrain(mask_id, datastruct):
     # Recalculate phase and g unstrain with updated reference on the entire image
     g_uns_update = g_uns + delta_g_model_3d
     delta_g_m_update = delta_g_m - delta_g_model_3d
-    print('guns_updated', g_uns_update.shape, g_uns_update)
-    print('deltag_updated', delta_g_m_update.shape, delta_g_m_update)
+    # print('guns_updated', g_uns_update.shape, g_uns_update)
+    # print('deltag_updated', delta_g_m_update.shape, delta_g_m_update)
 
     # Store the updated data
     data.SMGData.store_g(datastruct, mask_id, 'gMuns', g_uns_update)

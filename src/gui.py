@@ -38,6 +38,10 @@ class SMGGUI(object):
 #        self.fig_strain = plt.figure(num='Strain maps')
         self.mask =dict()
         self.mask_selected = None
+        self.h_1 = 0
+        self.h_2 = 0
+        self.v_1 = 0
+        self.v_2 = 0
 
     def guiflow(self):
         self.fig_GUIFlow = plt.figure(num='SMG Flow', figsize=(2, 5))
@@ -50,11 +54,64 @@ class SMGGUI(object):
         self.event_strain = Button(self.fig_GUIFlow.add_axes(self.fig_GUIFlow.add_subplot(gs_button[5, 0])), 'Strain')
 
     def guiconv(self):
-        self.fig_NM = plt.figure(num='(n,m) shift')
-        TextBox(self.fig_NM.add_axes(plt.subplot(self.fig_NM.add_subplot(2, 1, 1))),
-                'Horizontal shift', initial='0', label_pad=0.01)
-        TextBox(self.fig_NM.add_axes(plt.subplot(self.fig_NM.add_subplot(2, 1, 2))),
-                'Vertical shift', initial='0', label_pad=0.01)
+
+        def collect_shift_h1(text):
+            if text != '':
+                if isinstance(int(text), int) == True:
+                    self.h_1 = int(text)
+                else:
+                    return
+            else:
+                return
+
+        def collect_shift_v1(text):
+            if text != '':
+                if isinstance(int(text), int) == True:
+                    self.v_1 = int(text)
+                else:
+                    return
+            else:
+                return
+
+        def collect_shift_h2(text):
+            if text != '':
+                if isinstance(int(text), int) == True:
+                    self.h_2 = int(text)
+                else:
+                    return
+            else:
+                return
+
+        def collect_shift_v2(text):
+            if text != '':
+                if isinstance(int(text), int) == True:
+                    self.v_2 = int(text)
+                else:
+                    return
+            else:
+                return
+
+        self.fig_NM = plt.figure(figsize=(1.2,2), num='(n,m) shift')
+        fig_ax_text_1 = self.fig_NM.add_axes(plt.axes([0.1, 0.8, 0.8, 0.1]))
+        fig_ax_text_2 = self.fig_NM.add_axes(plt.axes([0.1, 0.4, 0.8, 0.1]))
+        fig_ax_text_1.set_axis_off()
+        fig_ax_text_1.format_coord = lambda x, y: ""
+        fig_ax_text_1.text(0, 0.2, 'Shift related to the Red mask')
+        fig_ax_text_2.set_axis_off()
+        fig_ax_text_2.text(0, 0.2, 'Shift related to the Blue mask')
+        fig_ax_text_2.format_coord = lambda x, y: ""
+        self.textbox_h_1 = TextBox(self.fig_NM.add_axes(plt.axes([0.6, 0.65, 0.2, 0.1])),
+                                   'Horizontal shift :', initial='0', label_pad=.2)
+        self.textbox_v_1 = TextBox(self.fig_NM.add_axes(plt.axes([0.6, 0.55, 0.2, 0.1])),
+                                   'Vertical shift :', initial='0', label_pad=0.2)
+        self.textbox_h_2 = TextBox(self.fig_NM.add_axes(plt.axes([0.6, 0.25, 0.2, 0.1])),
+                                  'Horizontal shift :', initial='0', label_pad=.2)
+        self.textbox_v_2 = TextBox(self.fig_NM.add_axes(plt.axes([0.6, 0.15, 0.2, 0.1])),
+                                  'Vertical shift :', initial='0', label_pad=0.2)
+        id1h = self.textbox_h_1.on_text_change(collect_shift_h1)
+        id1v = self.textbox_h_2.on_text_change(collect_shift_v1)
+        id2h = self.textbox_v_1.on_text_change(collect_shift_h2)
+        id2v = self.textbox_v_2.on_text_change(collect_shift_v2)
 
     def guismhexp(self, datastruct):
         self.fig_SMHexp = plt.figure(num='SMH and reference image')

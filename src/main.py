@@ -6,6 +6,7 @@ import userinput as userinput
 import smhsimulation as smhsimu
 import gpa as gpa
 import unstrainref as uref
+import conversion as conversion
 
 
 def main():
@@ -46,7 +47,9 @@ def main():
         """Moire to crystal data conversion Process"""
         if not event.inaxes == smggui.event_convert.ax:
             raise Exception('Improper convert axis')
-        print('convert')
+        print(smggui.h_1)
+        conversion.conversion('Mask1', smggui.h_1, smggui.v_1, smgdata)
+        conversion.conversion('Mask2', smggui.h_2, smggui.v_2, smgdata)
 
     def flow_strain(event):
         """Strain tensor calculation from two non collinear crystalline wave vector Process"""
