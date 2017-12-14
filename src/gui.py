@@ -12,8 +12,8 @@ from matplotlib_scalebar.scalebar import ScaleBar
 from matplotlib.patches import Rectangle
 import data as data
 import numpy as np
-import maskmanager as maskmanag
-import rectanglemanager as rectmanag
+import guimaskmanager as maskmanag
+import guirectanglemanager as rectmanag
 
 
 class SMGGUI(object):
