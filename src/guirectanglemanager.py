@@ -1,4 +1,6 @@
 # Module Rectangle Manager that is used by GUI
+
+
 from matplotlib.patches import Rectangle
 
 

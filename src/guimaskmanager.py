@@ -1,4 +1,6 @@
 # Module Mask Manager that is used by GUI
+
+
 from matplotlib.patches import Circle
 import matplotlib.artist as artist
 import math

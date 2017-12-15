@@ -1,4 +1,6 @@
 # Data Structure Module
+
+
 class SMGData(object):
     """Module storing and loading intermediate data used during the processing"""
 
