@@ -86,6 +86,8 @@ urlcolor=cyan          % color of external links
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 29/11/2017 & 1.0 & MIS First Draft\\
+15/12/2017 & 1.1 & Correction of matrices expression in 
+\cref{MIS_StrainCalc}\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -1006,8 +1008,7 @@ such that
 \item exception:
 \end{itemize}
 
-\section{MIS of 2D Strain Tensor Module 
-(\texorpdfstring{\cref{MG:M_StrainCalc}}))} \label{MIS_StrainCalc}
+\section{MIS of 2D Strain Tensor Module (\texorpdfstring{\cref{MG:M_StrainCalc}}))} \label{MIS_StrainCalc}
 
 \noindent\textit{{\#} Module calculating the strain and rotation tensors using 
 two non collinear crystalline wave vectors (see \cref{SRS:R_13} in the SRS).}
@@ -1058,13 +1059,13 @@ G_{\text{uns}}^{\text{exp}} =
 	\begin{bmatrix}
 	g_{1_{{\text{uns}}_x}}^{C_{\text{exp}}} & 
 g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} \\
-	g_{2_{{\text{uns}}_x}}^{C_{\text{exp}}} & 
+	g_{1_{{\text{uns}}_y}}^{C_{\text{exp}}} & 
 g_{2_{{\text{uns}}_y}}^{C_{\text{exp}}} 
 	\end{bmatrix}, \ 
 \Delta G^{\text{exp}}(\vec{r})=
 	\begin{bmatrix}
-	\Delta g_{1_{x}}^{C_{\text{exp}}} & \Delta g_{1_{y}}^{C_{\text{exp}}}\\
-	\Delta g_{2_{x}}^{C_{\text{exp}}} & \Delta g_{2_{y}}^{C_{\text{exp}}}
+	\Delta g_{1_{x}}^{C_{\text{exp}}} & \Delta g_{2_{x}}^{C_{\text{exp}}}\\
+	\Delta g_{1_{y}}^{C_{\text{exp}}} & \Delta g_{2_{y}}^{C_{\text{exp}}}
 	\end{bmatrix}
 \end{gathered}
 \end{equation*}
