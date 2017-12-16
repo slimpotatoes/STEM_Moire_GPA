@@ -1,23 +1,76 @@
 \documentclass[12pt, titlepage]{article}
 
-\usepackage{booktabs}
-\usepackage{tabularx}
+
+% Author's up-front packages
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+
+%Packages from template
+\usepackage{amsmath, mathtools}
+%\usepackage[round]{natbib}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{colortbl}
+\usepackage{xr-hyper}
 \usepackage{hyperref}
+\usepackage{xfrac}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[section]{placeins}
+\usepackage{caption}
+\usepackage{fullpage}
+
+% Author's packages
+
+\usepackage{cite}
+\usepackage{indentfirst}
+\usepackage{csquotes}
+\usepackage{cleveref}
+
 \hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=red,
-    urlcolor=blue
+%bookmarks=true,     % show bookmarks bar?
+colorlinks=true,       % false: boxed links; true: colored links
+linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+citecolor=blue,      % color of links to bibliography
+filecolor=magenta,  % color of file links
+urlcolor=cyan          % color of external links
 }
-\usepackage[round]{natbib}
+
+\usepackage{array}
 
 \input{../Comments}
 
+\newcommand{\progname}{STEM Moir{\'e} GPA}
+\externaldocument[SRS:]{../SRS/SRS}
+\externaldocument[TP:]{../TestPlan/TestPlan}
+\externaldocument[MG:]{../Design/MG/MG}
+\externaldocument[MIS:]{../Design/MIS/MIS}
+
+%Set the custom referencing syste
+	% Module
+\newtheorem{M}{M}
+\crefname{M}{M}{Ms}
+	% Module Interface Specification
+\newtheorem{MIS}{MIS}
+\crefname{MIS}{MIS}{MISs}
+	% Requirements
+\newtheorem{R}{R}
+\crefname{R}{R}{Rs}
+	% Instance Model
+\newtheorem{IM}{IM}
+\crefname{IM}{IM}{IMs}
+
 \begin{document}
 
-\title{Test Report: Project Title} 
-\author{Author Name}
+\title{Test Report: STEM Moir{\'e} GPA} 
+\author{Alexandre Pofelski \\
+		macid: pofelska \\
+		github: slimpotatoes}
 \date{\today}
 	
 \maketitle
@@ -29,8 +82,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+Date 1 & 1.0 & First incomplete version to meet deadline\\
 \bottomrule
 \end{tabularx}
 
@@ -61,25 +113,29 @@ Date 2 & 1.1 & Notes\\
 
 \pagenumbering{arabic}
 
-This document ...
+This document is providing information of \progname{} implementation by assessing the results of the tests designed in the TestPlan document. Regarding the size of \progname{} only a small part of the code was tested therefore, only a few functional requirements have been evaluated. An important update to the document is planed once the implementation of the other tests are done.
 
 \section{Functional Requirements Evaluation}
 
+
+
 \section{Nonfunctional Requirements Evaluation}
 
-\subsection{Usability}
-		
-\subsection{Performance}
-
-\subsection{etc.}
+Nonfunctional Requirements have not been addressed for the moment.
 	
 \section{Comparison to Existing Implementation}	
 
-This section will not be appropriate for every project.
+No other equivalent open-access software has been identified for a comparison. sMoir{\'e} program (available on ) is a good candidate but a licence must be bought in order to use the software. The licence purchase is not an option, moreover all aspects of \progname{} are not covered by sMoir{\'e}.
+
+The GPA algorithm used in \progname{} could be however compared to other open-access GPA software and is planned to be performed. Nevertheless, most of them are plug-ins for Digital Micrograph software therefore an interface must be designed to perform a comparison with \progname{}. 
 
 \section{Unit Testing}
 
+
+
 \section{Changes Due to Testing}
+
+Mask function 
 
 \section{Automated Testing}
 		
@@ -89,8 +145,8 @@ This section will not be appropriate for every project.
 
 \section{Code Coverage Metrics}
 
-\bibliographystyle{plainnat}
+\bibliographystyle{ieee}
 
-\bibliography{SRS}
+\bibliography{TestReport}
 
 \end{document}
