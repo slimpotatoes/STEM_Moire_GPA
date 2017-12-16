@@ -6,6 +6,5 @@ Following documentation is proposed:
 3) Test Plan
 4) Module Guide (MG) in the Design folder
 5) Module Interface Specification (MIS) in the Design folder
-6)
-7)
-8) User guide
+6) Test Report
+7) User guide
