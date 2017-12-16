@@ -50,6 +50,7 @@ urlcolor=cyan          % color of external links
 \externaldocument[TP:]{../TestPlan/TestPlan}
 \externaldocument[MG:]{../Design/MG/MG}
 \externaldocument[MIS:]{../Design/MIS/MIS}
+\externaldocument[T:]{../TestPlan/TestPlan}
 
 %Set the custom referencing syste
 	% Module
@@ -64,6 +65,9 @@ urlcolor=cyan          % color of external links
 	% Instance Model
 \newtheorem{IM}{IM}
 \crefname{IM}{IM}{IMs}
+	% Test
+\newtheorem{Test}{Test}
+\crefname{Test}{Test}{Tests}
 
 \begin{document}
 
@@ -82,7 +86,7 @@ urlcolor=cyan          % color of external links
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & First incomplete version to meet deadline\\
+18/12/2017 & 1.0 & First incomplete version to meet deadline\\
 \bottomrule
 \end{tabularx}
 
@@ -113,11 +117,74 @@ Date 1 & 1.0 & First incomplete version to meet deadline\\
 
 \pagenumbering{arabic}
 
-This document is providing information of \progname{} implementation by assessing the results of the tests designed in the TestPlan document. Regarding the size of \progname{} only a small part of the code was tested therefore, only a few functional requirements have been evaluated. An important update to the document is planed once the implementation of the other tests are done.
+This document is providing information of \progname{} implementation by assessing the results of the tests designed in the TestPlan document. Regarding the size of \progname{} program, only a small part of the code has been tested in the required time frame therefore, only a few functional requirements have been evaluated. An important update to the document is planed once the implementation of the other tests are done.
+\newline
+
+For the moment, only a specific focus has been put on the \textbf{GPA Module} (\cref{MG:M_GPA} in the  MG document and \cref{MIS:MIS_GPA} in the MIS document) and the modules used by GPA which are: the \textbf{Data Structure Module} (\cref{MG:M_DataStruct} in MG document and \cref{MIS:MIS_DataStruct} in the MIS document) and the \textbf{Mask Module} (\cref{MG:M_Mask} in the MG document and \cref{MIS:MIS_Mask} in the MIS document.
 
 \section{Functional Requirements Evaluation}
 
+\textbf{Test \cref{SRS:R_7} in \cref{SRS:IM_2}}: Correctness of the GPA method application.\medskip
 
+\textbf{\cref{T:T_Phase-Extraction-No-Strain}} from TestPlan document
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{Figures/Test_2_explanation.png}
+\caption{}
+\label{fig:Test_2_explaination}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{Figures/Test_2_explanation_1D.png}
+\caption{}
+\label{fig:Test_2_explaination_1D}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{Figures/Test_2_test_cases.png}
+\caption{}
+\label{fig:Test_2_Test_cases}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{Figures/Test_2_test_results.png}
+\caption{}
+\label{fig:Test_2_Test_results}
+\end{center}
+\end{figure}
+
+\textbf{\cref{T:T_Phase-Extraction-Known-Strain}} from TestPlan document
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{Figures/Test_3_explanation.png}
+\caption{}
+\label{fig:Test_3_explaination}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{Figures/Test_3_explanation_1D.png}
+\caption{}
+\label{fig:Test_3_explaination_1D}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{Figures/Test_3_test_results.png}
+\caption{}
+\label{fig:Test_3_test_results}
+\end{center}
+\end{figure}
 
 \section{Nonfunctional Requirements Evaluation}
 
@@ -125,7 +192,7 @@ Nonfunctional Requirements have not been addressed for the moment.
 	
 \section{Comparison to Existing Implementation}	
 
-No other equivalent open-access software has been identified for a comparison. sMoir{\'e} program (available on ) is a good candidate but a licence must be bought in order to use the software. The licence purchase is not an option, moreover all aspects of \progname{} are not covered by sMoir{\'e}.
+No other equivalent open-access software has been identified for a comparison. sMoir{\'e} program (available on \href{https://www.hremresearch.com/}{HREM website}) is a good candidate but a licence must be bought in order to use the software. The licence purchase is not an option, moreover all aspects of \progname{} are not covered by sMoir{\'e}.
 
 The GPA algorithm used in \progname{} could be however compared to other open-access GPA software and is planned to be performed. Nevertheless, most of them are plug-ins for Digital Micrograph software therefore an interface must be designed to perform a comparison with \progname{}. 
 
