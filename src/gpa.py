@@ -45,7 +45,7 @@ def gpa(mask_id, datastruct):
     mesh_x, mesh_y = np.meshgrid(np.arange(phase_g_m.shape[0]), np.arange(phase_g_m.shape[1]))
     unwrapped_phase_delta_g_m = np.array(unwrap_phase(phase_g_m)) - 2 * np.pi * (
         np.multiply(g_uns[1], mesh_x) + np.multiply(g_uns[0], mesh_y))
-    phase_delta_g_m = unwrapped_phase_delta_g_m - np.round(unwrapped_phase_delta_g_m / (2 * np.pi) * 2 * np.pi)
+    phase_delta_g_m = unwrapped_phase_delta_g_m - np.round(unwrapped_phase_delta_g_m / (2 * np.pi)) * 2 * np.pi
 
     # Store the final data
     data.SMGData.store_g(datastruct, mask_id, 'deltagM', delta_g_m)
