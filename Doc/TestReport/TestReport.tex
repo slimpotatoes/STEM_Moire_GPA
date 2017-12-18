@@ -137,11 +137,11 @@ For the moment, only a specific focus has been put on the \textbf{GPA Module} (\
 
 \section{Functional Requirements Evaluation}
 
-\textbf{Test \cref{SRS:R_7} in \cref{SRS:IM_2}}: Correctness of the GPA method application.\medskip
+\underline{\textbf{Test \cref{SRS:R_7} in \cref{SRS:IM_2}}: Correctness of the GPA method application.}\bigskip
 
 \textbf{\cref{TP:T_Phase-Extraction-No-Strain}} from TestPlan document was designed to check if the gpa function of the GPA module outputs no strain with a simulated input signal with no strain. As a reminder, the GPA module is calculating $\Delta \overrightarrow{g}$ the variation of the wave vector $\overrightarrow{g}$ by isolating the spatial frequency $\overrightarrow{g}$ in Fourier space to extract the phase component. The variation of the phase is then related to the variation of the $\overrightarrow{g}$ wave vector using the gradient operation. \medskip
 
-For \cref{TP:T_Phase-Extraction-No-Strain} to run, one SMH and the mask have to be provided. The SMH has been simulated using the numpy library by generating a 2D array of (256,256) in size with a single spatial frequency. Each element of the array (call pixel in the following of the document) represents the value of the sine function taken at the location of the array. The 2D array as a whole represents the sampled version of the 2D sine function and is a good representation of what is considered a STEM Moire hologram with a single frequency. The mask is set up to be centred on the simulated frequency of the Fourier transform of the SMH with a radius of one $\text{pixel}^{-1}$ (elementary unit in Fourier space). The mask array is performed by the function mask{\_}gaussian in the Mask Module. The maask{\_}gaussian function is executed inside the gpa function of the GPA module.
+For \cref{TP:T_Phase-Extraction-No-Strain} to run, one SMH and the mask have to be provided. The SMH has been simulated using the numpy library by generating a 2D array of (256,256) in size with a single spatial frequency. Each element of the array (call pixel in the following of the document) represents the value of the sine function taken at the location of the array. The 2D array as a whole represents the sampled version of the 2D sine function and is a good representation of what is considered a STEM Moire hologram with a single frequency. The mask is set up to be centred on the simulated frequency of the Fourier transform of the SMH with a radius of one $\text{pixel}^{-1}$ (elementary unit in Fourier space). The mask array is performed by the function mask{\_}gaussian in the Mask Module. The maask{\_}gaussian function is executed inside the gpa function of the GPA module. \medskip
 
 \Cref{fig:Test_2_explanation} is highlighting the results of \cref{TP:T_Phase-Extraction-No-Strain} for the particular case described below:
 \begin{itemize}
@@ -182,7 +182,7 @@ For the test case described in \cref{fig:Test_2_explaination_1D}, the metrics ar
 \centering
 \begin{tabular}{|c|c|c|}
 \hline
-$\overrightarrow{g} / \text{(pixel)}$ & Mean horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ & StDev horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ \\
+$\overrightarrow{g} \ \text{(pixel)}$ & Mean horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ & StDev horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ \\
 \hline
 16			& -2.2768245622195593e-18 & 3.2869874402072343e-16 \\ \hline
 \end{tabular}
@@ -201,7 +201,7 @@ It is reasonable to conclude that the errors are relatively small and can be con
 
 The difference between the different periodicities in the Fourier transform plot can be commented. Only the particular cases with a periodicity of 4 and 16 pixels are highlighting a sharp delta function shape signal at their respective frequency. On all the other cases, the Fourier transform signal is spread on a range of frequency with a maximum at their respective frequency. The cause of the frequency spreading is for the moment unclear. It could be a mix between a sampling artifact and erros from the fast fourier transform algorithm. Those errors are not included in the model described in the SRS document and will have an effect on the gpa algorithm since some artificial frequencies seem to be present in the signal. However, those artifact are still weaker than the main signal coming from periodicity simulated.\medskip
 
-The results of the test is highlighted in \cref{fig:Test_2_Test_results}. It is interesting to notice that some non negligible effect are now visible on some test cases. It is difficult to assess if the numbers shown will have a significant impact on the final strain maps but the variation of the phase (translated into variation of $\overrightarrow{\Delta g}$) will contribute by adding noise in the signal.
+The results of the test is highlighted in \cref{fig:Test_2_Test_results}. It is interesting to notice that some non negligible effects are now visible with specific test cases. It is difficult to assess if the numbers shown will have a significant impact on the final strain maps but the variation of the phase (translated into variation of $\overrightarrow{\Delta g}$) will contribute by adding noise in the signal.
 
 \begin{figure}[H]
 \begin{center}
