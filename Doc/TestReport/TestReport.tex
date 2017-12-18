@@ -120,19 +120,34 @@ urlcolor=cyan          % color of external links
 This document is providing information of \progname{} implementation by assessing the results of the tests designed in the TestPlan document. Regarding the size of \progname{} program, only a small part of the code has been tested in the required time frame therefore, only a few functional requirements have been evaluated. An important update to the document is planed once the implementation of the other tests are done.
 \newline
 
-For the moment, only a specific focus has been put on the \textbf{GPA Module} (\cref{MG:M_GPA} in the  MG document and \cref{MIS:MIS_GPA} in the MIS document) and the modules used by GPA which are: the \textbf{Data Structure Module} (\cref{MG:M_DataStruct} in MG document and \cref{MIS:MIS_DataStruct} in the MIS document) and the \textbf{Mask Module} (\cref{MG:M_Mask} in the MG document and \cref{MIS:MIS_Mask} in the MIS document.
+For the moment, only a specific focus has been put on the \textbf{GPA Module} (\cref{MG:M_GPA} in the  MG document and \cref{MIS:MIS_GPA} in the MIS document) and the modules used by GPA which are:
+\begin{itemize}
+\item the \textbf{Data Structure Module} (\cref{MG:M_DataStruct} in MG document and \cref{MIS:MIS_DataStruct} in the MIS document)
+\item the \textbf{Mask Module} (\cref{MG:M_Mask} in the MG document and \cref{MIS:MIS_Mask} in the MIS document)
+\item the \textbf{Fourier Transform Module} (\cref{MG:M_FT} in MG document and \cref{MIS:MIS_FT} in the MIS document)
+\item the \textbf{Gradient Module} (\cref{MG:M_Gradient} in MG document and \cref{MIS:MIS_Gradient} in the MIS document)
+\item the \textbf{Phase Calculation Module} (\cref{MG:M_Phase} in MG document and \cref{MIS:MIS_Phase} in the MIS document)
+\end{itemize}
 
 \section{Functional Requirements Evaluation}
 
 \textbf{Test \cref{SRS:R_7} in \cref{SRS:IM_2}}: Correctness of the GPA method application.\medskip
 
-\textbf{\cref{T:T_Phase-Extraction-No-Strain}} from TestPlan document
+\textbf{\cref{T:T_Phase-Extraction-No-Strain}} from TestPlan document was designed to check if the gpa function of the GPA module outputs no strain with a simulated input signal with no strain. As a reminder, the GPA module is calculating $\Delta \overrightarrow{g}$ the variation of the wave vector $\overrightarrow{g}$ by isolating the spatial frequency $\overrightarrow{g}$ in Fourier space to extract the phase component. The variation of the phase is then related to the variation of the $\overrightarrow{g}$ wave vector using the gradient operation. \medskip
+
+For {\cref{T:T_Phase-Extraction-No-Strain}} to run, a SMH has to be provided. The SMH has been generated using the numpy library by outputing a 2D array of (256,256) in size. Each element of the array represents the value of the sin function taken at the location of the array. The 2D array as a whole represents the sampled version of the 2D sin function and is a good representation of what is considered a STEM Moire hologram.  \Cref{fig:Test_2_explanation} is highlighting the results of{\cref{T:T_Phase-Extraction-No-Strain}} for the particular case described below:
+\begin{itemize}
+\item $I_{SMH_{exp}}=\sin{(2\pi g)}$, 
+\item Mask $M$ of one pixel at $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$
+\end{itemize}
+
+ 
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.5]{Figures/Test_2_explanation.png}
 \caption{}
-\label{fig:Test_2_explaination}
+\label{fig:Test_2_explanation}
 \end{center}
 \end{figure}
 
