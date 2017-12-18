@@ -5,6 +5,7 @@ import math as math
 import data as data
 import gpa as gpa
 import matplotlib.pyplot as plt
+import statistics
 
 # #######################################
 # Test #2 in TestPlan document
@@ -122,7 +123,11 @@ fig_test2_multiple_q_ax2 = fig_test2_multiple_q.add_subplot(1, 2, 2)
 fig_test2_multiple_q_ismh = plt.figure(figsize=(13, 6))
 fig_test2_multiple_q_ismh_ax1 = fig_test2_multiple_q_ismh.add_subplot(1, 2, 1)
 fig_test2_multiple_q_ismh_ax2 = fig_test2_multiple_q_ismh.add_subplot(1, 2, 2)
+fig_test2_error_delta_g = plt.figure(figsize=(13, 9))
+fig_test2_error_delta_g_ax = fig_test2_error_delta_g.add_subplot(1, 1, 1)
 count = 0
+mean_test_2 = []
+stand_dev_test_2 = []
 for elements in data2:
     fig_test2_multiple_q_ax1.plot(x2, elements.load_g('Mask1', 'phasegM')[128, :], linewidth=3, label=str(q[count]))
     fig_test2_multiple_q_ax2.plot(x2, elements.load_g('Mask1', 'deltagM')[1, 128, :], linewidth=3, label=str(q[count]))
@@ -130,24 +135,34 @@ for elements in data2:
                                        label=str(q[count]))
     fig_test2_multiple_q_ismh_ax2.plot(x2, np.log1p(np.fft.fftshift(np.abs(elements.load('FTISMHexp') ** 2)))[128, :],
                                        linewidth=3, label=str(q[count]))
+    error_delta_g = np.abs(elements.load_g('Mask1', 'deltagM')[1, 128, :])
+    fig_test2_error_delta_g_ax.plot(x2, error_delta_g, linewidth=3, label=str(q[count]))
+    mean_test_2.append(statistics.mean(elements.load_g('Mask1', 'deltagM')[1, 128, :]))
+    stand_dev_test_2.append(statistics.stdev(elements.load_g('Mask1', 'deltagM')[1, 128, :]))
     count += 1
 fig_test2_multiple_q_ax1.set_ylim(-np.pi, np.pi)
 fig_test2_multiple_q_ax1.legend()
-fig_test2_multiple_q_ax1.set_title('Raw phase')
+fig_test2_multiple_q_ax1.set_title('Phase corrected')
 fig_test2_multiple_q_ax2.set_title('Horizontal component of Δg')
 fig_test2_multiple_q_ax2.set_ylim(-0.01, 0.01)
 fig_test2_multiple_q_ismh_ax1.set_title('I_SMH')
 fig_test2_multiple_q_ismh_ax2.set_title('Fourier Transform of I_SMH')
 fig_test2_multiple_q_ismh_ax2.legend()
+fig_test2_error_delta_g_ax.set_ylim(0, 0.0025)
+fig_test2_error_delta_g_ax.legend()
+fig_test2_error_delta_g_ax.set_title('Error of the horizontal component of Δg ')
 fig_test2_multiple_q.savefig(
     '/media/alex/Work/PhD/Course/CAS 741/project/STEM_Moire_GPA/Doc/TestReport/Figures/Test_2_test_results.png',
     dpi=300, bbox_inches='tight')
 fig_test2_multiple_q_ismh.savefig(
     '/media/alex/Work/PhD/Course/CAS 741/project/STEM_Moire_GPA/Doc/TestReport/Figures/Test_2_test_cases.png',
     dpi=300, bbox_inches='tight')
-
-
+fig_test2_error_delta_g.savefig(
+    '/media/alex/Work/PhD/Course/CAS 741/project/STEM_Moire_GPA/Doc/TestReport/Figures/Test_2_test_error.png',
+    dpi=300, bbox_inches='tight')
 plt.show()
+print('Mean test 2 = ', mean_test_2)
+print('StDev test 2 = ', stand_dev_test_2)
 
 
 # #######################################
@@ -277,7 +292,7 @@ fig_test3_multiple_dq = plt.figure(figsize=(13, 6))
 fig_test3_multiple_dq_ax1 = fig_test3_multiple_dq.add_subplot(1, 2, 1)
 fig_test3_multiple_dq_ax2 = fig_test3_multiple_dq.add_subplot(1, 2, 2)
 count = 0
-strain_values =[]
+strain_values = []
 for elements in data3:
     fig_test3_multiple_dq_ax1.plot(x2[100:200], elements.load_g('Mask1', 'phasegM')[128, 100:200],
                                    linewidth=3, label=str(dq[count]))

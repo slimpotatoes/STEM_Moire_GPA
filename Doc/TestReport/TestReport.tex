@@ -50,7 +50,7 @@ urlcolor=cyan          % color of external links
 \externaldocument[TP:]{../TestPlan/TestPlan}
 \externaldocument[MG:]{../Design/MG/MG}
 \externaldocument[MIS:]{../Design/MIS/MIS}
-\externaldocument[T:]{../TestPlan/TestPlan}
+\externaldocument[TP:]{../TestPlan/TestPlan}
 
 %Set the custom referencing syste
 	% Module
@@ -68,6 +68,12 @@ urlcolor=cyan          % color of external links
 	% Test
 \newtheorem{Test}{Test}
 \crefname{Test}{Test}{Tests}
+	% Theoretical Model
+\newtheorem{T}{T}
+\crefname{T}{T}{Ts}
+	% Data Definition
+\newtheorem{DD}{DD}
+\crefname{DD}{DD}{DDs}
 
 \begin{document}
 
@@ -133,23 +139,28 @@ For the moment, only a specific focus has been put on the \textbf{GPA Module} (\
 
 \textbf{Test \cref{SRS:R_7} in \cref{SRS:IM_2}}: Correctness of the GPA method application.\medskip
 
-\textbf{\cref{T:T_Phase-Extraction-No-Strain}} from TestPlan document was designed to check if the gpa function of the GPA module outputs no strain with a simulated input signal with no strain. As a reminder, the GPA module is calculating $\Delta \overrightarrow{g}$ the variation of the wave vector $\overrightarrow{g}$ by isolating the spatial frequency $\overrightarrow{g}$ in Fourier space to extract the phase component. The variation of the phase is then related to the variation of the $\overrightarrow{g}$ wave vector using the gradient operation. \medskip
+\textbf{\cref{TP:T_Phase-Extraction-No-Strain}} from TestPlan document was designed to check if the gpa function of the GPA module outputs no strain with a simulated input signal with no strain. As a reminder, the GPA module is calculating $\Delta \overrightarrow{g}$ the variation of the wave vector $\overrightarrow{g}$ by isolating the spatial frequency $\overrightarrow{g}$ in Fourier space to extract the phase component. The variation of the phase is then related to the variation of the $\overrightarrow{g}$ wave vector using the gradient operation. \medskip
 
-For {\cref{T:T_Phase-Extraction-No-Strain}} to run, a SMH has to be provided. The SMH has been generated using the numpy library by outputing a 2D array of (256,256) in size. Each element of the array represents the value of the sin function taken at the location of the array. The 2D array as a whole represents the sampled version of the 2D sin function and is a good representation of what is considered a STEM Moire hologram.  \Cref{fig:Test_2_explanation} is highlighting the results of{\cref{T:T_Phase-Extraction-No-Strain}} for the particular case described below:
+For \cref{TP:T_Phase-Extraction-No-Strain} to run, one SMH and the mask have to be provided. The SMH has been simulated using the numpy library by generating a 2D array of (256,256) in size with a single spatial frequency. Each element of the array (call pixel in the following of the document) represents the value of the sine function taken at the location of the array. The 2D array as a whole represents the sampled version of the 2D sine function and is a good representation of what is considered a STEM Moire hologram with a single frequency. The mask is set up to be centred on the simulated frequency of the Fourier transform of the SMH with a radius of one $\text{pixel}^{-1}$ (elementary unit in Fourier space). The mask array is performed by the function mask{\_}gaussian in the Mask Module. The maask{\_}gaussian function is executed inside the gpa function of the GPA module.
+
+\Cref{fig:Test_2_explanation} is highlighting the results of \cref{TP:T_Phase-Extraction-No-Strain} for the particular case described below:
 \begin{itemize}
-\item $I_{SMH_{exp}}=\sin{(2\pi g)}$, 
-\item Mask $M$ of one pixel at $g\overrightarrow{u_x}$ in $\widetilde{I}_{SMH_{exp}}$
+\item $I_{SMH_{exp}}=\sin{(2\pi \overrightarrow{g}\cdot\overrightarrow{r})}$, with $\overrightarrow{g} = \frac{1}{16} \overrightarrow{u_x} \ \text{pixel}^{-1}$ which represents a periodicity of 16 pixels in the horizontal direction of $I_{SMH_{exp}}$. 
+\item Mask $M$ of one $\text{pixel}^{-1}$ in radius and centred on $\overrightarrow{g}=(g_x,g_y)$ in $\widetilde{I}_{SMH_{exp}}$
+\item $\overrightarrow{g} = \overrightarrow{g_\text{ref}} + \overrightarrow{\Delta g}$. Since $\overrightarrow{g}$ is constant and $\overrightarrow{g_\text{ref}}$ represents the value of $\overrightarrow{g}$ at a chosen pixel, $\overrightarrow{\Delta g} = \overrightarrow{0}$ everywhere in $I_{SMH_{exp}}=\sin{(2\pi g)}$ (case of no strain).
 \end{itemize}
 
- 
+A visual summary of the test case can be read in \cref{fig:Test_2_explanation}. The I{\_}SMH plot is the representation of $I_{SMH_{exp}}$ and the Fourier Transform of I{\_}SMH plot is showing the location of $\overrightarrow{g}$ in Fourier space (maximum intensity) where the mask $M$ is positioned. The Raw Phase plot is highlighting the result of the GPA algorithm corresponding to the phase component related to the spatial frequency $\overrightarrow{g}$ and the Phase corrected plot is displaying the variation of the related to the spatial frequency $\overrightarrow{g}$. The vertical and horizontal components of $\overrightarrow{\Delta g}$ showing the gradient of the phase corrected and are related to the variation of the wave vector $\overrightarrow{g}$. More details can be found in the SRS document (\cref{SRS:T_2} and \cref{SRS:DD_2}).
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.5]{Figures/Test_2_explanation.png}
-\caption{}
+\caption{Visual representation of one test case with the input, some intermediate values related to the phase extraction and the output with its horizontal and vertical components.}
 \label{fig:Test_2_explanation}
 \end{center}
 \end{figure}
+
+The expected output is $\overrightarrow{\Delta g} = \overrightarrow{0}$ on each pixel of the array. Since $\overrightarrow{\Delta g}$ is a 2D vector, the horizontal and the vertical components of the vector are shown on each pixel of the array to form the output test images (top and bottom figures on the left side of \cref{fig:Test_2_explanation}). For the intermediate variables, the phase corrected is expected to be constant, the raw phase to show a sawtooth shape with a constant slope along the horizontal direction. For the initial variables, $I_{SMH_{exp}}$ is a sampled version of a sine function and its Fourier transform should be two delta functions at the frequency $\overrightarrow{g}$ and $-\overrightarrow{g}$. Since the test case is only simulating a frequency in the horizontal direction, all the arrays from \cref{fig:Test_2_explanation} can be sliced by extracting only the results from a single vertical array. Such transformation is performed in \cref{fig:Test_2_explaination_1D}. The 1D representation helps in visualizing the different variables of the test case. 
 
 \begin{figure}[H]
 \begin{center}
@@ -159,6 +170,27 @@ For {\cref{T:T_Phase-Extraction-No-Strain}} to run, a SMH has to be provided. Th
 \end{center}
 \end{figure}
 
+The test can be summarized with the following metrics:
+\begin{itemize}
+\item Statistical \textbf{mean} of the elements part of horizontal line profile $\overrightarrow{\Delta g}$
+\item Statistical \textbf{standard deviation} of the elements part of the horizontal line profile $\overrightarrow{\Delta g}$
+\end{itemize}
+
+For the test case described in \cref{fig:Test_2_explaination_1D}, the metrics are provided in \cref{tb:Metric_test_2_single_case}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+$\overrightarrow{g} / \text{(pixel)}$ & Mean horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ & StDev horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ \\
+\hline
+16			& -2.2768245622195593e-18 & 3.2869874402072343e-16 \\ \hline
+\end{tabular}
+\caption{Table of metrics for}\label{tb:Metric_test_2_single_case}
+\end{table}
+
+It is reasonable to conclude that the errors are relatively small and can be considered negligible. The behaviour of the gpa function in the GPA module seems to be satisfactory. To check a more variety of test cases similar $I_{SMH_{exp}}$ with different periodicities were also tested. The following different periodicities are proposed: 3, 4, 4.1, 4.2, 4.5, 16 and 100 pixels. For each case, the appropriate mask is used and the radius of the mask is kept to 1 $\text{pixel}^{-1}$. The different test cases are summarized in \cref{fig:Test_2_Test_cases}. 
+
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.5]{Figures/Test_2_test_cases.png}
@@ -166,6 +198,10 @@ For {\cref{T:T_Phase-Extraction-No-Strain}} to run, a SMH has to be provided. Th
 \label{fig:Test_2_Test_cases}
 \end{center}
 \end{figure}
+
+The difference between the different periodicities in the Fourier transform plot can be commented. Only the particular cases with a periodicity of 4 and 16 pixels are highlighting a sharp delta function shape signal at their respective frequency. On all the other cases, the Fourier transform signal is spread on a range of frequency with a maximum at their respective frequency. The cause of the frequency spreading is for the moment unclear. It could be a mix between a sampling artifact and erros from the fast fourier transform algorithm. Those errors are not included in the model described in the SRS document and will have an effect on the gpa algorithm since some artificial frequencies seem to be present in the signal. However, those artifact are still weaker than the main signal coming from periodicity simulated.\medskip
+
+The results of the test is highlighted in \cref{fig:Test_2_Test_results}. It is interesting to notice that some non negligible effect are now visible on some test cases. It is difficult to assess if the numbers shown will have a significant impact on the final strain maps but the variation of the phase (translated into variation of $\overrightarrow{\Delta g}$) will contribute by adding noise in the signal.
 
 \begin{figure}[H]
 \begin{center}
@@ -175,7 +211,36 @@ For {\cref{T:T_Phase-Extraction-No-Strain}} to run, a SMH has to be provided. Th
 \end{center}
 \end{figure}
 
-\textbf{\cref{T:T_Phase-Extraction-Known-Strain}} from TestPlan document
+The table of metrics for all the cases is shown in \cref{tb:Metric_test_2_multiple_cases}. Those metrics might not be the most appropriate ones to assess GPA performance since the statistics remove the location where the error are minimized or maximized. The error distribution provided by the plot (or the image) are still needed to judge better the precision of the module. The error plot is provided in \cref{fig:Test_2_Test_error} and corresponds to the absolute value of horizontal component of $\overrightarrow{\Delta g}$ in \cref{fig:Test_2_Test_results}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+$\overrightarrow{g} / \text{(pixel)}$ & Mean horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ & StDev horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ \\
+\hline
+3			& 1.9414415841027127e-09 & 0.0006730746894985686 \\ \hline
+\cellcolor{green} 4	 & \cellcolor{green} -9.540979117872439e-18 & \cellcolor{green} 7.341002270163171e-16 \\ \hline
+\cellcolor[rgb]{1,0.8,0} 4.1 & \cellcolor[rgb]{1,0.8,0} 4.0351392667763858e-09 & \cellcolor[rgb]{1,0.8,0} 0.0009728477395757706 \\ \hline
+4.2			& -1.6333255180214085e-10 & 8.581046509119554e-05 \\ \hline
+4.5			& -3.9869652219449991e-10 & 0.0002022207376045426 \\ \hline
+\cellcolor{green} 16 & \cellcolor{green} -2.2768245622195593e-18 & \cellcolor{green} 3.2869874402072343e-16 \\ \hline
+\cellcolor[rgb]{1,0.8,0} 100 & \cellcolor[rgb]{1,0.8,0} -6.0785148749668448e-09 & \cellcolor[rgb]{1,0.8,0} 0.0010974597065239072 \\ \hline
+\end{tabular}
+\caption{Table of metrics for}\label{tb:Metric_test_2_multiple_cases}
+\end{table}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{Figures/Test_2_test_error.png}
+\caption{}
+\label{fig:Test_2_Test_error}
+\end{center}
+\end{figure}
+
+Based on the error plot in \cref{fig:Test_2_Test_error}, the behaviour of the gpa module is not fully satisfactory. Potentially, the error could be small enough to be negligible however, \textbf{\cref{TP:T_Phase-Extraction-No-Strain}} is the simplest test case possible based on generated data. Noise and other artifacts will be included in the experimental data which could also contribute to the error. A system test on the whole program might help in assessing if the errors visible in GPA module have a significant impact on the deformation maps. \bigskip
+
+\textbf{\cref{TP:T_Phase-Extraction-Known-Strain}} from TestPlan document
 
 \begin{figure}[H]
 \begin{center}
