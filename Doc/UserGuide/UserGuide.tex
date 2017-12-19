@@ -1,0 +1,127 @@
+\documentclass[12pt, titlepage]{article}
+
+
+% Author's up-front packages
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+
+%Packages from template
+\usepackage{amsmath, mathtools}
+%\usepackage[round]{natbib}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{colortbl}
+\usepackage{xr-hyper}
+\usepackage{hyperref}
+\usepackage{xfrac}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[section]{placeins}
+\usepackage{caption}
+\usepackage{fullpage}
+
+% Author's packages
+
+\usepackage{cite}
+\usepackage{indentfirst}
+\usepackage{csquotes}
+\usepackage{cleveref}
+
+\hypersetup{
+%bookmarks=true,     % show bookmarks bar?
+colorlinks=true,       % false: boxed links; true: colored links
+linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+citecolor=blue,      % color of links to bibliography
+filecolor=magenta,  % color of file links
+urlcolor=cyan          % color of external links
+}
+
+\usepackage{array}
+
+\input{../Comments}
+
+\newcommand{\progname}{STEM Moir{\'e} GPA}
+\externaldocument[SRS:]{../SRS/SRS}
+\externaldocument[TP:]{../TestPlan/TestPlan}
+\externaldocument[MG:]{../Design/MG/MG}
+\externaldocument[MIS:]{../Design/MIS/MIS}
+\externaldocument[TP:]{../TestPlan/TestPlan}
+
+%Set the custom referencing syste
+	% Module
+\newtheorem{M}{M}
+\crefname{M}{M}{Ms}
+	% Module Interface Specification
+\newtheorem{MIS}{MIS}
+\crefname{MIS}{MIS}{MISs}
+	% Requirements
+\newtheorem{R}{R}
+\crefname{R}{R}{Rs}
+	% Instance Model
+\newtheorem{IM}{IM}
+\crefname{IM}{IM}{IMs}
+	% Test
+\newtheorem{Test}{Test}
+\crefname{Test}{Test}{Tests}
+	% Theoretical Model
+\newtheorem{T}{T}
+\crefname{T}{T}{Ts}
+	% Data Definition
+\newtheorem{DD}{DD}
+\crefname{DD}{DD}{DDs}
+	% Test Report
+\newtheorem{TestRep}{TestRep}
+\crefname{TestRep}{TestRep}{TestReps}
+
+\begin{document}
+
+\title{User Guide: STEM Moir{\'e} GPA} 
+\author{Alexandre Pofelski \\
+		macid: pofelska \\
+		github: slimpotatoes}
+\date{\today}
+	
+\maketitle
+
+\pagenumbering{roman}
+
+\section{Revision History}
+
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
+\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\midrule
+18/12/2017 & 1.0 & First incomplete version to meet deadline\\
+\bottomrule
+\end{tabularx}
+
+~\newpage
+
+\section{Symbols, Abbreviations and Acronyms}
+
+The same Symbols, Abbreviations and Acronyms as in the SRS, the TestPlan, the 
+MG and the MIS documents (available in 
+\href{https://github.com/slimpotatoes/STEM_Moire_GPA}{\progname{}} repository) 
+are used in the Test Report document. 
+
+\newpage
+
+\tableofcontents
+
+\listoftables %if appropriate
+
+\listoffigures %if appropriate
+
+\newpage
+
+\pagenumbering{arabic}
+
+\bibliographystyle{ieee}
+
+\bibliography{TestReport}
+
+\end{document}
