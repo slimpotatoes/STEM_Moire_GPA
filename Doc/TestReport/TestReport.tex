@@ -155,7 +155,7 @@ A visual summary of the test case can be read in \cref{fig:Test_2_explanation}. 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.5]{Figures/Test_2_explanation.png}
-\caption{Visual representation of one test case with the input, some intermediate values related to the phase extraction and the output with its horizontal and vertical components.}
+\caption{Visual representation of one test case for \cref{Test_Report_2}}
 \label{fig:Test_2_explanation}
 \end{center}
 \end{figure}
@@ -165,7 +165,7 @@ The expected output is $\overrightarrow{\Delta g} = \overrightarrow{0}$ on each 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.5]{Figures/Test_2_explanation_1D.png}
-\caption{}
+\caption{1D visual representation of one test case for \cref{Test_Report_2}}
 \label{fig:Test_2_explaination_1D}
 \end{center}
 \end{figure}
@@ -186,7 +186,7 @@ $\overrightarrow{g} \ \text{(pixel)}^{-1}$ & Mean horizontal $\overrightarrow{\D
 \hline
 16			& -2.2768245622195593e-18 & 3.2869874402072343e-16 \\ \hline
 \end{tabular}
-\caption{Table of metrics for}\label{tb:Metric_test_2_single_case}
+\caption{Table of metrics for one test case for \cref{Test_Report_2}}\label{tb:Metric_test_2_single_case}
 \end{table}
 
 It is reasonable to conclude that the errors are relatively small and can be considered negligible. The behaviour of the gpa function in the GPA module seems to be satisfactory. To check a more variety of test cases similar $I_{SMH_{exp}}$ with different periodicities were also tested. The following different periodicities are proposed: 3, 4, 4.1, 4.2, 4.5, 16 and 100 pixels. For each case, the appropriate mask is used and the radius of the mask is kept to 1 $\text{pixel}^{-1}$. The different test cases are summarized in \cref{fig:Test_2_Test_cases}. 
@@ -194,7 +194,7 @@ It is reasonable to conclude that the errors are relatively small and can be con
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.5]{Figures/Test_2_test_cases.png}
-\caption{}
+\caption{1D visual representation of the multiple test cases used for \cref{Test_Report_2}}
 \label{fig:Test_2_Test_cases}
 \end{center}
 \end{figure}
@@ -206,7 +206,7 @@ The results of the test is highlighted in \cref{fig:Test_2_Test_results}. It is 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.5]{Figures/Test_2_test_results.png}
-\caption{}
+\caption{1D visual representation of the test results for \cref{Test_Report_2}}
 \label{fig:Test_2_Test_results}
 \end{center}
 \end{figure}
@@ -227,13 +227,13 @@ $\overrightarrow{g} \ \text{(pixel)}^{-1}$ & Mean horizontal $\overrightarrow{\D
 \cellcolor{green} 16 & \cellcolor{green} -2.2768245622195593e-18 & \cellcolor{green} 3.2869874402072343e-16 \\ \hline
 \cellcolor[rgb]{1,0.8,0} 100 & \cellcolor[rgb]{1,0.8,0} -6.0785148749668448e-09 & \cellcolor[rgb]{1,0.8,0} 0.0010974597065239072 \\ \hline
 \end{tabular}
-\caption{Table of metrics for}\label{tb:Metric_test_2_multiple_cases}
+\caption{Table of metrics for the test cases used for \cref{Test_Report_2}}\label{tb:Metric_test_2_multiple_cases}
 \end{table}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.5]{Figures/Test_2_test_error.png}
-\caption{}
+\caption{1D representation of the error measured for all the cases tested in \cref{Test_Report_2}}
 \label{fig:Test_2_Test_error}
 \end{center}
 \end{figure}
@@ -262,7 +262,7 @@ The details of the inputs used for test restuls shown in \cref{fig:Test_3_explan
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.5]{Figures/Test_3_explanation.png}
-\caption{}
+\caption{Visual representation of one test case for \cref{Test_Report_3}}
 \label{fig:Test_3_explanation}
 \end{center}
 \end{figure}
@@ -272,7 +272,7 @@ As done in \cref{Test_Report_2}, it is possible to slice the dataset to represen
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.5]{Figures/Test_3_explanation_1D.png}
-\caption{}
+\caption{1D visual representation of one test case for \cref{Test_Report_3}}
 \label{fig:Test_3_explanation_1D}
 \end{center}
 \end{figure}
@@ -287,7 +287,7 @@ $\overrightarrow{g} \ \text{(pixel)}$ & $\overrightarrow{K} \ \text{(pixel)}$ & 
 \hline
 4 & 4.5 & 5.55555637e-02 \\ \hline
 \end{tabular}
-\caption{Table of metrics for}\label{tb:Metric_test_3_single_case}
+\caption{Table of metrics on one test case for \cref{Test_Report_3} }\label{tb:Metric_test_3_single_case}
 \end{table}
 
 Several test cases can be designed to see if the error is evolving with the level of strain. The following periodicities on the right side of the image have been tested to verify the GPA algorithm : 3, 3.8, 3.9, 4, 4.1, 4.2 and 5 pixels. The test cases should respectively display the following level of strain : 1/4 - 1/3, 1/4 - 1/3.8, 1/4 - 1/3.9, 0, 1/4 - 1/4.1, 1/4 - 1/4.2 and 1/4 - 1/5 $\text{pixel}^{-1}$. The results of the tests are highlighted in \cref{fig:Test_3_test_results} and in the table \cref{tb:Metric_test_3_multi_case}. 
@@ -295,7 +295,7 @@ Several test cases can be designed to see if the error is evolving with the leve
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.5]{Figures/Test_3_test_results.png}
-\caption{}
+\caption{1D visual representation of the test results for all the cases tested in \cref{Test_Report_3}}
 \label{fig:Test_3_test_results}
 \end{center}
 \end{figure}
@@ -314,7 +314,7 @@ $\overrightarrow{g} \ \text{(pixel)}$ & $\overrightarrow{K} \ \text{(pixel)}$ & 
 4 & 4.2 & 2.38095207e-02 \\ \hline
 4 & 5 & 9.99999872e-02 \\ \hline
 \end{tabular}
-\caption{Table of metrics for}\label{tb:Metric_test_3_multi_case}
+\caption{Table of metrics for all the cases tested for \cref{Test_Report_3}}\label{tb:Metric_test_3_multi_case}
 \end{table}
 
 The error seems to increase slowly with the level of strain. Nevertheless, the higher the level of strain, the higher the radius of the mask should be. In this case, we kept the radius of the mask constant which can be at the disadvantage of higher strain level. The effect of the mask radius should be also assessed to give a more complete picture of the error evolution.
@@ -336,7 +336,7 @@ A couple of unit tests were performed in order to verify the proper behaviour of
 
 \section{Changes Due to Testing}
 
-Mask function 
+A new mask function has been implemented called mask{\_}gaussian because of the poor performance of the mask{\_} classic function (very noisy data). The results of the test with the classic mask will be discussed in the future.
 
 \section{Automated Testing}
 
@@ -352,7 +352,7 @@ Not enough tests have been performed to assess the proper behaviour of the modul
 
 \section{Code Coverage Metrics}
 
-
+N/A
 
 \bibliographystyle{ieee}
 
