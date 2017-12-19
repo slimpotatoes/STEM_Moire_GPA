@@ -74,6 +74,9 @@ urlcolor=cyan          % color of external links
 	% Data Definition
 \newtheorem{DD}{DD}
 \crefname{DD}{DD}{DDs}
+	% Test Report
+\newtheorem{TestRep}{TestRep}
+\crefname{TestRep}{TestRep}{TestReps}
 
 \begin{document}
 
@@ -100,16 +103,10 @@ urlcolor=cyan          % color of external links
 
 \section{Symbols, Abbreviations and Acronyms}
 
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
-  \toprule		
-  \textbf{symbol} & \textbf{description}\\
-  \midrule 
-  T & Test\\
-  \bottomrule
-\end{tabular}\\
-
-\wss{symbols, abbreviations or acronyms -- you can reference the SRS tables if needed}
+The same Symbols, Abbreviations and Acronyms as in the SRS, the TestPlan, the 
+MG and the MIS documents (available in 
+\href{https://github.com/slimpotatoes/STEM_Moire_GPA}{\progname{}} repository) 
+are used in the Test Report document. 
 
 \newpage
 
@@ -137,15 +134,18 @@ For the moment, only a specific focus has been put on the \textbf{GPA Module} (\
 
 \section{Functional Requirements Evaluation}
 
-\underline{\textbf{Test \cref{SRS:R_7} in \cref{SRS:IM_2}}: Correctness of the GPA method application.}\bigskip
+\subsection{\textbf{Test \cref{SRS:R_7} in \cref{SRS:IM_2}}: Correctness of the GPA method application}
 
-\textbf{\cref{TP:T_Phase-Extraction-No-Strain}} from TestPlan document was designed to check if the gpa function of the GPA module outputs no strain with a simulated input signal with no strain. As a reminder, the GPA module is calculating $\Delta \overrightarrow{g}$ the variation of the wave vector $\overrightarrow{g}$ by isolating the spatial frequency $\overrightarrow{g}$ in Fourier space to extract the phase component. The variation of the phase is then related to the variation of the $\overrightarrow{g}$ wave vector using the gradient operation. \medskip
+
+\begin{TestRep}\normalfont\underline{{\cref{TP:T_Phase-Extraction-No-Strain} from TestPlan document}} \label{Test_Report_2} \newline
+
+\cref{TP:T_Phase-Extraction-No-Strain} was designed to check if the gpa function of the GPA module outputs no strain with a simulated input signal with no strain. As a reminder, the GPA module is calculating $\Delta \overrightarrow{g}$ the variation of the wave vector $\overrightarrow{g}$ by isolating the spatial frequency $\overrightarrow{g}$ in Fourier space to extract the phase component. The variation of the phase is then related to the variation of the $\overrightarrow{g}$ wave vector using the gradient operation. \medskip
 
 For \cref{TP:T_Phase-Extraction-No-Strain} to run, one SMH and the mask have to be provided. The SMH has been simulated using the numpy library by generating a 2D array of (256,256) in size with a single spatial frequency. Each element of the array (call pixel in the following of the document) represents the value of the sine function taken at the location of the array. The 2D array as a whole represents the sampled version of the 2D sine function and is a good representation of what is considered a STEM Moire hologram with a single frequency. The mask is set up to be centred on the simulated frequency of the Fourier transform of the SMH with a radius of one $\text{pixel}^{-1}$ (elementary unit in Fourier space). The mask array is performed by the function mask{\_}gaussian in the Mask Module. The maask{\_}gaussian function is executed inside the gpa function of the GPA module. \medskip
 
 \Cref{fig:Test_2_explanation} is highlighting the results of \cref{TP:T_Phase-Extraction-No-Strain} for the particular case described below:
 \begin{itemize}
-\item $I_{SMH_{exp}}=\sin{(2\pi \overrightarrow{g}\cdot\overrightarrow{r})}$, with $\overrightarrow{g} = \frac{1}{16} \overrightarrow{u_x} \ \text{pixel}^{-1}$ which represents a periodicity of 16 pixels in the horizontal direction of $I_{SMH_{exp}}$. 
+\item $I_{SMH_{exp}}=\sin{(2\pi \overrightarrow{g}\cdot\overrightarrow{r})}$, with $\overrightarrow{g} = \frac{1}{16} \ \overrightarrow{u_x} \ \text{pixel}^{-1}$ which represents a periodicity of 16 pixels in the horizontal direction of $I_{SMH_{exp}}$. 
 \item Mask $M$ of one $\text{pixel}^{-1}$ in radius and centred on $\overrightarrow{g}=(g_x,g_y)$ in $\widetilde{I}_{SMH_{exp}}$
 \item $\overrightarrow{g} = \overrightarrow{g_\text{ref}} + \overrightarrow{\Delta g}$. Since $\overrightarrow{g}$ is constant and $\overrightarrow{g_\text{ref}}$ represents the value of $\overrightarrow{g}$ at a chosen pixel, $\overrightarrow{\Delta g} = \overrightarrow{0}$ everywhere in $I_{SMH_{exp}}=\sin{(2\pi g)}$ (case of no strain).
 \end{itemize}
@@ -182,7 +182,7 @@ For the test case described in \cref{fig:Test_2_explaination_1D}, the metrics ar
 \centering
 \begin{tabular}{|c|c|c|}
 \hline
-$\overrightarrow{g} \ \text{(pixel)}$ & Mean horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ & StDev horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ \\
+$\overrightarrow{g} \ \text{(pixel)}^{-1}$ & Mean horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ & StDev horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ \\
 \hline
 16			& -2.2768245622195593e-18 & 3.2869874402072343e-16 \\ \hline
 \end{tabular}
@@ -217,13 +217,13 @@ The table of metrics for all the cases is shown in \cref{tb:Metric_test_2_multip
 \centering
 \begin{tabular}{|c|c|c|}
 \hline
-$\overrightarrow{g} / \text{(pixel)}$ & Mean horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ & StDev horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ \\
+$\overrightarrow{g} \ \text{(pixel)}^{-1}$ & Mean horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ & StDev horizontal $\overrightarrow{\Delta g} \ \text{(pixel)}^{-1}$ \\
 \hline
-3			& 1.9414415841027127e-09 & 0.0006730746894985686 \\ \hline
+3 & 1.9414415841027127e-09 & 0.0006730746894985686 \\ \hline
 \cellcolor{green} 4	 & \cellcolor{green} -9.540979117872439e-18 & \cellcolor{green} 7.341002270163171e-16 \\ \hline
 \cellcolor[rgb]{1,0.8,0} 4.1 & \cellcolor[rgb]{1,0.8,0} 4.0351392667763858e-09 & \cellcolor[rgb]{1,0.8,0} 0.0009728477395757706 \\ \hline
-4.2			& -1.6333255180214085e-10 & 8.581046509119554e-05 \\ \hline
-4.5			& -3.9869652219449991e-10 & 0.0002022207376045426 \\ \hline
+4.2	& -1.6333255180214085e-10 & 8.581046509119554e-05 \\ \hline
+4.5	& -3.9869652219449991e-10 & 0.0002022207376045426 \\ \hline
 \cellcolor{green} 16 & \cellcolor{green} -2.2768245622195593e-18 & \cellcolor{green} 3.2869874402072343e-16 \\ \hline
 \cellcolor[rgb]{1,0.8,0} 100 & \cellcolor[rgb]{1,0.8,0} -6.0785148749668448e-09 & \cellcolor[rgb]{1,0.8,0} 0.0010974597065239072 \\ \hline
 \end{tabular}
@@ -239,24 +239,58 @@ $\overrightarrow{g} / \text{(pixel)}$ & Mean horizontal $\overrightarrow{\Delta 
 \end{figure}
 
 Based on the error plot in \cref{fig:Test_2_Test_error}, the behaviour of the gpa module is not fully satisfactory. Potentially, the error could be small enough to be negligible however, \textbf{\cref{TP:T_Phase-Extraction-No-Strain}} is the simplest test case possible based on generated data. Noise and other artifacts will be included in the experimental data which could also contribute to the error. A system test on the whole program might help in assessing if the errors visible in GPA module have a significant impact on the deformation maps. \bigskip
+\end{TestRep}
 
-\textbf{\cref{TP:T_Phase-Extraction-Known-Strain}} from TestPlan document
+\begin{TestRep}\normalfont\underline{{\cref{TP:T_Phase-Extraction-Known-Strain}} from TestPlan document} \label{Test_Report_3} \newline
+
+The same protocol as in \cref{Test_Report_2} has been used to generate the test cases of\cref{TP:T_Phase-Extraction-Known-Strain}. The only difference is that the generated data need to have a known strain in an area of the image. For simplicity, the left half of the image has been decided to be the reference state and the right half to be the strained state. An example of test case is shown in \cref{fig:Test_3_explanation} with the left side begin modelled by a sin function with a periodicity of 4 pixels and the right side modelled by a sin function with a periodicity of 4.5 pixels. The difference of periodicity correspond to the simulated strain field present on the right side of the image.\medskip
+
+The details of the inputs used for test restuls shown in \cref{fig:Test_3_explanation} are  described below:
+\begin{itemize}
+\item $I_{SMH_{exp}}=\sin{(2\pi \overrightarrow{g}\cdot\overrightarrow{r} + \overrightarrow{K(x)}\cdot\overrightarrow{r})}$, with:
+	\begin{itemize}
+	\item $\overrightarrow{g} = \frac{1}{4} \overrightarrow{u_x} \ \text{pixel}^{-1}$ which represents a periodicity of 4 pixels in the horizontal direction of $I_{SMH_{exp}}$.
+	\item $\overrightarrow{K(x)}$ such that $\begin{cases}
+	\overrightarrow{K(x)}=\overrightarrow{0}, \ 0\leq x\leq127 \\
+	\overrightarrow{K(x)}=\frac{4\times4.5}{4.5-4} \ \overrightarrow{u_x} \ \text{pixel}^{-1}, \ 128\leq x\leq 255
+	\end{cases}$
+	\end{itemize}
+\item Mask $M$ of $20 \ \text{pixel}^{-1}$ in radius and centred on $\overrightarrow{g}=(g_x,g_y)$ (the unstrained frequency) in $\widetilde{I}_{SMH_{exp}}$
+\item $\overrightarrow{g} = \overrightarrow{g_\text{ref}} + \overrightarrow{\Delta g}$. On the left side, $\overrightarrow{\Delta g} = \overrightarrow{0}$ and on the right side, $\overrightarrow{\Delta g} = (\frac{1}{4.5}-\frac{1}{4})\overrightarrow{u_x} + 0 \overrightarrow{u_y}$.
+\end{itemize}
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.5]{Figures/Test_3_explanation.png}
 \caption{}
-\label{fig:Test_3_explaination}
+\label{fig:Test_3_explanation}
 \end{center}
 \end{figure}
+
+As done in \cref{Test_Report_2}, it is possible to slice the dataset to represent a 1D profile because the periodicity and the strain is only generated along the horizontal axis. The 1D data visualization is done in \cref{fig:Test_3_explanation_1D}. The presence of two different periodicities is confirmed in both the I{\_}SMH and the Fourier Transform of I{\_}SMH plots. Two areas with their own frequencies are clearly observable. Again similar spreading in frequency of the Fourier Trasform of I{\_}SMH that in \cref{fig:Test_2_Test_cases} are highlighted. The phase corrected plot also shows two different regions with different behaviour. Because of the difference of frequency, the phase is constant on the left side and varying on the right side. These results are expected since the strain corresponds to the slope of the phase. Therefore, with a flat phase, no strain is expected and with a varying phase, a strain is expected. The value of the slope is directly linked to the strength of the strain. The final output $\overrightarrow{\Delta g}$ is confirming a strain observed on the right side of the profile. There is an important spike on the interface between the unstrained and strain region but this is a known weakness of GPA algorithm. One assumption is to not have an abrupt variation of phase in order to model the derivative of the phase as the variation of the wave vector $\overrightarrow{g}$. Any interface won't respect this hypothesis and it is only possible to limit the spiking effect by playing with the mask parameters.
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.5]{Figures/Test_3_explanation_1D.png}
 \caption{}
-\label{fig:Test_3_explaination_1D}
+\label{fig:Test_3_explanation_1D}
 \end{center}
 \end{figure}
+
+To check the performance of the GPA algorithm the error between the input strain and the output strain can be calculated. Results are shown in \cref{tb:Metric_test_3_single_case} and the error seems to be on the same order of magnitude as the standard deviation of the worst case in \cref{Test_Report_2}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+$\overrightarrow{g} \ \text{(pixel)}$ & $\overrightarrow{K} \ \text{(pixel)}$ & $\text{Error}=|\overrightarrow{\Delta g}_{\text{sim}}-\overrightarrow{\Delta g}_{\text{gpa}}| \ \text{(pixel)}^{-1}$ \\
+\hline
+4 & 4.5 & 5.55555637e-02 \\ \hline
+\end{tabular}
+\caption{Table of metrics for}\label{tb:Metric_test_3_single_case}
+\end{table}
+
+Several test cases can be designed to see if the error is evolving with the level of strain. The following periodicities on the right side of the image have been tested to verify the GPA algorithm : 3, 3.8, 3.9, 4, 4.1, 4.2 and 5 pixels. The test cases should respectively display the following level of strain : 1/4 - 1/3, 1/4 - 1/3.8, 1/4 - 1/3.9, 0, 1/4 - 1/4.1, 1/4 - 1/4.2 and 1/4 - 1/5 $\text{pixel}^{-1}$. The results of the tests are highlighted in \cref{fig:Test_3_test_results} and in the table \cref{tb:Metric_test_3_multi_case}. 
 
 \begin{figure}[H]
 \begin{center}
@@ -265,6 +299,26 @@ Based on the error plot in \cref{fig:Test_2_Test_error}, the behaviour of the gp
 \label{fig:Test_3_test_results}
 \end{center}
 \end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+$\overrightarrow{g} \ \text{(pixel)}$ & $\overrightarrow{K} \ \text{(pixel)}$ & $\text{Error}=|\overrightarrow{\Delta g}_{\text{sim}}-\overrightarrow{\Delta g}_{\text{gpa}}| \ \text{(pixel)}^{-1}$ \\
+\hline
+4 & 3 & 1.66666626e-01 \\ \hline
+4 & 3.8 & 2.63157758e-02 \\ \hline
+4 & 3.9 & 1.28205175e-02 \\ \hline
+4 & 4 & 8.32667268e-16 \\ \hline
+4 & 4.1 & 1.21951224e-02 \\ \hline
+4 & 4.2 & 2.38095207e-02 \\ \hline
+4 & 5 & 9.99999872e-02 \\ \hline
+\end{tabular}
+\caption{Table of metrics for}\label{tb:Metric_test_3_multi_case}
+\end{table}
+
+The error seems to increase slowly with the level of strain. Nevertheless, the higher the level of strain, the higher the radius of the mask should be. In this case, we kept the radius of the mask constant which can be at the disadvantage of higher strain level. The effect of the mask radius should be also assessed to give a more complete picture of the error evolution.
+\end{TestRep}
 
 \section{Nonfunctional Requirements Evaluation}
 
@@ -278,19 +332,27 @@ The GPA algorithm used in \progname{} could be however compared to other open-ac
 
 \section{Unit Testing}
 
-
+A couple of unit tests were performed in order to verify the proper behaviour of a few functions. The amount of tests are still not sufficient to qualify the reliability of \progname{} nevertheless, the Data Structure Module has been tested such as a few properties of the Mask module. The test can be run using pytest testing framework and the content of the test can be found in the python files with the designation test{\_}*.py (the * replacing the name of the module tested).
 
 \section{Changes Due to Testing}
 
 Mask function 
 
 \section{Automated Testing}
-		
+
+For the moment, only a manual testing approach has been considered.
+
 \section{Trace to Requirements}
+
+Not enough tests have been performed to assess the requirement of \progname{}.
 		
-\section{Trace to Modules}		
+\section{Trace to Modules}
+
+Not enough tests have been performed to assess the proper behaviour of the modules in \progname{}.		
 
 \section{Code Coverage Metrics}
+
+
 
 \bibliographystyle{ieee}
 
