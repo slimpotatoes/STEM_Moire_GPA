@@ -11,7 +11,6 @@ from tkinter import filedialog
 from matplotlib.widgets import Button
 from matplotlib.widgets import TextBox
 from matplotlib_scalebar.scalebar import ScaleBar
-from matplotlib.patches import Rectangle
 import data as data
 import numpy as np
 import guimaskmanager as maskmanag

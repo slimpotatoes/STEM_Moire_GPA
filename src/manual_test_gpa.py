@@ -311,7 +311,7 @@ fig_test3_multiple_dq.savefig(
     dpi=300, bbox_inches='tight')
 print('dg = ', dg)
 print('strain = ', strain_values)
-
+print('error = ', np.abs(np.array(dg)-np.array(strain_values)))
 # #######################################
 # Test #4 in TestPlan document
 # #######################################

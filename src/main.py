@@ -9,7 +9,7 @@
 # Python script calculating the 2D relative strain maps from a STEM Moire hologram.
 # Alexandre POFELSKI <pofelska@mcmaster.ca>
 # https://github.com/slimpotatoes/STEM_Moire_GPA
-# 13/12/2017
+# 18/12/2017
 #
 # #####################################################################################
 
