@@ -260,14 +260,18 @@ class SMGGUI(object):
 
     def guistrain(self, datastruct):
         self.fig_strain = plt.figure(num='Strain maps')
-        self.fig_strain.add_subplot(2, 2, 1).imshow(data.SMGData.load(datastruct,'Exx'), cmap='bwr', vmin=-0.02,
-                                                    vmax=0.02)
-        self.fig_strain.add_subplot(2, 2, 2).imshow(data.SMGData.load(datastruct, 'Eyy'), cmap='bwr', vmin=-0.02,
-                                                    vmax=0.02)
-        self.fig_strain.add_subplot(2, 2, 3).imshow(data.SMGData.load(datastruct, 'Exy'), cmap='bwr', vmin=-0.02,
-                                                    vmax=0.02)
-        self.fig_strain.add_subplot(2, 2, 4).imshow(data.SMGData.load(datastruct, 'Rxy'), cmap='bwr', vmin=-0.02,
-                                                    vmax=0.02)
+        fig_strain_ax_exx = self.fig_strain.add_subplot(2, 2, 1)
+        fig_strain_ax_eyy = self.fig_strain.add_subplot(2, 2, 2)
+        fig_strain_ax_exy = self.fig_strain.add_subplot(2, 2, 3)
+        fig_strain_ax_rxy = self.fig_strain.add_subplot(2, 2, 4)
+        fig_strain_ax_exx.imshow(data.SMGData.load(datastruct,'Exx'), cmap='bwr', vmin=-0.02, vmax=0.02)
+        fig_strain_ax_eyy.imshow(data.SMGData.load(datastruct, 'Eyy'), cmap='bwr', vmin=-0.02, vmax=0.02)
+        fig_strain_ax_exy.imshow(data.SMGData.load(datastruct, 'Exy'), cmap='bwr', vmin=-0.02, vmax=0.02)
+        fig_strain_ax_rxy.imshow(data.SMGData.load(datastruct, 'Rxy'), cmap='bwr', vmin=-0.02,vmax=0.02)
+        fig_strain_ax_exx.set_title('εxx')
+        fig_strain_ax_eyy.set_title('εyy')
+        fig_strain_ax_exy.set_title('εxy')
+        fig_strain_ax_rxy.set_title('ωxy')
         plt.show()
 
 
