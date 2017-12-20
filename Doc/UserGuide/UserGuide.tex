@@ -95,7 +95,7 @@ urlcolor=cyan          % color of external links
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-19/12/2017 & 1.0 & First quick version\\
+20/12/2017 & 1.0 & First quick version\\
 \bottomrule
 \end{tabularx}
 
@@ -236,7 +236,7 @@ The two shifts identified and their contribution localized in the Fourier transf
 
 Once the shift determined, the \enquote{Ic split in tiles} and the \enquote{SMH Simulation with colors} windows can be closed. Those won't be reused in the following steps.
 
-\section{GPA}
+\section{Apply the GPA algorithm}
 
 With the GPA algorithm, the user wants to isolate a particular spatial frequency to capture the variation of the wave vector. With the previous step, the user should have identified two non collinear reflections in the Fourier transform of the experimental STEM Moir{\'e} hologram. Those two reflections are the ones that are going to be selected using the red and the blue circle available in the window. The position and the radius of the circles will define the mask that are going used by the GPA module.\medskip
 
@@ -250,6 +250,52 @@ To edit the position and the radius of both circles, the user should press the l
 \caption{STEM Moir{\'e} hologram simulation window with the mask positioned}
 \label{fig:SMH_Simulation_1}
 \end{figure}
+
+Once the circles drawn, select one by clicking on it and select \enquote{GPA} button to execute the GPA algorithm on the selected mask. A new window will appear (\cref{fig:GPA_Mask_Blue}) representing the phase variation and green rectangle to choose an unstrained reference on the image. It is advised to execute the GPA algorithm on the other mask also by selecting the other mask in the \enquote{SMH simulation window} (\cref{fig:SMH_Simulation}) before selecting the reference in the next step. With both phase images displayed, the reference will be automatically adjusted for both images at once.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{Figures/GPA_-_Mask_Blue.png}
+\caption{Phase image from the blue mask using the GPA algorithm}
+\label{fig:GPA_Mask_Blue}
+\end{figure}
+
+\section{Define the unstrained reference}
+
+With both phases images displayed, it is possible to define an unstrained reference on the either of the phase images by drawing a rectangle on where the reference is supposed to be. The draw process correspond to a first right click to define the top left corner of the rectangle and drag the mouse to the bottom right corner of the rectangle and release the mouse button. Once the area define, select the button \enquote{Ref} to update the unstrained reference and the phase images. The reference definition should update the phase like in \cref{fig:GPA_Mask_Ref_Updated}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{Figures/GPA_-_Both_Phases.png}
+\caption{Updated phase images with the unstrained reference defined. The left image corresponds to the blue mask and the right image corresponds to the ref mask.}
+\label{fig:GPA_Mask_Ref_Updated}
+\end{figure}
+
+\section{Convert the Moir{\'e} wave vector into crystalline wave vector}
+
+The shifts for each chosen reflection (covered by either the blue or red masks) have been chosen from the STEM Moir{\'e} simulation process. The shifts have to be manually implemented into \progname{} to perform the conversion. A (2,0) shift has been identified for the $g_{1-100}$ reflection (red mask), so an horizontal shift of 2 and a vertical shift of 0 should be written in the appropriate entry fields. A (0,2) shift has been identified for the $g_{0002}$ reflection (blue mask), so an horizontal shift of 0 and a vertical shift of 2 should be written in the appropriate entry fields. For the example described here, the conversion input window should like in \cref{fig:nm_shift_filled}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.8]{Figures/(n,m)_shift-1.png}
+\caption{Updated phase images with the unstrained reference defined. The left image corresponds to the blue mask and the right image corresponds to the ref mask.}
+\label{fig:nm_shift_filled}
+\end{figure}
+
+Once the shift values inputed, select the button \enquote{Convert} to perform the conversion. When the conversion is done, a message appears in the terminal.
+
+\section{Calculate the 2D strain tensor}
+
+Once the conversion performed, select the button \enquote{Strain} to perform the strain calculation. Each element of the 2D tensor is displayed as a map highlighting the uni-axial strain along the horizontal and the vertical direction, the shear strain and the rotation. All the 4 maps a regrouped in one figure as shown in \cref{fig:strain_map}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{Figures/Strain_maps.png}
+\caption{Updated phase images with the unstrained reference defined. The left image corresponds to the blue mask and the right image corresponds to the ref mask.}
+\label{fig:strain_map}
+\end{figure}
+
+With the strain maps the flow of \progname{} is completed. New features will be added to manipulate the data in a future release (change contrast, change color map, perform a line profile, ...). The user guide will be accordingly updated once the new functions are implemented. 
 
 \bibliographystyle{ieee}
 
