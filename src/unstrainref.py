@@ -75,9 +75,8 @@ def update_zerostrain(mask_id, datastruct):
     mesh_x, mesh_y = np.meshgrid(np.arange(phase.shape[0]), np.arange(phase.shape[1]))
     unwrapped_phase_update = np.array(unwrap_phase(phase)) - 2 * np.pi * (
         np.multiply(g_uns_update[1], mesh_x) + np.multiply(g_uns_update[0], mesh_y))
-    phase_updated = unwrapped_phase_update - np.round(unwrapped_phase_update / (2 * np.pi) * 2 * np.pi)
+    phase_updated = unwrapped_phase_update - np.round(unwrapped_phase_update / (2 * np.pi)) * 2 * np.pi
     data.SMGData.store_g(datastruct, mask_id, 'phasegM', phase_updated)
-
 
     '''
     phase_updated_u = phase_updated[u[1]:u[3], u[0]:u[2]]
