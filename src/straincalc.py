@@ -9,6 +9,7 @@ def strain_calculation(mask_id_1, mask_id_2, datastruct):
     if p <= 0:
         raise Exception('Pixel size negative or zero, strain calculation cannot be performed')
 
+    # Load the crystalline 3D arrays and their corresponding delta G 3D arrays and calibrate them with the pixel size p
     g_c_uns_1 = 1 / p * data.SMGData.load_g(datastruct, mask_id_1, 'gCuns')
     g_c_uns_2 = 1 / p * data.SMGData.load_g(datastruct, mask_id_2, 'gCuns')
     delta_g_1 = 1 / p * data.SMGData.load_g(datastruct, mask_id_1, 'deltagM')
