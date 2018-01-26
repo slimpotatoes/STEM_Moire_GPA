@@ -6,16 +6,19 @@ import data as data
 
 def strain_calculation(mask_id_1, mask_id_2, datastruct):
     p = data.SMGData.load(datastruct, 'p')
-    g_c_uns_1 = data.SMGData.load_g(datastruct, mask_id_1, 'gCuns')
-    delta_g_1 = data.SMGData.load_g(datastruct, mask_id_1, 'deltagM')
-    g_c_uns_2 = data.SMGData.load_g(datastruct, mask_id_2, 'gCuns')
-    delta_g_2 = data.SMGData.load_g(datastruct, mask_id_2, 'deltagM')
+    if p <= 0:
+        raise Exception('Pixel size negative or zero, strain calculation cannot be performed')
 
-    delta_g_1[0, :, :] = 1 / p * delta_g_1[0, :, :]
+    g_c_uns_1 = 1 / p * data.SMGData.load_g(datastruct, mask_id_1, 'gCuns')
+    delta_g_1 = 1 / p * data.SMGData.load_g(datastruct, mask_id_1, 'deltagM')
+    g_c_uns_2 = 1 / p * data.SMGData.load_g(datastruct, mask_id_2, 'gCuns')
+    delta_g_2 = 1 / p * data.SMGData.load_g(datastruct, mask_id_2, 'deltagM')
+
+    '''delta_g_1[0, :, :] = 1 / p * delta_g_1[0, :, :]
     delta_g_1[1, :, :] = 1 / p * delta_g_1[1, :, :]
 
     delta_g_2[0, :, :] = 1 / p * delta_g_2[0, :, :]
-    delta_g_2[1, :, :] = 1 / p * delta_g_2[1, :, :]
+    delta_g_2[1, :, :] = 1 / p * delta_g_2[1, :, :]'''
 
     identity = np.ones(delta_g_1[0, :, :].shape)
     identity_image = np.array([[identity, np.zeros(identity.shape)], [np.zeros(identity.shape), identity]])
