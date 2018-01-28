@@ -16,12 +16,6 @@ def strain_calculation(mask_id_1, mask_id_2, datastruct):
     delta_g_1 = 1 / p * data.SMGData.load_g(datastruct, mask_id_1, 'deltagM')
     delta_g_2 = 1 / p * data.SMGData.load_g(datastruct, mask_id_2, 'deltagM')
 
-    '''delta_g_1[0, :, :] = 1 / p * delta_g_1[0, :, :]
-    delta_g_1[1, :, :] = 1 / p * delta_g_1[1, :, :]
-
-    delta_g_2[0, :, :] = 1 / p * delta_g_2[0, :, :]
-    delta_g_2[1, :, :] = 1 / p * delta_g_2[1, :, :]'''
-
     identity = np.ones(delta_g_1[0, :, :].shape)
     identity_image = np.array([[identity, np.zeros(identity.shape)], [np.zeros(identity.shape), identity]])
 
@@ -43,14 +37,11 @@ def strain_calculation(mask_id_1, mask_id_2, datastruct):
     delta_g = np.array([[(-1) * delta_g_2[0, :, :], delta_g_1[0, :, :]],
                         [(-1) * delta_g_2[1, :, :], delta_g_1[1, :, :]]])'''
 
-    # Raw data adapted to base rotation
+    # Raw data adapted to base rotation (90 degree CCW)
     g_ref = np.array([[(-1) * g_c_uns_1[1, :, :], (-1) * g_c_uns_2[1, :, :]],
                       [g_c_uns_1[0, :, :], g_c_uns_2[0, :, :]]])
     delta_g = np.array([[(-1) * delta_g_1[1, :, :], (-1) * delta_g_2[1, :, :]],
                         [delta_g_1[0, :, :], delta_g_2[0, :, :]]])
-
-    print(g_ref.shape)
-    print(delta_g.shape)
 
     g = np.add(g_ref, delta_g)
 
@@ -58,16 +49,9 @@ def strain_calculation(mask_id_1, mask_id_2, datastruct):
     t_g_pixel = np.transpose(np.transpose(g, axes=[2, 3, 0, 1]), axes=[0, 1, 3, 2])
     identity_pixel = np.transpose(identity_image, axes=[2, 3, 0, 1])
 
-    print(t_g_ref_pixel.shape)
-    print(t_g_pixel.shape)
-    print(t_g_ref_pixel[0, 0])
-    print(t_g_pixel[0, 0])
-
     # Store intermediate values because of memory ?? LOL
     inv_t_g_pixel = np.linalg.inv(t_g_pixel)
     displacement = np.zeros(t_g_pixel.shape)
-    print(t_g_ref_pixel[:, :, 0, 0].shape[0])
-    print(t_g_ref_pixel[:, :, 0, 0].shape[1])
 
     for i in range(0, t_g_ref_pixel[:, :, 0, 0].shape[0]):
         for j in range(0, t_g_ref_pixel[:, :, 0, 0].shape[1]):
@@ -87,3 +71,4 @@ def strain_calculation(mask_id_1, mask_id_2, datastruct):
     data.SMGData.store(datastruct, 'Eyy', epsilon_image[1, 1])
     data.SMGData.store(datastruct, 'Exy', epsilon_image[1, 0])
     data.SMGData.store(datastruct, 'Rxy', omega_image[1, 0])
+    print('2D strain calculation done !')
