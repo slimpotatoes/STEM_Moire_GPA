@@ -40,8 +40,9 @@ def verify_p(p, pref):
     if pref < 0 or isinstance(pref, float) is False:
         raise Exception('The pixel size of the Reference image is not a real number strictly positive.')
     if p == pref:
-        raise Warning('The pixel size is the same for the STEM Moire hologram and the Reference image. There is '
-                      'probably a mistake.')
+        print('The pixel size is the same for the STEM Moire hologram and the Reference image. The software '
+                      'is now running in classic HRSTEM GPA mode.')
+    # Improve it with a raise warning but it doesn't continue
 
 
 def verify_p_unit(unit_p, unit_pref):
