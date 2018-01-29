@@ -110,8 +110,8 @@ class SMGGUI(object):
         self.textbox_v_2 = TextBox(self.fig_NM.add_axes(plt.axes([0.6, 0.15, 0.2, 0.1])),
                                   'Vertical shift :', initial='0', label_pad=0.2)
         id1h = self.textbox_h_1.on_text_change(collect_shift_h1)
-        id1v = self.textbox_h_2.on_text_change(collect_shift_v1)
-        id2h = self.textbox_v_1.on_text_change(collect_shift_h2)
+        id2h = self.textbox_h_2.on_text_change(collect_shift_h2)
+        id1v = self.textbox_v_1.on_text_change(collect_shift_v1)
         id2v = self.textbox_v_2.on_text_change(collect_shift_v2)
 
     def guismhexp(self, datastruct):

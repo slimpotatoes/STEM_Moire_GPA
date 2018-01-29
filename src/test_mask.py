@@ -82,3 +82,11 @@ def test_classic_g0(test_case):
     #print(image_masked)
     #print(test_case['g0'])
     assert np.all(image_masked==test_case['g0'])
+
+@pytest.mark.parametrize("test_case", test_cases)
+def test_gaussian_g0(test_case):
+    image_masked = np.array(mask.mask_gaussian(test_case['center'], test_case['radius'],
+                                     np.shape(test_case['image_test']))[1][:,0,0])
+    #print(image_masked)
+    #print(test_case['g0'])
+    assert np.all(image_masked==test_case['g0'])

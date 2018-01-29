@@ -79,7 +79,7 @@ def main():
         masks."""
         if not event.inaxes == smggui.event_convert.ax:
             raise Exception('Improper convert axis')
-        print(smggui.h_1)
+        print(smggui.h_1, smggui.h_2, smggui.v_1, smggui.v_2)
         conversion.conversion('Mask1', smggui.h_1, smggui.v_1, smgdata)
         conversion.conversion('Mask2', smggui.h_2, smggui.v_2, smgdata)
 

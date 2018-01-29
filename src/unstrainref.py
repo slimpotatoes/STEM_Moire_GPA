@@ -6,7 +6,6 @@ import numpy as np
 from scipy.optimize import leastsq
 from skimage.restoration import unwrap_phase
 
-import matplotlib.pyplot as plt
 
 def update_zerostrain(mask_id, datastruct):
 

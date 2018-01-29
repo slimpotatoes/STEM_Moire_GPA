@@ -20,8 +20,6 @@ def conversion(mask_id, n_horizontal, m_vertical, datastruct):
     # Normalize the unstrained reference Moire 3D array (gMuns = 3D array -- 2D vector on each pixel of a
     # 2D image and separate components)
     g_m_uns = data.SMGData.load_g(datastruct, mask_id, 'gMuns')
-    # g_m_uns[0, :, :] = 1 / p * g_m_uns[0, :, :]
-    # g_m_uns[1, :, :] = 1 / p * g_m_uns[1, :, :]
 
     # Generate the correction 3D array to apply on the unstrained reference Moire 3D array on each component
     correction = np.ones(g_m_uns.shape)
