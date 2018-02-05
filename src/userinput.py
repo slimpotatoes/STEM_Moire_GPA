@@ -41,7 +41,7 @@ def verify_p(p, pref):
         raise Exception('The pixel size of the Reference image is not a real number strictly positive.')
     if p == pref:
         print('The pixel size is the same for the STEM Moire hologram and the Reference image. The software '
-                      'is now running in classic HRSTEM GPA mode.')
+              'is now running in classic HRSTEM GPA mode.')
     # Improve it with a raise warning but it doesn't continue
 
 

@@ -15,11 +15,12 @@ import data as data
 import numpy as np
 import guimaskmanager as maskmanag
 import guirectanglemanager as rectmanag
+import guidisplay as display
 
 
 class SMGGUI(object):
 
-    def __init__(self):
+    def __init__(self, datastruct):
         self.fig_GUIFlow = None
         self.event_input = None
         self.event_smhsim = None
@@ -43,6 +44,7 @@ class SMGGUI(object):
         self.h_2 = 0
         self.v_1 = 0
         self.v_2 = 0
+        self.datastruct = datastruct
 
     def guiflow(self):
         self.fig_GUIFlow = plt.figure(num='SMG Flow', figsize=(2, 5))
@@ -53,6 +55,7 @@ class SMGGUI(object):
         self.event_ref = Button(self.fig_GUIFlow.add_axes(self.fig_GUIFlow.add_subplot(gs_button[3, 0])), 'Ref')
         self.event_convert = Button(self.fig_GUIFlow.add_axes(self.fig_GUIFlow.add_subplot(gs_button[4, 0])), 'Convert')
         self.event_strain = Button(self.fig_GUIFlow.add_axes(self.fig_GUIFlow.add_subplot(gs_button[5, 0])), 'Strain')
+        self.fig_GUIFlow.canvas.mpl_connect('key_press_event', self.custom_display)
 
     def guiconv(self):
 
@@ -264,14 +267,19 @@ class SMGGUI(object):
         fig_strain_ax_eyy = self.fig_strain.add_subplot(2, 2, 2)
         fig_strain_ax_exy = self.fig_strain.add_subplot(2, 2, 3)
         fig_strain_ax_rxy = self.fig_strain.add_subplot(2, 2, 4)
-        fig_strain_ax_exx.imshow(data.SMGData.load(datastruct,'Exx'), cmap='bwr', vmin=-0.02, vmax=0.02)
-        fig_strain_ax_eyy.imshow(data.SMGData.load(datastruct, 'Eyy'), cmap='bwr', vmin=-0.02, vmax=0.02)
-        fig_strain_ax_exy.imshow(data.SMGData.load(datastruct, 'Exy'), cmap='bwr', vmin=-0.02, vmax=0.02)
-        fig_strain_ax_rxy.imshow(data.SMGData.load(datastruct, 'Rxy'), cmap='bwr', vmin=-0.02,vmax=0.02)
+        exx = fig_strain_ax_exx.imshow(data.SMGData.load(datastruct,'Exx'), cmap='bwr', vmin=-0.02, vmax=0.02)
+        eyy = fig_strain_ax_eyy.imshow(data.SMGData.load(datastruct, 'Eyy'), cmap='bwr', vmin=-0.02, vmax=0.02)
+        exy = fig_strain_ax_exy.imshow(data.SMGData.load(datastruct, 'Exy'), cmap='bwr', vmin=-0.02, vmax=0.02)
+        rxy = fig_strain_ax_rxy.imshow(data.SMGData.load(datastruct, 'Rxy'), cmap='bwr', vmin=-0.02,vmax=0.02)
         fig_strain_ax_exx.set_title('εxx')
+        fig_strain_ax_exx.xaxis.set_visible(False)
         fig_strain_ax_eyy.set_title('εyy')
+        fig_strain_ax_eyy.xaxis.set_visible(False)
         fig_strain_ax_exy.set_title('εxy')
+        fig_strain_ax_exy.xaxis.set_visible(False)
         fig_strain_ax_rxy.set_title('ωxy')
+        fig_strain_ax_rxy.xaxis.set_visible(False)
+        fig_strain_ax_rxy.add_artist(ScaleBar(data.SMGData.load(datastruct, 'p') * 10 ** -9))
         plt.show()
 
 
@@ -310,15 +318,11 @@ class SMGGUI(object):
         if mask_id == 'Mask1':
             phase = data.SMGData.load_g(datastruct, mask_id, 'phasegM')
             print('Mask 1 update')
-            #print(self.image_mask_1)
-            #self.image_mask_1.remove()
             self.fig_GPA_M1_ax.imshow(phase, cmap='gray')
             self.fig_GPA_M1.canvas.draw()
         elif mask_id == 'Mask2':
             print('Mask 2 update')
             phase = data.SMGData.load_g(datastruct, mask_id, 'phasegM')
-            #print(self.image_mask_2)
-            #self.image_mask_2.remove()
             self.fig_GPA_M2_ax.imshow(phase, cmap='gray')
             self.fig_GPA_M2.canvas.draw()
         else:
@@ -329,3 +333,12 @@ class SMGGUI(object):
         file_path_smh = filedialog.askopenfilename(title="Load the STEM Moire hologram")
         file_path_ic = filedialog.askopenfilename(title="Load the reference image")
         return file_path_smh, file_path_ic
+
+    # NOT DOCUMENTED AND NEED TO BE DESIGNED PROPERLY
+    def custom_display(self, event):
+        if event.key == '1':
+            data_to_display = data.SMGData.load(self.datastruct,'ISMHexp')
+            display.GUIDisplay(data_to_display)
+        if event.key == '2':
+            data_to_display = data.SMGData.load(self.datastruct, 'ICref')
+            display.GUIDisplay(data_to_display)

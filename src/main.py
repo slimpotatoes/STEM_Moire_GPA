@@ -91,8 +91,8 @@ def main():
         smggui.guistrain(smgdata)
 
     """Creation of the GUI and the Data object"""
-    smggui = gui.SMGGUI()
     smgdata = data.SMGData()
+    smggui = gui.SMGGUI(smgdata)
 
     """Call of the GUI module functions to pop up the initial windows for the user"""
     smggui.guiconv()
