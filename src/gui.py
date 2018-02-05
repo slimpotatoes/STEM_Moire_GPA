@@ -105,11 +105,11 @@ class SMGGUI(object):
         fig_ax_text_2.text(0, 0.2, 'Shift related to the Blue mask')
         fig_ax_text_2.format_coord = lambda x, y: ""
         self.textbox_h_1 = TextBox(self.fig_NM.add_axes(plt.axes([0.6, 0.65, 0.2, 0.1])),
-                                   'Horizontal shift :', initial='0', label_pad=.2)
+                                   'Horizontal shift :', initial='0', label_pad=0.2)
         self.textbox_v_1 = TextBox(self.fig_NM.add_axes(plt.axes([0.6, 0.55, 0.2, 0.1])),
                                    'Vertical shift :', initial='0', label_pad=0.2)
         self.textbox_h_2 = TextBox(self.fig_NM.add_axes(plt.axes([0.6, 0.25, 0.2, 0.1])),
-                                  'Horizontal shift :', initial='0', label_pad=.2)
+                                  'Horizontal shift :', initial='0', label_pad=0.2)
         self.textbox_v_2 = TextBox(self.fig_NM.add_axes(plt.axes([0.6, 0.15, 0.2, 0.1])),
                                   'Vertical shift :', initial='0', label_pad=0.2)
         id1h = self.textbox_h_1.on_text_change(collect_shift_h1)
