@@ -338,7 +338,9 @@ class SMGGUI(object):
     def custom_display(self, event):
         if event.key == '1':
             data_to_display = data.SMGData.load(self.datastruct,'ISMHexp')
-            display.GUIDisplay(data_to_display)
+            p = data.SMGData.load(self.datastruct, 'p')
+            display.GUIDisplay(data_to_display, cal=p)
         if event.key == '2':
             data_to_display = data.SMGData.load(self.datastruct, 'ICref')
-            display.GUIDisplay(data_to_display)
+            p = data.SMGData.load(self.datastruct, 'pref')
+            display.GUIDisplay(data_to_display, cal=p)
