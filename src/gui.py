@@ -15,6 +15,7 @@ import data as data
 import numpy as np
 import guimaskmanager as maskmanag
 import guirectanglemanager as rectmanag
+import guilinemanager as linemanag
 import guidisplay as display
 
 
@@ -29,6 +30,7 @@ class SMGGUI(object):
         self.event_convert = None
         self.event_strain = None
         self.fig_SMHexp = None
+        self.ax_fig_SMHexp = None
         self.fig_SMHSim = None
         self.fig_GPA_M1 = None
         self.fig_GPA_M2 = None
@@ -45,6 +47,7 @@ class SMGGUI(object):
         self.v_1 = 0
         self.v_2 = 0
         self.datastruct = datastruct
+        self.line_rot = None
 
     def guiflow(self):
         self.fig_GUIFlow = plt.figure(num='SMG Flow', figsize=(2, 5))
@@ -119,10 +122,12 @@ class SMGGUI(object):
 
     def guismhexp(self, datastruct):
         self.fig_SMHexp = plt.figure(num='SMH and reference image')
-        self.fig_SMHexp.add_axes(plt.subplot(self.fig_SMHexp.add_subplot(1, 2, 1))).imshow(
-            data.SMGData.load(datastruct, 'ISMHexp'), cmap='gray')
+        self.ax_fig_SMHexp = self.fig_SMHexp.add_axes(plt.subplot(self.fig_SMHexp.add_subplot(1, 2, 1)))
+        self.ax_fig_SMHexp.imshow(data.SMGData.load(datastruct, 'ISMHexp'), cmap='gray')
         scalebar1 = ScaleBar(data.SMGData.load(datastruct, 'p') * 10 ** -9)
         plt.gca().add_artist(scalebar1)
+        self.line_rot = linemanag.LineDraw(self.ax_fig_SMHexp)
+        self.line_rot.ConnectDraw()
         self.fig_SMHexp.add_axes(plt.subplot(self.fig_SMHexp.add_subplot(1, 2, 2))).imshow(
             data.SMGData.load(datastruct, 'ICref'), cmap='gray')
         scalebar2 = ScaleBar(data.SMGData.load(datastruct, 'pref') * 10 ** -9)
@@ -343,4 +348,34 @@ class SMGGUI(object):
         if event.key == '2':
             data_to_display = data.SMGData.load(self.datastruct, 'ICref')
             p = data.SMGData.load(self.datastruct, 'pref')
+            display.GUIDisplay(data_to_display, cal=p)
+        if event.key == '3':
+            data_to_display = data.SMGData.load(self.datastruct, 'FTISMHexp')
+            display.GUIDisplay(data_to_display)
+        if event.key == '4':
+            data_to_display = data.SMGData.load(self.datastruct, 'FTISMHsim')
+            display.GUIDisplay(data_to_display)
+        if event.key == '5':
+            data_to_display = data.SMGData.load_g(self.datastruct,'Mask1', 'PhasegM')
+            p = data.SMGData.load(self.datastruct, 'p')
+            display.GUIDisplay(data_to_display, cal=p)
+        if event.key == '6':
+            data_to_display = data.SMGData.load_g(self.datastruct, 'Mask2', 'PhasegM')
+            p = data.SMGData.load(self.datastruct, 'p')
+            display.GUIDisplay(data_to_display, cal=p)
+        if event.key == '7':
+            data_to_display = data.SMGData.load(self.datastruct,'Exx')
+            p = data.SMGData.load(self.datastruct, 'p')
+            display.GUIDisplay(data_to_display, cal=p)
+        if event.key == '8':
+            data_to_display = data.SMGData.load(self.datastruct,'Eyy')
+            p = data.SMGData.load(self.datastruct, 'p')
+            display.GUIDisplay(data_to_display, cal=p)
+        if event.key == '9':
+            data_to_display = data.SMGData.load(self.datastruct,'Exy')
+            p = data.SMGData.load(self.datastruct, 'p')
+            display.GUIDisplay(data_to_display, cal=p)
+        if event.key == '0':
+            data_to_display = data.SMGData.load(self.datastruct,'Rxy')
+            p = data.SMGData.load(self.datastruct, 'p')
             display.GUIDisplay(data_to_display, cal=p)

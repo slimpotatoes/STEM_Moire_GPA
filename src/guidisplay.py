@@ -7,6 +7,8 @@ from matplotlib_scalebar.scalebar import ScaleBar
 from matplotlib.colorbar import Colorbar
 from scipy.misc import imsave
 import numpy as np
+import guilinemanager
+import skimage.measure
 # import time
 # import string
 import collections
@@ -39,7 +41,7 @@ class GUIDisplay(object):
             ButtonParams('Set\nColourmap', 1, 0, self.colourmap_button),
             ButtonParams('Calibration', 2, 0, self.test),
             ButtonParams('Scale bar', 3, 0, self.update_scalebar),
-            ButtonParams('Num 4', 4, 0, self.test),
+            ButtonParams('Line profile', 4, 0, self.line_profile),
             ButtonParams('Num 5', 5, 0, self.test),
             ButtonParams('Num 6', 6, 0, self.test),
             ButtonParams('Export', 7, 0, self.export_data)
@@ -98,6 +100,12 @@ class GUIDisplay(object):
         self.state_scalebar = 0
         self.scalebar = None
 
+        # Line profile
+        self.line_prof = None
+        self.line_prof_edit = 0
+        self.fig_line_prof = None
+        self.ax_fig_line_prof = None
+
         # Show the display window
         plt.show()
 
@@ -133,6 +141,36 @@ class GUIDisplay(object):
                 self.image.set_cmap(plt.get_cmap(self.cmap))
                 self.update_colourmap()
                 self.fig_image.canvas.draw()
+
+    def line_profile(self, event):
+        if event.inaxes == self.fig_image_parameter[4].ax:
+            if self.line_prof_edit == 0:
+                if self.line_prof is None:
+                    print('create line')
+                    self.line_prof_edit = 1
+                    self.line_prof = guilinemanager.LineDraw(self.ax_image)
+                    self.line_prof.ConnectDraw()
+                else:
+                    print('edit line')
+                    self.line_prof_edit = 1
+                    self.line_prof.ConnectMove()
+            elif self.line_prof_edit == 1:
+                print('disconect')
+                self.line_prof_edit = 0
+                self.line_prof.DisconnectDraw()
+                self.line_prof.DisconnectMove()
+                self.fig_line_prof = plt.figure()
+                self.ax_fig_line_prof = self.fig_line_prof.add_subplot(1, 1, 1)
+                print(self.line_prof.WidthData)
+                first_postion = (self.line_prof.LineCoords[0][1], self.line_prof.LineCoords[0][0])
+                second_postion = (self.line_prof.LineCoords[1][1], self.line_prof.LineCoords[1][0])
+                line_profile = skimage.measure.profile_line(self.image_data, first_postion,
+                                                            second_postion,
+                                                            linewidth=int(self.line_prof.WidthData))
+                self.ax_fig_line_prof.plot(line_profile)
+                plt.show()
+            else:
+                return
 
     # Function to update image after changing it
     def update_image(self):

@@ -3,6 +3,7 @@
 
 import numpy as np
 import data as data
+import rotatecalc
 
 
 def strain_calculation(mask_id_1, mask_id_2, datastruct):

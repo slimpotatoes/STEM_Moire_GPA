@@ -26,6 +26,7 @@ import gpa as gpa
 import unstrainref as uref
 import conversion as conversion
 import straincalc as strain
+import rotatecalc as rotate
 
 
 def main():
@@ -88,6 +89,7 @@ def main():
         if not event.inaxes == smggui.event_strain.ax:
             raise Exception('Improper strain axis')
         strain.strain_calculation('Mask1', 'Mask2', smgdata)
+        rotate.rotate_tensor(smgdata, smggui)
         smggui.guistrain(smgdata)
 
     """Creation of the GUI and the Data object"""
