@@ -17,22 +17,34 @@ def smh_sim(datastruct):
     ft_ic = np.fft.fftshift(np.abs(np.fft.fft2(data.SMGData.load(datastruct, 'ICref')) ** 2))
     p = data.SMGData.load(datastruct, 'p')
     pref = data.SMGData.load(datastruct, 'pref')
-    n_lim = math.floor(p/(2*pref))
+    n_lim = math.floor(p/(pref))
     fov = ft_ic.shape[0]
     tile = int(pref / p * fov)
     ft_ismh_sim = np.ndarray(ft_ic.shape)
-    ft_ic_square = np.ndarray((len(range(-n_lim, n_lim+1)), len(range(-n_lim, n_lim+1)), int(tile), int(tile)))
+    ft_ic_square = np.ndarray((len(range(0, n_lim)), len(range(0, n_lim)), tile, tile))
 
-    #Simulation by calculating the STEM Moire hologram equation.
+    # Print statement to inform user
+    print('Tile size (in pixel): ', tile)
+    print('Number of tiles: ', n_lim)
+    print('Shape in pixel of refence: ', ft_ismh_sim.shape)
+    print('Shape in pixel of the tile: ', ft_ic_square.shape)
     print('Please wait the calculation can take some time !!!')
-    for i in range(-n_lim, n_lim+1):
-        for j in range(-n_lim, n_lim+1):
-            ft_ismh_sim += shift(ft_ic, [i*tile, j*tile], cval=0, order=0, prefilter=False)
-            a = int(0.5 * (fov - tile) + i * tile)
-            b = int(0.5 * (fov + tile) + i * tile)
-            c = int(0.5 * (fov - tile) + j * tile)
-            d = int(0.5 * (fov + tile) + j * tile)
-            ft_ic_square[i+n_lim][j+n_lim] = ft_ic[a:b, c:d]
+    print('Number of loops: ', (n_lim) ** 2)
+
+    # Simulation by calculating the STEM Moire hologram equation.
+    counter = 0
+    initial_coordinate = (int(0.5 * (fov - n_lim * tile)), int(0.5 * (fov - n_lim * tile)))
+    for i in range(0, n_lim):
+        for j in range(0, n_lim):
+            ft_ismh_sim += shift(ft_ic, [int(i - 0.5 * n_lim) * tile, int(j - 0.5 * n_lim) * tile],
+                                 cval=0, order=0, prefilter=False)
+            a = int(initial_coordinate[0] + i * tile)
+            b = a + tile
+            c = int(initial_coordinate[0] + j * tile)
+            d = c + tile
+            ft_ic_square[i][j] = ft_ic[a:b, c:d]
+            counter = counter + 1
+            # print('Loop number: ', counter)
     print('Simulation done')
 
     #Storing data into data structure.

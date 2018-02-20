@@ -42,7 +42,7 @@ class GUIDisplay(object):
             ButtonParams('Calibration', 2, 0, self.test),
             ButtonParams('Scale bar', 3, 0, self.update_scalebar),
             ButtonParams('Line profile', 4, 0, self.line_profile),
-            ButtonParams('Num 5', 5, 0, self.test),
+            ButtonParams('Rot 90 CCW', 5, 0, self.rotate_90),
             ButtonParams('Num 6', 6, 0, self.test),
             ButtonParams('Export', 7, 0, self.export_data)
         )
@@ -82,8 +82,8 @@ class GUIDisplay(object):
         # Textbox for colormap
         self.ax_cmin = plt.axes([0.8, 0.85, 0.1, 0.05])
         self.ax_cmax = plt.axes([0.8, 0.8, 0.1, 0.05])
-        self.text_cmin = TextBox(self.ax_cmin, label='min', initial="%.2f" % self.cmin, label_pad=0.25)
-        self.text_cmax = TextBox(self.ax_cmax, label='max', initial="%.2f" % self.cmax, label_pad=0.25)
+        self.text_cmin = TextBox(self.ax_cmin, label='min', initial="%.4f" % self.cmin, label_pad=0.25)
+        self.text_cmax = TextBox(self.ax_cmax, label='max', initial="%.4f" % self.cmax, label_pad=0.25)
         self.text_cmin.on_submit(self.update_cmin)
         self.text_cmax.on_submit(self.update_cmax)
 
@@ -105,6 +105,7 @@ class GUIDisplay(object):
         self.line_prof_edit = 0
         self.fig_line_prof = None
         self.ax_fig_line_prof = None
+        self.profile = None
 
         # Show the display window
         plt.show()
@@ -164,10 +165,10 @@ class GUIDisplay(object):
                 print(self.line_prof.WidthData)
                 first_postion = (self.line_prof.LineCoords[0][1], self.line_prof.LineCoords[0][0])
                 second_postion = (self.line_prof.LineCoords[1][1], self.line_prof.LineCoords[1][0])
-                line_profile = skimage.measure.profile_line(self.image_data, first_postion,
+                self.profile = skimage.measure.profile_line(self.image_data, first_postion,
                                                             second_postion,
                                                             linewidth=int(self.line_prof.WidthData))
-                self.ax_fig_line_prof.plot(line_profile)
+                self.ax_fig_line_prof.plot(self.profile)
                 plt.show()
             else:
                 return
@@ -180,8 +181,8 @@ class GUIDisplay(object):
         self.colourbar.update_bruteforce(self.image)
 
     def update_cm_textbox(self):
-        self.text_cmin.set_val("%.2f" % self.cmin)
-        self.text_cmax.set_val("%.2f" % self.cmax)
+        self.text_cmin.set_val("%.4f" % self.cmin)
+        self.text_cmax.set_val("%.4f" % self.cmax)
 
     def update_cmin(self, event):
         self.cmin = float(event)
@@ -225,6 +226,12 @@ class GUIDisplay(object):
             else:
                 raise Exception("Invalid parameter for scalebar")
 
+    def rotate_90(self, event):
+        if event.inaxes == self.fig_image_parameter[5].ax:
+            self.image_data = np.rot90(self.image_data)
+            self.image.set_array(self.image_data)
+            self.fig_image.canvas.draw()
+
     def export_data(self, event):
         if event.inaxes == self.fig_image_parameter[7].ax:
             print('export')
@@ -233,11 +240,14 @@ class GUIDisplay(object):
             '''Save image without respecting the number of pixels of the origin image'''
             plt.ioff()
             fig_export = plt.figure(figsize=(10, 7), dpi=100)
-            image_fig_export = fig_export.add_subplot(1, 1, 1).imshow(self.image_data,
-                                                                      cmap=self.cmap,
-                                                                      vmin=self.cmin,
-                                                                      vmax=self.cmax
-                                                                      )
+            ax_fig_export = fig_export.add_subplot(1, 1, 1)
+            image_fig_export = ax_fig_export.imshow(self.image_data, cmap=self.cmap, vmin=self.cmin, vmax=self.cmax)
+            ax_fig_export.set_axis_off()
+            if self.state_scalebar == 1:
+                ax_fig_export.add_artist(ScaleBar(self.cal * 10 ** -9))
+                fig_export.canvas.draw()
+            if self.line_prof is not None:
+                np.save('line_profile', self.profile)
             fig_export.colorbar(image_fig_export)
             fig_export.savefig('image.png')
             print('Image saved')

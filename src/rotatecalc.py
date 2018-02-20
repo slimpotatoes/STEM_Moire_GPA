@@ -61,4 +61,3 @@ def rotate_tensor(datastruct, gui):
     data.SMGData.store(datastruct, 'Eyy', epsilon[1, 1])
     data.SMGData.store(datastruct, 'Exy', epsilon[1, 0])
     data.SMGData.store(datastruct, 'Rxy', omega[1, 0])
-

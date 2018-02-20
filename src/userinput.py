@@ -21,6 +21,8 @@ def load_files(file_path_smh, file_path_ic, datastruct):
     data.SMGData.store(datastruct, 'ICref', dm3_meta_ic.imagedata)
     data.SMGData.store(datastruct, 'pref', pixel_ic[0])
     print('Files loaded')
+    print('Pixel size SMH: ', pixel_smh[0], 'nm')
+    print('Pixel size Reference: ', pixel_ic[0], 'nm')
 
 
 def verify_i(ismh, ic):
