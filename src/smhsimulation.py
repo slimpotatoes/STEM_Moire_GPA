@@ -28,46 +28,30 @@ def smh_sim(datastruct):
         initial_coordinate = (int(0.5 * (fov - n_lim * tile)), int(0.5 * (fov - n_lim * tile)))
         ft_ic_square = np.ndarray((len(range(0, n_lim)), len(range(0, n_lim)), tile, tile))
 
-        # Print statement to inform user
-        print('Shape in pixel of refence: ', ft_ismh_sim.shape)
-        print('Shape in pixel of the tile: ', ft_ic_square.shape)
-        print('Tile size (in pixel): ', tile)
-        print('Number of tiles: ', n_lim ** 2)
-        print('Please wait the calculation can take some time !!!')
-
-        for i in range(0, n_lim):
-            for j in range(0, n_lim):
-                ft_ismh_sim += shift(ft_ic, [int(i - 0.5 * n_lim) * tile, int(j - 0.5 * n_lim) * tile],
-                                     cval=0, order=0, prefilter=False)
-                a = int(initial_coordinate[0] + i * tile)
-                b = a + tile
-                c = int(initial_coordinate[0] + j * tile)
-                d = c + tile
-                ft_ic_square[i][j] = ft_ic[a:b, c:d]
-                counter += 1
-                # print('Loop number: ', counter)
     else:
         n_lim -= 1
         initial_coordinate = (int(0.5 * (fov - n_lim * tile)), int(0.5 * (fov - n_lim * tile)))
         ft_ic_square = np.ndarray((len(range(0, n_lim)), len(range(0, n_lim)), tile, tile))
 
-        # Print statement to inform user
-        print('Shape in pixel of refence: ', ft_ismh_sim.shape)
-        print('Shape in pixel of the tile: ', ft_ic_square.shape)
-        print('Tile size (in pixel): ', tile)
-        print('Number of tiles: ', n_lim ** 2)
+    # Print statement to inform user
+    print('Shape in pixel of refence: ', ft_ismh_sim.shape)
+    print('Shape in pixel of the tile: ', ft_ic_square.shape)
+    print('Tile size (in pixel): ', tile)
+    print('Number of tiles: ', n_lim ** 2)
+    print('Please wait the calculation can take some time !!!')
 
-        print('Please wait the calculation can take some time !!!')
-        for i in range(0, n_lim):
-            for j in range(0, n_lim):
-                ft_ismh_sim += shift(ft_ic, [int(i - 0.5 * n_lim) * tile, int(j - 0.5 * n_lim) * tile],
-                                     cval=0, order=0, prefilter=False)
-                a = int(initial_coordinate[0] + i * tile)
-                b = a + tile
-                c = int(initial_coordinate[0] + j * tile)
-                d = c + tile
-                ft_ic_square[i][j] = ft_ic[a:b, c:d]
-                counter += 1
+    for i in range(0, n_lim):
+        for j in range(0, n_lim):
+            ft_ismh_sim += shift(ft_ic, [int(i - 0.5 * n_lim) * tile, int(j - 0.5 * n_lim) * tile],
+                                 cval=0, order=0, prefilter=False)
+            a = int(initial_coordinate[0] + i * tile)
+            b = a + tile
+            c = int(initial_coordinate[0] + j * tile)
+            d = c + tile
+            ft_ic_square[i][j] = ft_ic[a:b, c:d]
+            counter += 1
+            # print('Loop number: ', counter)
+
     print('Simulation done')
 
     # Storing data into data structure.
