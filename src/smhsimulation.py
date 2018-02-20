@@ -24,12 +24,11 @@ def smh_sim(datastruct):
     ft_ic_square = np.ndarray((len(range(0, n_lim)), len(range(0, n_lim)), tile, tile))
 
     # Print statement to inform user
-    print('Tile size (in pixel): ', tile)
-    print('Number of tiles: ', n_lim)
     print('Shape in pixel of refence: ', ft_ismh_sim.shape)
     print('Shape in pixel of the tile: ', ft_ic_square.shape)
+    print('Tile size (in pixel): ', tile)
+    print('Number of tiles: ', (n_lim) ** 2)
     print('Please wait the calculation can take some time !!!')
-    print('Number of loops: ', (n_lim) ** 2)
 
     # Simulation by calculating the STEM Moire hologram equation.
     counter = 0
