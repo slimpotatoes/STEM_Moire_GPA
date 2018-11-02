@@ -17,7 +17,7 @@ def smh_sim(datastruct):
     ft_ic = np.fft.fftshift(np.abs(np.fft.fft2(data.SMGData.load(datastruct, 'ICref')) ** 2))
     p = data.SMGData.load(datastruct, 'p')
     pref = data.SMGData.load(datastruct, 'pref')
-    n_lim = math.floor(p/pref)
+    n_lim = int(math.floor(p/pref))
     fov = ft_ic.shape[0]
     tile = int(pref / p * fov)
     ft_ismh_sim = np.ndarray(ft_ic.shape)
@@ -34,7 +34,7 @@ def smh_sim(datastruct):
         ft_ic_square = np.ndarray((len(range(0, n_lim)), len(range(0, n_lim)), tile, tile))
 
     # Print statement to inform user
-    print('Shape in pixel of refence: ', ft_ismh_sim.shape)
+    print('Shape in pixel of reference: ', ft_ismh_sim.shape)
     print('Shape in pixel of the tile: ', ft_ic_square.shape)
     print('Tile size (in pixel): ', tile)
     print('Number of tiles: ', n_lim ** 2)

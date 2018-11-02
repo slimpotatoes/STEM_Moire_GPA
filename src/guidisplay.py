@@ -57,14 +57,14 @@ class GUIDisplay(object):
         # Define image axis
         self.ax_image = plt.subplot(self.gs_fig_image[1:-1, 1:6])
         self.ax_image.set_axis_off()
-        self.cmap = 'gray'
-        self.image = self.ax_image.imshow(self.image_data, cmap=self.cmap)
+        self.cmap = 'bwr'
+        self.image = self.ax_image.imshow(self.image_data, cmap=self.cmap, vmin=-0.02, vmax=0.02)
 
         # Contrast histogram display and span selector
         self.ax_contrast = plt.subplot(self.gs_fig_image[0, 1:6])
         self.contrastbins = 256
-        self.cmin = np.min(self.image_data)
-        self.cmax = np.max(self.image_data)
+        self.cmin = -0.02
+        self.cmax = 0.02
         self.imhist, self.imbins = np.histogram(self.image_data, bins=self.contrastbins)
         self.ax_contrast_span = None
         self.plot_contrast_histogram()
@@ -247,8 +247,12 @@ class GUIDisplay(object):
                 ax_fig_export.add_artist(ScaleBar(self.cal * 10 ** -9))
                 fig_export.canvas.draw()
             if self.line_prof is not None:
-                np.save('line_profile', self.profile)
+                np.savetxt('line_profile', self.profile)
             fig_export.colorbar(image_fig_export)
             fig_export.savefig('image.png')
             print('Image saved')
+            status_export_raw = 1
+            if status_export_raw == 1:
+                np.savetxt('image_raw', self.image_data, delimiter=',')
+                print('Raw data extracted')
             plt.close(fig_export)

@@ -152,6 +152,7 @@ class SMGGUI(object):
                 for element in self.mask.keys():
                     data.SMGData.create_branch(datastruct, element)
                     data.SMGData.store_g(datastruct, element, 'Mask', self.mask[element])
+                    print(element, ' Center : ', self.mask[element][0], ' Radius : ', self.mask[element][1])
 
         self.fig_SMHsim = plt.figure(num='SMH Simulation')
         self.fig_SMHsim.canvas.mpl_connect('key_press_event', edit_mode)
@@ -169,7 +170,7 @@ class SMGGUI(object):
         icsplit = plt.figure(num='Ic split into tiles')
         # A cleaner
         ZERO = np.zeros(fticsquare[0][0].shape)
-        ftsmhsimaxis = ftsmhsim.add_subplot(1,1,1)
+        ftsmhsimaxis = ftsmhsim.add_subplot(1, 1, 1)
         ftsmhsimaxis.imshow(ZERO, cmap="gray", alpha=1)
         max_general = np.max(np.max(np.max(np.max(np.log1p(fticsquare)))))
 

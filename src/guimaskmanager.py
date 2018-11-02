@@ -24,7 +24,6 @@ class MaskCreator(object):
         circle_artist = self.axis.add_artist(self.circle)
         circle_artist.set_gid(mask_id)
         self.axis.figure.canvas.draw()
-        print(self.circle)
         return Circle.get_gid(self.circle), (self.circle.center, self.circle.radius),
 
 
@@ -57,7 +56,7 @@ class MaskEditor(object):
         self.press = x0, y0, event.xdata, event.ydata
         self.artist.fill = False
         self.artist.figure.canvas.draw()
-        print(artist.Artist.get_gid(self.artist))
+        #print(artist.Artist.get_gid(self.artist))
         self.mask_selected = artist.Artist.get_gid(self.artist)
 
     def on_motion(self, event):
