@@ -5,7 +5,7 @@ import matplotlib.gridspec as gridspec
 from matplotlib.widgets import Button, SpanSelector, TextBox
 from matplotlib_scalebar.scalebar import ScaleBar
 from matplotlib.colorbar import Colorbar
-from scipy.misc import imsave
+from imageio import imwrite as imsave
 import numpy as np
 import guilinemanager
 import skimage.measure
@@ -235,9 +235,9 @@ class GUIDisplay(object):
     def export_data(self, event):
         if event.inaxes == self.fig_image_parameter[7].ax:
             print('export')
-            '''Save image respecting the number of pixels of the origin image'''
-            imsave('image_array.png', self.image_data)
-            '''Save image without respecting the number of pixels of the origin image'''
+            #'''Save image respecting the number of pixels of the origin image'''
+            #imsave('image_array.png', self.image_data)
+            #'''Save image without respecting the number of pixels of the origin image'''
             plt.ioff()
             fig_export = plt.figure(figsize=(10, 7), dpi=100)
             ax_fig_export = fig_export.add_subplot(1, 1, 1)

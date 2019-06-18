@@ -30,8 +30,9 @@ def mask_gaussian(center, r, shape):
     """Do not forget event coordinate (x,y) from matplotlib  should be switched compared to numpy array indexing"""
     g_0 = np.array([(center[1] - 0.5 * shape[0]) / shape[0] * np.ones(shape),
                     (center[0] - 0.5 * shape[1]) / shape[1] * np.ones(shape)])
-    """Do not forget event coordinate (x,y) from matplotlib  should be switched compared to numpy array indexing"""
-    const = 1 / (2 * (2 / 3 * r) ** 2)
+    """Do not forget event coordinate (x,y) from matplotlib  should be switched compared to numpy array indexing
+    - r corresponds  to 3 * sigma => 99% gaussian mask included in circle"""
+    const = 1 / (2 * (r / 3) ** 2)
     mesh_x, mesh_y = np.meshgrid(np.arange(shape[0]), np.arange(shape[1]))
     delta_x = (mesh_x - center[0]) ** 2
     delta_y = (mesh_y - center[1]) ** 2

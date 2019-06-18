@@ -296,7 +296,7 @@ class SMGGUI(object):
     @staticmethod
     def generate_colormap_smhsim(total_tiles):
         initial_color_map = cm.get_cmap(name="jet")
-        coef_weighted_color = np.arange(0, total_tiles).astype(float) / (total_tiles- 1)
+        coef_weighted_color = np.arange(0, total_tiles).astype(float) / (total_tiles - 1)
         customized_color_map_max = []
         for elements in coef_weighted_color:
             customized_color_map_max.append(initial_color_map(elements))
