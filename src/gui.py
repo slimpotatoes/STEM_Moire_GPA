@@ -99,6 +99,7 @@ class SMGGUI(object):
                 return
 
         self.fig_NM = plt.figure(figsize=(1.2,2), num='(n,m) shift')
+        self.fig_NM.canvas.mpl_disconnect(self.fig_NM.canvas.manager.key_press_handler_id)
         fig_ax_text_1 = self.fig_NM.add_axes(plt.axes([0.1, 0.8, 0.8, 0.1]))
         fig_ax_text_2 = self.fig_NM.add_axes(plt.axes([0.1, 0.4, 0.8, 0.1]))
         fig_ax_text_1.set_axis_off()
@@ -122,14 +123,13 @@ class SMGGUI(object):
 
     def guismhexp(self, datastruct):
         self.fig_SMHexp = plt.figure(num='SMH and reference image')
-        self.ax_fig_SMHexp = self.fig_SMHexp.add_axes(plt.subplot(self.fig_SMHexp.add_subplot(1, 2, 1)))
+        self.ax_fig_SMHexp = self.fig_SMHexp.add_subplot(1, 2, 1)
         self.ax_fig_SMHexp.imshow(data.SMGData.load(datastruct, 'ISMHexp'), cmap='gray')
         scalebar1 = ScaleBar(data.SMGData.load(datastruct, 'p') * 10 ** -9)
         plt.gca().add_artist(scalebar1)
         self.line_rot = linemanag.LineDraw(self.ax_fig_SMHexp)
         self.line_rot.ConnectDraw()
-        self.fig_SMHexp.add_axes(plt.subplot(self.fig_SMHexp.add_subplot(1, 2, 2))).imshow(
-            data.SMGData.load(datastruct, 'ICref'), cmap='gray')
+        self.fig_SMHexp.add_subplot(1, 2, 2).imshow(data.SMGData.load(datastruct, 'ICref'), cmap='gray')
         scalebar2 = ScaleBar(data.SMGData.load(datastruct, 'pref') * 10 ** -9)
         plt.gca().add_artist(scalebar2)
         plt.show()
@@ -156,13 +156,10 @@ class SMGGUI(object):
 
         self.fig_SMHsim = plt.figure(num='SMH Simulation')
         self.fig_SMHsim.canvas.mpl_connect('key_press_event', edit_mode)
-        #self.fig_SMHsim.add_axes(plt.subplot(self.fig_SMHsim.add_subplot(1, 2, 1))).imshow(
-        #    np.log1p(self.fft_display(data.SMGData.load(datastruct, 'FTISMHexp'))), cmap='gray')
         self.fig_SMHsim_axis = self.fig_SMHsim.add_subplot(1,2,1)
         ftsmhexp = data.SMGData.load(datastruct, 'FTISMHexp')
         self.fig_SMHsim_axis.imshow(np.log1p(self.fft_display(ftsmhexp)), cmap='gray')
-        self.fig_SMHsim.add_axes(plt.subplot(self.fig_SMHsim.add_subplot(1, 2, 2))).imshow(
-            np.log1p(data.SMGData.load(datastruct, 'FTISMHsim')), cmap='gray')
+        self.fig_SMHsim.add_subplot(1, 2, 2).imshow(np.log1p(data.SMGData.load(datastruct, 'FTISMHsim')), cmap='gray')
 
         fticsquare = data.SMGData.load(datastruct, 'FTISMHsimDisplay')
         colormaps_Moire, colormaps_IC = self.generate_colormap_smhsim(fticsquare.shape[0] * fticsquare.shape[1])
