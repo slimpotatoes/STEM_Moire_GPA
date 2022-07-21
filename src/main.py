@@ -37,7 +37,7 @@ def main():
             2. Verify and import files in smgdata.
             3. Display the SMH and ICref images to the user."""
         if not event.inaxes == smggui.event_input.ax:
-            raise Exception('Improper input axis')
+            raise Exception('Improper dinput axis')
         file_path_smh, file_path_ic = smggui.open_files()
         userinput.load_files(file_path_smh, file_path_ic, smgdata)
         smggui.guismhexp(smgdata)

@@ -12,6 +12,7 @@ class MaskCreator(object):
         self.axis = axis
         self.image = image
         self.circle = None
+        self.circle_artist = None
         self.colored = None
         self.off_center = None
 
@@ -24,7 +25,7 @@ class MaskCreator(object):
         circle_artist = self.axis.add_artist(self.circle)
         circle_artist.set_gid(mask_id)
         self.axis.figure.canvas.draw()
-        return Circle.get_gid(self.circle), (self.circle.center, self.circle.radius),
+        return Circle.get_gid(self.circle), (self.circle.center, self.circle.radius), circle_artist
 
 
 class MaskEditor(object):
@@ -44,6 +45,7 @@ class MaskEditor(object):
         self.cidmotion = self.artist.figure.canvas.mpl_connect('motion_notify_event', self.on_motion)
 
     def on_press(self, event):
+        print(event.x, event.y)
         if event.inaxes != self.artist.axes:
             return
         contains, attrd = self.artist.contains(event)

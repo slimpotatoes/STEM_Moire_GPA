@@ -139,6 +139,7 @@ class SMGGUI(object):
         def edit_mode(event):
             if event.key == 'e':
                 print('Edit mode open, please edit your masks')
+                print(self.circles)
                 for circle in self.circles:
                     circle.connect()
                 for element in self.mask.keys():
@@ -188,15 +189,19 @@ class SMGGUI(object):
                 icsplitaxis.yaxis.set_visible(False)
                 count += 1
 
-        smgmaskcreate = maskmanag.MaskCreator(self.fig_SMHsim_axis,ftsmhexp)
+        smgmaskcreate = maskmanag.MaskCreator(self.fig_SMHsim_axis, ftsmhexp)
         circle1 = smgmaskcreate.make_circle('Mask1')
         circle2 = smgmaskcreate.make_circle('Mask2', colored='b',off_center=(20,20))
         self.mask[circle1[0]] = circle1[1]
         self.mask[circle2[0]] = circle2[1]
         self.circles = []
-        for el in self.fig_SMHsim_axis.artists:
-            smgmaskedit = maskmanag.MaskEditor(el)
-            self.circles.append(smgmaskedit)
+        #print(type(circle1[0]), type(circle1[1]), type(circle1[2]))
+        #print(type(circle2[0]), type(circle2[1]), type(circle2[2]))
+        circle1_edit = maskmanag.MaskEditor(circle1[2])
+        circle2_edit = maskmanag.MaskEditor(circle2[2])
+        self.circles.append(circle1_edit)
+        self.circles.append(circle2_edit)
+        #print(self.circles)
 
         plt.show()
 
