@@ -7,4 +7,5 @@
 *.blg
 *.bbl
 *.lof
+*.pyc
 Doc/Comments.tex
