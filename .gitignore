@@ -8,4 +8,5 @@
 *.bbl
 *.lof
 *.pyc
+*.xml
 Doc/Comments.tex
